@@ -21,7 +21,7 @@
       </div>
     </div>
     <button class="btn btn-secondary" type="submit" @click="updateArticle({articleUpdateData,temp:1})">수정</button>
-    <button class="ml-1 btn btn-danger" type="submit" @click="deleteArticle(articleUpdateData.articleId)">삭제</button>
+    <button class="ml-1 btn btn-danger" type="submit" @click="deleteArticle({id:articleUpdateData.articleId,temp:1})">삭제</button>
   </div>
 </template>
 

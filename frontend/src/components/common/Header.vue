@@ -177,6 +177,9 @@ export default {
   methods: {
     ...mapMutations(['REMOVE_TOKEN','loginCheck']),
     ...mapActions(['search','login']),
+
+
+    //검색
     // selectSubject(num){
     //   if(num==0){
     //   this.searchData.searchDataForSend.subject='title'
@@ -201,6 +204,8 @@ export default {
     //     this.item2="공동구매"
     //   }
     // },
+
+
   },
   computed:{
     ...mapState(['isLoggedin'])
