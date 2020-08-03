@@ -39,36 +39,58 @@
 			<h2 style="color: #fec9c9;">실시간 게시물</h2>
 		</div>
 		<hr>
-		
+
 		<!-- 첫번째 줄 -->
 		<div>
 			<b-card-group deck>
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This is a wider card with supporting text below as a natural lead-in to additional content.
-						This content is a little bit longer.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This is a wider card with supporting text below as a natural lead-in to additional content.
-						This content is a little bit longer.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This card has supporting text below as a natural lead-in to additional content.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 			</b-card-group>
@@ -78,32 +100,54 @@
 		<!-- 두번째 줄 -->
 		<div>
 			<b-card-group deck>
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This is a wider card with supporting text below as a natural lead-in to additional content.
-						This content is a little bit longer.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This card has supporting text below as a natural lead-in to additional content.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This is a wider card with supporting text below as a natural lead-in to additional content.
-						This card has even longer content than the first to show that equal height action.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 			</b-card-group>
@@ -118,32 +162,54 @@
 
 		<div>
 			<b-card-group deck>
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This is a wider card with supporting text below as a natural lead-in to additional content.
-						This content is a little bit longer.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This is a wider card with supporting text below as a natural lead-in to additional content.
-						This content is a little bit longer.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This card has supporting text below as a natural lead-in to additional content.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 			</b-card-group>
@@ -153,32 +219,54 @@
 		<!-- 두번째 줄 -->
 		<div>
 			<b-card-group deck>
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This is a wider card with supporting text below as a natural lead-in to additional content.
-						This content is a little bit longer.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This card has supporting text below as a natural lead-in to additional content.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 
-				<b-card title="Title" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+				<b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 					<b-card-text>
-						This is a wider card with supporting text below as a natural lead-in to additional content.
-						This card has even longer content than the first to show that equal height action.
+						<h5>제목: 제목입니다.</h5>
+						<h6>지역: 대전</h6>
+						<h6>가격: 10000원/20000원</h6>
 					</b-card-text>
 					<template v-slot:footer>
-						<small class="text-muted">Last updated 3 mins ago</small>
+						<div class="d-flex justify-content-between">
+							<small>
+								<b-icon-heart></b-icon-heart> 0개
+								<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+							</small>
+							<small class="text-muted">10분 전</small>
+						</div>
 					</template>
 				</b-card>
 			</b-card-group>
