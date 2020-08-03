@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="mt-5">
+    <nav class="mt-4 mb-3 ml-3">
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <a @click="changeCategory(0)" class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">전체보기</a>
         <a @click="changeCategory(1)" class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">쉘위택배</a>
@@ -11,6 +11,34 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
       <div v-if="categoryNum === 0" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <b-container class="bv-example-row">
+          <b-row align-h="start">
+            <b-col cols="4">
+              <b-card-group deck>
+                <b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
+                  <b-card-text>
+                      <h5>제목입니다.</h5>
+                      <h6>대전</h6>
+                      <h6>10000원/20000원</h6>
+                  </b-card-text>
+                  <template v-slot:footer>
+                      <div class="d-flex justify-content-between">
+                        <small>
+                            <b-icon-heart></b-icon-heart> 0개
+                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+                        </small>
+                        <small class="text-muted">10분 전</small>
+                      </div>
+                  </template>
+                </b-card>
+              </b-card-group>
+            </b-col>
+            <b-col cols="4">
+
+            </b-col>
+          </b-row>
+        </b-container>        
+        
         <div class="container">
           <div class="row">
             <div class="card col-3" style="width: 18rem;" v-for="article in articles" :key="article.articleId">
