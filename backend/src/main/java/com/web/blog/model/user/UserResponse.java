@@ -6,27 +6,22 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class UserResponse {
     // user
-    @ApiModelProperty(value = "status", position = 1)
-    public boolean status;
-    @ApiModelProperty(value = "data", position = 2)
-    public String data;
-    @ApiModelProperty(value = "object", position = 3)
-    public Object object;
-    @ApiModelProperty(value = "userId", position = 4)
+
+    @ApiModelProperty(value = "userId", position = 1)
     public int userId;
-    @ApiModelProperty(value = "password", position = 5)
+    @ApiModelProperty(value = "password", position = 2)
     public String password;
-    @ApiModelProperty(value = "email", position = 6)
+    @ApiModelProperty(value = "email", position = 3)
     public String email;
-    @ApiModelProperty(value = "name", position = 7)
+    @ApiModelProperty(value = "name", position = 4)
     public String name;
-    @ApiModelProperty(value = "nickname", position = 8)
+    @ApiModelProperty(value = "nickname", position = 5)
     public String nickname;
-    @ApiModelProperty(value = "address", position = 9)
+    @ApiModelProperty(value = "address", position = 6)
     public String address;
-    @ApiModelProperty(value = "birthday", position = 10)
+    @ApiModelProperty(value = "birthday", position = 7)
     public LocalDate birthday;
-    @ApiModelProperty(value = "userPoint", position = 10)
+    @ApiModelProperty(value = "userPoint", position = 8)
     public int userPoint;
 
    
