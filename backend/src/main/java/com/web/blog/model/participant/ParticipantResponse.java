@@ -1,7 +1,5 @@
 package com.web.blog.model.participant;
 
-import java.util.List;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class ParticipantResponse {
@@ -20,7 +18,4 @@ public class ParticipantResponse {
     @ApiModelProperty(value = "description", position = 5)
     private String description;
 
-    @ApiModelProperty(value = "participantList", position = 6)
-     public List<Participant> participantList;
-   
 }
