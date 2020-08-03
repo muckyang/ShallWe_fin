@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import com.web.blog.dao.ArticleTagDao;
 import com.web.blog.dao.CommentDao;
 import com.web.blog.dao.LikeDao;
+import com.web.blog.dao.ParticipantDao;
 // import com.web.blog.dao.LikeDao;
 import com.web.blog.dao.PostDao;
 import com.web.blog.dao.TagDao;
@@ -20,6 +21,7 @@ import com.web.blog.model.post.PostResponse;
 import com.web.blog.model.post.PostSearchRequest;
 import com.web.blog.model.tag.Tag;
 import com.web.blog.model.like.Like;
+import com.web.blog.model.participant.Participant;
 import com.web.blog.model.post.PostRequest;
 import com.web.blog.model.post.Post;
 import com.web.blog.model.user.TokenRequest;
@@ -34,9 +36,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.hibernate.boot.archive.scan.spi.ClassDescriptor.Categorization;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -65,10 +65,16 @@ public class PostController {
 
     @Autowired
     CommentDao commentDao;
+    
     @Autowired
     ArticleTagDao articleTagDao;
+
     @Autowired
     TagDao tagDao;
+
+    @Autowired
+    ParticipantDao participantDao;
+
 
     @Autowired
     private JwtService jwtService;
@@ -137,6 +143,30 @@ public class PostController {
                 System.out.println("게시물 등록!!");
                 PostResponse result = new PostResponse();
 
+                //게시물 등록과 동시에 참가자 등록하기
+                int myPrice = request.getMyPrice();
+                if(myPrice<0){
+                    String message = "0원보다 값이 작습니다.";
+                    return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+                }
+                Participant participant = new Participant();
+                participant.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
+                participant.setArticleId(request.getArticleId());
+                participant.setTitle("게시자 본인입니다.");
+                participant.setPrice(myPrice);
+                participant.setDescription("게시자 본인입니다."); 
+                participantDao.save(participant);//참가자 DB에 등록 완료
+    
+                //게시물 sum_price에 더하기
+                post = postDao.getPostByArticleId(request.getArticleId());//해당 구매게시물을 얻어옴
+                int sumPrice=post.getSumPrice();//sumPrice를 얻어옴
+                sumPrice=sumPrice+myPrice;//참가자의 가격을 더해줌
+                post.setSumPrice(sumPrice);
+                postDao.save(post);//다시 DB에 넣어줌
+    
+                System.out.println("참가자 등록!!");
+                
+
                 return new ResponseEntity<>(result, HttpStatus.OK);
             }
             String message = "로그인을 확인하세요";
@@ -167,7 +197,7 @@ public class PostController {
                 Post p = plist.get(i);
                 // int articleno = p.getPid();
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
+                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
                         p.getImage(), p.getBillImage(), p.getTemp(), p.getEndTime()));
 
             }
@@ -186,7 +216,7 @@ public class PostController {
                 Post p = plist.get(i);
                 int articleId = p.getArticleId();
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
+                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
                         p.getImage(), p.getBillImage(), p.getTemp(), p.getEndTime()));
 
                 // Optional<Like> llist = likeDao.findLikeByArticleno(articleno);
@@ -249,7 +279,7 @@ public class PostController {
                 Post p = tlist.get(i);
                 // int articleno = p.getPid();
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                p.getAddress(), p.getMinPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
+                p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
                 p.getImage(), p.getBillImage(), p.getTemp(), p.getEndTime()));
             }
             System.out.println("title로 검색 확인");
@@ -267,7 +297,7 @@ public class PostController {
                 Post p = tlist.get(i);
                 // int articleno = p.getPid();
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
+                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
                         p.getImage(), p.getBillImage(), p.getTemp(), p.getEndTime()));
             }
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -283,7 +313,7 @@ public class PostController {
                 Optional<Post> article = postDao.findPostByArticleIdAndTempAndCategoryId(aId,temp,categoryId);
                 Post p = article.get();
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
+                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
                         p.getImage(), p.getBillImage(), p.getTemp(), p.getEndTime()));
             }
 
@@ -306,7 +336,7 @@ public class PostController {
             User jwtuser = jwtService.getUser(token);
             Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                    p.getAddress(), p.getMinPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(),
+                    p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(),
                     p.getBillImage(), p.getTemp(), p.getEndTime());
             if (userOpt.isPresent()) {// 로그인 상태일때
 
@@ -349,7 +379,7 @@ public class PostController {
 
             postDao.save(post);
 
-            System.out.println("게시물 수정");
+            System.out.println("임시글 수정");
             PostResponse result = new PostResponse();
             result.title = post.getTitle();
             result.minPrice = post.getMinPrice();
@@ -377,6 +407,24 @@ public class PostController {
             System.out.println();
 
             postDao.save(post);
+
+            //게시물 등록과 동시에 참가자 등록하기
+            int myPrice = request.getMyPrice();
+            if(myPrice<0){
+                String message = "0원보다 값이 작습니다.";
+                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            }
+            Participant participant = new Participant();
+            participant.setArticleId(request.getArticleId());
+            participant.setPrice(myPrice);
+            participantDao.save(participant);//참가자 DB에 등록 완료
+
+            //게시물 sum_price에 더하기
+            post = postDao.getPostByArticleId(request.getArticleId());//해당 구매게시물을 얻어옴
+            int sumPrice=post.getSumPrice();//sumPrice를 얻어옴
+            sumPrice=sumPrice+myPrice;//참가자의 가격을 더해줌
+            post.setSumPrice(sumPrice);
+            postDao.save(post);//다시 DB에 넣어줌
 
             System.out.println("게시물 수정");
             PostResponse result = new PostResponse();

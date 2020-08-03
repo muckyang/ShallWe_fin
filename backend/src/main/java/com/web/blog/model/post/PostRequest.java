@@ -24,6 +24,7 @@ public class PostRequest {
     @ApiModelProperty(required = true)
     @NotNull
     int minPrice;
+    int myPrice;
     @ApiModelProperty(required = true)
     @NotNull
     String description;
