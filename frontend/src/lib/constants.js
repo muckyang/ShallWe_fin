@@ -12,8 +12,7 @@ export default {
             LOGIN: 'login',
             PROFILE: 'profile',
             JOIN: 'join',
-            EDIT: 'edit', 
-            EMAIL: 'email',
+            EDIT: 'edit',
         },
         POST: {
         },
