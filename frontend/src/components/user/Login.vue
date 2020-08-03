@@ -16,7 +16,7 @@
                         <label for="" class="mr-3 col-3">이메일</label>
                         <input 
                         class="col-6"
-                        v-model="loginData.id"
+                        v-model="loginData.email"
                         id="id" 
                         placeholder="아이디를 입력해주세요"
                         type="text"/>
@@ -57,7 +57,7 @@
             return {
                 constants,
                 loginData:{
-                    id: '',
+                    email: '',
                     password: '',
                 },
                 isLoggedin: false,

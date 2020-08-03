@@ -153,6 +153,7 @@ export default new Vuex.Store({
         });
     },
     login({commit},loginData){
+      console.log(loginData)
       axios.post(`${BACK_URL}/account/login`,loginData)
       .then(response=>{
         commit('SET_TOKEN',response.data) 
