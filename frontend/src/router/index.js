@@ -10,7 +10,6 @@ import Login from '../components/user/Login.vue'
 import Join from '../components/user/Join.vue'
 import editUser from '../components/user/editUser.vue'
 import Profile from '../components/user/Profile.vue'
-import emailAuthenticate from '../components/user/emailAuthenticate.vue'
 import SignUpComplete from '../components/user/SignUpComplete.vue'
 
 // 아티클
@@ -65,12 +64,6 @@ Vue.use(VueRouter)
       component: editUser
     },
    
-    //이메일 인증
-    {
-      path: '/user/email',
-      name: constants.URL_TYPE.USER.EMAIL,
-      component: emailAuthenticate
-    },
     //게시글 CRUD
     {
       path: '/create',
