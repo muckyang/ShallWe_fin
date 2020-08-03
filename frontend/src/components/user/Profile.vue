@@ -45,7 +45,8 @@
                     <div v-for="article in articles" :key="article.articleId">
                         <!-- <tempList/> -->
                         <span>{{article.title}}</span>
-                        <router-link :to="{name:'articleUpdate', params: {ID:article.articleId}}">작성하기</router-link>
+                        <button class="btn btn-info"><router-link :to="{name:'articleUpdate', params: {ID:article.articleId}}">작성하기</router-link></button>
+                        <button class="btn btn-danger" @click="deleteArticle({id:article.articleId,temp:0})">삭제하기</button>
                     </div>
                 </div>
             </div>
@@ -75,7 +76,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getUserData','deleteUser','getArticles']),
+        ...mapActions(['getUserData','deleteUser','getArticles','deleteArticle']),
     },
     computed:{
         ...mapState(['userData','articles'])
@@ -83,7 +84,8 @@ export default {
     created: function(){
         this.getUserData()
         this.getArticles({temp:0,categoryId:0})
-    }
+        console.log("created")
+    },
 }
 </script>
 

@@ -1,7 +1,6 @@
 <template>
     <!-- Modal -->
     <div>
-        asdasd
     </div>
     <!-- Modal -->
 </template>
