@@ -26,20 +26,40 @@
     </nav>
     <!-- Navbar2 -->
     <nav class="navbar navbar-light d-flex justify-content-center my-navbar p-1">
-      <a class="navbar-brand mt-3" href="/" style="color: #ee6e9f; font-family: 'Lobster', cursive; font-size: 35px">Shall we?</a>
+      <a class="navbar-brand mt-3" href="/" 
+      style="color: #ee6e9f; font-family: 'Lobster', cursive; 
+      font-size: 35px">Shall we?</a>
     </nav>
     <!-- Navbar3 -->
     <nav class="navbar navbar-expand-lg navbar-light p-0">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <!--페이지 줄일때 네브바 햄버거로 만들어주는거-->
+      <button class="navbar-toggler" 
+      type="button" data-toggle="collapse" 
+      data-target="#navbarSupportedContent" 
+      aria-controls="navbarSupportedContent" 
+      aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item pb-0"><router-link to="/article" class="nav-link mainMenu pb-0" id="article">게시글</router-link></li>
-          <li class="nav-item pb-0"><router-link to="#" class="nav-link mainMenu pb-0" id="community">자유 게시판</router-link></li>
+          <li class="nav-item pb-0">
+            <router-link to="/article" 
+            class="nav-link mainMenu pb-0" 
+            id="article">게시글</router-link></li>
+
+          <li class="nav-item pb-0">
+            <router-link to="#" 
+            class="nav-link mainMenu pb-0" 
+            id="community">자유 게시판</router-link></li>
+
+          <li class="nav-item pb-0">
+            <router-link to="#" 
+            class="nav-link mainMenu pb-0" 
+            id="community">쉘위 소개</router-link></li>
         </ul>
         <!-- Search -->
-        <div class="dropdown mr-1">
+        <!-- <div class="dropdown mr-1">
           <button class="downBtn btn btn-secondary" 
             type="button" id="dropdownMenuButton" 
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{item1 }}<i class="down fas fa-sort-down"></i> 
@@ -49,9 +69,9 @@
             <a class="dropdown-item" href="#" @click="selectSubject(1)">작성자</a>
             <a class="dropdown-item" href="#" @click="selectSubject(2)">태그</a>
           </div>
-        </div>
-        <div class="form-inline my-2 my-lg-0 mb-1">
-          <div class="dropdown mr-1">
+        </div> -->
+        <!-- <div class="form-inline my-2 my-lg-0 mb-1"> -->
+          <!-- <div class="dropdown mr-1">
             <button class="downBtn btn btn-secondary" 
             type="button" id="dropdownMenuButton" 
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{item2}}<i class="down fas fa-sort-down"></i> 
@@ -61,17 +81,18 @@
               <a class="dropdown-item" href="#" @click="selectCategory(2)">최저주문</a>
               <a class="dropdown-item" href="#" @click="selectCategory(3)">공동구매</a>
           </div>
-        </div>
+        </div> -->
           <input class="searchInput" type="search" 
           style="font-family: FontAwesome;" 
-          placeholder="Search" v-model="searchData.searchDataForSend.word" 
+          placeholder="Search" 
+          v-model="searchData.searchDataForSend.word" 
           @keypress.enter="search" 
           >
           <button class="searchBtn 
           my-2 my-sm-0" 
           type="submit" @click="search(searchData)">
           <i class="fas fa-search"></i></button>
-        </div>
+        <!-- </div> -->
       </div>
     </nav>
   </div>
@@ -106,30 +127,30 @@ export default {
   methods: {
     ...mapMutations(['REMOVE_TOKEN','loginCheck']),
     ...mapActions(['search']),
-    selectSubject(num){
-      if(num==0){
-      this.searchData.searchDataForSend.subject='title'
-      this.item1 = '제목'
-      }else if(num==1){
-        this.searchData.searchDataForSend.subject = 'writer'
-        this.item1 = '작성자'
-      }else{
-        this.searchData.searchDataForSend.subject = 'tag'
-        this.item1 = '태그'
-      }
-    },
-    selectCategory(num){
-      if(num==1){
-      this.searchData.categoryId=1
-      this.item2="배달"
-      }else if(num==2){
-        this.searchData.categoryId = 2
-        this.item2="최저주문"
-      }else{
-        this.searchData.categoryId = 3
-        this.item2="공동구매"
-      }
-    },
+    // selectSubject(num){
+    //   if(num==0){
+    //   this.searchData.searchDataForSend.subject='title'
+    //   this.item1 = '제목'
+    //   }else if(num==1){
+    //     this.searchData.searchDataForSend.subject = 'writer'
+    //     this.item1 = '작성자'
+    //   }else{
+    //     this.searchData.searchDataForSend.subject = 'tag'
+    //     this.item1 = '태그'
+    //   }
+    // },
+    // selectCategory(num){
+    //   if(num==1){
+    //   this.searchData.categoryId=1
+    //   this.item2="배달"
+    //   }else if(num==2){
+    //     this.searchData.categoryId = 2
+    //     this.item2="최저주문"
+    //   }else{
+    //     this.searchData.categoryId = 3
+    //     this.item2="공동구매"
+    //   }
+    // },
   },
   computed:{
     ...mapState(['isLoggedin'])
@@ -187,13 +208,19 @@ font-style: normal;
 }
 .searchInput{
   height: 35px;
-  width: 170px;
-  border-radius: 4px 0px 0px 4px;
+  width: 180px;
+  border-radius: 4px 0px 0px 4px; 
   /* border-top-left-radius: 2px; */
   border-style: solid;
   border-width: 1.5px;
   border-color: #3a4049;
-  
+  padding-left: 0.6%;
+}
+.searchInput:focus{
+  outline: none;
+}
+.searchInput:focus::placeholder{
+  color:transparent;
 }
 .searchBtn{
   height: 35px;
