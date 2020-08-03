@@ -1,5 +1,5 @@
 <template>
-  <div class="user" id="join"> 
+  <div class="user" id="join">
         <div class="wrapC table">
             <div class="middle mt-4">
                 <h2 class="edit">개인정보 수정</h2>
@@ -117,9 +117,7 @@ export default {
                     address:'',
                     nickname:'',
                     password:'',
-                    email:'',
                     birthday:'',
-                    token:this.$cookies.get('auth-token')
                 },
                 password2:'',
             },
@@ -132,12 +130,7 @@ export default {
     },
     created: function(){
         this.getUserData()
-        this.editData.editDataForSend.name=this.userData.name
-        this.editData.editDataForSend.address=this.userData.address
-        this.editData.editDataForSend.nickname=this.userData.nickname
-        this.editData.editDataForSend.password=this.userData.password
-        this.editData.editDataForSend.birthday=this.userData.birthday
-        this.editData.editDataForSend.email=this.userData.email
+        this.editData.editDataForSend=this.userData
     },
     computed:{
         ...mapState(["userData"]),

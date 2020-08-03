@@ -57,7 +57,7 @@ export default new Vuex.Store({
     //사용자 관리
     SET_TOKEN(state,token){
       state.authToken=token
-      cookies.set('auth-token', token)
+      cookies.set('auth-token', token, 0)
       state.isLoggedin=true
       alert("login success")
       router.push('/')
@@ -174,14 +174,15 @@ export default new Vuex.Store({
       })
     },
     editUser({state,commit},editData){
-      if(editData.editDataForSend.password===editData.password2){ 
-          axios.post(`${BACK_URL}/account/update`,editData.editDataForSend)
-            .then(()=>{
-              alert("수정이 완료되었습니다. 다시 로그인해 주세요")
-              commit('REMOVE_TOKEN')
-            })
-            .catch((err)=>{
-              console.error(err)
+      if(editData.editDataForSend.password===editData.password2){
+        editData.editDataForSend.token=state.authToken
+        axios.post(`${BACK_URL}/account/update`,editData.editDataForSend)
+          .then(()=>{
+            alert("수정이 완료되었습니다. 다시 로그인해 주세요")
+            commit('REMOVE_TOKEN')
+          })
+          .catch((err)=>{
+            console.error(err)
             })
       }else{
           alert("비밀번호를 확인해 주세요")
@@ -256,9 +257,7 @@ export default new Vuex.Store({
     },
     //게시글 검색
     search({commit},searchData){
-      console.log(searchData.searchDataForSend.subject)
-      console.log(searchData.searchDataForSend.word)
-      console.log(searchData.categoryId)
+      cookies.set('searchData',searchData,0)
       if(searchData.searchDataForSend.word&&searchData.searchDataForSend.subject&&searchData.categoryId){
         axios.post(`${BACK_URL}/post/search/1/${searchData.categoryId}`, searchData.searchDataForSend)
           .then((res) =>{

@@ -43,6 +43,7 @@
                 <div class="tab-pane fade text-dark" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">내가 찜한 목록</div>
                 <div class="tab-pane fade text-dark" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
                     <div v-for="article in articles" :key="article.articleId">
+                        <!-- <tempList/> -->
                         <span>{{article.title}}</span>
                         <router-link :to="{name:'articleUpdate', params: {ID:article.articleId}}">작성하기</router-link>
                     </div>
@@ -61,9 +62,13 @@
 const BACK_URL = 'http://127.0.0.1:8080'
 import constants from '../../lib/constants'
 import {mapState, mapActions} from 'vuex'
+// import tempList from '@/views/articles/tempList'
 
 export default {
     name:'Profile',
+    components:{
+        // tempList
+    },
     data: function () {
         return {
             constants,
