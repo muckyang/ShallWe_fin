@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-5">
     <div class="sub-footer">
         <div class="footer-blank"></div>
         <div d-inline>
