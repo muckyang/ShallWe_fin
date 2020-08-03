@@ -16,6 +16,7 @@
             <b-col cols="4"
             v-for="article in articles" 
             :key="article.articleId">
+            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}">
                 <b-card class="article-card m-4" align="left" img-width="100%" 
                img-height="60%" :img-src="article.image"
                img-alt="Image" img-top>
@@ -34,6 +35,7 @@
                      </div>
                   </template>
                </b-card>
+            </router-link>
                 <!-- <b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
                   <b-card-text>
                       <h5>제목입니다.</h5>
@@ -75,6 +77,7 @@
             <b-col cols="4"
             v-for="article in articles" 
             :key="article.articleId">
+            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}">
                 <b-card class="article-card m-4" align="left" img-width="100%" 
                img-height="60%" :img-src="article.image"
                img-alt="Image" img-top>
@@ -93,6 +96,7 @@
                      </div>
                   </template>
                </b-card>
+            </router-link>
                 <!-- <b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
                   <b-card-text>
                       <h5>제목입니다.</h5>
@@ -119,6 +123,7 @@
             <b-col cols="4"
             v-for="article in articles" 
             :key="article.articleId">
+            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}">
                 <b-card class="article-card m-4" align="left" img-width="100%" 
                img-height="60%" :img-src="article.image"
                img-alt="Image" img-top>
@@ -137,6 +142,7 @@
                      </div>
                   </template>
                </b-card>
+            </router-link>
                 <!-- <b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
                   <b-card-text>
                       <h5>제목입니다.</h5>
@@ -158,11 +164,23 @@
         </b-container>  
       </div>
       <div v-if="categoryNum === 3" class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <!-- <div class="container">
+          <div class="row">
+            <div class="card col-3" style="width: 18rem;" v-for="article in articles" :key="article.articleId">
+              <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}"><img :src="article.image" class="card-img-top" alt="..."></router-link>
+              <div class="card-body">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="card-text">{{ article.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div> -->
         <b-container class="bv-example-row">
           <b-row align-h="start">
             <b-col cols="4"
             v-for="article in articles" 
             :key="article.articleId">
+            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}">
                 <b-card class="article-card m-4" align="left" img-width="100%" 
                img-height="60%" :img-src="article.image"
                img-alt="Image" img-top>
@@ -181,6 +199,7 @@
                      </div>
                   </template>
                </b-card>
+            </router-link>
                 <!-- <b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
                   <b-card-text>
                       <h5>제목입니다.</h5>
@@ -199,7 +218,7 @@
                 </b-card> -->
             </b-col>
           </b-row>
-        </b-container>  
+        </b-container>
       </div>
     </div>
   </div>
