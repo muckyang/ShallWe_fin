@@ -12,7 +12,7 @@ public class PostResponse {
           
      }
      public PostResponse(int articleId,int categoryId,int userId,String title,String address,
-     int minPrice,String description, String writer, String urlLink,String image,String billImage,
+     int minPrice,int sumPrice,String description, String writer, String urlLink,String image,String billImage,
      int temp,LocalDateTime endTime){
           super();
           this.articleId = articleId;
@@ -21,6 +21,7 @@ public class PostResponse {
           this.title = title;
           this.address = address;
           this.minPrice = minPrice;
+          this.sumPrice=sumPrice;
           this.description = description;
           this.writer = writer;
           this.urlLink = urlLink;

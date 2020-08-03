@@ -10,6 +10,9 @@ import javax.validation.constraints.NotNull;
 @Valid
 public class ParticipantRequest {
   
+    @ApiModelProperty(required = true)
+    @NotNull
+    int no;
     
     @ApiModelProperty(required = true)
     @NotNull
@@ -29,4 +32,6 @@ public class ParticipantRequest {
     
     @ApiModelProperty(required = true)
     String description;
+
+    String token;
 }
