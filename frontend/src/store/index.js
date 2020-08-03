@@ -153,14 +153,13 @@ export default new Vuex.Store({
         });
     },
     login({commit},loginData){
-      event.preventDefault()
-        axios.get(`${BACK_URL}/account/login/${loginData.id}/${loginData.password}`)
-        .then(response=>{
-          commit('SET_TOKEN',response.data) 
-        })
-        .catch(err=>{
-            console.log(err)
-        });
+      axios.post(`${BACK_URL}/account/login`,loginData)
+      .then(response=>{
+        commit('SET_TOKEN',response.data) 
+      })
+      .catch(err=>{
+          console.log(err)
+      });
     },
     //profile
     getUserData({state,commit}){
