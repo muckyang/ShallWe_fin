@@ -25,6 +25,9 @@ export default {
   computed:{
     ...mapState(['articles'])
   },
+  created:function(){
+    this.search(this.$cookies.get('searchData'))
+  }
 }
 </script>
 
