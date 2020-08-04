@@ -14,7 +14,7 @@
     <!-- 댓글 수정 -->
     <input v-if="flag" type="text" v-model="commentData.content">
     <button v-if="flag" @click="updateComment">댓글 수정</button>
-    <hr>
+    <!-- <hr> -->
   </div>
 </template>
 
