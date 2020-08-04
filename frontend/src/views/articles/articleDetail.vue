@@ -56,11 +56,11 @@
               </button> -->
               <button @click="shareContent" 
               class="btn-secondary detail-share">
-              <i class="fas fa-share-alt"></i> 공유하기</button>
+              <i class="fas fa-share-alt"></i> 공유</button>
 
               <button @click="shareContent" 
               class="btn-secondary detail-join">
-              <i class="fas fa-user-plus"></i> 참여하기</button>
+              <i class="fas fa-user-plus"></i> 참여</button>
           </div>
           
         </div>
