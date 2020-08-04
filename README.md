@@ -6,7 +6,7 @@
 
 ## Team 소개
 
-#### 팀명: 욕망의 항아리 :trophy:
+#### 팀명: 욕망의 항아리(대전 2반 3팀) :trophy:
 
 > 팀장: 김영호
 >
@@ -67,7 +67,7 @@ OS: Windows, Linux (Ubuntu)
 
 #### GitLab
 
-![image-20200805011253539](../../../AppData/Roaming/Typora/typora-user-images/image-20200805011253539.png)
+![image-20200805011253539](README.assets/image-20200805011253539.png)
 
 
 
