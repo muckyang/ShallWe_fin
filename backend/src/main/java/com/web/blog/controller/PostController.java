@@ -139,8 +139,18 @@ public class PostController {
                 postDao.save(post);// 다시 DB에 넣어줌
 
                 System.out.println("참가자 등록!!");
+                
+                //태그 등록
+                String[] tags=req.getTags();//태그 내용
+                //artiId 게시물 PK
+                for (int i = 0; i < tags.length; i++) {
+                    Tag tag=new Tag();
+                    tag.setName(tags[i]);
+                    tag.setArticleId(artiId);
+                    tagDao.save(tag);
+                }
 
-                return new ResponseEntity<>("참가자 등록 및 게시물 등록", HttpStatus.OK);
+                return new ResponseEntity<>("태그 등록 및 참가자 등록 및 게시물 등록", HttpStatus.OK);
             }
             String message = "로그인을 확인하세요";
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
@@ -304,6 +314,16 @@ public class PostController {
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
                     p.getImage(), p.getTemp(), p.getEndTime());
+
+            
+            //이 게시물에 해당되는 태그는 다 보내기
+            List<Tag> tlist=tagDao.findTagByArticleId(articleId);        
+            String[] tags=new String[tlist.size()];
+            for (int i = 0; i < tags.length; i++) {
+                tags[i]=tlist.get(i).getName();
+            }
+            result.tags=tags;
+
             if (userOpt.isPresent()) {// 로그인 상태일때
 
                 Optional<Like> isILiked = likeDao.findLikeByUserIdAndArticleId(userOpt.get().getUserId(), articleId);
@@ -382,8 +402,7 @@ public class PostController {
 
             Participant participant = new Participant();
 
-            Optional<Participant> partOpt = participantDao.getParticipantByUserIdAndArticleId(userId,
-                    req.getArticleId());
+            Optional<Participant> partOpt = participantDao.getParticipantByUserIdAndArticleId(userId, req.getArticleId());
             if (partOpt.isPresent()) {// 이미 게시된 글이라면
                 participant = partOpt.get();
             }
@@ -400,6 +419,22 @@ public class PostController {
             sumPrice = sumPrice + (myPrice - old_price);// 참가자의 가격을 더해줌
             post.setSumPrice(sumPrice);
             postDao.save(post);// 다시 DB에 넣어줌
+
+            // 태그 삭제
+             List<Tag> tList = tagDao.findTagByArticleId(req.getArticleId());
+            int atsize = tList.size();
+            for (int i = 0; i < atsize; i++) {
+                Tag l = tList.get(i);
+                tagDao.delete(l);
+            }
+            // 태그 수정
+            String[] tags=req.getTags();//태그 내용
+            for (int i = 0; i < tags.length; i++) {
+                Tag tag=new Tag();
+                tag.setName(tags[i]);
+                tag.setArticleId(req.getArticleId());
+                tagDao.save(tag);
+            }
 
             System.out.println(post.getArticleId() + "번째 게시물 수정 완료 ");
             return new ResponseEntity<>("게시물 수정 완료 ", HttpStatus.OK);
