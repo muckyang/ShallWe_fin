@@ -112,7 +112,7 @@ public class AccountController {
         // 이메일, 닉네임 중복처리
         Optional<Auth> OptionalAuth = authDao.getAuthByEmailAndAuthNumber(req.getEmail(), req.getAuthNumber());
         if (OptionalAuth.isPresent()) {
-            User user = new User(req.getPassword(), req.getName(), req.getNickname(), req.getAddress(),
+            User user = new User(req.getEmail(),getPassword(), req.getName(), req.getNickname(), req.getAddress(),
                     req.getBirthday());
             userDao.save(user);
             System.out.println("가입하기 성공!");
