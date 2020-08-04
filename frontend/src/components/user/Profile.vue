@@ -31,7 +31,7 @@
           </div>
           <div class="col-7">
             <b-card bg-variant="light" text-variant="dark" >
-              <b-card-text class="mt-4">
+              <b-card-text class="mt-2">
                 <h3>나의 레벨</h3>
                 <div class="progress">
                   <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
@@ -40,16 +40,19 @@
                 <div class="container mt-4">
                   <div class="row">
                     <div class="col-4">
-                      <h5>점수</h5>
-                      <h3>100점</h3>
+                      <i class="fas fa-balance-scale" style="font-size: 40px;"></i><br>
+                      <small>신뢰점수</small>
+                      <h3>100 점</h3>
                     </div>
                     <div class="col-4">
-                      <h5>점수</h5>
-                      <h3>100점</h3>
+                      <i class="fas fa-star" style="font-size: 40px;"></i><br>
+                      <small>활동점수</small>
+                      <h3>100 점</h3>
                     </div>
                     <div class="col-4">
-                      <h5>점수</h5>
-                      <h3>100점</h3>
+                      <i class="fas fa-heart" style="font-size: 40px;"></i><br>
+                      <small>인기점수</small>
+                      <h3>100 점</h3>
                     </div>
                   </div>
                 </div>
@@ -67,17 +70,21 @@
               <b-card-text>
                 <div class="container">
                       <div class="row">
-                        <div class="col-4">
-                          <b-icon icon="camera" font-scale="4"></b-icon>
-                          <h2>100점</h2>
+                        <div class="col-3">
+                          <h2>0 개</h2>
+                          <small>내가 쓴 게시물</small>
                         </div>
-                        <div class="col-4">
-                          <b-icon icon="camera" font-scale="4"></b-icon>
-                          <h2>100점</h2>
+                        <div class="col-3">
+                          <h2>0 개</h2>
+                          <small>내가 쓴 후기</small>
                         </div>
-                        <div class="col-4">
-                          <b-icon icon="camera" font-scale="4"></b-icon>
-                          <h2>100점</h2>
+                        <div class="col-3">
+                          <h2>0 개</h2>
+                          <small>찜 목록</small>
+                        </div>
+                        <div class="col-3">
+                          <h2>0 개</h2>
+                          <small>임시 저장</small>
                         </div>
                       </div>
                     </div>
