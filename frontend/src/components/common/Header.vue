@@ -95,7 +95,7 @@
             id="article">게시글</router-link></li>
 
           <li class="nav-item pb-0">
-            <router-link to="#" 
+            <router-link to="/posts" 
             class="nav-link mainMenu pb-0" 
             id="community">자유 게시판</router-link></li>
 

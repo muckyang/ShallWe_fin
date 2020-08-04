@@ -18,6 +18,12 @@ import articleDetail from '../views/articles/articleDetail.vue'
 import articleUpdate from '../views/articles/articleUpdate.vue'
 import articleList from '../views/articles/articleList.vue'
 
+//자유게시판
+import postCreate from '../views/post/postCreate'
+import postDetail from '../views/post/postDetail'
+import postUpdate from '../views/post/postUpdate'
+import postList from '../views/post/postList'
+
 //임시저장
 import tempList from '../views/articles/tempList.vue'
 
@@ -90,6 +96,27 @@ Vue.use(VueRouter)
       name: 'tempList',
       component: tempList
     },
+    //자유게시판CRUD
+    {
+      path: '/pcreate',
+      name: 'postCreate',
+      component: postCreate
+    },
+    {
+      path: '/pupdate',
+      name: 'postDetail',
+      component: postDetail
+    },
+    {
+      path: '/pupdate',
+      name: 'postUpdate',
+      component: postUpdate
+    },
+    {
+      path: '/posts',
+      name: 'postList',
+      component: postList
+    },
     //검색
     {
       path:'/searchlist',
@@ -137,7 +164,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   //로그인 하지 않아도 되는 페이지
-  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList']
+  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList']
   //로그인 하면 안되는 페이지
   const authPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN]
   

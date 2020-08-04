@@ -70,6 +70,7 @@
             </div>
           </div>
         </div> -->
+        
       </div>
       <div v-if="categoryNum === 1" class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
         <b-container class="bv-example-row">
@@ -225,7 +226,6 @@
 </template>
 
 <script>
-const BACK_URL = "http://127.0.0.1:8080"
 import {mapState,mapActions} from 'vuex'
 
 export default {
@@ -240,7 +240,6 @@ export default {
     changeCategory(num){
       this.categoryNum = num
       this.getArticles({temp:1,categoryId:this.categoryNum})
-      console.log('바뀐 카테고리 넘버',this.categoryNum);
     }
   },
   computed:{
