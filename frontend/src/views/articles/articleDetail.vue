@@ -39,9 +39,11 @@
       <div class="middle-row">
         <img class="MyImage" :src="articleData.image" alt="...">
         <div class="articleInfo">
-          <div class="detail-address">{{articleData.address}}<br></div>
-          <div class="detail-price">{{articleData.minPrice}}원 / {{articleData.sumPrice}}원</div>
-          <div class="detail-endTime">{{articleData.endTime}}까지{{articleData.endTime}}</div>
+          <div class="detail-info">
+            <div class="detail-address">{{articleData.address}}<br></div>
+            <div class="detail-price">{{articleData.minPrice}}원 / {{articleData.sumPrice}}원</div>
+            <div class="detail-endTime">{{articleData.endTime}}까지{{articleData.endTime}}</div>
+          </div>          
           <div class="detail-btns">
             <articleLike  @like-change="likeChange" 
             :isLiked="isLiked" :article="articleData"/>
@@ -224,6 +226,9 @@ a{
   padding: 15px 40px;
   width: 65%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   /* position: relative;
   height: 100%; */
   /* /* border-bottom: 1px solid #e9ecef; */
@@ -247,15 +252,13 @@ a{
 .detail-btns{
   display: flex;
   justify-content: space-between;
-  /* position: absolute;
-  bottom: 0px; */
 }
 .detail-share{
   border: none;
   outline:none;
-  height: 41px;
+  height: 43px;
   border-radius: 3px;
-  padding: 9px 12px;
+  padding: 10px 12px;
   text-align: center;
   background: #f7e600;
   font-size: 17px;
@@ -263,9 +266,9 @@ a{
 .detail-join{
   border: none;
   outline:none;
-  height: 41px;
+  height: 43px;
   border-radius: 3px;
-  padding: 9px 12px;
+  padding: 10px 12px;
   text-align: center;
   background: #252522;
   font-size: 17px;
