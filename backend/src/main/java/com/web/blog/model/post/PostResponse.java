@@ -62,4 +62,7 @@ public class PostResponse {
      public boolean isLiked;
      @ApiModelProperty(value = "sumPrice", position = 15)
      public int sumPrice;
+     @ApiModelProperty(value = "tags", position = 16)
+     public String[] tags;
+
 }
