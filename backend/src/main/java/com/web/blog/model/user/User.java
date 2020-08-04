@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +33,7 @@ public class User {
     private String address;
     private int userPoint;
     private LocalDate birthday;
-    // 생성시간은 자동생성
+    @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;
 
     public User(String email, String password) {

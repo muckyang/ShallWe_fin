@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,6 +38,7 @@ public class Post {
     private int temp;
     // 생성시간은 자동생성
     private LocalDateTime endTime;
+    @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;
 
     public Post(int cateId, int userId, String title, String writer, String addr, String des, int minPrice,
