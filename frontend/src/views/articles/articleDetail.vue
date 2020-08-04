@@ -57,10 +57,66 @@
               <button @click="shareContent" 
               class="btn-secondary detail-share">
               <i class="fas fa-share-alt"></i> 공유</button>
+              
 
-              <button @click="shareContent" 
-              class="btn-secondary detail-join">
-              <i class="fas fa-user-plus"></i> 참여</button>
+              <!-- <b-button class="detail-join" v-b-modal.modal-1><i class="fas fa-user-plus"></i> 참여</b-button>
+
+                <b-modal id="modal-1" title="참여하기">
+                  <p class="my-4">ㅎㅇ</p>
+                </b-modal> -->
+
+              <b-button v-b-modal.modal-prevent-closing><i class="fas fa-user-plus"></i> 참여</b-button>
+
+                <b-modal
+                  id="modal-prevent-closing"
+                  ref="modal"
+                  title="참여하기"
+                  @ok="sendJoinData"
+                >
+                  <form ref="form" @submit.stop.prevent="handleSubmit">
+                    <b-form-group
+                      label="제목"
+                      label-for="title-input"
+                    >
+                      <b-form-input
+                        id="title-input"
+                        v-model="joinData.title"
+                      ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      label="url"
+                      label-for="url-input"
+                    >
+                      <b-form-input
+                        id="url-input"
+                        v-model="joinData.url"
+                      ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      label="가격"
+                      label-for="price-input"
+                    >
+                      <b-form-input
+                        id="price-input"
+                        v-model="joinData.price"
+                      ></b-form-input>원
+                    </b-form-group>
+
+                    <b-form-group
+                      label="요구사항"
+                      label-for="order-input"
+                    >
+                      <b-form-input
+                        id="order-input"
+                        v-model="joinData.order"
+                      ></b-form-input>
+                    </b-form-group>
+
+                  </form>
+                </b-modal>
+
           </div>
           
         </div>
@@ -91,6 +147,12 @@
     data () {
       return {
         isLiked:false,
+        joinData:{
+          title: '',
+          url: '',
+          price: '',
+          order: '',
+        }
       }
     },
     computed:{
@@ -99,6 +161,10 @@
     methods: {
       ...mapActions(['getArticle', 'getUserData']),
       
+      sendJoinData(){
+        console.log(this.joinData, '보내는 데이터')
+      },
+
       shareContent(){
         Kakao.Link.createDefaultButton({
         container: '#kakao-link',
