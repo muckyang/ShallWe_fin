@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-
 @Entity
 @Data
 @NoArgsConstructor
@@ -35,10 +34,26 @@ public class Post {
     private int sumPrice;
     private String urlLink;
     private String image;
-    private String billImage;
     private int temp;
-     // 생성시간은 자동생성
-    private LocalDateTime createTime;
+    // 생성시간은 자동생성
     private LocalDateTime endTime;
-    
+    private LocalDateTime createTime;
+
+    public Post(int cateId, int userId, String title, String writer, String addr, String des, int minPrice,
+            int sumPrice, String image, int temp, LocalDateTime endTime) {
+                this.categoryId = cateId;
+                this.userId = userId;
+                this.title = title;
+                this.writer = writer;
+                this.address = addr;
+                this.description = des;
+                this.minPrice = minPrice;
+                this.sumPrice = sumPrice;
+                this.image = image;
+                this.temp = temp;
+                this.endTime = endTime;
+          
+
+    }
+
 }

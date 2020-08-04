@@ -12,7 +12,7 @@ public class PostResponse {
           
      }
      public PostResponse(int articleId,int categoryId,int userId,String title,String address,
-     int minPrice,int sumPrice,String description, String writer, String urlLink,String image,String billImage,
+     int minPrice,int sumPrice,String description, String writer, String urlLink,String image,
      int temp,LocalDateTime endTime){
           super();
           this.articleId = articleId;
@@ -26,7 +26,6 @@ public class PostResponse {
           this.writer = writer;
           this.urlLink = urlLink;
           this.image = image;
-          this.billImage = billImage;
           this.temp = temp;
           this.endTime = endTime;
      }
@@ -55,14 +54,12 @@ public class PostResponse {
      public String urlLink;
      @ApiModelProperty(value = "image", position = 11)
      public String image;
-     @ApiModelProperty(value = "billImage", position =12)
-     public String billImage;
-     @ApiModelProperty(value = "likenum", position = 13)
+     @ApiModelProperty(value = "likenum", position = 12)
      public int likenum;
-     @ApiModelProperty(value = "commentnum", position = 14)
+     @ApiModelProperty(value = "commentnum", position = 13)
      public int commentnum;
-     @ApiModelProperty(value = "isLiked", position = 15)
+     @ApiModelProperty(value = "isLiked", position = 14)
      public boolean isLiked;
-     @ApiModelProperty(value = "sumPrice", position = 16)
+     @ApiModelProperty(value = "sumPrice", position = 15)
      public int sumPrice;
 }
