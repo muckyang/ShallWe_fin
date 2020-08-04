@@ -78,7 +78,7 @@ public class PostController {
     private JwtService jwtService;
 
     @PostMapping("/post/create/{temp}")
-    @ApiOperation(value = "게시글및임시글등록")
+    @ApiOperation(value = "게시글 및 임시글 등록")
     public Object create(@Valid @RequestBody PostRequest req, @PathVariable int temp)
             throws MessagingException, IOException {
         String token = req.getToken();
@@ -89,8 +89,8 @@ public class PostController {
             if (userOpt.isPresent()) {
 
                 Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
-                userOpt.get().getName(), req.getAddress(), req.getDescription(), req.getMinPrice(),
-                req.getMyPrice(), req.getImage(), req.getTemp(), req.getEndTime());
+                        userOpt.get().getName(), req.getAddress(), req.getDescription(), req.getMinPrice(),
+                        req.getMyPrice(), req.getImage(), req.getTemp(), req.getEndTime());
                 // post.setUrlLink(req.getUrlLink());
 
                 postDao.save(post);
@@ -125,10 +125,10 @@ public class PostController {
                 Participant participant = new Participant();
                 participant.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
                 participant.setArticleId(artiId);
-                System.out.println(artiId);
-                participant.setTitle("게시자 본인입니다.");
+                System.out.println(post.getTitle() + " " + artiId);
+                participant.setTitle(def_mes);
                 participant.setPrice(myPrice);
-                participant.setDescription("게시자 본인입니다.");
+                participant.setDescription(def_mes);
                 participantDao.save(participant);// 참가자 DB에 등록 완료
 
                 // 게시물 sum_price에 더하기
@@ -169,7 +169,7 @@ public class PostController {
             result.postList = new LinkedList<>();
             for (int i = 0; i < plist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
                 Post p = plist.get(i);
-                // int articleno = p.getPid();
+
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                         p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
                         p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
@@ -183,7 +183,7 @@ public class PostController {
                 plist = postDao.findPostByTemp(temp);
             else
                 plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
-            // System.out.println(plist.get(0).getTitle());
+    
             PostListResponse result = new PostListResponse();
             result.postList = new LinkedList<>();
             for (int i = 0; i < plist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
@@ -326,18 +326,28 @@ public class PostController {
 
     @PostMapping("/post/update/{temp}")
     @ApiOperation(value = "게시글 및 임시글 수정")
-    public Object update(@Valid @RequestBody PostRequest request, @PathVariable int temp) {
+    public Object update(@Valid @RequestBody PostRequest req, @PathVariable int temp) {
+        String token = req.getToken();
+        User jwtuser = jwtService.getUser(token);
+        int userId;
+        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        if (userOpt.isPresent()) {
+            userId = userOpt.get().getUserId();
+        } else {
+            return new ResponseEntity<>("로그인 상태를 확인하세요(token값 유효하지 않음)", HttpStatus.BAD_REQUEST);
+        }
+
         if (temp == 0) {
-            Post post = postDao.getPostByArticleId(request.getArticleId());
-            post.setCategoryId(request.getCategoryId());
-            post.setTitle(request.getTitle());
-            post.setAddress(request.getAddress());
-            post.setDescription(request.getDescription());
-            post.setMinPrice(request.getMinPrice());
-            post.setUrlLink(request.getUrlLink());
-            post.setImage(request.getImage());
+            Post post = postDao.getPostByArticleId(req.getArticleId());
+            post.setCategoryId(req.getCategoryId());
+            post.setTitle(req.getTitle());
+            post.setAddress(req.getAddress());
+            post.setDescription(req.getDescription());
+            post.setMinPrice(req.getMinPrice());
+            post.setUrlLink(req.getUrlLink());
+            post.setImage(req.getImage());
             post.setTemp(temp);
-            post.setEndTime(request.getEndTime());
+            post.setEndTime(req.getEndTime());
             // post.setBillImage(request.getBillImage());
 
             System.out.println(post.getArticleId());
@@ -346,63 +356,53 @@ public class PostController {
             postDao.save(post);
 
             System.out.println("임시글 수정");
-            PostResponse result = new PostResponse();
-            result.title = post.getTitle();
-            result.minPrice = post.getMinPrice();
-            // result.title = post.getAddress();
-            // result.title = post.getTitle();
-            // result.title = post.getTitle();
-            // result.title = post.getTitle();
-            result.temp = temp;
-            return new ResponseEntity<>(result, HttpStatus.OK);
+
+            return new ResponseEntity<>("임시글 수정 완료", HttpStatus.OK);
         } else if (temp == 1) {
 
-            Post post = postDao.getPostByArticleId(request.getArticleId());
+            Post post = postDao.getPostByArticleId(req.getArticleId());
 
-            post.setCategoryId(request.getCategoryId());
-            post.setTitle(request.getTitle());
-            post.setAddress(request.getAddress());
-            post.setMinPrice(request.getMinPrice());
-            post.setDescription(request.getDescription());
-            post.setUrlLink(request.getUrlLink());
-            post.setImage(request.getImage());
+            post.setCategoryId(req.getCategoryId());
+            post.setTitle(req.getTitle());
+            post.setAddress(req.getAddress());
+            post.setMinPrice(req.getMinPrice());
+            post.setDescription(req.getDescription());
+            post.setUrlLink(req.getUrlLink());
+            post.setImage(req.getImage());
             post.setTemp(temp);
-            post.setEndTime(request.getEndTime());
-
-            System.out.println(post.getArticleId());
-            System.out.println();
-
+            post.setEndTime(req.getEndTime());
             postDao.save(post);
 
             // 게시물 등록과 동시에 참가자 등록하기
-            int myPrice = request.getMyPrice();
+            int myPrice = req.getMyPrice();
             if (myPrice < 0) {
                 String message = "0원보다 값이 작습니다.";
                 return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
             }
+
             Participant participant = new Participant();
-            participant.setArticleId(request.getArticleId());
+
+            Optional<Participant> partOpt = participantDao.getParticipantByUserIdAndArticleId(userId,
+                    req.getArticleId());
+            if (partOpt.isPresent()) {// 이미 게시된 글이라면
+                participant = partOpt.get();
+            }
+
+            int old_price = participant.getPrice();// 원래 참가자의 가격정보
+
+            participant.setArticleId(req.getArticleId());
             participant.setPrice(myPrice);
             participantDao.save(participant);// 참가자 DB에 등록 완료
 
             // 게시물 sum_price에 더하기
-            post = postDao.getPostByArticleId(request.getArticleId());// 해당 구매게시물을 얻어옴
+            post = postDao.getPostByArticleId(req.getArticleId());// 해당 구매게시물을 얻어옴
             int sumPrice = post.getSumPrice();// sumPrice를 얻어옴
-            sumPrice = sumPrice + myPrice;// 참가자의 가격을 더해줌
+            sumPrice = sumPrice + (myPrice - old_price);// 참가자의 가격을 더해줌
             post.setSumPrice(sumPrice);
             postDao.save(post);// 다시 DB에 넣어줌
 
-            System.out.println("게시물 수정");
-            PostResponse result = new PostResponse();
-            result.title = post.getTitle();
-            result.minPrice = post.getMinPrice();
-            // result.title = post.getAddress();
-            // result.title = post.getTitle();
-            // result.title = post.getTitle();
-            // result.title = post.getTitle();
-
-            result.temp = temp;
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            System.out.println(post.getArticleId() + "번째 게시물 수정 완료 ");
+            return new ResponseEntity<>("게시물 수정 완료 ", HttpStatus.OK);
         } else if (temp == 2) { // 자유게시판
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         } else {

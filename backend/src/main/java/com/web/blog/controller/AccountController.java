@@ -33,6 +33,7 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.context.Context;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = UserResponse.class),
@@ -54,6 +55,26 @@ public class AccountController {
     private SpringTemplateEngine TemplateEngine;
     @Autowired
     private JwtService jwtService;
+
+    @RequestMapping("/account/kakaologin")
+    @ApiOperation(value = "카카오 로그인") // SWAGGER UI에 보이는 이름
+    public Object kakaoLogin(@RequestBody LoginRequest req) {
+     
+        String email = req.getEmail();
+        String password = req.getPassword();
+        Optional<User> userOpt = userDao.findUserByEmailAndPassword(email, password);
+
+        if (userOpt.isPresent()) {
+            System.out.println("로그인 성공  : " + email);
+            User user = new User(email, password);
+            String token = jwtService.createLoginToken(user);
+            return new ResponseEntity<>(token, HttpStatus.OK);
+        } else {
+            System.out.println("로그인 실패");
+            return new ResponseEntity<>("로그인 실패 ", HttpStatus.NOT_FOUND);
+        }
+
+    }
 
     @PostMapping("/account/login") // SWAGGER UI에 보이는 REQUEST명
     @ApiOperation(value = "로그인") // SWAGGER UI에 보이는 이름
@@ -145,7 +166,7 @@ public class AccountController {
     public Object update(@Valid @RequestBody SignupRequest req) {
         String token = req.getToken();
 
-        // 복호화
+        // 복호화' ;
         User jwtuser = jwtService.getUser(token);
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
         String message = "";
