@@ -6,5 +6,7 @@ public class TagResponse {
     @ApiModelProperty(value = "tagId", position = 1)
     public int tagId;
     @ApiModelProperty(value = "name", position = 2)
-    public int name;
+    public String name;
+    @ApiModelProperty(value = "name", position = 3)
+    public int articleId;
 }

@@ -21,6 +21,6 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int tagId;
-    
     String name;
+    int articleId;
 }

@@ -43,7 +43,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiOperation;
 
-import com.web.blog.model.article_tag.ArticleTag;
 import com.web.blog.model.comment.Comment;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = PostResponse.class),
@@ -260,20 +259,31 @@ public class PostController {
             }
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else if (subject.equals("tag")) {
-            Optional<Tag> tag = tagDao.findTagByName(word);// 해당 태그의 tagId가져옴
-            int tId = tag.get().getTagId();
-
-            List<ArticleTag> atlist = articleTagDao.findArticleTagByTagId(tId);// 해당 tagId의 articleId들 가져옴
+            List<Tag> taglist = tagDao.findTagByName(word);// 해당 태그의 tagId가져옴
             PostListResponse result = new PostListResponse();
             result.postList = new LinkedList<>();
-            for (int i = 0; i < atlist.size(); i++) {
-                int aId = atlist.get(i).getArticleId();
+            for (int i = 0; i < taglist.size(); i++) {
+                int aId = taglist.get(i).getArticleId();
                 Optional<Post> article = postDao.findPostByArticleIdAndTempAndCategoryId(aId, temp, categoryId);
                 Post p = article.get();
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                         p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
                         p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
             }
+
+            // int tId = tag.get().getTagId();
+
+            // List<ArticleTag> atlist = articleTagDao.findArticleTagByTagId(tId);// 해당 tagId의 articleId들 가져옴
+            // PostListResponse result = new PostListResponse();
+            // result.postList = new LinkedList<>();
+            // for (int i = 0; i < atlist.size(); i++) {
+            //     int aId = atlist.get(i).getArticleId();
+            //     Optional<Post> article = postDao.findPostByArticleIdAndTempAndCategoryId(aId, temp, categoryId);
+            //     Post p = article.get();
+            //     result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
+            //             p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
+            //             p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
+            // }
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -420,11 +430,11 @@ public class PostController {
             likeDao.delete(l);
         }
         // 태그 삭제
-        List<ArticleTag> atList = articleTagDao.findArticleTagByArticleId(articleId);
-        int atsize = atList.size();
+        List<Tag> tList = tagDao.findTagByArticleId(articleId);
+        int atsize = tList.size();
         for (int i = 0; i < atsize; i++) {
-            ArticleTag l = atList.get(i);
-            articleTagDao.delete(l);
+            Tag l = tList.get(i);
+            tagDao.delete(l);
         }
 
         postDao.delete(post);
