@@ -3,75 +3,89 @@
       <!-- 1. 상단 -->
       <div class="mb-4 container">
         <div class="row">
-          <b-card no-body class="overflow-hidden col-6">
-            <b-row no-gutters>
-              <b-col>
-                <b-card-img src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0"></b-card-img>
-              </b-col>
-              <b-col>
-                <b-card-body title="내 정보">
-                  <b-card-text>
-                    <h6 class="mt-0">이메일: {{ userData.email }}</h6>
-                    <h6 class="mt-0">이름: {{ userData.name }}</h6>
-                    <h6 class="mt-0">닉네임: {{ userData.nickname }}</h6>
-                    <h6 class="mt-0">생일: {{ userData.birthday }}</h6>
-                    <h6 class="mt-0">지역: {{ userData.address }}</h6>
-                    <h6>자기소개</h6>
-                    <div style="height: 50px; border: solid black 1px"></div>
-                  </b-card-text>
-                </b-card-body>
-              </b-col>
-            </b-row>
-          </b-card>
-          <b-card bg-variant="light" text-variant="dark" class="col-6">
-            <b-card-text class="mt-4">
-              <h3>나의 레벨</h3>
-              <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <p>{{ userData.userPoint }} Point</p>
-              <div class="container mt-5">
-                <div class="row">
-                  <div class="col-4">
-                    <h5>점수</h5>
-                    <h2>100점</h2>
-                  </div>
-                  <div class="col-4">
-                    <h5>점수</h5>
-                    <h2>100점</h2>
-                  </div>
-                  <div class="col-4">
-                    <h5>점수</h5>
-                    <h2>100점</h2>
+          <div class="col-5">
+            <b-card no-body class="overflow-hidden">
+              <b-row no-gutters>
+                <b-col>
+                  <b-card-img height="50%" src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0 mt-3" style="width: 50%;"></b-card-img>
+                  <hr style="width: 70%" class="mb-1">
+                  <h5>{{ userData.name }} 님의 프로필</h5>
+                  <h6 class="mt-0" style="font-size: 70%;">{{ userData.email }}</h6>
+                </b-col>
+                <b-col style="border-left: solid 1px lightgray">
+                  <b-card-body>
+                    <b-card-text>
+                      <div class="text-left">
+                        <h6 class="mt-0">닉네임: {{ userData.nickname }}</h6>
+                        <h6 class="mt-0">생일: {{ userData.birthday }}</h6>
+                        <h6 class="mt-0">지역: {{ userData.address }}</h6>
+                        <hr style="width: 90%">
+                        <h6>자기소개</h6>
+                        <div style="border: solid 1px lightgray; height: 70px;"></div>
+                      </div>
+                    </b-card-text>
+                  </b-card-body>
+                </b-col>
+              </b-row>
+            </b-card>
+          </div>
+          <div class="col-7">
+            <b-card bg-variant="light" text-variant="dark" >
+              <b-card-text class="mt-4">
+                <h3>나의 레벨</h3>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>{{ userData.userPoint }} Point</p>
+                <div class="container mt-4">
+                  <div class="row">
+                    <div class="col-4">
+                      <h5>점수</h5>
+                      <h3>100점</h3>
+                    </div>
+                    <div class="col-4">
+                      <h5>점수</h5>
+                      <h3>100점</h3>
+                    </div>
+                    <div class="col-4">
+                      <h5>점수</h5>
+                      <h3>100점</h3>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </b-card-text>
-          </b-card>
+              </b-card-text>
+            </b-card>
+          </div>
         </div>
       </div>
 
       <!-- 2. 중단 -->
-      <b-card bg-variant="light" text-variant="dark" class="mb-4">
-        <b-card-text>
-          <div class="container">
-                <div class="row">
-                  <div class="col-4">
-                    <b-icon icon="camera" font-scale="4"></b-icon>
-                    <h2>100점</h2>
-                  </div>
-                  <div class="col-4">
-                    <b-icon icon="camera" font-scale="4"></b-icon>
-                    <h2>100점</h2>
-                  </div>
-                  <div class="col-4">
-                    <b-icon icon="camera" font-scale="4"></b-icon>
-                    <h2>100점</h2>
-                  </div>
-                </div>
-              </div>
-        </b-card-text>
-      </b-card>
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <b-card bg-variant="light" text-variant="dark" class="mb-4">
+              <b-card-text>
+                <div class="container">
+                      <div class="row">
+                        <div class="col-4">
+                          <b-icon icon="camera" font-scale="4"></b-icon>
+                          <h2>100점</h2>
+                        </div>
+                        <div class="col-4">
+                          <b-icon icon="camera" font-scale="4"></b-icon>
+                          <h2>100점</h2>
+                        </div>
+                        <div class="col-4">
+                          <b-icon icon="camera" font-scale="4"></b-icon>
+                          <h2>100점</h2>
+                        </div>
+                      </div>
+                    </div>
+              </b-card-text>
+            </b-card>
+          </div>
+        </div>
+      </div>
 
       <!-- 3. 하단 -->
       <div class="container">
@@ -100,10 +114,11 @@
               </div>
           </div>
         </div>
-        <div class="mt-5 mb-5">
-            <button class="btn btn-danger mr-1" @click="deleteUser">회원 탈퇴 하기</button>
-            <router-link class="btn btn-info ml-1" v-bind:to="{name:constants.URL_TYPE.USER.EDIT}">회원 정보 수정하기</router-link>
-        </div>
+    </div>
+    <hr>
+    <div class="mb-5">
+        <button class="btn btn-danger mr-1" @click="deleteUser">회원 탈퇴 하기</button>
+        <router-link class="btn btn-info ml-1" v-bind:to="{name:constants.URL_TYPE.USER.EDIT}">회원 정보 수정하기</router-link>
     </div>
   </div>
 </template>
