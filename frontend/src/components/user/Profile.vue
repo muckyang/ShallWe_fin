@@ -52,9 +52,24 @@
       </div>
 
       <!-- 2. 중단 -->
-      <b-card bg-variant="light" text-variant="dark" title="Card Title" class="mb-4">
+      <b-card bg-variant="light" text-variant="dark" class="mb-4">
         <b-card-text>
-          With supporting text below as a natural lead-in to additional content.
+          <div class="container">
+                <div class="row">
+                  <div class="col-4">
+                    <b-icon icon="camera" font-scale="4"></b-icon>
+                    <h2>100점</h2>
+                  </div>
+                  <div class="col-4">
+                    <b-icon icon="camera" font-scale="4"></b-icon>
+                    <h2>100점</h2>
+                  </div>
+                  <div class="col-4">
+                    <b-icon icon="camera" font-scale="4"></b-icon>
+                    <h2>100점</h2>
+                  </div>
+                </div>
+              </div>
         </b-card-text>
       </b-card>
 
@@ -142,14 +157,17 @@ export default {
         height: 500px;
     }
     #v-pills-2 {
+        border: solid lightgray 1px;
         border-radius: 1%;
         height: 500px;
     }
     #v-pills-3 {
+        border: solid lightgray 1px;
         border-radius: 1%;
         height: 500px;
     }
     #v-pills-4 {
+        border: solid lightgray 1px;
         border-radius: 1%;
         height: 500px;
     }
