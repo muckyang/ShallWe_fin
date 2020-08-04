@@ -89,9 +89,9 @@ public class PostController {
             Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
             if (userOpt.isPresent()) {
 
-                Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), userOpt.get().getName(),
-                        req.getTitle(), req.getAddress(), req.getDescription(), req.getMinPrice(), req.getMyPrice(),
-                        req.getImage(), req.getTemp(), req.getEndTime());
+                Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
+                userOpt.get().getName(), req.getAddress(), req.getDescription(), req.getMinPrice(),
+                req.getMyPrice(), req.getImage(), req.getTemp(), req.getEndTime());
                 // post.setUrlLink(req.getUrlLink());
 
                 postDao.save(post);
@@ -108,11 +108,12 @@ public class PostController {
 
             if (userOpt.isPresent()) {
 
-                Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), userOpt.get().getName(),
-                        req.getTitle(), req.getAddress(), req.getDescription(), req.getMinPrice(), req.getMyPrice(),
-                        req.getImage(), req.getTemp(), req.getEndTime());
+                Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
+                        userOpt.get().getName(), req.getAddress(), req.getDescription(), req.getMinPrice(),
+                        req.getMyPrice(), req.getImage(), req.getTemp(), req.getEndTime());
 
                 postDao.save(post);
+                int artiId = post.getArticleId();
                 System.out.println("게시물 등록!!");
 
                 // 게시물 등록과 동시에 참가자 등록하기
@@ -121,10 +122,11 @@ public class PostController {
                     String message = "0원보다 값이 작습니다.";
                     return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
                 }
-                String def_mes="게시자 본인입니다.";
+                String def_mes = "게시자 본인입니다.";
                 Participant participant = new Participant();
                 participant.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
-                participant.setArticleId(req.getArticleId());
+                participant.setArticleId(artiId);
+                System.out.println(artiId);
                 participant.setTitle("게시자 본인입니다.");
                 participant.setPrice(myPrice);
                 participant.setDescription("게시자 본인입니다.");
