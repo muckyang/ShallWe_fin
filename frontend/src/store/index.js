@@ -205,10 +205,10 @@ export default new Vuex.Store({
     //게시글 관리
     //전체 조회, 임시저장글 조회
     getArticles({state,commit},data){
+      console.log("asdasdasdasdasdasdas")
       const auth={token:state.authToken}
       axios.post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}`,auth)
         .then((response) => {
-          console.log(response.data.postList,"AAAAAAAAAAA")
           commit('GET_ARTICLES',response.data.postList)
         })
         .catch((err) => {
@@ -245,11 +245,15 @@ export default new Vuex.Store({
       })
     },
     //게시글 삭제하기
-    deleteArticle({state},articleId){
+    deleteArticle({state,dispatch},article){
       const auth={token:state.authToken}
-      axios.get(`${BACK_URL}/post/delete/${articleId}`,auth)
+      axios.get(`${BACK_URL}/post/delete/${article.id}`,auth)
        .then(()=>{
+         if(article.temp===1){
           router.push('/article')
+         }else{
+          dispatch('getArticles',{temp:0,categoryId:0})
+         }
        })
        .catch((err)=>{
          console.log(err)
