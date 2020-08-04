@@ -8,15 +8,15 @@
           </div>
           <div class="form-group mb-5 w-75 mx-auto">
             <p class="align-self-center m-1 text-left">Title</p>
-            <input id="title" type="text" class="form-control form-control-lg" v-model="articleData.title"/>
+            <input id="title" type="text" class="form-control form-control-lg" v-model="articleUpdateData.title"/>
           </div>
           <div class="form-group w-75 mb-5 mx-auto">
             <p class="align-self-center m-1 text-left">minPrice</p>
-            <input id="minPrice" type="number" class="form-control form-control-lg" placeholder="가격을 입력해 주세요." v-model="articleData.minPrice"/>
+            <input id="minPrice" type="number" class="form-control form-control-lg" placeholder="가격을 입력해 주세요." v-model="articleUpdateData.minPrice"/>
           </div>
           <div class="form-group w-75 mx-auto">
             <p class="align-self-center m-1 text-left">Description</p>
-            <textarea placeholder="내용을 입력해 주세요." class="form-control form-control-lg" v-model="articleData.description" id="content" cols="30" rows="10"></textarea>
+            <textarea placeholder="내용을 입력해 주세요." class="form-control form-control-lg" v-model="articleUpdateData.description" id="content" cols="30" rows="10"></textarea>
           </div>
       </div>
     </div>
@@ -34,26 +34,15 @@ export default {
     name:'articleUpdate',
     data () {
       return {
-        articleUpdateData: {
-          articleId: this.$route.params.ID,
-          categoryId:null,
-          title: null,
-          address:null,
-          description:null,
-          minPrice:null,
-          urlLink:null,
-          image:null,
-          endTime:null,
-          token:this.$cookies.get('auth-token')
-        },
+        articleUpdateData: {},
       }
     },
     methods: {
         ...mapActions(['getArticle','deleteArticle','updateArticle']),
     },
     created: function(){
-        this.getArticle(this.$route.params.ID)
-        this.articleUpdateData=this.articleData
+      this.getArticle(this.$route.params.ID)
+      this.articleUpdateData=this.articleData
     },
     computed:{
       ...mapState(['articleData'])
