@@ -6,12 +6,12 @@
         <!-- 로그인 X -->
         <li class="nav-item mr-1"><a v-if="!isLoggedin" 
         v-bind:to="{name:constants.URL_TYPE.USER.LOGIN}" class="nav-link navbar1-item loginBtn" 
-        data-toggle="modal" data-target="#exampleModal">로그인</a></li>
+        data-toggle="modal" data-target="#Login">로그인</a></li>
 
         <div class="wall" v-show="!isLoggedin">|</div>
 
         <!--modal-->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
