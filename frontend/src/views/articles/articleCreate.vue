@@ -10,9 +10,9 @@
                 {{ selectedTBG }}
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" @click="selectT1">쉘위택배</a>
-                <a class="dropdown-item" href="#" @click="selectB2">쉘위배달</a>
-                <a class="dropdown-item" href="#" @click="selectG3">쉘위공구</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(1)">쉘위배달</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(2)">쉘위택배</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(3)">쉘위공구</a>
               </div>
             </div>
             <b-form-input type="text" v-model="articleData.title"></b-form-input>
@@ -27,7 +27,7 @@
         <tr>
           <th scope="row">시작금액/전체금액</th>
           <td class="d-flex">
-            <b-form-input type="number" v-model="articleData.title"></b-form-input>
+            <b-form-input type="number" v-model="articleData.sumPrice"></b-form-input>
             <b-form-input type="number" v-model="articleData.minPrice"></b-form-input>
           </td>
         </tr>
@@ -46,8 +46,8 @@
         <tr>
           <th scope="row">종료일자/종료시간</th>
           <td class="d-flex">
-            <b-form-input type="date" v-model="articleData.title"></b-form-input>
-            <b-form-input type="time" v-model="articleData.title"></b-form-input>
+            <b-form-input type="date" v-model="articleData.endDate"></b-form-input>
+            <b-form-input type="time" v-model="articleData.endTime"></b-form-input>
           </td>
         </tr>
         <tr>
@@ -81,7 +81,7 @@
 <script>
   const BACK_URL = 'http://127.0.0.1:8080'
   import axios from 'axios'
-    import {mapActions} from 'vuex'
+  import {mapActions} from 'vuex'
 
 
   export default {
@@ -89,7 +89,7 @@
     data() {
       return {
         articleData: {
-          categoryId : 1,
+          categoryId : '카테고리',
           title: null,
           address: null,
           description: null,
@@ -97,31 +97,28 @@
           sumPrice: null,
           urlLink: null,
           imgae: null,
+          endDate:null,
+          endTime:null,
           token:this.$cookies.get('auth-token')
         },
         imageUrl: null, //다시 검토
-        selectedTBG: '카테고리',
         value: [],
+        selectedTBG:'카테고리'
       };
     },
     methods: {
       ...mapActions(['createArticle','tempSaveArticle']),
-      selectT1 () {
-        this.articleData.categoryId = 1
-        this.selectedTBG = '쉘위택배'
-        console.log(this.articleData.categoryId)
+      selectCategory(num){
+        this.articleData.categoryId=num
+        if(num===1){
+          this.selectedTBG='쉘위배달'
+        }else if(num===2){
+          this.selectedTBG='쉘위택배'
+        }else{
+          this.selectedTBG='쉘위공구'
+        }
       },
-      selectB2 () {
-        this.articleData.categoryId = 2
-        this.selectedTBG = '쉘위배달'
-        console.log(this.articleData.categoryId)
-      },
-      selectG3 () {
-        this.articleData.categoryId = 3
-        this.selectedTBG = '쉘위공구'
-        console.log(this.articleData.categoryId)
-      },
-        imageChange(e){
+      imageChange(e){
         const selectedImage = e.target.files[0]
         this.createBase64Image(selectedImage);
       },
@@ -132,7 +129,6 @@
           this.articleData.image = e.target.result;
         };
         reader.readAsDataURL(fileObject);
-      
       },
       imageUpload(){
         this.$refs.imageInput.click()

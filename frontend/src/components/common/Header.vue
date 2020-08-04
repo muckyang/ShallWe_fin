@@ -28,7 +28,7 @@
                             <input 
                             class="col-6"
                             v-model="loginData.email"
-                            id="id" 
+                            id="email" 
                             placeholder="아이디를 입력해주세요"
                             type="text"/>
                         </div>
