@@ -1,23 +1,23 @@
 <template>
-  <div class="mt-4">
+  <div class="comments-box mt-4">
     <div class="comment-start">
-      <i class="far fa-comment-dots"></i> 댓글 {{comments.length}}개
+      <i class="far fa-comment-dots"></i> 댓글 {{comments.length}}
     </div>    
-    <hr class="comment-start-line">
+    <!-- <hr class="comment-start-line"> -->
 
     <!--댓글 보여주는 공간-->
     <commentListItem v-for="comment in comments" 
-    :key="comment.comment_id" :comment="comment" 
-    @re-render="getComments" :user="comment.writer"/>
+    :key="comment.commentId" :comment="comment" 
+    @re-render="getComments" :user="comment.userId"/>
 
     <!--댓글 등록 공간-->
     <div class="comment-write">
       <div class="comment-text">
-        <input class="comment-text" placeholder="댓글을 남겨보세요 :)" 
-      type="text" v-model="commentData.content" @keypress.enter="createComment">
+        <input class="comment-input" placeholder="댓글을 남겨보세요 :)" 
+          type="text" v-model="commentData.content">
       </div>
-      <div class="comment-btn">
-        <button type="button" class="comment-btn" @click="createComment">등록</button>
+      <div class="comment-submit">
+        <button type="button" class="comment-submit-btn" @click="createComment">등록</button>
       </div> 
     </div>
   </div>
@@ -68,40 +68,56 @@ export default {
   },
   created(){
     this.getComments()
+    
   },
 }
 </script>
 
 <style>
+.comments-box{
+  /* border: 1px solid red; */
+  width: 75%;
+  margin: auto;
+}
 .comment-start{
-  padding: 0% 13%;
+  width: 100%;
+  padding: 0 0 0.5% 0.5%;
   text-align: left;
+  border-bottom: 0.5px solid rgb(218, 215, 215);
+  margin: 0 0 2% 0;
 }
 .comment-start-line{
-  width: 75%;
+  width: 85%;
 }
 .comment-write{
   border:2px solid rgba(0,0,0,0.1);
   border-radius: 6px;
-  width: 75%;
-  margin: 0 auto;
+  width: 100%;
+  margin: 5% auto;
   padding: 16px 10px 10px 18px;
   display: flex;
   flex-direction: column;
 }
-.comment-btn{
+.comment-submit{
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 4px 3px 0; 
+}
+.comment-submit-btn{
   font-weight: bold;
   border: none;
   outline: none;
   background-color: transparent;
   color: grey;
-  display: flex;
-  justify-content: flex-end;
 }
 .comment-text{
+  /* border: none;
+  outline: none; */
+  display: block;
+}
+.comment-input{
   border: none;
   outline: none;
-  display: block;
-  
+  width: 100%;
 }
 </style>

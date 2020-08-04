@@ -1,7 +1,7 @@
 <template>
   <div class="like-content">
-    <button v-if="!isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart"></i> 찜하기</button>
-    <button v-if="isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart-broken"></i> 찜하기 취소</button>
+    <button v-if="!isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart"></i> 찜</button>
+    <button v-if="isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart-broken"></i> 찜 취소</button>
   </div>
 </template>
 
