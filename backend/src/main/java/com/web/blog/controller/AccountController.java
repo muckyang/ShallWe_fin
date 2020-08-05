@@ -17,6 +17,7 @@ import com.web.blog.model.user.SignupRequest;
 import com.web.blog.model.user.TokenRequest;
 import com.web.blog.model.user.User;
 import com.web.blog.service.JwtService;
+import com.web.blog.service.KakaoService;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,6 +35,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.context.Context;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = UserResponse.class),
@@ -55,25 +57,16 @@ public class AccountController {
     private SpringTemplateEngine TemplateEngine;
     @Autowired
     private JwtService jwtService;
-
-    @RequestMapping("/account/kakaologin")
+    @Autowired
+    KakaoService kakao;
+    @RequestMapping("/account/kakaoLogin")
     @ApiOperation(value = "카카오 로그인") // SWAGGER UI에 보이는 이름
-    public Object kakaoLogin(@RequestBody LoginRequest req) {
-     
-        String email = req.getEmail();
-        String password = req.getPassword();
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(email, password);
-
-        if (userOpt.isPresent()) {
-            System.out.println("로그인 성공  : " + email);
-            User user = new User(email, password);
-            String token = jwtService.createLoginToken(user);
-            return new ResponseEntity<>(token, HttpStatus.OK);
-        } else {
-            System.out.println("로그인 실패");
-            return new ResponseEntity<>("로그인 실패 ", HttpStatus.NOT_FOUND);
-        }
-
+    public Object kakaoLogin(@RequestParam("code") String code) {
+        String access_Token = kakao.getAccessToken(code);
+        System.out.println("controller access_token : " + access_Token);
+   
+        System.out.println("카카오 로그인 체크 : " + code);
+        return new ResponseEntity<>(code, HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/account/login") // SWAGGER UI에 보이는 REQUEST명
