@@ -16,14 +16,17 @@
             <b-col cols="4"
             v-for="article in articles" 
             :key="article.articleId">
-            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}">
-                <b-card class="article-card m-4" align="left" img-width="100%" 
+            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
+                <b-card class="article-card m-4 _container" align="left" img-width="100%" 
                img-height="60%" :img-src="article.image"
                img-alt="Image" img-top>
+                <div class="_overlay">
+                  <div class="_text d-flex justify-content-center align-items-center" style="border: solid 3px white; height: 40px; width: 120px"><h4 class="text-center">Shall we?</h4></div>
+                </div>
                   <b-card-text>
                      <h5 class="article-title">{{ article.title }}</h5>
-                     <h6 class="article-area">지역: 대전</h6>
-                     <h6 class="article-price">가격: 50000원/20000원</h6>
+                     <h6 class="article-area">{{ article.address }}</h6>
+                     <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                   </b-card-text>
                   <template v-slot:footer>
                      <div class="d-flex justify-content-between">
@@ -36,41 +39,9 @@
                   </template>
                </b-card>
             </router-link>
-                <!-- <b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-                  <b-card-text>
-                      <h5>제목입니다.</h5>
-                      <h6>대전</h6>
-                      <h6>10000원/20000원</h6>
-                  </b-card-text>
-                  <template v-slot:footer>
-                      <div class="d-flex justify-content-between">
-                        <small>
-                            <b-icon-heart></b-icon-heart> 0개
-                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-                        </small>
-                        <small class="text-muted">10분 전</small>
-                      </div>
-                  </template>
-                </b-card> -->
             </b-col>
           </b-row>
         </b-container>        
-        
-        <!-- <div class="container">
-          <div class="row">
-            <div class="card col-3" style="width: 18rem;" 
-            v-for="article in articles" 
-            :key="article.articleId">
-              <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}">
-                <img :src="article.image" class="card-img-top" alt="..."></router-link>
-              <div class="card-body">
-                <h5 class="card-title">{{ article.title }}</h5>
-                <p class="card-text">{{ article.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div> -->
-        
       </div>
       <div v-if="categoryNum === 1" class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
         <b-container class="bv-example-row">
@@ -78,15 +49,25 @@
             <b-col cols="4"
             v-for="article in articles" 
             :key="article.articleId">
-            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}">
-                <b-card class="article-card m-4" align="left" img-width="100%" 
-               img-height="60%" :img-src="article.image"
+            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
+                <b-card class="article-card m-4 mycard" align="left" img-width="100%" 
+               img-height="60%" 
                img-alt="Image" img-top>
-                  <b-card-text>
-                     <h5 class="article-title">{{ article.title }}</h5>
-                     <h6 class="article-area">지역: 대전</h6>
-                     <h6 class="article-price">가격: 50000원/20000원</h6>
-                  </b-card-text>
+              <div class="image">
+                <img :src="article.image" style="height: 100%;">
+              </div>
+                <div class="details">
+                  <div class="center">
+                    <h1>{{ article.title }}<br><span>{{ article.address }}</span></h1>
+                    <p>가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</p>
+                    <ul>
+                      <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                      <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                      <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                      <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
                   <template v-slot:footer>
                      <div class="d-flex justify-content-between">
                         <small>
@@ -98,22 +79,6 @@
                   </template>
                </b-card>
             </router-link>
-                <!-- <b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-                  <b-card-text>
-                      <h5>제목입니다.</h5>
-                      <h6>대전</h6>
-                      <h6>10000원/20000원</h6>
-                  </b-card-text>
-                  <template v-slot:footer>
-                      <div class="d-flex justify-content-between">
-                        <small>
-                            <b-icon-heart></b-icon-heart> 0개
-                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-                        </small>
-                        <small class="text-muted">10분 전</small>
-                      </div>
-                  </template>
-                </b-card> -->
             </b-col>
           </b-row>
         </b-container>  
@@ -124,14 +89,14 @@
             <b-col cols="4"
             v-for="article in articles" 
             :key="article.articleId">
-            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}">
+            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
                 <b-card class="article-card m-4" align="left" img-width="100%" 
                img-height="60%" :img-src="article.image"
                img-alt="Image" img-top>
                   <b-card-text>
                      <h5 class="article-title">{{ article.title }}</h5>
-                     <h6 class="article-area">지역: 대전</h6>
-                     <h6 class="article-price">가격: 50000원/20000원</h6>
+                     <h6 class="article-area">{{ article.address }}</h6>
+                     <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                   </b-card-text>
                   <template v-slot:footer>
                      <div class="d-flex justify-content-between">
@@ -144,51 +109,26 @@
                   </template>
                </b-card>
             </router-link>
-                <!-- <b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-                  <b-card-text>
-                      <h5>제목입니다.</h5>
-                      <h6>대전</h6>
-                      <h6>10000원/20000원</h6>
-                  </b-card-text>
-                  <template v-slot:footer>
-                      <div class="d-flex justify-content-between">
-                        <small>
-                            <b-icon-heart></b-icon-heart> 0개
-                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-                        </small>
-                        <small class="text-muted">10분 전</small>
-                      </div>
-                  </template>
-                </b-card> -->
+             
             </b-col>
           </b-row>
         </b-container>  
       </div>
       <div v-if="categoryNum === 3" class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-        <!-- <div class="container">
-          <div class="row">
-            <div class="card col-3" style="width: 18rem;" v-for="article in articles" :key="article.articleId">
-              <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}"><img :src="article.image" class="card-img-top" alt="..."></router-link>
-              <div class="card-body">
-                <h5 class="card-title">{{ article.title }}</h5>
-                <p class="card-text">{{ article.description }}</p>
-              </div>
-            </div>
-          </div>
-        </div> -->
+       
         <b-container class="bv-example-row">
           <b-row align-h="start">
             <b-col cols="4"
             v-for="article in articles" 
             :key="article.articleId">
-            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}">
+            <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
                 <b-card class="article-card m-4" align="left" img-width="100%" 
                img-height="60%" :img-src="article.image"
                img-alt="Image" img-top>
                   <b-card-text>
-                     <h5 class="article-title">{{ article.title }}</h5>
-                     <h6 class="article-area">지역: 대전</h6>
-                     <h6 class="article-price">가격: 50000원/20000원</h6>
+                    <h5 class="article-title">{{ article.title }}</h5>
+                     <h6 class="article-area">{{ article.address }}</h6>
+                     <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                   </b-card-text>
                   <template v-slot:footer>
                      <div class="d-flex justify-content-between">
@@ -201,22 +141,6 @@
                   </template>
                </b-card>
             </router-link>
-                <!-- <b-card align="left" img-width="100%" img-height="69%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-                  <b-card-text>
-                      <h5>제목입니다.</h5>
-                      <h6>대전</h6>
-                      <h6>10000원/20000원</h6>
-                  </b-card-text>
-                  <template v-slot:footer>
-                      <div class="d-flex justify-content-between">
-                        <small>
-                            <b-icon-heart></b-icon-heart> 0개
-                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-                        </small>
-                        <small class="text-muted">10분 전</small>
-                      </div>
-                  </template>
-                </b-card> -->
             </b-col>
           </b-row>
         </b-container>
@@ -268,5 +192,112 @@ export default {
 }
 .article-card {
   height: 400px;
+}
+._overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: lightgray;
+}
+._container:hover ._overlay {
+  opacity: 0.8;
+  box-shadow: 5px 5px 5px lightgray;
+}
+._text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+
+
+
+.mycard {
+  
+}
+.mycard .image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.mycard .image img {
+    width: 100%;
+    transition: .5s;
+}
+.mycard:hover .image img {
+    opacity: .5;
+    transform: translateX(30%);
+}
+.mycard .details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70%;/*100%*/
+    height: 100%;
+    background: lightgray;
+    transition: .5s;
+    transform-origin: left;
+    transform: perspective(2000px) rotateY(-90deg);
+}
+.mycard:hover .details {
+    transform: perspective(2000px) rotateY(0deg);
+}
+.mycard .details .center {
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.mycard .details .center h1 {
+    margin: 0;
+    padding: 0;
+    color: #ff3636;
+    line-height: 20px;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.mycard .details .center h1 span {
+    font-size: 14px;
+}
+.mycard .details .center p {
+    margin: 10px 0;
+    padding: 0;
+}
+.mycard .details .center ul {
+    margin: 10px auto 0;
+    padding: 0;
+    display: table;
+}
+.mycard .details .center ul li {
+    list-style: none;
+    margin: 0 5px;
+    float: left;
+}
+.mycard .details .center ul li a {
+    display: block;
+    background: #262626;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    transform: .5s;
+}
+.mycard .details .center ul li a:hover {
+    background: #ff3636;
 }
 </style>
