@@ -44,7 +44,7 @@
                           class="login-pw"
                           v-model="loginData.password" type="password"
                           id="password"
-                          placeholder="비밀번호"
+                          :placeholder="pw"
                           @keypress.enter="login"/>
                       </div>
                   </div>
@@ -56,13 +56,21 @@
                   <button type="submit" class="submit-btn" 
                   @click="login(loginData)" data-dismiss="modal">로그인</button>
 
-                  <button class="kakao-btn">카카오 로그인</button>
+                  <button class="kakao-btn">
+                    <img src="../../assets/img/kakao_btn.png" class="kakao">
+                    카카오톡으로 로그인</button>
                 </div>
               </div>
 
-              <div class="modal-footer">
-                계정이 없으신가요? 
-                  <router-link v-bind:to="{name:constants.URL_TYPE.USER.JOIN}" class="btn btn-secondary" data-dismiss="modal">가입하기</router-link>
+              <div class="modal-footer d-flex justify-content-center">
+                <div class="signup d-flex justify-content-between">
+                  <span>계정이 없으신가요? </span>
+                <span class="click">
+                    <router-link v-bind:to="{name:constants.URL_TYPE.USER.JOIN}" 
+                    class="goJoin" data-dismiss="modal"> 가입하기</router-link>
+                </span>  
+                </div>
+                          
               </div>
 
             </div>
@@ -171,8 +179,8 @@ export default {
   props: ["isHeader"],
   data: function() {
     return {
-      email:'\uf0e0',
-      pw: '&#xf084;',
+      email:'\uf0e0'+ ' 이메일',
+      pw: '\uf084'+ ' 비밀번호',
       constants,
       // icon:'\uf002',
       item1:'',
@@ -278,10 +286,17 @@ font-style: normal;
   border-radius: 4px;
   margin: 2% 0 0 0;
   border: none;
+  font-weight: bold;
 }
 .submit-btn{
   background-color: #ee6e9f;
   color: white;
+  height: 35px;
+}
+.kakao-btn{
+  margin-top: 5%;
+  background-color: transparent;
+  color: rgb(26, 12, 12);
 }
  .mainMenu{
    font-family: Recipekorea;
@@ -349,9 +364,8 @@ font-style: normal;
 .loginBtn:hover{
   cursor: pointer;
 }
+.goJoin{
+  font-weight: bold;
+}
 
-/* .dropdown-toggle {
-  background-color: white;
-  border: white;
-} */
 </style>

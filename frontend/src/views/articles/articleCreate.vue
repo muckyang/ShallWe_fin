@@ -27,7 +27,7 @@
         <tr>
           <th scope="row">시작금액/전체금액</th>
           <td class="d-flex">
-            <b-form-input type="number" v-model="articleData.sumPrice"></b-form-input>
+            <b-form-input type="number" v-model="articleData.myPrice"></b-form-input>
             <b-form-input type="number" v-model="articleData.minPrice"></b-form-input>
           </td>
         </tr>
@@ -94,7 +94,7 @@
           address: null,
           description: null,
           minPrice: null,
-          sumPrice: null,
+          myPrice: null,
           urlLink: null,
           imgae: null,
           endDate:null,
