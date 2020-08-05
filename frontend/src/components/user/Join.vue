@@ -100,8 +100,6 @@
                             placeholder=" YYYY-MM-DD"
                             type="text"/>
                     </div>
-
-                    
                 </div>
 
                 <div class="seeModal">

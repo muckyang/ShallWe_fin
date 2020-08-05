@@ -153,7 +153,6 @@ export default new Vuex.Store({
         });
     },
     login({commit},loginData){
-      console.log(loginData)
       axios.post(`${BACK_URL}/account/login`,loginData)
       .then(response=>{
         commit('SET_TOKEN',response.data) 
@@ -205,7 +204,6 @@ export default new Vuex.Store({
     //게시글 관리
     //전체 조회, 임시저장글 조회
     getArticles({state,commit},data){
-      console.log("asdasdasdasdasdasdas")
       const auth={token:state.authToken}
       axios.post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}`,auth)
         .then((response) => {
@@ -228,6 +226,7 @@ export default new Vuex.Store({
     },
     //게시글 생성
     createArticle(context,articleData){
+      articleData.articleData.endTime=articleData.articleData.endTime+':00'
       axios.post(`${BACK_URL}/post/create/${articleData.temp}` ,articleData.articleData)
         .then(() => { 
           router.push('/article')
@@ -236,6 +235,8 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({state},updateData){
+      updateData.articleUpdateData.token=state.authToken
+      console.log(updateData.articleUpdateData)
       axios.post(`${BACK_URL}/post/update/${updateData.temp}`, updateData.articleUpdateData)
       .then((response) => {
         router.push(`/detail/${updateData.articleUpdateData.articleId}`)

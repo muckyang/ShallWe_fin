@@ -10,44 +10,11 @@
                 {{ selectedTBG }}
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" @click="selectCategory(1)">쉘위배달</a>
-                <a class="dropdown-item" href="#" @click="selectCategory(2)">쉘위택배</a>
-                <a class="dropdown-item" href="#" @click="selectCategory(3)">쉘위공구</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(1)">후기</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(2)">자유</a>
               </div>
             </div>
             <b-form-input type="text" v-model="articleData.title"></b-form-input>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">지역</th>
-          <td>
-            <b-form-input type="text" v-model="articleData.address"></b-form-input>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">시작금액/전체금액</th>
-          <td class="d-flex">
-            <b-form-input type="number" v-model="articleData.sumPrice"></b-form-input>
-            <b-form-input type="number" v-model="articleData.minPrice"></b-form-input>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">URL</th>
-          <td>
-            <b-form-input type="url" v-model="articleData.urlLink"></b-form-input>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">사진첨부</th>
-          <td>
-            <b-form-file class="mt-3" @change="imageChange" plain></b-form-file>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">종료일자/종료시간</th>
-          <td class="d-flex">
-            <b-form-input type="date" v-model="articleData.endDate"></b-form-input>
-            <b-form-input type="time" v-model="articleData.endTime"></b-form-input>
           </td>
         </tr>
         <tr>
@@ -60,6 +27,12 @@
                 v-model="articleData.description"
               ></b-form-textarea>
             </div>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">사진첨부</th>
+          <td>
+            <b-form-file class="mt-3" @change="imageChange" plain></b-form-file>
           </td>
         </tr>
         <tr>
@@ -91,14 +64,8 @@
         articleData: {
           categoryId : '카테고리',
           title: null,
-          address: null,
           description: null,
-          minPrice: null,
-          sumPrice: null,
-          urlLink: null,
           imgae: null,
-          endDate:null,
-          endTime:null,
           token:this.$cookies.get('auth-token')
         },
         imageUrl: null, //다시 검토
@@ -111,11 +78,9 @@
       selectCategory(num){
         this.articleData.categoryId=num
         if(num===1){
-          this.selectedTBG='쉘위배달'
-        }else if(num===2){
-          this.selectedTBG='쉘위택배'
+          this.selectedTBG='후기'
         }else{
-          this.selectedTBG='쉘위공구'
+          this.selectedTBG='자유'
         }
       },
       imageChange(e){

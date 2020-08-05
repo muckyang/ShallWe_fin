@@ -33,5 +33,5 @@ public class PostRequest {
     String token;
     int temp;
     LocalDateTime endTime;
-        
+    String[] tags;   
 }

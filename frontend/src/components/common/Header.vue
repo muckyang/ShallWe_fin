@@ -28,7 +28,7 @@
                             <input 
                             class="col-6"
                             v-model="loginData.email"
-                            id="id" 
+                            id="email" 
                             placeholder="아이디를 입력해주세요"
                             type="text"/>
                         </div>
@@ -95,7 +95,7 @@
             id="article">게시글</router-link></li>
 
           <li class="nav-item pb-0">
-            <router-link to="#" 
+            <router-link to="/posts" 
             class="nav-link mainMenu pb-0" 
             id="community">자유 게시판</router-link></li>
 

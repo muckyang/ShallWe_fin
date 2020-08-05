@@ -1,7 +1,7 @@
 <template>
   <div class="like-content">
-    <button v-if="!isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart"></i> 찜하기</button>
-    <button v-if="isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart-broken"></i> 찜하기 취소</button>
+    <button v-if="!isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart"></i> 찜</button>
+    <button v-if="isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart-broken"></i> 찜 취소</button>
   </div>
 </template>
 
@@ -38,13 +38,13 @@ export default {
 <style>
 .like-content {
     /* display: inline-block; */
-    width: 100%;
+    /* width: 100%; */
     /* margin: 40px 0 0;
     padding: 47px 0 0; */
     font-size: 17px;
     /* border-top: 10px dashed #eee; */
     text-align: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 .like-content .btn-secondary {
     display: block;

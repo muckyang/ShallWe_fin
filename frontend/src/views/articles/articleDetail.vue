@@ -1,82 +1,135 @@
 <template>
   <div class="mt-3">
-    <div class="container">
-      <a href="#item-1" class="totheContent mb-3">내용으로</a>
-      <div data-spy="scroll" data-target="#navbar-example3" data-offset="0">
-        <img class="MyImage" :src="articleData.image" alt="...">
-        <div class="articleInfo">
-          <!-- <hr> -->
-
-          <div class="row-item">
-            <div class="title"><p>{{ articleData.title }}asdfads</p></div>
-            <!-- <div class="update">
-              <router-link :to="{name:'articleUpdate',
-              params: {ID:this.$route.params.ID}}">수정
-              </router-link>
-            </div> -->
-            <div class="dropdown">
+    <div class="container detail">
+      <!--Top 부분. 제목, 작성자, create time -->
+      <div class="top">
+        <div class="top-row">
+          <div class="detail-title">{{ articleData.title }}</div>
+          <div class="detail-dropbtn">
+            <div class="dropdown" v-if="articleData.userId === userData.userId">
               <button class="dropbtn btn-dark">
-                <i class="fas fa-ellipsis-v"></i>
-                <!-- <i class="fas fa-ellipsis-h"></i> -->
+                <i class="fas fa-ellipsis-v"></i><!-- <i class="fas fa-ellipsis-h"></i> -->
               </button>
               <div class="dropdown-content">
                   <router-link :to="{name:'articleUpdate',
                   params: {ID:this.$route.params.ID}}">수정
                   </router-link>
-                
-                  <a href="#">삭제</a>
-
-                  <div class="share">
+                  <a href="#">삭제</a><!--다시 보기!!!!!!!1 -->
+                  <!-- <div class="share"> -->
                     <!-- <img src="../../assets/img/kakao_btn.png" class="kakao"> -->
-                    <a href="javascript:;" 
+                    <!-- <a href="javascript:;" 
                       @click="shareContent" 
-                      id="kakao-link">공유</a>
-                  </div>
+                      id="kakao-link">공유</a> -->
+                  <!-- </div> -->
               </div>
             </div>
-
-
           </div>
-          <!-- <div class="title"><p>{{ articleData.title }}</p></div> -->
-          <!-- <div><p>가격 들어갈 자리</p></div> -->
-          <div class="minPrice"><p>{{ articleData.minPrice }}10000원</p></div>
-          <div class="description" id="item-1">
-            <p>{{ articleData.description }}</p>
-          </div>
+          
+        <br>
+        </div>
+        <div class="in-the-top">
+          <div class="writer">{{ articleData.writer }}<br></div>
+          <div class="create-time">{{ articleData.createTime }}2020.08.04. 08:36</div>        </div>
+      </div>
+      <hr class="top-line">
 
-          <div>
+      <!-- <a href="#item-1" class="totheContent mb-3">내용으로</a> -->
+
+      <!--중간 부분. 이미지, 주요 정보들 -->
+      <div class="middle-row">
+        <img class="MyImage" :src="articleData.image" alt="...">
+        <div class="articleInfo">
+          <div class="detail-info">
+            <div class="detail-address">{{articleData.address}}<br></div>
+            <div class="detail-price">{{articleData.minPrice}}원 / {{articleData.sumPrice}}원</div>
+            <div class="detail-endTime">{{articleData.endTime}}까지{{articleData.endTime}}</div>
+          </div>          
+          <div class="detail-btns">
             <articleLike  @like-change="likeChange" 
             :isLiked="isLiked" :article="articleData"/>
+              <!-- <button type="button">
+                <a href="javascript:;" 
+                  @click="shareContent" 
+                  id="kakao-link">
+                  <img src="../../assets/img/kakao_btn.png" class="kakao">
+                </a>
+              </button> -->
+              <button @click="shareContent" 
+              class="btn-secondary detail-share">
+              <i class="fas fa-share-alt"></i> 공유</button>
+              
+
+              <!-- <b-button class="detail-join" v-b-modal.modal-1><i class="fas fa-user-plus"></i> 참여</b-button>
+
+                <b-modal id="modal-1" title="참여하기">
+                  <p class="my-4">ㅎㅇ</p>
+                </b-modal> -->
+
+              <b-button v-b-modal.modal-prevent-closing><i class="fas fa-user-plus"></i> 참여</b-button>
+
+                <b-modal
+                  id="modal-prevent-closing"
+                  ref="modal"
+                  title="참여하기"
+                  @ok="sendJoinData"
+                >
+                  <form ref="form" @submit.stop.prevent="handleSubmit">
+                    <b-form-group
+                      label="제목"
+                      label-for="title-input"
+                    >
+                      <b-form-input
+                        id="title-input"
+                        v-model="joinData.title"
+                      ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      label="url"
+                      label-for="url-input"
+                    >
+                      <b-form-input
+                        id="url-input"
+                        v-model="joinData.url"
+                      ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      label="가격"
+                      label-for="price-input"
+                    >
+                      <b-form-input
+                        id="price-input"
+                        v-model="joinData.price"
+                      ></b-form-input>원
+                    </b-form-group>
+
+                    <b-form-group
+                      label="요구사항"
+                      label-for="order-input"
+                    >
+                      <b-form-input
+                        id="order-input"
+                        v-model="joinData.order"
+                      ></b-form-input>
+                    </b-form-group>
+
+                  </form>
+                </b-modal>
+
           </div>
+          
+        </div>
+      </div>
 
-          <!-- <div class="share">
-            <a href="javascript:;" 
-              @click="shareContent" 
-              id="kakao-link">
-                <img src="../../assets/img/kakao_btn.png" class="kakao">
-            </a>
-          </div> -->
-         
-        </div> 
-
-        <!-- <div class="update">
-          <router-link :to="{name:'articleUpdate',
-           params: {ID:this.$route.params.ID}}">수정
-           </router-link>
-        </div> -->
-        <!-- <a href="javascript:;" 
-        @click="shareContent" 
-        id="kakao-link">
-          <img src="../../assets/img/kakao_btn.png" class="kakao">
-        </a> -->
-
-      </div> 
+      <!--하단 부분. 내용,(지도) -->
+      <div class="detail-content" id="item-1">
+        <p>{{ articleData.description }}</p>
+      </div>
     </div>
     <commentList/>
   </div>
 </template>
-
-
 
 <script>
   const BACK_URL = "http://127.0.0.1:8080"
@@ -94,10 +147,33 @@
     data () {
       return {
         isLiked:false,
+        joinData:{
+          articleId:this.$route.params.ID,
+          title: '',
+          url: '',
+          price: '',
+          description: '',
+          token:this.$cookies.get('auth-token')
+        }
       }
     },
+    computed:{
+      ...mapState(['articleData','userData'])
+    },
     methods: {
-      ...mapActions(['getArticle']),
+      ...mapActions(['getArticle', 'getUserData']),
+      
+      sendJoinData(){
+        axios.post(`${BACK_URL}/participant/create`,this.joinData)
+          .then((response)=>{
+            console.log(response)
+            alert('등록이 완료되었습니다!')
+          })
+          .catch((error)=>{
+            console.log(error,"AAAA")
+          })
+      },
+
       shareContent(){
         Kakao.Link.createDefaultButton({
         container: '#kakao-link',
@@ -154,20 +230,24 @@
     },
     created: function(){
       this.getArticle(this.$route.params.ID)
+      this.getUserData()
       console.log(this.articleData, '나옴 ?')
+      console.log(this.userData, '유저 나옴?')
     },
-    computed:{
-      ...mapState(['articleData'])
-      
-    }
+
   }
 </script>
 
 <style>
+.detail{
+  border: 1px solid rgb(224, 221, 221);
+  border-radius: 1.5%;
+  width: 75%
+}
 .MyImage{
-  width: 50%;
-  height: 350px;
-  margin-bottom: 25px;
+  width: 45%;
+  height: 300px;
+  margin: 10px;
 }
 .totheContent{
   background-color: #676d74;
@@ -176,39 +256,101 @@
   border-radius: 5px;
   /* margin-bottom: */
 }
-.articleInfo{
-  margin-left: 15px;
-  text-align: left;
-}
-.row-item{
-  display: grid;
-  grid-template-columns: repeat(15, 1fr);
+/* .row-item{
+  display: grid; */
+  /* grid-template-columns: repeat(15, 1fr);
   grid-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
-}
-.update{
-  float:right;
-}
+} */
 a{
   justify-content: bottom;
   text-decoration: none;
   color: black;
 }
-.title{
+.top{
+  margin-bottom:2%;
+  margin-top: 2%;
+  text-align: left;
+  /* grid-column: 1/15; */
+}
+.top-row{
+  display: flex;
+  justify-content: space-between;
+}
+.detail-title{
   font-size: x-large;
   font-weight:bold;
-  grid-column: 1/15;;
+  /* display: inline; */
+  width: 90%;
+  /* justify-content: space-between; */
+}
+.create-time{
+  font-size: small;
+  font-weight:normal;
+  opacity: 0.6;
+}
+.top-line{
+  margin: 0% 0% 2% 0%; 
+}
+.middle-row{
+  display: flex;
+  /* border: 1px solid blue; */
 }
 .articleInfo{
-  padding: 30px 0;
-    width: 677px;
-    margin: 0 auto;
-    border-bottom: 1px solid #e9ecef;
-    border-top: 1px solid #e9ecef;
+  text-align: left;
+  padding: 15px 40px;
+  width: 65%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* position: relative;
+  height: 100%; */
+  /* /* border-bottom: 1px solid #e9ecef; */
+  /* border-top: 1px solid #e9ecef; */ 
+}
+.detail-address{
+  font-size: large;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 .kakao{
   height: 25px;
   width: 25px;
+}
+.detail-content{
+  /* border: 1px solid blue; */
+  margin: 30px 0;
+  padding: 0 15px;
+  text-align: left;
+}
+.detail-btns{
+  display: flex;
+  justify-content: space-between;
+}
+.detail-share{
+  border: none;
+  outline:none;
+  height: 43px;
+  border-radius: 3px;
+  padding: 10px 12px;
+  text-align: center;
+  background: #f7e600;
+  font-size: 17px;
+}
+.detail-join{
+  border: none;
+  outline:none;
+  height: 43px;
+  border-radius: 3px;
+  padding: 10px 12px;
+  text-align: center;
+  background: #252522;
+  font-size: 17px;
+}
+.detail-dropbtn{
+  width: 10%;
+  padding-right: 10px;
 }
 .dropbtn {
   /* background-color: #676d74; */
@@ -226,6 +368,7 @@ a{
 .dropdown {
   position: relative;
   display: inline-block;
+  float: right;
 }
 .dropdown-content {
   display: none;
@@ -238,6 +381,7 @@ a{
 }
 .dropdown-content a {
   color: black;
+  font-size:medium;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -247,7 +391,6 @@ a{
 .dropdown:hover .dropdown-content {
   display: block;
 }
-
 .dropdown:hover .dropbtn {
   background-color: #3a4049;
 }
