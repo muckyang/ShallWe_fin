@@ -25,7 +25,7 @@
                 </div> 
             </div>
             <div class="comment-content">{{commentData.content}}</div>
-            <div class="comment-create-time">{{commentData.create_time}}</div>
+            <div class="comment-create-time">{{commentData.createTime}}</div>
         </div>
     </div>
     <!-- v-for="comment in comments" 
@@ -58,7 +58,7 @@ export default {
                 commentId:this.comment.commentId,
                 content:this.comment.content,
                 userId: this.comment.userId,
-                create_time: this.comment.create_time,
+                createTime: this.comment.createTime,
                 token:this.$cookies.get('auth-token')
             },
             userIdForCheck:''
