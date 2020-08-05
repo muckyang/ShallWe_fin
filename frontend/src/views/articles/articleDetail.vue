@@ -8,19 +8,13 @@
           <div class="detail-dropbtn">
             <div class="dropdown" v-if="articleData.userId === userData.userId">
               <button class="dropbtn btn-dark">
-                <i class="fas fa-ellipsis-v"></i><!-- <i class="fas fa-ellipsis-h"></i> -->
+                <i class="fas fa-ellipsis-v"></i>
               </button>
               <div class="dropdown-content">
                   <router-link :to="{name:'articleUpdate',
                   params: {ID:this.$route.params.ID}}">수정
                   </router-link>
                   <a href="#">삭제</a><!--다시 보기!!!!!!!1 -->
-                  <!-- <div class="share"> -->
-                    <!-- <img src="../../assets/img/kakao_btn.png" class="kakao"> -->
-                    <!-- <a href="javascript:;" 
-                      @click="shareContent" 
-                      id="kakao-link">공유</a> -->
-                  <!-- </div> -->
               </div>
             </div>
           </div>
@@ -29,11 +23,10 @@
         </div>
         <div class="in-the-top">
           <div class="writer">{{ articleData.writer }}<br></div>
-          <div class="create-time">{{ articleData.createTime }}2020.08.04. 08:36</div>        </div>
+          <div class="create-time">{{ articleData.createTime }}2020.08.04. 08:36</div>        
+        </div>
       </div>
       <hr class="top-line">
-
-      <!-- <a href="#item-1" class="totheContent mb-3">내용으로</a> -->
 
       <!--중간 부분. 이미지, 주요 정보들 -->
       <div class="middle-row">
@@ -55,17 +48,12 @@
                 </a>
               </button> -->
               <button @click="shareContent" 
-              class="btn-secondary detail-share">
+              class="detail-share">
               <i class="fas fa-share-alt"></i> 공유</button>
-              
 
-              <!-- <b-button class="detail-join" v-b-modal.modal-1><i class="fas fa-user-plus"></i> 참여</b-button>
-
-                <b-modal id="modal-1" title="참여하기">
-                  <p class="my-4">ㅎㅇ</p>
-                </b-modal> -->
-
-              <b-button v-b-modal.modal-prevent-closing><i class="fas fa-user-plus"></i> 참여</b-button>
+              <b-button class="detail-join" v-if="articleData.userId != userData.userId" 
+              v-b-modal.modal-prevent-closing>
+              <i class="fas fa-user-plus"></i> 참여</b-button>
 
                 <b-modal
                   id="modal-prevent-closing"
@@ -289,7 +277,7 @@ a{
 }
 .articleInfo{
   text-align: left;
-  padding: 15px 40px;
+  padding: 15px 35px 15px 40px;
   width: 65%;
   margin: 0 auto;
   display: flex;
@@ -316,29 +304,60 @@ a{
   text-align: left;
 }
 .detail-btns{
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-}
-.detail-share{
-  border: none;
-  outline:none;
-  height: 43px;
-  border-radius: 3px;
-  padding: 10px 12px;
-  text-align: center;
-  background: #f7e600;
+  justify-content: flex-end;
   font-size: 17px;
-}
-.detail-join{
-  border: none;
-  outline:none;
-  height: 43px;
-  border-radius: 3px;
-  padding: 10px 12px;
   text-align: center;
-  background: #252522;
-  font-size: 17px;
 }
+.detail-btns .detail-share{
+    display: block;
+    text-align: center;
+    background: #f7e600;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px -8px rgb(216, 203, 20);
+    padding: 10px 12px;
+    font-size: 17px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+    margin: 0 1% 0 2%;
+}
+.detail-btns .detail-share:hover {
+      transform: translateY(-3px);
+}
+.detail-btns .detail-share .fa {
+      margin-right: 5px;
+}
+
+.detail-btns .detail-join{
+    display: block;
+    text-align: center;
+    background: #31312f;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px -8px rgb(27, 27, 25);
+    padding: 10px 12px;
+    font-size: 17px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+    margin: 0 1% 0 1%;
+}
+.detail-btns .detail-join:hover {
+      transform: translateY(-3px);
+}
+.detail-btns .detail-join .fa {
+      margin-right: 5px;
+}
+
 .detail-dropbtn{
   width: 10%;
   padding-right: 10px;
