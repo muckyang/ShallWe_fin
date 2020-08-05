@@ -3,6 +3,9 @@ package com.web.blog.model.post;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.web.blog.model.comment.CommentRes;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -64,5 +67,7 @@ public class PostResponse {
      public int sumPrice;
      @ApiModelProperty(value = "tags", position = 16)
      public String[] tags;
+     @ApiModelProperty(value = "commentList", position = 17)
+     public List<CommentRes> commentList;
 
 }

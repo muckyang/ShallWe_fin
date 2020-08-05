@@ -46,7 +46,7 @@ public class User {
         this.password = password;
         this.name = name;
         this.nickname = nickname;
-        this.address = password;
+        this.address = address;
         this.userPoint = 1000;
         this.birthday = birthday;
     }
