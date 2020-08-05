@@ -5,17 +5,15 @@
       <div class="top">
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
-          <div class="detail-dropbtn">
-            <div class="dropdown" v-if="articleData.userId === userData.userId">
-              <button class="dropbtn btn-dark">
-                <i class="fas fa-ellipsis-v"></i>
-              </button>
-              <div class="dropdown-content">
-                  <router-link :to="{name:'articleUpdate',
-                  params: {ID:this.$route.params.ID}}">수정
-                  </router-link>
-                  <a href="#">삭제</a><!--다시 보기!!!!!!!1 -->
-              </div>
+
+          <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
+            <button type="button" class="article-btn" data-toggle="dropdown">
+                  <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item"><router-link class="articleUpdate" :to="{name:'articleUpdate',
+                params: {ID:this.$route.params.ID}}">수정</router-link></a>
+                <a class="dropdown-item" @click="del">삭제</a><!--다시 보기!!!!!!!1 -->
             </div>
           </div>
           
@@ -34,7 +32,7 @@
         <div class="articleInfo">
           <div class="detail-info">
             <div class="detail-address">{{articleData.address}}<br></div>
-            <div class="detail-price">{{articleData.minPrice}}원 / {{articleData.sumPrice}}원</div>
+            <div class="detail-price">{{articleData.sumPrice}}원 / {{articleData.minPrice}}원</div>
             <div class="detail-endTime">{{articleData.endTime}}까지{{articleData.endTime}}</div>
           </div>          
           <div class="detail-btns">
@@ -148,7 +146,7 @@
     },
     methods: {
       ...mapActions(['getArticle', 'getUserData']),
-      
+
       sendJoinData(){
         console.log(this.joinData, '보내는 데이터')
       },
@@ -235,12 +233,6 @@
   border-radius: 5px;
   /* margin-bottom: */
 }
-/* .row-item{
-  display: grid; */
-  /* grid-template-columns: repeat(15, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-} */
 a{
   justify-content: bottom;
   text-decoration: none;
@@ -333,7 +325,6 @@ a{
 .detail-btns .detail-share .fa {
       margin-right: 5px;
 }
-
 .detail-btns .detail-join{
     display: block;
     text-align: center;
@@ -357,54 +348,43 @@ a{
 .detail-btns .detail-join .fa {
       margin-right: 5px;
 }
-
-.detail-dropbtn{
-  width: 10%;
-  padding-right: 10px;
+.article-drop{
+    display: flex;
+    flex-direction: row;
+    width: 3%;
 }
-.dropbtn {
-  /* background-color: #676d74; */
-  color: white;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  padding-left: 8.5px;
-  padding-right: 8.5px;;
-  font-size: 13px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  /* height: 50px; */
+.article-btn {
+    background-color: transparent;
+    color: rgb(182, 182, 182);
+    padding:0;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    outline: none;
 }
-.dropdown {
-  position: relative;
-  display: inline-block;
-  float: right;
+.article-drop:hover{
+    border: none;
+    outline: none;
 }
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 90px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 5px;
+.article-btn:hover{
+    border: none;
+    outline: none;
 }
-.dropdown-content a {
-  color: black;
-  font-size:medium;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-.dropdown:hover .dropbtn {
-  background-color: #3a4049;
+/* .article-drop:hover .article-btn {
+    background-color: transparent;
+    color: rgb(145, 141, 141);
+    border: none;
+    outline: none;
+} */
+.articleUpdate{
+  text-decoration: none;;
 }
 .share{
   display: flex;
+}
+.dropdown-item{
+  cursor:pointer;
+  text-decoration: none;
 }
 </style>
