@@ -12,8 +12,8 @@
 
         <!--modal-->
         <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-        <div class="modal-dialog">
-            <div class="modal-content">
+        <div class="modal-dialog modalsize">
+            <div class="modal-content modalsize">
             <!-- <div class="modal-header">
             </div> -->
             <div class="modal-body">
@@ -30,10 +30,12 @@
                 <form>
                   <div class="form-group mb-1">
                       <div class="container">
+
                           <input 
                           class="login-email"
                           v-model="loginData.email"
                           id="email" 
+                          style="font-family: FontAwesome;" 
                           :placeholder="email"
                           type="text"/>
                       </div>
@@ -44,6 +46,7 @@
                           class="login-pw"
                           v-model="loginData.password" type="password"
                           id="password"
+                          style="font-family: FontAwesome;" 
                           :placeholder="pw"
                           @keypress.enter="login"/>
                       </div>
@@ -63,12 +66,13 @@
               </div>
 
               <div class="modal-footer d-flex justify-content-center">
-                <div class="signup d-flex justify-content-between">
-                  <span>계정이 없으신가요? </span>
-                <span class="click">
-                    <router-link v-bind:to="{name:constants.URL_TYPE.USER.JOIN}" 
-                    class="goJoin" data-dismiss="modal"> 가입하기</router-link>
-                </span>  
+                <div class="signup d-flex justify-content-center">
+                  <div class="ask">계정이 없으신가요?</div>
+                  <div class="blank"></div>
+                  <div class="click">
+                      <router-link v-bind:to="{name:constants.URL_TYPE.USER.JOIN}" 
+                      class="goJoin" data-dismiss="modal">가입하기</router-link>
+                  </div>  
                 </div>
                           
               </div>
@@ -179,8 +183,8 @@ export default {
   props: ["isHeader"],
   data: function() {
     return {
-      email:'\uf0e0'+ ' 이메일',
-      pw: '\uf084'+ ' 비밀번호',
+      email:' \uf0e0'+ '  이메일',
+      pw: ' \uf084'+ '  비밀번호',
       constants,
       // icon:'\uf002',
       item1:'',
@@ -262,6 +266,16 @@ font-style: normal;
   text-align: left;
   vertical-align: middle;
 }
+.modal-dialog.modalsize {
+  width: 27%;
+  height: 85%;
+  margin: 0;
+  padding: 0;
+}
+.modal-content.modalsize {
+  height: auto;
+  min-width: 10%;
+}
 .close-btn{
   border: none;
   outline: none;
@@ -273,6 +287,12 @@ font-style: normal;
 }
 .login-input{
   margin: 10% 0 5% 0;
+}
+.login-email:focus::placeholder{
+  color: transparent;
+}
+.login-pw:focus::placeholder{
+  color: transparent;
 }
 .login-email, .login-pw {
   width: 100%;
@@ -297,6 +317,9 @@ font-style: normal;
   margin-top: 5%;
   background-color: transparent;
   color: rgb(26, 12, 12);
+}
+.blank{
+  width: 10px;
 }
  .mainMenu{
    font-family: Recipekorea;
