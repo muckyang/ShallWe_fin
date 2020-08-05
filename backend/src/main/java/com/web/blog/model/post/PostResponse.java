@@ -13,7 +13,7 @@ public class PostResponse {
      }
      public PostResponse(int articleId,int categoryId,int userId,String title,String address,
      int minPrice,int sumPrice,String description, String writer, String urlLink,String image,
-     int temp,LocalDateTime endTime){
+     int temp,LocalDateTime endT){
           super();
           this.articleId = articleId;
           this.categoryId = categoryId;
@@ -27,7 +27,7 @@ public class PostResponse {
           this.urlLink = urlLink;
           this.image = image;
           this.temp = temp;
-          this.endTime = endTime;
+          this.endT = endT;
      }
      // post
      @ApiModelProperty(value = "articleId", position = 1)
@@ -49,7 +49,7 @@ public class PostResponse {
      @ApiModelProperty(value = "minPrice", position = 8)
      public int minPrice;
      @ApiModelProperty(value = "endTime", position = 9)
-     public LocalDateTime endTime;
+     public LocalDateTime endT;
      @ApiModelProperty(value = "urlLink", position = 10)
      public String urlLink;
      @ApiModelProperty(value = "image", position = 11)

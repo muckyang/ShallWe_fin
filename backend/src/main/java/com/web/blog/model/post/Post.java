@@ -36,8 +36,8 @@ public class Post {
     private String urlLink;
     private String image;
     private int temp;
-    // 생성시간은 자동생성
     private LocalDateTime endTime;
+    // 생성시간은 자동생성
     @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;
 

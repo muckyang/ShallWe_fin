@@ -1,6 +1,8 @@
 package com.web.blog.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -82,6 +84,10 @@ public class PostController {
     public Object create(@Valid @RequestBody PostRequest req, @PathVariable int temp)
             throws MessagingException, IOException {
         String token = req.getToken();
+        String endDate=req.getEndDate();
+        String endT=req.getEndTime();
+        LocalDateTime endTime=LocalDateTime.parse(endDate+" "+endT,DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
         if (temp == 0) {// 임시저장
             System.out.println(token);
             User jwtuser = jwtService.getUser(token);
@@ -90,7 +96,7 @@ public class PostController {
 
                 Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
                         userOpt.get().getName(), req.getAddress(), req.getDescription(), req.getMinPrice(),
-                        req.getMyPrice(), req.getImage(), req.getTemp(), req.getEndTime());
+                        req.getMyPrice(), req.getImage(), req.getTemp(), endTime);
                 // post.setUrlLink(req.getUrlLink());
 
                 postDao.save(post);
@@ -109,7 +115,7 @@ public class PostController {
 
                 Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
                         userOpt.get().getName(), req.getAddress(), req.getDescription(), req.getMinPrice(),
-                        req.getMyPrice(), req.getImage(), req.getTemp(), req.getEndTime());
+                        req.getMyPrice(), req.getImage(), req.getTemp(), endTime);
 
                 postDao.save(post);
                 int artiId = post.getArticleId();
@@ -357,6 +363,10 @@ public class PostController {
             return new ResponseEntity<>("로그인 상태를 확인하세요(token값 유효하지 않음)", HttpStatus.BAD_REQUEST);
         }
 
+        String endDate=req.getEndDate();
+        String endT=req.getEndTime();
+        LocalDateTime endTime=LocalDateTime.parse(endDate+" "+endT);
+
         if (temp == 0) {
             Post post = postDao.getPostByArticleId(req.getArticleId());
             post.setCategoryId(req.getCategoryId());
@@ -367,7 +377,7 @@ public class PostController {
             post.setUrlLink(req.getUrlLink());
             post.setImage(req.getImage());
             post.setTemp(temp);
-            post.setEndTime(req.getEndTime());
+            post.setEndTime(endTime);
             // post.setBillImage(request.getBillImage());
 
             System.out.println(post.getArticleId());
@@ -390,7 +400,7 @@ public class PostController {
             post.setUrlLink(req.getUrlLink());
             post.setImage(req.getImage());
             post.setTemp(temp);
-            post.setEndTime(req.getEndTime());
+            post.setEndTime(endTime);
             postDao.save(post);
 
             // 게시물 등록과 동시에 참가자 등록하기
