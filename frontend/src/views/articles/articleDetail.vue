@@ -148,10 +148,12 @@
       return {
         isLiked:false,
         joinData:{
+          articleId:this.$route.params.ID,
           title: '',
           url: '',
           price: '',
-          order: '',
+          description: '',
+          token:this.$cookies.get('auth-token')
         }
       }
     },
@@ -162,7 +164,14 @@
       ...mapActions(['getArticle', 'getUserData']),
       
       sendJoinData(){
-        console.log(this.joinData, '보내는 데이터')
+        axios.post(`${BACK_URL}/participant/create`,this.joinData)
+          .then((response)=>{
+            console.log(response)
+            alert('등록이 완료되었습니다!')
+          })
+          .catch((error)=>{
+            console.log(error,"AAAA")
+          })
       },
 
       shareContent(){
