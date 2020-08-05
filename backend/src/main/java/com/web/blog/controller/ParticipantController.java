@@ -57,6 +57,14 @@ public class ParticipantController {
         System.out.println(request.getArticleId());
         String token = request.getToken();
 
+        // 게시자는 바로 참가자로 등록됨
+        // 만약 게시자가 참가자 버튼을 눌렀을 때 안되도록 하기
+        Optional<Participant> partiOpt = participantDao.getParticipantByUserIdAndArticleId(request.getUserId(),request.getArticleId());
+        if(partiOpt.isPresent()){//이 게시물(ArticleId)에 해당하는 유저아이디(UserId)가 Participant DB에 있으면
+            String message = "이미 참가되셨습니다.";
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
         String title = request.getTitle();
         int price = request.getPrice();
         if (price < 0) {
@@ -83,9 +91,7 @@ public class ParticipantController {
             post.setSumPrice(sumPrice);
             postDao.save(post);// 다시 DB에 넣어줌
 
-            System.out.println("참가자 등록!!");
-            ParticipantResponse result = new ParticipantResponse();
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>("참가자 등록", HttpStatus.OK);
         } else {
             String message = "로그인 상태를 확인하세요";
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
@@ -135,9 +141,9 @@ public class ParticipantController {
         participant.setDescription(request.getDescription());
         participantDao.save(participant);// 다시 세팅해서 참가자 DB에 넣어줌
 
-        System.out.println("참가자 수정");
-        ParticipantResponse result = new ParticipantResponse();
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        System.out.println(participantNo+"번째 참가자 수정 완료");
+        
+        return new ResponseEntity<>("참가자 수정 완료", HttpStatus.OK);
     }
 
     @PostMapping("/participant/delete/{no}")
