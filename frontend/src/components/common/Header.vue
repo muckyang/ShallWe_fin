@@ -12,47 +12,73 @@
 
         <!--modal-->
         <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">로그인</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div class="modal-dialog modalsize">
+            <div class="modal-content modalsize">
+            <!-- <div class="modal-header">
+            </div> -->
             <div class="modal-body">
+              <div class="login-header">
+                <div>
+                  <a type="button" class="close-btn" data-dismiss="modal" 
+                  aria-label="Close">
+                  <span class="close" aria-hidden="true">&times;</span></a>
+                </div>
+                <h5 class="modal-title text-center" style="color: #ee6e9f; font-family: 'Lobster', cursive; 
+                font-size: 35px" id="exampleModalLabel">Shall we?</h5>
+              </div>
+              <div class="login-input">
                 <form>
-                    <div class="form-group">
-                        <div class="container">
-                            <label for="" class="mr-3 col-3">이메일</label>
-                            <input 
-                            class="col-6"
-                            v-model="loginData.email"
-                            id="email" 
-                            placeholder="아이디를 입력해주세요"
-                            type="text"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="container">
-                            <label for="" class="mr-3 col-3">패스워드</label>
-                            <input 
-                            class="col-6"
-                            v-model="loginData.password" type="password"
-                            id="password"
-                            placeholder="영문, 숫자 혼용 8자 이상"
-                            @keypress.enter="login"/>
-                        </div>
-                    </div>
-                    
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" @click="login(loginData)" data-dismiss="modal">로그인</button>
-                        <button class="btn btn-warning text-white">카카오 로그인</button>
-                        <router-link v-bind:to="{name:constants.URL_TYPE.USER.JOIN}" class="btn btn-secondary" data-dismiss="modal">회원가입</router-link>
-                    </div>
+                  <div class="form-group mb-1">
+                      <div class="container">
+
+                          <input 
+                          class="login-email"
+                          v-model="loginData.email"
+                          id="email" 
+                          style="font-family: FontAwesome;" 
+                          :placeholder="email"
+                          type="text"/>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="container">
+                          <input 
+                          class="login-pw"
+                          v-model="loginData.password" type="password"
+                          id="password"
+                          style="font-family: FontAwesome;" 
+                          :placeholder="pw"
+                          @keypress.enter="login"/>
+                      </div>
+                  </div>
                 </form>
+              </div>
+
+              <div class="login-sumit">
+                <div class="container mb-3">
+                  <button type="submit" class="submit-btn" 
+                  @click="login(loginData)" data-dismiss="modal">로그인</button>
+
+                  <button class="kakao-btn">
+                    <img src="../../assets/img/kakao_btn.png" class="kakao">
+                    카카오톡으로 로그인</button>
+                </div>
+              </div>
+
+              <div class="modal-footer d-flex justify-content-center">
+                <div class="signup d-flex justify-content-center">
+                  <div class="ask">계정이 없으신가요?</div>
+                  <div class="blank"></div>
+                  <div class="click">
+                      <router-link v-bind:to="{name:constants.URL_TYPE.USER.JOIN}" 
+                      class="goJoin" data-dismiss="modal">가입하기</router-link>
+                  </div>  
+                </div>
+                          
+              </div>
+
             </div>
-            </div>
+          </div>
         </div>
         </div>
 
@@ -157,6 +183,8 @@ export default {
   props: ["isHeader"],
   data: function() {
     return {
+      email:' \uf0e0'+ '  이메일',
+      pw: ' \uf084'+ '  비밀번호',
       constants,
       // icon:'\uf002',
       item1:'',
@@ -222,6 +250,77 @@ src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Recipekor
 font-weight: normal; 
 font-style: normal;
  }
+ .modal{
+   text-align: center;
+ }
+ @media screen and (min-width: 768px) { 
+  .modal:before {
+          display: inline-block;
+          vertical-align: middle;
+          content: " ";
+          height: 100%;
+  }
+}
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+.modal-dialog.modalsize {
+  width: 27%;
+  height: 85%;
+  margin: 0;
+  padding: 0;
+}
+.modal-content.modalsize {
+  height: auto;
+  min-width: 10%;
+}
+.close-btn{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  width: 100%;
+}
+.close{
+  float: right;
+}
+.login-input{
+  margin: 10% 0 5% 0;
+}
+.login-email:focus::placeholder{
+  color: transparent;
+}
+.login-pw:focus::placeholder{
+  color: transparent;
+}
+.login-email, .login-pw {
+  width: 100%;
+  border-radius: 2px;
+}
+.modal-body .login-submit{
+  margin: 0 0 10% 0;
+}
+.submit-btn, .kakao-btn{
+  width: 100%;
+  border-radius: 4px;
+  margin: 2% 0 0 0;
+  border: none;
+  font-weight: bold;
+}
+.submit-btn{
+  background-color: #ee6e9f;
+  color: white;
+  height: 35px;
+}
+.kakao-btn{
+  margin-top: 5%;
+  background-color: transparent;
+  color: rgb(26, 12, 12);
+}
+.blank{
+  width: 10px;
+}
  .mainMenu{
    font-family: Recipekorea;
    font-weight: normal;
@@ -288,9 +387,8 @@ font-style: normal;
 .loginBtn:hover{
   cursor: pointer;
 }
+.goJoin{
+  font-weight: bold;
+}
 
-/* .dropdown-toggle {
-  background-color: white;
-  border: white;
-} */
 </style>

@@ -68,6 +68,7 @@
               </router-link>
             </b-col>
           </b-row>
+
         </b-container>  
       </div>
       <div v-if="categoryNum === 2" class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
@@ -127,9 +128,11 @@
                 </b-card>
               </router-link>
             </b-col>
+
           </b-row>
         </b-container>
       </div>
+      
     </div>
   </div>
 </template>
@@ -156,6 +159,7 @@ export default {
   },
   created () {
     this.getArticles({temp:1,categoryId:this.categoryNum})
+    console.log(this.articles, '아티클리스츠')
   },
 }
 </script>

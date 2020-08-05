@@ -4,25 +4,17 @@
         <div class="comment-box">
             <div class="comment-user">
                 {{commentData.userId}}
-                <!-- <div>
-                    <b-dropdown size="lg"  variant="link" toggle-class="text-decoration-none" no-caret>
-                        <template v-slot:button-content>
-                        <i class="fas fa-ellipsis-v"></i>
-                        </template>
-                        <b-dropdown-item href="#">수정</b-dropdown-item>
-                        <b-dropdown-item href="#">삭제</b-dropdown-item>
-                    </b-dropdown>
-                </div> -->
 
-                <div class="comment-drop" v-if="checkAuth">
-                    <button class="comment-btn">
+                <div class="comment-drop dropdown dropleft" v-if="checkAuth">
+                    <button type="button" class="comment-btn" data-toggle="dropdown">
                         <i class="fas fa-ellipsis-v"></i>
                     </button>
-                    <div class="dropcontent">
-                        <button class="comment-ud" @click="showInput" v-if="!flag">수정</button> 
-                        <button class="comment-del" @click="deleteComment">삭제</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" @click="showInput" v-if="!flag">수정</a>
+                        <a class="dropdown-item" @click="deleteComment">삭제</a>
                     </div>
-                </div> 
+                </div>
+
             </div>
             <div class="comment-content">{{commentData.content}}</div>
             <div class="comment-create-time">{{commentData.createTime}}</div>
@@ -33,8 +25,17 @@
     @re-render="getComments" :user="comment.writer" -->
 
     <!-- 댓글 수정 -->
-    <input v-if="flag" type="text" v-model="commentData.content">
-    <button v-if="flag" @click="updateComment">댓글 수정</button>
+
+    <div v-if="flag" class="comment-update-write">
+      <div class="comment-update-text">
+        <input class="comment-input" type="text" v-model="commentData.content">
+      </div>
+      <div class="comment-update-submit">
+        <button type="button" v-if="flag" class="comment-update-btn" @click="updateCancel">취소</button>
+        <button type="button" v-if="flag" class="comment-update-btn" @click="updateComment">수정</button>
+      </div> 
+    </div>
+
   </div>
 </template>
 
@@ -61,7 +62,14 @@ export default {
                 createTime: this.comment.createTime,
                 token:this.$cookies.get('auth-token')
             },
-            userIdForCheck:''
+            userIdForCheck:'',
+            canceldata:{
+                commentId:this.comment.commentId,
+                content:this.comment.content,
+                userId: this.comment.userId,
+                createTime: this.comment.createTime,
+                token:this.$cookies.get('auth-token')
+            },
         }
     },
     computed:{
@@ -94,7 +102,6 @@ export default {
             axios.post(BACK_URL+'/comment/update',this.commentData)
                 .then((response)=>{
                     this.flag=false
-                    console.log(this.flag, '수정gngngngngn')
                     //~~~~~~~~~~~~~~~~~~~~~~~~~중요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                     // this.commentData=response.data
                     //다시 댓글을 전부 다시 받는 것이 아니라 수정 후 응답으로 수정된 댓글만 다시 받아온다.
@@ -104,6 +111,13 @@ export default {
                     console.error(err)
                 })
         },
+        updateCancel() {
+            console.log(this.canceldata)
+            console.log(this.commentData, '바뀐 댓글데이타')
+            this.commentData = this.canceldata
+            console.log(this.commentData, '취소 후')
+            this.watchFlag=true
+        }
     },
     watch:{
         watchFlag(){
@@ -138,54 +152,67 @@ export default {
 .comment-content{
     text-align: left;
 }
-.comment-create-time{
-
-}
 .comment-drop{
     display: flex;
     flex-direction: row;
+    width: 3%;
 
-    /* position: relative;
-  display: inline-block; */
 }
 .comment-btn {
-  background-color: transparent;
-  color: rgb(182, 182, 182);
-  padding:0;
-  font-size: 15px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  /* height: 50px; */
+    background-color: transparent;
+    color: rgb(182, 182, 182);
+    padding:0;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    outline: none;
 }
-
-.dropcontent {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 90px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 5px;
-}
-.dropcontent button {
+.comment-drop:hover{
     border: none;
     outline: none;
-    background-color: transparent;
-    color: black;
-    font-size:medium;
-    padding: 10;
-    text-decoration: none;
-    display: block;
-    
 }
-.dropcontent button:hover {
-    background-color: #f1f1f1
-}
-.comment-drop:hover .dropcontent {
-  display: block;
+.comment-btn:hover{
+    border: none;
+    outline: none;
 }
 .comment-drop:hover .comment-btn {
-  background-color: #3a4049;
+    background-color: transparent;
+    color: rgb(145, 141, 141);
+    border: none;
+    outline: none;
+
 }
+.comment-update-write{
+  border:2px solid rgba(0,0,0,0.1);
+  border-radius: 6px;
+  width: 100%;
+  margin: 1% auto;
+  padding: 16px 10px 10px 18px;
+  display: flex;
+  flex-direction: column;
+}
+.comment-update-submit{
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 4px 3px 0; 
+}
+.comment-update-btn{
+  font-weight: bold;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: grey;
+}
+.comment-update-text{
+  /* border: none;
+  outline: none; */
+  display: block;
+}
+.comment-update-input{
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
 </style>
