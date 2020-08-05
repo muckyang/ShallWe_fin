@@ -90,9 +90,12 @@
             v-for="article in articles" 
             :key="article.articleId">
             <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
-                <b-card class="article-card m-4" align="left" img-width="100%" 
+                <b-card class="article-card m-4 _container" align="left" img-width="100%" 
                img-height="60%" :img-src="article.image"
                img-alt="Image" img-top>
+                <div class="_overlay2">
+                  <div class="_text d-flex justify-content-center align-items-center" style="border: solid 3px white; height: 40px; width: 120px"><h4 class="text-center">Shall we?</h4></div>
+                </div>
                   <b-card-text>
                      <h5 class="article-title">{{ article.title }}</h5>
                      <h6 class="article-area">{{ article.address }}</h6>
@@ -219,6 +222,23 @@ export default {
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+._overlay2 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  /* background-color: lightgray; */
+}
+._container:hover ._overlay2 {
+  opacity: 0.8;
+  box-shadow: 10px 10px 10px lightgray;
 }
 
 
