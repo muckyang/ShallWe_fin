@@ -32,6 +32,8 @@ public class PostRequest {
     String image;
     String token;
     int temp;
-    LocalDateTime endTime;
     String[] tags;   
+    String endDate;
+    String endTime;
+    LocalDateTime endT;
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,6 +29,8 @@ public class Comment {
     private int articleId;
     private int userId;
     private String content;
+    
+    @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;
     
 }

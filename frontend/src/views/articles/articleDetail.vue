@@ -5,23 +5,15 @@
       <div class="top">
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
-          <div class="detail-dropbtn">
-            <div class="dropdown" v-if="articleData.userId === userData.userId">
-              <button class="dropbtn btn-dark">
-                <i class="fas fa-ellipsis-v"></i><!-- <i class="fas fa-ellipsis-h"></i> -->
-              </button>
-              <div class="dropdown-content">
-                  <router-link :to="{name:'articleUpdate',
-                  params: {ID:this.$route.params.ID}}">수정
-                  </router-link>
-                  <a href="#">삭제</a><!--다시 보기!!!!!!!1 -->
-                  <!-- <div class="share"> -->
-                    <!-- <img src="../../assets/img/kakao_btn.png" class="kakao"> -->
-                    <!-- <a href="javascript:;" 
-                      @click="shareContent" 
-                      id="kakao-link">공유</a> -->
-                  <!-- </div> -->
-              </div>
+
+          <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
+            <button type="button" class="article-btn" data-toggle="dropdown">
+                  <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item"><router-link class="articleUpdate" :to="{name:'articleUpdate',
+                params: {ID:this.$route.params.ID}}">수정</router-link></a>
+                <a class="dropdown-item" @click="del">삭제</a><!--다시 보기!!!!!!!1 -->
             </div>
           </div>
           
@@ -29,11 +21,10 @@
         </div>
         <div class="in-the-top">
           <div class="writer">{{ articleData.writer }}<br></div>
-          <div class="create-time">{{ articleData.createTime }}2020.08.04. 08:36</div>        </div>
+          <div class="create-time">{{ articleData.createTime }}2020.08.04. 08:36</div>        
+        </div>
       </div>
       <hr class="top-line">
-
-      <!-- <a href="#item-1" class="totheContent mb-3">내용으로</a> -->
 
       <!--중간 부분. 이미지, 주요 정보들 -->
       <div class="middle-row">
@@ -41,7 +32,7 @@
         <div class="articleInfo">
           <div class="detail-info">
             <div class="detail-address">{{articleData.address}}<br></div>
-            <div class="detail-price">{{articleData.minPrice}}원 / {{articleData.sumPrice}}원</div>
+            <div class="detail-price">{{articleData.sumPrice}}원 / {{articleData.minPrice}}원</div>
             <div class="detail-endTime">{{articleData.endTime}}까지{{articleData.endTime}}</div>
           </div>          
           <div class="detail-btns">
@@ -55,17 +46,12 @@
                 </a>
               </button> -->
               <button @click="shareContent" 
-              class="btn-secondary detail-share">
+              class="detail-share">
               <i class="fas fa-share-alt"></i> 공유</button>
-              
 
-              <!-- <b-button class="detail-join" v-b-modal.modal-1><i class="fas fa-user-plus"></i> 참여</b-button>
-
-                <b-modal id="modal-1" title="참여하기">
-                  <p class="my-4">ㅎㅇ</p>
-                </b-modal> -->
-
-              <b-button v-b-modal.modal-prevent-closing><i class="fas fa-user-plus"></i> 참여</b-button>
+              <b-button class="detail-join" v-if="articleData.userId != userData.userId" 
+              v-b-modal.modal-prevent-closing>
+              <i class="fas fa-user-plus"></i> 참여</b-button>
 
                 <b-modal
                   id="modal-prevent-closing"
@@ -162,7 +148,7 @@
     },
     methods: {
       ...mapActions(['getArticle', 'getUserData']),
-      
+
       sendJoinData(){
         axios.post(`${BACK_URL}/participant/create`,this.joinData)
           .then((response)=>{
@@ -256,12 +242,6 @@
   border-radius: 5px;
   /* margin-bottom: */
 }
-/* .row-item{
-  display: grid; */
-  /* grid-template-columns: repeat(15, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-} */
 a{
   justify-content: bottom;
   text-decoration: none;
@@ -298,7 +278,7 @@ a{
 }
 .articleInfo{
   text-align: left;
-  padding: 15px 40px;
+  padding: 15px 35px 15px 40px;
   width: 65%;
   margin: 0 auto;
   display: flex;
@@ -325,76 +305,95 @@ a{
   text-align: left;
 }
 .detail-btns{
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-}
-.detail-share{
-  border: none;
-  outline:none;
-  height: 43px;
-  border-radius: 3px;
-  padding: 10px 12px;
-  text-align: center;
-  background: #f7e600;
+  justify-content: flex-end;
   font-size: 17px;
-}
-.detail-join{
-  border: none;
-  outline:none;
-  height: 43px;
-  border-radius: 3px;
-  padding: 10px 12px;
   text-align: center;
-  background: #252522;
-  font-size: 17px;
 }
-.detail-dropbtn{
-  width: 10%;
-  padding-right: 10px;
+.detail-btns .detail-share{
+    display: block;
+    text-align: center;
+    background: #f7e600;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px -8px rgb(216, 203, 20);
+    padding: 10px 12px;
+    font-size: 17px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+    margin: 0 1% 0 2%;
 }
-.dropbtn {
-  /* background-color: #676d74; */
-  color: white;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  padding-left: 8.5px;
-  padding-right: 8.5px;;
-  font-size: 13px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  /* height: 50px; */
+.detail-btns .detail-share:hover {
+      transform: translateY(-3px);
 }
-.dropdown {
-  position: relative;
-  display: inline-block;
-  float: right;
+.detail-btns .detail-share .fa {
+      margin-right: 5px;
 }
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 90px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  border-radius: 5px;
+.detail-btns .detail-join{
+    display: block;
+    text-align: center;
+    background: #31312f;
+    border-radius: 3px;
+    box-shadow: 0 10px 20px -8px rgb(27, 27, 25);
+    padding: 10px 12px;
+    font-size: 17px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    text-decoration: none;
+    -webkit-transition: 0.3s ease;
+    transition: 0.3s ease;
+    margin: 0 1% 0 1%;
 }
-.dropdown-content a {
-  color: black;
-  font-size:medium;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
+.detail-btns .detail-join:hover {
+      transform: translateY(-3px);
 }
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-.dropdown:hover .dropdown-content {
-  display: block;
+.detail-btns .detail-join .fa {
+      margin-right: 5px;
 }
-.dropdown:hover .dropbtn {
-  background-color: #3a4049;
+.article-drop{
+    display: flex;
+    flex-direction: row;
+    width: 3%;
+}
+.article-btn {
+    background-color: transparent;
+    color: rgb(182, 182, 182);
+    padding:0;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    outline: none;
+}
+.article-drop:hover{
+    border: none;
+    outline: none;
+}
+.article-btn:hover{
+    border: none;
+    outline: none;
+}
+/* .article-drop:hover .article-btn {
+    background-color: transparent;
+    color: rgb(145, 141, 141);
+    border: none;
+    outline: none;
+} */
+.articleUpdate{
+  text-decoration: none;;
 }
 .share{
   display: flex;
+}
+.dropdown-item{
+  cursor:pointer;
+  text-decoration: none;
 }
 </style>

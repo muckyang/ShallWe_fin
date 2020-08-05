@@ -6,7 +6,7 @@ public class CommentResponse {
     @ApiModelProperty(value = "content", position = 1)
     public String content;
 
-    @ApiModelProperty(value = "commentlist", position = 2)
-     public List<Comment> commentList;
+    // @ApiModelProperty(value = "commentlist", position = 2)
+    //  public List<Comment> commentList;
    
 }
