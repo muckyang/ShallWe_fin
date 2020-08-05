@@ -116,6 +116,7 @@
                 </b-card> -->
             </b-col>
           </b-row>
+
         </b-container>  
       </div>
       <div v-if="categoryNum === 2" class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
@@ -189,6 +190,7 @@
                      <h5 class="article-title">{{ article.title }}</h5>
                      <h6 class="article-area">지역: 대전</h6>
                      <h6 class="article-price">가격: 50000원/20000원</h6>
+
                   </b-card-text>
                   <template v-slot:footer>
                      <div class="d-flex justify-content-between">
@@ -218,9 +220,11 @@
                   </template>
                 </b-card> -->
             </b-col>
+
           </b-row>
         </b-container>
       </div>
+      
     </div>
   </div>
 </template>
@@ -247,6 +251,7 @@ export default {
   },
   created () {
     this.getArticles({temp:1,categoryId:this.categoryNum})
+    console.log(this.articles, '아티클리스츠')
   },
 }
 </script>

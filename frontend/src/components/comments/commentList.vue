@@ -49,6 +49,7 @@ export default {
           .then(()=>{
             this.commentData.content=''
             console.log('댓글 보내기 완료')
+            this.getComments() //다시 보기
           })
           .catch((err)=>{
             console.error(err)
@@ -119,5 +120,8 @@ export default {
   border: none;
   outline: none;
   width: 100%;
+}
+.comment-input:focus::placeholder{
+  color: transparent;
 }
 </style>
