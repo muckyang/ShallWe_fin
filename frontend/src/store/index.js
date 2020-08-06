@@ -67,6 +67,7 @@ export default new Vuex.Store({
       router.push('/')
       console.log('로그인 성공')
       router.go()
+      alert('로그인 성공')
     },
     REMOVE_TOKEN(state){
       state.authToken=null
@@ -104,7 +105,6 @@ export default new Vuex.Store({
       state.userData.userId=userData.userId
       state.userData.password=userData.password
       state.userData.birthday=userData.birthday
-      console.log(state.userData, '겟유저데이터')
     },
 
     //게시글 관리
