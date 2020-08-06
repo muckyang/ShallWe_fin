@@ -43,7 +43,8 @@
               <a href="javascript:;" class="kakao-share"
                   @click="shareContent" 
                   id="kakao-link">
-                  <img src="../../assets/img/kakao_btn.png" class="kakao"> 공유
+                  <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제"> 
+                  공유
                 </a>
               </button>
 
@@ -204,7 +205,6 @@
         axios.post(BACK_URL + `/likedcheck/${this.$route.params.ID}`,auth)
         .then((response) => {
           this.isLiked=response.data.isLiked
-          console.log(this.isLiked, '조아요 눌림 ?')
         })
         .catch(err => console.log(err))
       },
@@ -299,11 +299,14 @@ a{
 }
 .kakao-share{
   text-decoration: none;
-  color: rgb(26, 12, 12);
+  color: white;
   font-weight: normal;
+  text-align:center;
+  vertical-align: middle;
 }
 .kakao-share:hover{
   text-decoration: none;
+  color: white;
 }
 .detail-content{
   /* border: 1px solid blue; */
