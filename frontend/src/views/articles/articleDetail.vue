@@ -15,9 +15,8 @@
                 params: {ID:this.$route.params.ID}}">수정</router-link></a>
                 <a class="dropdown-item">삭제</a><!--다시 보기!!!!!!!1 -->
             </div>
-          </div>
-          
-        <br>
+          </div>  
+          <br>
         </div>
         <div class="in-the-top">
           <div class="writer">{{ articleData.writer }}<br></div>
@@ -32,13 +31,35 @@
         <div class="articleInfo">
           <div class="detail-info">
             <div class="detail-address">만남의 장소: {{articleData.address}}
-              <button class="kakao-map">지도 보기</button><br></div>
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                지도 보기
+              </button>
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">만남의 장소</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <kakaoMapForDetail/>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                    
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="detail-price">{{articleData.sumPrice}}원 / {{articleData.minPrice}}원</div>
-            <div class="detail-endTime">{{articleData.endTime}}까지{{articleData.endTime}}</div>
+            <div class="detail-endTime">{{articleData.endTime}}까지</div>
           </div>  
           <div class="detail-btns">
             <articleLike  @like-change="likeChange" 
             :isLiked="isLiked" :article="articleData"/>
+
               <button @click="shareContent" 
               class="detail-share">
               <a href="javascript:;" class="kakao-share"
@@ -108,14 +129,14 @@
         </div>
       </div>
 
-      <!--하단 부분. 내용,(지도) -->
-      <div class="detail-content" id="item-1">
-        <p>{{ articleData.description }}</p>
+        <!--하단 부분. 내용,(지도) -->
+        <div class="detail-content" id="item-1">
+          <p>{{ articleData.description }}</p>
+        </div>
       </div>
+      <commentList/>
     </div>
-    <kakaoMapForDetail/>
-    <commentList/>
-  </div>
+  
 </template>
 
 <script>
@@ -296,6 +317,9 @@ a{
   font-size: large;
   font-weight: bold;
   margin-bottom: 5px;
+}
+.detail-endTime{
+  font-size: x-small;
 }
 .kakao{
   height: 25px;
