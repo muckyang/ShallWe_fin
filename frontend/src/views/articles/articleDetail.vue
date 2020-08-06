@@ -31,7 +31,8 @@
         <img class="MyImage" :src="articleData.image" alt="...">
         <div class="articleInfo">
           <div class="detail-info">
-            <div class="detail-address">{{articleData.address}}<br></div>
+            <div class="detail-address">만남의 장소: {{articleData.address}}
+              <button class="kakao-map">지도 보기</button><br></div>
             <div class="detail-price">{{articleData.sumPrice}}원 / {{articleData.minPrice}}원</div>
             <div class="detail-endTime">{{articleData.endTime}}까지{{articleData.endTime}}</div>
           </div>  

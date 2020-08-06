@@ -104,6 +104,7 @@ export default new Vuex.Store({
       state.userData.userId=userData.userId
       state.userData.password=userData.password
       state.userData.birthday=userData.birthday
+      console.log(state.userData, '겟유저데이터')
     },
 
     //게시글 관리

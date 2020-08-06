@@ -155,8 +155,11 @@ public class AccountController {
         User jwtuser = jwtService.getUser(token);
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
         if (userOpt.isPresent()) {
-            System.out.println(userOpt.get().getUserId());
             UserResponse result = getUserResponse(userOpt.get());
+            result.userId = userOpt.get().getUserId();
+            result.email = userOpt.get().getEmail();
+            result.userPoint =userOpt.get().getUserPoint();
+
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
