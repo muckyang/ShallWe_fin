@@ -141,10 +141,11 @@ export default new Vuex.Store({
     sendEmail({state},data){
       if(state.isTerm){
         if (data.signUpDataForSend.password===data.password2){
+          alert("메일로 인증 코드가 발송되었습니다.")
+          this.commit('sendCheck')
           axios.post(`${BACK_URL}/account/sendmail`, data.signUpDataForSend)
           .then((res)=>{
-            this.commit('sendCheck')
-            alert("메일로 인증 코드가 발송되었습니다.")
+            // this.commit('sendCheck')
           })
           .catch((err)=>{
             console.log(err)
