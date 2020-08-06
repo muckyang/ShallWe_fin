@@ -89,9 +89,11 @@ public class PostController {
         String token = req.getToken();
         String endDate = req.getEndDate();
         String endT = req.getEndTime();
-        LocalDateTime endTime = LocalDateTime.parse(endDate + " " + endT,
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
+        LocalDateTime endTime=null; 
+        if(endDate!=null||endT!=null){
+            endTime = LocalDateTime.parse(endDate + " " + endT,
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
         System.out.println(token);
         User jwtuser = jwtService.getUser(token);
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
@@ -153,7 +155,27 @@ public class PostController {
                 return new ResponseEntity<>("태그 등록 및 참가자 등록 및 게시물 등록", HttpStatus.OK);
 
             } else if (temp == 2) { // 자유게시물
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                Post post=new Post();
+                post.setUserId(userOpt.get().getUserId());
+                post.setCategoryId(req.getCategoryId());
+                post.setTitle(req.getTitle());
+                post.setWriter(userOpt.get().getNickname());
+                post.setDescription(req.getDescription());
+                post.setImage(req.getImage());
+                post.setTemp(temp);
+                postDao.save(post);
+
+                int artiId = post.getArticleId();
+                // 태그 등록
+                String[] tags = req.getTags();// 태그 내용
+                // artiId 게시물 PK
+                for (int i = 0; i < tags.length; i++) {
+                    Tag tag = new Tag();
+                    tag.setName(tags[i]);
+                    tag.setArticleId(artiId);
+                    tagDao.save(tag);
+                }
+                return new ResponseEntity<>("자유게시물 등록", HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
@@ -201,7 +223,17 @@ public class PostController {
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else if (temp == 2) { // 자유게시판
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            List<Post> plist;
+            if (categoryId == 100)// 전체 게시물 출력
+                plist = postDao.findPostByTemp(temp);
+            else
+                plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
+            
+            PostListResponse result = new PostListResponse();
+            result.postList = getPostList(plist, temp); //게시물 목록 및 각 게시물의 좋아요 댓글 수
+
+            System.out.println("자유글 목록 출력!!");
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
@@ -407,7 +439,11 @@ public class PostController {
 
         String endDate = req.getEndDate();
         String endT = req.getEndTime();
-        LocalDateTime endTime = LocalDateTime.parse(endDate + " " + endT);
+        LocalDateTime endTime=null; 
+        if(endDate!=null||endT!=null){
+        endTime = LocalDateTime.parse(endDate + " " + endT,
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        }
 
         if (temp == 0) {
             Post post = postDao.getPostByArticleId(req.getArticleId());
@@ -492,7 +528,34 @@ public class PostController {
             System.out.println(post.getArticleId() + "번째 게시물 수정 완료 ");
             return new ResponseEntity<>("게시물 수정 완료 ", HttpStatus.OK);
         } else if (temp == 2) { // 자유게시판
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+
+            Post post = postDao.getPostByArticleId(req.getArticleId());
+            post.setUserId(userOpt.get().getUserId());
+            post.setCategoryId(req.getCategoryId());
+            post.setTitle(req.getTitle());
+            post.setWriter(userOpt.get().getNickname());
+            post.setDescription(req.getDescription());
+            post.setImage(req.getImage());
+            post.setTemp(temp);
+            postDao.save(post);
+            // 태그 삭제
+            List<Tag> tList = tagDao.findTagByArticleId(req.getArticleId());
+            int atsize = tList.size();
+            for (int i = 0; i < atsize; i++) {
+                Tag l = tList.get(i);
+                tagDao.delete(l);
+            }
+            // 태그 수정
+            String[] tags = req.getTags();// 태그 내용
+            for (int i = 0; i < tags.length; i++) {
+                Tag tag = new Tag();
+                tag.setName(tags[i]);
+                tag.setArticleId(req.getArticleId());
+                tagDao.save(tag);
+            }
+
+            System.out.println(post.getArticleId() + "번째 자유글 수정 완료 ");
+            return new ResponseEntity<>("자유글 수정 완료 ", HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
