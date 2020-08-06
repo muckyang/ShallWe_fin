@@ -112,6 +112,7 @@
         <p>{{ articleData.description }}</p>
       </div>
     </div>
+    <kakaoMapForDetail/>
     <commentList/>
   </div>
 </template>
@@ -122,12 +123,14 @@
   import {mapState,mapActions} from 'vuex'
   import commentList from '@/components/comments/commentList'
   import articleLike from '@/components/articles/articleLike'
+  import kakaoMapForDetail from '@/components/articles/kakaoMapForDetail'
   
   export default {
     name:'articleDetail',
     components:{
       commentList,
-      articleLike
+      articleLike,
+      kakaoMapForDetail,
     },
     data () {
       return {
