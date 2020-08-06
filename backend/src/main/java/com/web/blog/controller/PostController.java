@@ -89,10 +89,9 @@ public class PostController {
         String token = req.getToken();
         String endDate = req.getEndDate();
         String endT = req.getEndTime();
-        LocalDateTime endTime=null; 
-        if(endDate!=null||endT!=null){
-            endTime = LocalDateTime.parse(endDate + " " + endT,
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime endTime = null;
+        if (endDate != null || endT != null) {
+            endTime = LocalDateTime.parse(endDate + " " + endT, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         }
         System.out.println(token);
         User jwtuser = jwtService.getUser(token);
@@ -112,8 +111,8 @@ public class PostController {
                 Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
                         userOpt.get().getNickname(), req.getAddress(), req.getDescription(), req.getMinPrice(),
                         req.getMyPrice(), req.getImage(), temp, endTime);
-                System.out.println("Min" + req.getMinPrice());
-                System.out.println("My" + req.getMyPrice());
+                post.setLikeNum(0);
+                post.setCommentNum(0);
 
                 postDao.save(post);
                 int artiId = post.getArticleId();
@@ -129,6 +128,7 @@ public class PostController {
                 Participant participant = new Participant();
                 participant.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
                 participant.setArticleId(artiId);
+                
                 System.out.println(post.getTitle() + " " + artiId);
                 participant.setTitle(def_mes);
                 participant.setPrice(myPrice);
@@ -155,7 +155,7 @@ public class PostController {
                 return new ResponseEntity<>("태그 등록 및 참가자 등록 및 게시물 등록", HttpStatus.OK);
 
             } else if (temp == 2) { // 자유게시물
-                Post post=new Post();
+                Post post = new Post();
                 post.setUserId(userOpt.get().getUserId());
                 post.setCategoryId(req.getCategoryId());
                 post.setTitle(req.getTitle());
@@ -204,9 +204,9 @@ public class PostController {
                 Post p = plist.get(i);
 
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
-                        p.getUrlLink(), p.getImage(), temp, p.getEndTime() , BeforeCreateTime(p.getCreateTime())));
-                        
+                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
+                        p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), temp, p.getEndTime(),
+                        BeforeCreateTime(p.getCreateTime())));
 
             }
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -219,7 +219,7 @@ public class PostController {
                 plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
 
             PostListResponse result = new PostListResponse();
-            result.postList = getPostList(plist, temp); //게시물 목록 및 각 게시물의 좋아요 댓글 수
+            result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else if (temp == 2) { // 자유게시판
@@ -228,9 +228,9 @@ public class PostController {
                 plist = postDao.findPostByTemp(temp);
             else
                 plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
-            
+
             PostListResponse result = new PostListResponse();
-            result.postList = getPostList(plist, temp); //게시물 목록 및 각 게시물의 좋아요 댓글 수
+            result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
 
             System.out.println("자유글 목록 출력!!");
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -250,19 +250,20 @@ public class PostController {
         if (subject.equals("title")) {
             word = "%" + word + "%";
             System.out.println("title로 검색");
-           
+
             if (categoryId == 0)
                 plist = postDao.findPostByTempAndTitleLike(temp, word);
             else
                 plist = postDao.findPostByTempAndCategoryIdAndTitleLike(temp, categoryId, word);
             PostListResponse result = new PostListResponse();
+
             result.postList = getPostList(plist, temp);
 
             System.out.println("title로 검색 확인");
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else if (subject.equals("writer")) {
             word = "%" + word + "%";
-           
+
             if (categoryId == 0)
                 plist = postDao.findPostByTempAndWriterLike(temp, word);
             else
@@ -278,28 +279,28 @@ public class PostController {
                 int aId = taglist.get(i).getArticleId();
                 Optional<Post> article = postDao.findPostByArticleIdAndTempAndCategoryId(aId, temp, categoryId);
                 plist.add(article.get());
-                // result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                // p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
+                // result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(),
+                // p.getUserId(), p.getTitle(),
+                // p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(),
+                // p.getWriter(),
                 // p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
-                
+
                 // List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
                 // List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
                 // int likenum = llist.size();
                 // int commentnum = clist.size();
                 // System.out.println("list return success");
                 // System.out.println(likenum);
-                
+
                 // result.postList.get(i).likenum = likenum;
                 // result.postList.get(i).commentnum = commentnum;
             }
 
-
-            result.postList = getPostList(plist,temp);
-            
+            result.postList = getPostList(plist, temp);
 
             return new ResponseEntity<>(result, HttpStatus.OK);
-        }else if(subject.equals("address")){
-            
+        } else if (subject.equals("address")) {
+
             System.out.println("address로 검색");
             List<String> addList = new ArrayList<>();
             
@@ -307,44 +308,42 @@ public class PostController {
             while(st.hasMoreTokens()){
                 addList.add("%" + st.nextToken() + "%");
             }
-            
 
             if (categoryId == 0)
-                if(addList.size() == 1){
+                if (addList.size() == 1) {
                     plist = postDao.findPostByAddressLike(addList.get(0));
-                }
-                else if(addList.size() == 2){
+                } else if (addList.size() == 2) {
                     plist = postDao.findPostByAddressLikeAndAddressLike(addList.get(0), addList.get(1));
-                }
-                else if(addList.size() == 3){
-                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLike(addList.get(0), addList.get(1), addList.get(2));
-                }
-                else if(addList.size() == 4){
-                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(addList.get(0), addList.get(1), addList.get(2), addList.get(3));
+                } else if (addList.size() == 3) {
+                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLike(addList.get(0), addList.get(1),
+                            addList.get(2));
+                } else if (addList.size() == 4) {
+                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(addList.get(0),
+                            addList.get(1), addList.get(2), addList.get(3));
                 }
 
-                
-            else{
-                if(addList.size()==1){
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0));
+                else {
+                    if (addList.size() == 1) {
+                        plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0));
+                    } else if (addList.size() == 2) {
+                        plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLike(temp, categoryId,
+                                addList.get(0), addList.get(1));
+                    } else if (addList.size() == 3) {
+                        plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLike(temp,
+                                categoryId, addList.get(0), addList.get(1), addList.get(2));
+                    } else if (addList.size() == 4) {
+                        plist = postDao
+                                .findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(
+                                        temp, categoryId, addList.get(0), addList.get(1), addList.get(2),
+                                        addList.get(3));
+                    }
                 }
-                else if(addList.size() == 2){
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLike(temp, categoryId, addList.get(0), addList.get(1));
-                }
-                else if(addList.size() == 3){
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLike(temp, categoryId, addList.get(0), addList.get(1), addList.get(2));
-                }
-                else if(addList.size() == 4){
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(temp, categoryId, addList.get(0), addList.get(1), addList.get(2), addList.get(3));
-                }
-            }
             PostListResponse result = new PostListResponse();
             result.postList = getPostList(plist, temp);
 
             System.out.println("address로 검색 확인");
             return new ResponseEntity<>(result, HttpStatus.OK);
-        } 
-        else {
+        } else {
             return new ResponseEntity<>("temp 해당 없음", HttpStatus.BAD_REQUEST);
         }
     }
@@ -354,39 +353,28 @@ public class PostController {
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
         // 토큰 받아오면 그 토큰으로 유효성 검사 후 uid 받아와서 좋아요 한지 여부 확인
 
-        System.out.println("상세보기 들어옴 "  +articleId);
+        System.out.println("상세보기 들어옴 " + articleId);
         Optional<Post> postOpt = postDao.findPostByArticleId(articleId);
         Post p = postOpt.get();
 
         if (postOpt.isPresent()) {
             String token = request.getToken();
             User jwtuser = jwtService.getUser(token);
-      
+
             Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                    p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
-                    p.getImage(), p.getTemp(), p.getEndTime(), BeforeCreateTime(p.getCreateTime()));
-      
-                    List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
-                    List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
-                    int likenum = llist.size();
-                    int commentnum = clist.size();
-                    System.out.println("list return success");
-                    System.out.println(likenum);
-        
-                    result.likenum = likenum;
-                    result.commentnum = commentnum;
-        
-      
-                    // 이 게시물에 해당되는 태그는 다 보내기
-                    List<Tag> tlist = tagDao.findTagByArticleId(articleId);
-                    String[] tags = new String[tlist.size()];
-                    for (int i = 0; i < tags.length; i++) {
-                        tags[i] = tlist.get(i).getName();
-                    }
-                    result.tags = tags;
-                    
-      
+                    p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
+                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime(),
+                    BeforeCreateTime(p.getCreateTime()));
+
+            // 이 게시물에 해당되는 태그는 다 보내기
+            List<Tag> tlist = tagDao.findTagByArticleId(articleId);
+            String[] tags = new String[tlist.size()];
+            for (int i = 0; i < tags.length; i++) {
+                tags[i] = tlist.get(i).getName();
+            }
+            result.tags = tags;
+
             if (userOpt.isPresent()) {// 로그인 상태일때
 
                 Optional<Like> isILiked = likeDao.findLikeByUserIdAndArticleId(userOpt.get().getUserId(), articleId);
@@ -399,8 +387,9 @@ public class PostController {
             } else {
                 System.out.println("비로그인 / 로그인 여부 확인 !!!");
                 result.isLiked = false;
-            }              
+            }
 
+            List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
             result.commentList = new LinkedList<>(); // 댓글 리스트 가져옴
             for (int i = 0; i < clist.size(); i++) {
                 User user = userDao.getUserByUserId(clist.get(i).getUserId());
@@ -439,10 +428,9 @@ public class PostController {
 
         String endDate = req.getEndDate();
         String endT = req.getEndTime();
-        LocalDateTime endTime=null; 
-        if(endDate!=null||endT!=null){
-        endTime = LocalDateTime.parse(endDate + " " + endT,
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime endTime = null;
+        if (endDate != null || endT != null) {
+            endTime = LocalDateTime.parse(endDate + " " + endT, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         }
 
         if (temp == 0) {
@@ -456,7 +444,6 @@ public class PostController {
             post.setImage(req.getImage());
             post.setTemp(temp);
             post.setEndTime(endTime);
-            // post.setBillImage(request.getBillImage());
 
             System.out.println(post.getArticleId());
             System.out.println();
@@ -481,7 +468,6 @@ public class PostController {
             post.setEndTime(endTime);
             postDao.save(post);
 
-            // 게시물 등록과 동시에 참가자 등록하기
             int myPrice = req.getMyPrice();
             if (myPrice < 0) {
                 String message = "0원보다 값이 작습니다.";
@@ -623,65 +609,57 @@ public class PostController {
             Post p = plist.get(i);
 
             result.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                    p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
-                    p.getImage(), temp, p.getEndTime(),BeforeCreateTime(p.getCreateTime())));
-
-            // Optional<Like> llist = likeDao.findLikeByArticleno(articleno);
-            List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
-            List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
-            int likenum = llist.size();
-            int commentnum = clist.size();
-            System.out.println("list return success");
-            System.out.println(likenum);
-
-            result.get(i).likenum = likenum;
-            result.get(i).commentnum = commentnum;
+                    p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
+                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), temp, p.getEndTime(),
+                    BeforeCreateTime(p.getCreateTime())));
 
         }
 
         return result;
     }
 
-
     private static String BeforeCreateTime(LocalDateTime createTime) {
         String result = "";
         int before = 0;
         LocalDateTime nowTime = LocalDateTime.now();
-        if (createTime.getYear() <= nowTime.getYear()+1) {
+        if (createTime.getYear() <= nowTime.getYear() + 1) {
             if (createTime.getMonthValue() == nowTime.getMonthValue()) {
                 if (createTime.getDayOfYear() == nowTime.getDayOfYear()) {
                     if (createTime.getHour() == nowTime.getHour()) {
                         if (createTime.getMinute() == nowTime.getMinute()) {
                             result = "약 1분 전";
                         } else {
-                            before = nowTime.getMinute() -  createTime.getMinute() ;
+                            before = nowTime.getMinute() - createTime.getMinute();
                             result = "약 " + before + "분 전";
                         }
-                    } else if(createTime.getHour() == nowTime.getHour() +1 && createTime.getMinute() > nowTime.getMinute() ){
+                    } else if (createTime.getHour() == nowTime.getHour() + 1
+                            && createTime.getMinute() > nowTime.getMinute()) {
                         before = 60 + nowTime.getMinute() - createTime.getMinute();
                         result = "약 " + before + "분 전";
-                    }else{
-                        before = nowTime.getHour() -  createTime.getHour() ;
+                    } else {
+                        before = nowTime.getHour() - createTime.getHour();
                         result = "약 " + before + "시간 전";
                     }
-                }  else if(createTime.getDayOfYear() == nowTime.getDayOfYear() +1 && createTime.getHour() > nowTime.getHour() ){
+                } else if (createTime.getDayOfYear() == nowTime.getDayOfYear() + 1
+                        && createTime.getHour() > nowTime.getHour()) {
                     before = 24 + nowTime.getHour() - createTime.getHour();
                     result = "약 " + before + "시간 전";
-                }else{
-                    before = nowTime.getDayOfYear() -  createTime.getDayOfYear() ;
+                } else {
+                    before = nowTime.getDayOfYear() - createTime.getDayOfYear();
                     result = "약 " + before + "일 전";
                 }
-            }  else if(createTime.getDayOfYear() == nowTime.getDayOfYear() +1 && createTime.getHour() > nowTime.getHour() ){
+            } else if (createTime.getDayOfYear() == nowTime.getDayOfYear() + 1
+                    && createTime.getHour() > nowTime.getHour()) {
                 before = 24 + nowTime.getHour() - createTime.getHour();
                 result = "약 " + before + "일 전";
-            }else{
-                before = nowTime.getDayOfYear() -  createTime.getDayOfYear() ;
+            } else {
+                before = nowTime.getDayOfYear() - createTime.getDayOfYear();
                 result = "약 " + before + "일 전";
             }
         } else {
-            before = nowTime.getYear() - createTime.getYear() ;
-       
-            result ="약 " +  before + "년 전";
+            before = nowTime.getYear() - createTime.getYear();
+
+            result = "약 " + before + "년 전";
         }
         return result;
 

@@ -7,8 +7,10 @@ import java.util.Optional;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import com.web.blog.dao.CommentDao;
+import com.web.blog.dao.PostDao;
 import com.web.blog.dao.UserDao;
 import com.web.blog.model.comment.CommentResponse;
+import com.web.blog.model.post.Post;
 import com.web.blog.model.comment.CommentRequest;
 import com.web.blog.model.user.User;
 import com.web.blog.service.JwtService;
@@ -41,6 +43,8 @@ public class CommentController {
     @Autowired
     UserDao userDao;
     @Autowired
+    PostDao postDao;
+    @Autowired
     private JwtService jwtService;
 
     @PostMapping("/comment/create")
@@ -62,6 +66,9 @@ public class CommentController {
             comment.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
             commentDao.save(comment);
 
+            Post post = postDao.getPostByArticleId(articleId);
+            post.setCommentNum(post.getCommentNum()+1);
+            postDao.save(post);
             System.out.println("댓글 등록!!");
             CommentResponse result = new CommentResponse();
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -108,6 +115,9 @@ public class CommentController {
         System.out.println("댓글 삭제하기!!");
         CommentResponse result = new CommentResponse();
 
+        Post post = postDao.getPostByArticleId(comment.getArticleId());
+        post.setCommentNum(post.getCommentNum()-1);
+        postDao.save(post);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

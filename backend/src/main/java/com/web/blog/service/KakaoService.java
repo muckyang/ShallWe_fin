@@ -66,7 +66,6 @@ public class KakaoService {
             br.close();
             bw.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } 
         

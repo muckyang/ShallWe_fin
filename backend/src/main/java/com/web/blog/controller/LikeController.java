@@ -5,7 +5,9 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import com.web.blog.dao.LikeDao;
+import com.web.blog.dao.PostDao;
 import com.web.blog.dao.UserDao;
+import com.web.blog.model.post.Post;
 import com.web.blog.model.post.PostResponse;
 import com.web.blog.model.like.Like;
 import com.web.blog.model.like.LikeResponse;
@@ -39,6 +41,8 @@ public class LikeController {
     LikeDao likeDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    PostDao postDao;
 
     @Autowired
     private JwtService jwtService;
@@ -67,16 +71,24 @@ public class LikeController {
                 like.setArticleId(articleId);
                 likeDao.delete(like);
                 message = "좋아요 취소 !!";
-    
+                Post post = postDao.getPostByArticleId(articleId);
+                
+                post.setLikeNum(post.getLikeNum()-1);
+                
+                postDao.save(post);
                 return new ResponseEntity<>(message, HttpStatus.OK);
             } else {
-                System.out.println("ELSEEEEE");
                 int UserId = userOpt.get().getUserId();
                 Like like = new Like();
                 like.setArticleId(articleId);
                 like.setUserId(UserId);
                 likeDao.save(like);
 
+                Post post = postDao.getPostByArticleId(articleId);
+                
+                post.setLikeNum(post.getLikeNum()+1);
+                
+                postDao.save(post);
                 message = "좋아요!!"; 
                 return new ResponseEntity<>(message, HttpStatus.OK);
 

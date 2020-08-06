@@ -33,6 +33,8 @@ public class Post {
     private String description;
     private int minPrice;
     private int sumPrice;
+    private int likeNum;
+    private int commentNum;
     private String urlLink;
     private String image;
     private int temp;
@@ -51,6 +53,7 @@ public class Post {
                 this.description = des;
                 this.minPrice = minPrice;
                 this.sumPrice = sumPrice;
+                
                 this.image = image;
                 this.temp = temp;
                 this.endTime = endTime;
