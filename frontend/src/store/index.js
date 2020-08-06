@@ -15,6 +15,7 @@ export default new Vuex.Store({
   state: {
     //사용자 인증
     authToken: cookies.get('auth-token'),
+    modal: true,
     isLoggedin:false,
     userData:{
       name:'',
@@ -61,13 +62,15 @@ export default new Vuex.Store({
       state.authToken=token
       cookies.set('auth-token', token, 0)
       state.isLoggedin=true
-      alert("login success")
+      state.modal = false
+      alert("반갑습니다!")
       router.push('/')
     },
     REMOVE_TOKEN(state){
       state.authToken=null
       cookies.remove('auth-token')
       state.isLoggedin=false
+      state.modal = true
       router.push('/')
     },
     loginCheck(state){
@@ -75,6 +78,7 @@ export default new Vuex.Store({
         state.isLoggedin = true
       }else{
         state.isLoggedin = false
+        
       }
     },
     sendCheck(state){
