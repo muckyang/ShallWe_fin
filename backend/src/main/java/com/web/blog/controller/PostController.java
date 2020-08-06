@@ -396,7 +396,7 @@ public class PostController {
                 String nickname = user.getNickname();
 
                 result.commentList.add(new CommentRes(clist.get(i).getCommentId(), clist.get(i).getArticleId(),
-                        clist.get(i).getUserId(), nickname, clist.get(i).getContent(), clist.get(i).getCreateTime()));
+                        clist.get(i).getUserId(), nickname, clist.get(i).getContent(), BeforeCreateTime(clist.get(i).getCreateTime()),clist.get(i).getCreateTime()));
 
                 System.out.println(nickname);
             }
@@ -445,8 +445,6 @@ public class PostController {
             post.setTemp(temp);
             post.setEndTime(endTime);
 
-            System.out.println(post.getArticleId());
-            System.out.println();
 
             postDao.save(post);
 
