@@ -281,13 +281,13 @@ public class PostController {
                     plist = postDao.findPostByAddressLike(addList.get(0));
                 }
                 else if(addList.size() == 2){
-                    plist = postDao.findPostByAddressLike(addList.get(0), addList.get(1));
+                    plist = postDao.findPostByAddressLikeAndAddressLike(addList.get(0), addList.get(1));
                 }
                 else if(addList.size() == 3){
-                    plist = postDao.findPostByAddressLike(addList.get(0), addList.get(1), addList.get(2));
+                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLike(addList.get(0), addList.get(1), addList.get(2));
                 }
                 else if(addList.size() == 4){
-                    plist = postDao.findPostByAddressLike(addList.get(0), addList.get(1), addList.get(2), addList.get(3));
+                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(addList.get(0), addList.get(1), addList.get(2), addList.get(3));
                 }
 
                 
@@ -296,13 +296,13 @@ public class PostController {
                     plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0));
                 }
                 else if(addList.size() == 2){
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0), addList.get(1));
+                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLike(temp, categoryId, addList.get(0), addList.get(1));
                 }
                 else if(addList.size() == 3){
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0), addList.get(1), addList.get(2));
+                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLike(temp, categoryId, addList.get(0), addList.get(1), addList.get(2));
                 }
                 else if(addList.size() == 4){
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0), addList.get(1), addList.get(2), addList.get(3));
+                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(temp, categoryId, addList.get(0), addList.get(1), addList.get(2), addList.get(3));
                 }
             }
             PostListResponse result = new PostListResponse();
