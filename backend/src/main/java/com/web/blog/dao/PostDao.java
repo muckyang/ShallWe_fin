@@ -35,5 +35,4 @@ public interface PostDao extends JpaRepository<Post, String> {
     List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1, String st2);
     List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1, String st2, String st3);
     List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1, String st2, String st3, String st4);
-
 }

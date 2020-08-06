@@ -16,7 +16,7 @@ public class PostResponse {
      }
      public PostResponse(int articleId,int categoryId,int userId,String title,String address,
      int minPrice,int sumPrice,String description, String writer, String urlLink,String image,
-     int temp,LocalDateTime endT){
+     int temp,LocalDateTime endT, String timeAgo){
           super();
           this.articleId = articleId;
           this.categoryId = categoryId;
@@ -31,6 +31,7 @@ public class PostResponse {
           this.image = image;
           this.temp = temp;
           this.endT = endT;
+          this.timeAgo = timeAgo;
      }
      // post
      @ApiModelProperty(value = "articleId", position = 1)
@@ -69,5 +70,7 @@ public class PostResponse {
      public String[] tags;
      @ApiModelProperty(value = "commentList", position = 17)
      public List<CommentRes> commentList;
+     @ApiModelProperty(value = "timeAgo", position = 18)
+     public String timeAgo;
 
 }
