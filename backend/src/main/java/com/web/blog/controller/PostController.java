@@ -100,14 +100,11 @@ public class PostController {
                         userOpt.get().getNickname(), req.getAddress(), req.getDescription(), req.getMinPrice(),
                         req.getMyPrice(), req.getImage(), temp, endTime);
                 // post.setUrlLink(req.getUrlLink());
-
                 postDao.save(post);
-
                 System.out.println("임시저장!!");
 
                 return new ResponseEntity<>("임시저장 완료", HttpStatus.OK);
             } else if (temp == 1) {
-
                 Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
                         userOpt.get().getNickname(), req.getAddress(), req.getDescription(), req.getMinPrice(),
                         req.getMyPrice(), req.getImage(), temp, endTime);
@@ -120,8 +117,8 @@ public class PostController {
 
                 // 게시물 등록과 동시에 참가자 등록하기
                 int myPrice = req.getMyPrice();
-                if (myPrice < 0) {
-                    String message = "0원보다 값이 작습니다.";
+                if (myPrice <= 0) {
+                    String message = "price 값이 유효하지 않습니다.";
                     return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
                 }
                 String def_mes = "게시자 본인입니다.";
@@ -179,7 +176,7 @@ public class PostController {
 
             PostListResponse result = new PostListResponse();
             result.postList = new LinkedList<>();
-            for (int i = 0; i < plist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
+            for (int i = 0; i < plist.size(); i++) {
                 Post p = plist.get(i);
 
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
@@ -197,26 +194,7 @@ public class PostController {
                 plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
 
             PostListResponse result = new PostListResponse();
-            result.postList = new LinkedList<>();
-            for (int i = 0; i < plist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
-                Post p = plist.get(i);
-                int articleId = p.getArticleId();
-                result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
-                        p.getUrlLink(), p.getImage(), temp, p.getEndTime()));
-
-                // Optional<Like> llist = likeDao.findLikeByArticleno(articleno);
-                List<Like> llist = likeDao.findLikeByArticleId(articleId);
-                List<Comment> clist = commentDao.findCommentByArticleId(articleId);
-                int likenum = llist.size();
-                int commentnum = clist.size();
-                System.out.println("list return success");
-                System.out.println(likenum);
-
-                result.postList.get(i).likenum = likenum;
-                result.postList.get(i).commentnum = commentnum;
-
-            }
+            result.postList = getPostList(plist, temp); //게시물 목록 및 각 게시물의 좋아요 댓글 수
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else if (temp == 2) { // 자유게시판
@@ -233,93 +211,56 @@ public class PostController {
 
         String subject = request.getSubject();
         String word = request.getWord();
-
+        List<Post> plist = new LinkedList<>();
         if (subject.equals("title")) {
             word = "%" + word + "%";
             System.out.println("title로 검색");
-            List<Post> tlist = null;
+           
             if (categoryId == 0)
-                tlist = postDao.findPostByTempAndTitleLike(temp, word);
+                plist = postDao.findPostByTempAndTitleLike(temp, word);
             else
-                tlist = postDao.findPostByTempAndCategoryIdAndTitleLike(temp, categoryId, word);
+                plist = postDao.findPostByTempAndCategoryIdAndTitleLike(temp, categoryId, word);
             PostListResponse result = new PostListResponse();
-            result.postList = new LinkedList<>();
-            for (int i = 0; i < tlist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
-                Post p = tlist.get(i);
-                // int articleno = p.getPid();
-                result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
-                        p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
-            }
+            result.postList = getPostList(plist, temp);
+
             System.out.println("title로 검색 확인");
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else if (subject.equals("writer")) {
             word = "%" + word + "%";
-            List<Post> tlist = null;
+           
             if (categoryId == 0)
-                tlist = postDao.findPostByTempAndWriterLike(temp, word);
+                plist = postDao.findPostByTempAndWriterLike(temp, word);
             else
-                tlist = postDao.findPostByTempAndCategoryIdAndWriterLike(temp, categoryId, word);
+                plist = postDao.findPostByTempAndCategoryIdAndWriterLike(temp, categoryId, word);
             PostListResponse result = new PostListResponse();
-            result.postList = new LinkedList<>();
-            for (int i = 0; i < tlist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
-                Post p = tlist.get(i);
-                // int articleno = p.getPid();
-                result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
-                        p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
+            result.postList = getPostList(plist, temp);
 
-                        List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
-                        List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
-                        int likenum = llist.size();
-                        int commentnum = clist.size();
-                        System.out.println("list return success");
-                        System.out.println(likenum);
-        
-                        result.postList.get(i).likenum = likenum;
-                        result.postList.get(i).commentnum = commentnum;
-            }
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else if (subject.equals("tag")) {
             List<Tag> taglist = tagDao.findTagByName(word);// 해당 태그의 tagId가져옴
             PostListResponse result = new PostListResponse();
-            result.postList = new LinkedList<>();
             for (int i = 0; i < taglist.size(); i++) {
                 int aId = taglist.get(i).getArticleId();
                 Optional<Post> article = postDao.findPostByArticleIdAndTempAndCategoryId(aId, temp, categoryId);
-                Post p = article.get();
-                result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
-                        p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
-
-                        List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
-                        List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
-                        int likenum = llist.size();
-                        int commentnum = clist.size();
-                        System.out.println("list return success");
-                        System.out.println(likenum);
-        
-                        result.postList.get(i).likenum = likenum;
-                        result.postList.get(i).commentnum = commentnum;
+                plist.add(article.get());
+                // result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
+                // p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
+                // p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
+                
+                // List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
+                // List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
+                // int likenum = llist.size();
+                // int commentnum = clist.size();
+                // System.out.println("list return success");
+                // System.out.println(likenum);
+                
+                // result.postList.get(i).likenum = likenum;
+                // result.postList.get(i).commentnum = commentnum;
             }
 
-            // int tId = tag.get().getTagId();
 
-            // List<ArticleTag> atlist = articleTagDao.findArticleTagByTagId(tId);// 해당
-            // tagId의 articleId들 가져옴
-            // PostListResponse result = new PostListResponse();
-            // result.postList = new LinkedList<>();
-            // for (int i = 0; i < atlist.size(); i++) {
-            // int aId = atlist.get(i).getArticleId();
-            // Optional<Post> article = postDao.findPostByArticleIdAndTempAndCategoryId(aId,
-            // temp, categoryId);
-            // Post p = article.get();
-            // result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(),
-            // p.getUserId(), p.getTitle(),
-            // p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(),
-            // p.getWriter(),
-            // p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
-            // }
+            result.postList = getPostList(plist,temp);
+            
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -331,24 +272,40 @@ public class PostController {
     @ApiOperation(value = "게시물상세보기") // SWAGGER UI에 보이는 이름
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
         // 토큰 받아오면 그 토큰으로 유효성 검사 후 uid 받아와서 좋아요 한지 여부 확인
+
+        System.out.println("상세보기 들어옴 "  +articleId);
         Optional<Post> postOpt = postDao.findPostByArticleId(articleId);
         Post p = postOpt.get();
+
         if (postOpt.isPresent()) {
             String token = request.getToken();
             User jwtuser = jwtService.getUser(token);
+      
             Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
                     p.getImage(), p.getTemp(), p.getEndTime());
-
-            // 이 게시물에 해당되는 태그는 다 보내기
-            List<Tag> tlist = tagDao.findTagByArticleId(articleId);
-            String[] tags = new String[tlist.size()];
-            for (int i = 0; i < tags.length; i++) {
-                tags[i] = tlist.get(i).getName();
-            }
-            result.tags = tags;
-
+      
+                    List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
+                    List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
+                    int likenum = llist.size();
+                    int commentnum = clist.size();
+                    System.out.println("list return success");
+                    System.out.println(likenum);
+        
+                    result.likenum = likenum;
+                    result.commentnum = commentnum;
+        
+      
+                    // 이 게시물에 해당되는 태그는 다 보내기
+                    List<Tag> tlist = tagDao.findTagByArticleId(articleId);
+                    String[] tags = new String[tlist.size()];
+                    for (int i = 0; i < tags.length; i++) {
+                        tags[i] = tlist.get(i).getName();
+                    }
+                    result.tags = tags;
+                    
+      
             if (userOpt.isPresent()) {// 로그인 상태일때
 
                 Optional<Like> isILiked = likeDao.findLikeByUserIdAndArticleId(userOpt.get().getUserId(), articleId);
@@ -361,22 +318,18 @@ public class PostController {
             } else {
                 System.out.println("비로그인 / 로그인 여부 확인 !!!");
                 result.isLiked = false;
-            }
-            
-            List<Comment> clist = commentDao.findCommentByArticleId(articleId);
-   
+            }              
+
             result.commentList = new LinkedList<>(); // 댓글 리스트 가져옴
-            for(int i = 0 ; i < clist.size();i++){
+            for (int i = 0; i < clist.size(); i++) {
                 User user = userDao.getUserByUserId(clist.get(i).getUserId());
                 String nickname = user.getNickname();
 
-                result.commentList.add(new CommentRes(clist.get(i).getCommentId(),clist.get(i).getArticleId(),clist.get(i).getUserId(),
-                nickname,clist.get(i).getContent(),clist.get(i).getCreateTime()));                        
+                result.commentList.add(new CommentRes(clist.get(i).getCommentId(), clist.get(i).getArticleId(),
+                        clist.get(i).getUserId(), nickname, clist.get(i).getContent(), clist.get(i).getCreateTime()));
 
                 System.out.println(nickname);
-                System.out.println(result);
-                System.out.println("결과결과");
-            }   
+            }
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -398,11 +351,10 @@ public class PostController {
         } else {
             return new ResponseEntity<>("로그인 상태를 확인하세요(token값 유효하지 않음)", HttpStatus.BAD_REQUEST);
         }
-       
-        if(userOpt.get().getUserId() != p.getUserId()){
+
+        if (userOpt.get().getUserId() != p.getUserId()) {
             return new ResponseEntity<>("로그인한 회원과 게시자가 일치하지 않습니다.", HttpStatus.NOT_FOUND);
         }
-
 
         String endDate = req.getEndDate();
         String endT = req.getEndTime();
@@ -508,18 +460,20 @@ public class PostController {
         // User jwtuser = jwtService.getUser(token);
         // int userId;
 
-        // Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        // Optional<User> userOpt =
+        // userDao.findUserByEmailAndPassword(jwtuser.getEmail(),
+        // jwtuser.getPassword());
         // if (userOpt.isPresent()) {
-        //     userId = userOpt.get().getUserId();
+        // userId = userOpt.get().getUserId();
         // } else {
-        //     return new ResponseEntity<>("로그인 상태를 확인하세요(token값 유효하지 않음)", HttpStatus.BAD_REQUEST);
-        // }
-       
-        // if(userOpt.get().getUserId() != post.getUserId()){
-        //     return new ResponseEntity<>("로그인한 회원과 게시자가 일치하지 않습니다.", HttpStatus.NOT_FOUND);
+        // return new ResponseEntity<>("로그인 상태를 확인하세요(token값 유효하지 않음)",
+        // HttpStatus.BAD_REQUEST);
         // }
 
-       
+        // if(userOpt.get().getUserId() != post.getUserId()){
+        // return new ResponseEntity<>("로그인한 회원과 게시자가 일치하지 않습니다.",
+        // HttpStatus.NOT_FOUND);
+        // }
 
         // 댓글 삭제
         List<Comment> commentList = commentDao.findCommentByArticleId(articleId);
@@ -550,4 +504,29 @@ public class PostController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    private List<PostResponse> getPostList(List<Post> plist, int temp) {
+        List<PostResponse> result = new LinkedList<>();
+
+        for (int i = 0; i < plist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
+            Post p = plist.get(i);
+
+            result.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
+                    p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
+                    p.getImage(), temp, p.getEndTime()));
+
+            // Optional<Like> llist = likeDao.findLikeByArticleno(articleno);
+            List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
+            List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
+            int likenum = llist.size();
+            int commentnum = clist.size();
+            System.out.println("list return success");
+            System.out.println(likenum);
+
+            result.get(i).likenum = likenum;
+            result.get(i).commentnum = commentnum;
+
+        }
+
+        return result;
+    }
 }
