@@ -4,8 +4,7 @@
         <div class="comment-box">
             <div class="comment-user">
                 {{comment.nickname}}
-
-                <div class="comment-drop dropdown dropleft" v-if="checkAuth">
+                <div class="comment-drop dropdown dropleft" v-if="comment.userId === userData.userId">
                     <button type="button" class="comment-btn" data-toggle="dropdown">
                         <i class="fas fa-ellipsis-v"></i>
                     </button>
@@ -21,11 +20,11 @@
         </div>
     </div>
 
-    <!-- 댓글 수정 -->
+    <!-- 댓글 수정 input 공간-->
 
     <div v-if="flag" class="comment-update-write">
       <div class="comment-update-text">
-        <input class="comment-input" type="text" v-model="commentData.content">
+        <input class="comment-input" type="text" v-model="comment.content">
       </div>
       <div class="comment-update-submit">
         <button type="button" v-if="flag" class="comment-update-btn" @click="updateCancel">취소</button>
@@ -50,35 +49,24 @@ export default {
         return{
             watchFlag:false,
             flag:false,
-            usersameflag:false,
-            commentData:{
-                commentId:this.comment.commentId,
-                content:this.comment.content,
-                user: this.comment.userId,
-                createTime: this.comment.createTime,
-                token:this.$cookies.get('auth-token')
-            },
-            userIdForCheck:'',
             canceldata:{
+                articleId:this.comment.articleId,
                 commentId:this.comment.commentId,
                 content:this.comment.content,
                 userId: this.comment.userId,
+                nickname: this.comment.nickname,
                 createTime: this.comment.createTime,
                 token:this.$cookies.get('auth-token')
             },
         }
     },
     computed:{
-        checkAuth(){
-            return this.comment.userId===this.userIdForCheck.userId
-        },
         ...mapState(['userData'])
     },
     methods:{
-        ...mapActions(['getUserData']),
         deleteComment(){
             const auth = {token:this.$cookies.get('auth-token')}
-            axios.post(BACK_URL+`/comment/delete/${this.commentData.commentId}`,auth)
+            axios.post(BACK_URL+`/comment/delete/${this.comment.commentId}`,auth)
                 .then(()=>{
                     this.watchFlag=true
                 })
@@ -87,12 +75,10 @@ export default {
                 })
         },
         showInput(){
-            console.log(this.flag, '수정전')
             this.flag=true
-            console.log(this.flag, '수정후')
         },
         updateComment(){
-            axios.post(BACK_URL+'/comment/update',this.commentData)
+            axios.post(BACK_URL+'/comment/update',this.comment)
                 .then((response)=>{
                     this.flag=false
                     //~~~~~~~~~~~~~~~~~~~~~~~~~중요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -106,10 +92,11 @@ export default {
         },
         updateCancel() {
             console.log(this.canceldata)
-            console.log(this.commentData, '바뀐 댓글데이타')
-            this.commentData = this.canceldata
-            console.log(this.commentData, '취소 후')
+            console.log(this.comment, '바뀐 댓글데이타')
+            this.comment = this.canceldata
+            console.log(this.comment, '취소 후')
             this.watchFlag=true
+            this.flag=false
         }
     },
     watch:{
@@ -117,11 +104,9 @@ export default {
             this.$emit('re-render')
         }
     },
-    created(){
-        this.getUserData()
-        this.userIdForCheck=this.userData
-        this.checkAuth
-    }
+    // created(){
+    //     console.log(this.comment)
+    // }
 }
 </script>
 

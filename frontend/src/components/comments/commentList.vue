@@ -3,12 +3,11 @@
     <div class="comment-start">
       <i class="far fa-comment-dots"></i> 댓글 {{comments.length}}
     </div>    
-    <!-- <hr class="comment-start-line"> -->
 
     <!--댓글 보여주는 공간-->
     <commentListItem v-for="comment in comments" 
     :key="comment.commentId" :comment="comment" 
-    @re-render="getArticle"/>
+    @re-render="getArticle($route.params.ID)"/>
 
     <!--댓글 등록 공간-->
     <div class="comment-write">
@@ -26,7 +25,7 @@
 <script>
 const BACK_URL = "http://127.0.0.1:8080"
 import axios from "axios"
-import {mapState,mapActions} from 'vuex'
+import {mapState,mapActions, mapMutations} from 'vuex'
 import commentListItem from '@/components/comments/commentListItem'
 
 export default {
@@ -48,32 +47,26 @@ export default {
     },
   methods: {
     ...mapActions(['getArticle']),
+    ...mapMutations(['GET_COMMENTS']),
       createComment(){
         axios.post( `${BACK_URL}/comment/create`, this.commentData)
           .then(()=>{
             this.commentData.content=''
-            console.log('댓글 보내기 완료')
-            this.getArticle() //다시 보기
+            this.getArticle(this.$route.params.ID) //다시 보기
           })
           .catch((err)=>{
             console.error(err)
           })
       },
-      // getComments()
-      // { 
+      // getComments(){ 
       //   axios.get(`${BACK_URL}/comment/read/${this.$route.params.ID}`)
       //     .then((response)=>{
-      //       this.comments = response.data.commentList
-      //       console.log(this.comments, '댓글 나옴?')
+      //       this.GET_COMMENTS(response.data.commentList)
       //     })
       //     .catch((err)=>{
       //       console.error(err)
       //     })       
       // },
-  },
-  created(){
-    // this.getComments()
-    
   },
 }
 </script>
