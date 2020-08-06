@@ -8,6 +8,9 @@ import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
 import com.web.blog.dao.AuthDao;
+import com.web.blog.dao.PostDao;
+import com.web.blog.dao.CommentDao;
+import com.web.blog.dao.LikeDao;
 import com.web.blog.dao.UserDao;
 import com.web.blog.model.user.UserResponse;
 import com.web.blog.model.auth.Auth;
@@ -49,6 +52,12 @@ public class AccountController {
 
     @Autowired
     UserDao userDao;
+    @Autowired
+    PostDao postDao;
+    @Autowired
+    CommentDao commentDao;
+    @Autowired
+    LikeDao likeDao;
     @Autowired
     AuthDao authDao;
     @Autowired
@@ -146,7 +155,11 @@ public class AccountController {
         User jwtuser = jwtService.getUser(token);
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
         if (userOpt.isPresent()) {
-            User result = userOpt.get();
+
+            UserResponse result = getUserResponse(userOpt.get());
+
+
+
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -216,5 +229,14 @@ public class AccountController {
             authDao.save(auth);
         }
         return authNumber;
+    }
+
+    private UserResponse getUserResponse(User user){
+        UserResponse result = new UserResponse(user.getPassword(),user.getName(),user.getNickname(),user.getAddress(),user.getBirthday());
+        result.articleCount = postDao.findPostByUserIdAndTemp(user.getUserId(),1).size();
+        result.reviewCount = postDao.findPostByUserIdAndCategoryId(user.getUserId(),102).size();
+        result.likeCount = likeDao.findLikeByUserId(user.getUserId()).size();
+        result.tempCount = postDao.findPostByUserIdAndTemp(user.getUserId(),2).size();
+        return result;
     }
 }
