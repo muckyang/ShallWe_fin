@@ -642,50 +642,46 @@ public class PostController {
         return result;
     }
 
-    
+
     private static String BeforeCreateTime(LocalDateTime createTime) {
         String result = "";
         int before = 0;
         LocalDateTime nowTime = LocalDateTime.now();
-        if (createTime.getYear() == nowTime.getYear()) {
-            if (createTime.getMonth() == nowTime.getMonth()) {
-                if (createTime.getDayOfMonth() == nowTime.getDayOfMonth()) {
+        if (createTime.getYear() <= nowTime.getYear()+1) {
+            if (createTime.getMonthValue() == nowTime.getMonthValue()) {
+                if (createTime.getDayOfYear() == nowTime.getDayOfYear()) {
                     if (createTime.getHour() == nowTime.getHour()) {
                         if (createTime.getMinute() == nowTime.getMinute()) {
-                            result = "1분 전";
+                            result = "약 1분 전";
                         } else {
-                            before = createTime.getMinute() -  nowTime.getMinute() ;
-                            if (before < 0)
-                                before = 60 + before;
-                            result = before + "분 전";
+                            before = nowTime.getMinute() -  createTime.getMinute() ;
+                            result = "약 " + before + "분 전";
                         }
-                    } else {
-                        before = createTime.getHour() - nowTime.getHour();
-                       
-                        if (before < 0)
-                            before = before + 24;
-                        result = before + "시간 전";
+                    } else if(createTime.getHour() == nowTime.getHour() +1 && createTime.getMinute() > nowTime.getMinute() ){
+                        before = 60 + nowTime.getMinute() - createTime.getMinute();
+                        result = "약 " + before + "분 전";
+                    }else{
+                        before = nowTime.getHour() -  createTime.getHour() ;
+                        result = "약 " + before + "시간 전";
                     }
-                } else {
-                    before = createTime.getDayOfYear() - nowTime.getDayOfYear();
-                    if (before < 0)
-                        before = 365 + before;
-                    if (before < 0) {
-                        result = "1달 전";
-                        return result;
-                    }
-                    result = before + "일 전";
+                }  else if(createTime.getDayOfYear() == nowTime.getDayOfYear() +1 && createTime.getHour() > nowTime.getHour() ){
+                    before = 24 + nowTime.getHour() - createTime.getHour();
+                    result = "약 " + before + "시간 전";
+                }else{
+                    before = nowTime.getDayOfYear() -  createTime.getDayOfYear() ;
+                    result = "약 " + before + "일 전";
                 }
-            } else {
-                before = createTime.getMonthValue()-  nowTime.getMonthValue() ;
-                if (before < 0)
-                    before = 12 + before;
-                result = before + "달 전";
+            }  else if(createTime.getDayOfYear() == nowTime.getDayOfYear() +1 && createTime.getHour() > nowTime.getHour() ){
+                before = 24 + nowTime.getHour() - createTime.getHour();
+                result = "약 " + before + "일 전";
+            }else{
+                before = nowTime.getDayOfYear() -  createTime.getDayOfYear() ;
+                result = "약 " + before + "일 전";
             }
         } else {
-            before = createTime.getYear() - nowTime.getYear() ;
+            before = nowTime.getYear() - createTime.getYear() ;
        
-            result = before + "달 전";
+            result ="약 " +  before + "년 전";
         }
         return result;
 
