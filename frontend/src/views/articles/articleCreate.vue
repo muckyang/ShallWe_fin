@@ -27,7 +27,7 @@
         <tr>
           <th scope="row">시작금액/전체금액</th>
           <td class="d-flex">
-            <b-form-input type="number" v-model="articleData.sumPrice"></b-form-input>
+            <b-form-input type="number" v-model="articleData.myPrice"></b-form-input>
             <b-form-input type="number" v-model="articleData.minPrice"></b-form-input>
           </td>
         </tr>
@@ -75,6 +75,7 @@
     <hr>
     <button class="btn btn-primary" type="submit" @click="createArticle({articleData,temp:1})" value="Submit">작성완료</button>
     <button class="btn btn-info" @click="createArticle({articleData,temp:0})">임시저장</button>
+    <kakaoMap/>
   </div>
 </template>
 
@@ -82,10 +83,14 @@
   const BACK_URL = 'http://127.0.0.1:8080'
   import axios from 'axios'
   import {mapActions} from 'vuex'
+  import kakaoMap from '@/components/articles/kakaoMap'
 
 
   export default {
     name: "CreateView",
+    components:{
+      kakaoMap
+    },
     data() {
       return {
         articleData: {
@@ -94,7 +99,7 @@
           address: null,
           description: null,
           minPrice: null,
-          sumPrice: null,
+          myPrice: null,
           urlLink: null,
           imgae: null,
           endDate:null,

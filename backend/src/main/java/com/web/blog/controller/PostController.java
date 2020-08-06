@@ -111,6 +111,8 @@ public class PostController {
                 Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
                         userOpt.get().getNickname(), req.getAddress(), req.getDescription(), req.getMinPrice(),
                         req.getMyPrice(), req.getImage(), temp, endTime);
+                System.out.println("Min" + req.getMinPrice());
+                System.out.println("My" + req.getMyPrice());
 
                 postDao.save(post);
                 int artiId = post.getArticleId();
@@ -134,9 +136,7 @@ public class PostController {
 
                 // 게시물 sum_price에 더하기
                 post = postDao.getPostByArticleId(artiId);// 해당 구매게시물을 얻어옴
-                int sumPrice = post.getSumPrice();// sumPrice를 얻어옴
-                sumPrice = sumPrice + myPrice;// 참가자의 가격을 더해줌
-                post.setSumPrice(sumPrice);
+                post.setSumPrice(myPrice);
                 postDao.save(post);// 다시 DB에 넣어줌
 
                 System.out.println("참가자 등록!!");
