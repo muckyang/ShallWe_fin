@@ -2,7 +2,6 @@ package com.web.blog.model.comment;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Entity;
 import javax.validation.Valid;
 
 import lombok.AllArgsConstructor;

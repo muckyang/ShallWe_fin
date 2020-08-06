@@ -12,7 +12,6 @@ import com.web.blog.dao.UserDao;
 import com.web.blog.model.comment.CommentResponse;
 import com.web.blog.model.participant.ParticipantRequest;
 import com.web.blog.model.participant.ParticipantListResponse;
-import com.web.blog.model.participant.ParticipantResponse;
 import com.web.blog.model.post.Post;
 import com.web.blog.model.user.User;
 import com.web.blog.service.JwtService;
