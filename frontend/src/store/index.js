@@ -43,11 +43,12 @@ export default new Vuex.Store({
       endTime:'',
       createTime:'',
     },
-    comments:[],
+    
     isSended:false,
 
     //게시글
     articles:[],
+    comments:[],
   },
 
   getters:{
@@ -223,8 +224,6 @@ export default new Vuex.Store({
       const auth={token:state.authToken}
       axios.post(`${BACK_URL}/post/detail/${articleID}`,auth)
         .then((response)=>{
-          console.log(response, '응답응답')
-          console.log(response.data.commentList, '댓글리스트')
           commit('GET_ARTICLE',response)
           commit('GET_COMMENTS', response.data.commentList)
         })

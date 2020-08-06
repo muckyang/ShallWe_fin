@@ -1,5 +1,6 @@
 <template>
   <div class="comments-box mt-4">
+    {{comments}}
     <div class="comment-start">
       <i class="far fa-comment-dots"></i> 댓글 {{comments.length}}
     </div>    
@@ -8,7 +9,7 @@
     <!--댓글 보여주는 공간-->
     <commentListItem v-for="comment in comments" 
     :key="comment.commentId" :comment="comment" 
-    @re-render="getComments" :user="comment.userId"/>
+    @re-render="getComments" :user="comment.nickname"/>
 
     <!--댓글 등록 공간-->
     <div class="comment-write">
@@ -26,6 +27,7 @@
 <script>
 const BACK_URL = "http://127.0.0.1:8080"
 import axios from "axios"
+import {mapState} from 'vuex'
 import commentListItem from '@/components/comments/commentListItem'
 
 export default {
@@ -35,7 +37,6 @@ export default {
   },
   data(){
     return{
-      comments:[],
       commentData:{
         articleId: this.$route.params.ID,
         content:'',
@@ -43,6 +44,9 @@ export default {
       },
     }
   },
+  computed:{
+      ...mapState(['comments'])
+    },
   methods: {
       createComment(){
         axios.post( `${BACK_URL}/comment/create` , this.commentData)
