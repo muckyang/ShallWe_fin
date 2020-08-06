@@ -13,7 +13,7 @@
             <div class="dropdown-menu">
                 <a class="dropdown-item"><router-link class="articleUpdate" :to="{name:'articleUpdate',
                 params: {ID:this.$route.params.ID}}">수정</router-link></a>
-                <a class="dropdown-item" @click="del">삭제</a><!--다시 보기!!!!!!!1 -->
+                <a class="dropdown-item">삭제</a><!--다시 보기!!!!!!!1 -->
             </div>
           </div>
           
@@ -38,16 +38,14 @@
           <div class="detail-btns">
             <articleLike  @like-change="likeChange" 
             :isLiked="isLiked" :article="articleData"/>
-              <!-- <button type="button">
-                <a href="javascript:;" 
-                  @click="shareContent" 
-                  id="kakao-link">
-                  <img src="../../assets/img/kakao_btn.png" class="kakao">
-                </a>
-              </button> -->
               <button @click="shareContent" 
               class="detail-share">
-              <i class="fas fa-share-alt"></i> 공유</button>
+              <a href="javascript:;" class="kakao-share"
+                  @click="shareContent" 
+                  id="kakao-link">
+                  <img src="../../assets/img/kakao_btn.png" class="kakao"> 공유
+                </a>
+              </button>
 
               <b-button class="detail-join" v-if="articleData.userId != userData.userId" 
               v-b-modal.modal-prevent-closing>
@@ -206,6 +204,7 @@
         axios.post(BACK_URL + `/likedcheck/${this.$route.params.ID}`,auth)
         .then((response) => {
           this.isLiked=response.data.isLiked
+          console.log(this.isLiked, '조아요 눌림 ?')
         })
         .catch(err => console.log(err))
       },
@@ -217,6 +216,8 @@
     created: function(){
       this.getArticle(this.$route.params.ID)
       this.getUserData()
+      this.likeCheck()
+
     },
 
   }
@@ -292,10 +293,18 @@ a{
   font-weight: bold;
   margin-bottom: 5px;
 }
-/* .kakao{
+.kakao{
   height: 25px;
   width: 25px;
-} */
+}
+.kakao-share{
+  text-decoration: none;
+  color: rgb(26, 12, 12);
+  font-weight: normal;
+}
+.kakao-share:hover{
+  text-decoration: none;
+}
 .detail-content{
   /* border: 1px solid blue; */
   margin: 30px 0;
@@ -312,9 +321,9 @@ a{
 .detail-btns .detail-share{
     display: block;
     text-align: center;
-    background: #f7e600;
+    background: rgb(250,227,1);
     border-radius: 3px;
-    box-shadow: 0 10px 20px -8px rgb(216, 203, 20);
+    box-shadow: 0 10px 20px -8px rgb(202, 190, 21);
     padding: 10px 12px;
     font-size: 17px;
     cursor: pointer;
