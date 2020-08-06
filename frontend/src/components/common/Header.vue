@@ -70,7 +70,7 @@
                     카톡 로그인</button>
                     <div class="blank"></div>
                   <button class="google-btn">
-                  <img src="../../assets/img/google_logo.png" class="google-img">
+                  <img src="../../assets/img/google_logo4.png" class="google-img">
                   구글 로그인</button>
                 </div>
               </div>
@@ -307,6 +307,9 @@ font-style: normal;
   width: 100%;
   border-radius: 2px;
 }
+.login-email{
+  margin-bottom:0.5%;
+}
 .modal-body .login-submit{
   margin: 0 0 10% 0;
 }
@@ -352,13 +355,13 @@ font-style: normal;
   color: rgb(26, 12, 12);
 }
 .kakao-img{
-  height: 25px;
-  width: 25px;
+  height: 23px;
+  width: 24px;
 }
 .google-img{
-  height: 20px;
-  width: 20px;
-  margin: 0 0 0 5px;
+  height: 24px;
+  width: 23px;
+  /* margin: 0 0 0 5px; */
 }
 
 .blank{
