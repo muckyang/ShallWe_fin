@@ -11,7 +11,7 @@
         <div class="wall" v-show="!isLoggedin">|</div>
 
         <!--modal-->
-        <div class="modal fade" v-if="modal" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog modalsize">
             <div class="modal-content modalsize">
             <!-- <div class="modal-header">
@@ -245,7 +245,7 @@ export default {
 
   },
   computed:{
-    ...mapState(['isLoggedin','modal'])
+    ...mapState(['isLoggedin'])
   },
   created:function(){
     this.loginCheck()
@@ -326,7 +326,7 @@ font-style: normal;
   opacity: 0.8;
 }
 .submit-btn:hover{
-  transition-duration: 0.3s;
+  transition-duration: 0.5s;
   opacity: 1;
 }
 .row-items{
