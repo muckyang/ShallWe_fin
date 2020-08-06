@@ -323,6 +323,11 @@ font-style: normal;
   color: white;
   margin: 2% 0 0 0;
   width: 100%;
+  opacity: 0.8;
+}
+.submit-btn:hover{
+  transition-duration: 0.3s;
+  opacity: 1;
 }
 .row-items{
   margin: 5% 0 3% 0 ;
