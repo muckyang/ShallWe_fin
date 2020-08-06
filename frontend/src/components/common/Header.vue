@@ -59,11 +59,10 @@
                   <button type="submit" class="submit-btn" 
                   @click="login(loginData)" data-dismiss="modal">로그인</button>
 
-                  <div class="row-items d-flex justify-content-start">
+                  <div class="row-items d-flex justify-content-center">
                     <div class="bottom-line"></div>
-                    <!-- <div class="or">또는</div> -->
-                    <!-- <hr class="or-line"> -->
-                    <!-- <div class="bottom-line"></div> -->
+                    <div class="or">또는</div>
+                    <div class="bottom-line"></div>
                   </div>
 
                   <button class="kakao-btn">
@@ -326,19 +325,22 @@ font-style: normal;
   width: 100%;
 }
 .row-items{
+  margin: 5% 0 0 0 ;
   width: 100%;
   height: 40%;
 }
-.or-line{
-  background-color: blue;
+.or{
+  border: 0px solid grey;
+  margin: 2% 1% 0 1%;
+  font-size: small;
 }
-.bottom-line, .or{
-  margin: 7% 0 0 0;
-  width: 100%;
+.bottom-line{
+  margin: 7% 0 6% 0;
+  width: 42%;
   border-bottom: 1px solid grey;
 }
 .kakao-btn, .google-btn{
-  margin: 5% 0 0 0;
+  margin: 2% 0 0 0;
   width: 100%;
   background-color: transparent;
   color: rgb(26, 12, 12);
