@@ -72,17 +72,17 @@ public class CommentController {
 
     }
 
-    // @GetMapping("/comment/read/{articleId}")
-    // @ApiOperation(value = "댓글 목록")
-    // public Object read(@PathVariable int articleId) throws MessagingException, IOException {
+    @GetMapping("/comment/read/{articleId}")
+    @ApiOperation(value = "댓글 목록")
+    public Object read(@PathVariable int articleId) throws MessagingException, IOException {
 
-    //     List<Comment> clist = commentDao.findCommentByArticleId(articleId);
+        List<Comment> clist = commentDao.findCommentByArticleId(articleId);
 
-    //     System.out.println("댓글 목록!!");
-    //     CommentResponse result = new CommentResponse();
-    //     result.commentList = clist;
-    //     return new ResponseEntity<>(result, HttpStatus.OK);
-    // }
+        System.out.println("댓글 목록!!");
+        CommentResponse result = new CommentResponse();
+        result.commentList = clist;
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
     @PostMapping("/comment/update")
     @ApiOperation(value = "댓글수정")
