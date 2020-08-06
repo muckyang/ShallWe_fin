@@ -42,6 +42,9 @@ export default new Vuex.Store({
       temp:'',
       endTime:'',
       createTime:'',
+      likeNum:'',
+      commentNum:'',
+      timeAgo:'',
     },
     
     isSended:false,
@@ -117,6 +120,8 @@ export default new Vuex.Store({
       state.articleData.description = response.data.description,
       state.articleData.minPrice = response.data.minPrice,
       state.articleData.sumPrice = response.data.sumPrice,
+      state.articleData.likeNum = response.data.likeNum,
+      state.articleData.commentNum=response.data.commentNum,
       state.articleData.urlLink=response.data.urlLink,
       state.articleData.image=response.data.image,
       state.articleData.temp=response.data.temp,
