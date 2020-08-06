@@ -24,6 +24,24 @@ public class UserResponse {
     @ApiModelProperty(value = "userPoint", position = 8)
     public int userPoint;
 
-   
-    
+    @ApiModelProperty(value = "articleCount", position = 9)
+    public int articleCount;
+
+    @ApiModelProperty(value = "reviewCount", position = 10)
+    public int reviewCount;
+
+    @ApiModelProperty(value = "likeCount", position = 11)
+    public int likeCount;
+
+    @ApiModelProperty(value = "tempCount", position = 12)
+    public int tempCount;
+
+    public UserResponse(String password, String name, String nickname, String address, LocalDate birthday) {
+        this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+        this.address = address;
+        this.birthday = birthday;
+    }
+
 }

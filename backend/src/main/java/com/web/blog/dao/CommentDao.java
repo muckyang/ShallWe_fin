@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CommentDao extends JpaRepository<Comment, String> {
    
     List<Comment> findCommentByArticleId(int articleId);
+    List<Comment> findCommmentByUserId(int userId);
     Comment getCommentByCommentId(int commentId);
 
 }
