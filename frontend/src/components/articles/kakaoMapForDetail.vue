@@ -11,7 +11,6 @@ export default {
       ...mapState(['articleData'])
     },
     mounted() {
-        console.log(this.articleData.address,"AAAAAA")
         if (window.kakao && window.kakao.maps) {
             setTimeout(()=>{
                 this.initMap();
@@ -61,7 +60,7 @@ export default {
                 } 
             });   
         }
-    }
+    },
 }
 </script>
 

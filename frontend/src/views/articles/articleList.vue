@@ -1,5 +1,16 @@
 <template>
   <div>
+    <input class="searchInput" type="search" 
+    v-model="searchData.searchDataForSend.word"
+    @keypress.enter="search(searchData)"
+    style="font-family: FontAwesome;" 
+    placeholder="Search" 
+    >
+    <button class="searchBtn 
+    my-2 my-sm-0" 
+    type="submit" @click="search(searchData)">
+    <i class="fas fa-search"></i></button>
+
     <nav class="mt-4 mb-3 ml-3">
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
         <a @click="changeCategory(0)" class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">전체보기</a>
@@ -145,14 +156,20 @@ export default {
   data(){
     return {
       categoryNum: 0,
+      searchData:{
+        searchDataForSend:{
+          word:'',
+        },
+        categoryId:'',
+      },
     }
   },
   methods: {
-    ...mapActions(['getArticles']),
+    ...mapActions(['getArticles','search']),
     changeCategory(num){
       this.categoryNum = num
       this.getArticles({temp:1,categoryId:this.categoryNum})
-    }
+    },
   },
   computed:{
     ...mapState(['articles'])
