@@ -15,7 +15,7 @@
                 <a class="dropdown-item" href="#" @click="selectCategory(3)">쉘위공구</a>
               </div>
             </div>
-            <b-form-input type="text" v-model="articleData.title"></b-form-input>
+            <b-form-input type="text" v-model="articleUpdateData.title"></b-form-input>
           </td>
         </tr>
       </tbody>
@@ -23,7 +23,7 @@
     <hr>
     <div>
       <div class="bg-secondary text-light">
-        <h3>어디서 만날까? - {{articleData.address}}</h3>
+        <h3>어디서 만날까? - {{articleUpdateData.address}}</h3>
       </div>
       <kakaoMap @setAddress="setAddress"/>
     </div>
@@ -32,14 +32,14 @@
         <tr>
           <th scope="row">시작금액/전체금액</th>
           <td class="d-flex">
-            <b-form-input type="number" v-model="articleData.myPrice"></b-form-input>
-            <b-form-input type="number" v-model="articleData.minPrice"></b-form-input>
+            <b-form-input type="number" v-model="articleUpdateData.myPrice"></b-form-input>
+            <b-form-input type="number" v-model="articleUpdateData.minPrice"></b-form-input>
           </td>
         </tr>
         <tr>
           <th scope="row">URL</th>
           <td>
-            <b-form-input type="url" v-model="articleData.urlLink"></b-form-input>
+            <b-form-input type="url" v-model="articleUpdateData.urlLink"></b-form-input>
           </td>
         </tr>
         <tr>
@@ -51,8 +51,8 @@
         <tr>
           <th scope="row">종료일자/종료시간</th>
           <td class="d-flex">
-            <b-form-input type="date" v-model="articleData.endDate"></b-form-input>
-            <b-form-input type="time" v-model="articleData.endTime"></b-form-input>
+            <b-form-input type="date" v-model="articleUpdateData.endDate"></b-form-input>
+            <b-form-input type="time" v-model="articleUpdateData.endTime"></b-form-input>
           </td>
         </tr>
         <tr>
@@ -62,7 +62,7 @@
               <b-form-textarea
                 id="textarea-rows"
                 rows="8"
-                v-model="articleData.description"
+                v-model="articleUpdateData.description"
               ></b-form-textarea>
             </div>
           </td>
@@ -71,7 +71,7 @@
           <th scope="row">태그</th>
           <td>
             <div>
-              <b-form-tags input-id="tags-basic" v-model="articleData.tags" class="mb-2"></b-form-tags>
+              <b-form-tags input-id="tags-basic" v-model="articleUpdateData.tags" class="mb-2"></b-form-tags>
           </div>
           </td>
         </tr>
@@ -97,14 +97,50 @@ export default {
     data () {
       return {
         articleUpdateData: {},
+        selectedTBG:"카테고리"
       }
     },
     methods: {
         ...mapActions(['getArticle','deleteArticle','updateArticle']),
+        selectCategory(num){
+          this.articleUpdateData.categoryId=num
+          if(num===1){
+            this.selectedTBG='쉘위배달'
+          }else if(num===2){
+            this.selectedTBG='쉘위택배'
+          }else{
+            this.selectedTBG='쉘위공구'
+          }
+      },
+      imageChange(e){
+        const selectedImage = e.target.files[0]
+        this.createBase64Image(selectedImage);
+      },
+      createBase64Image(fileObject){
+        this.articleData.image = new Image();
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.articleData.image = e.target.result;
+        };
+        reader.readAsDataURL(fileObject);
+      },
+      imageUpload(){
+        this.$refs.imageInput.click()
+      },
+      setAddress(address){
+        this.articleData.address=address
+      },
     },
     created: function(){
       this.getArticle(this.$route.params.ID)
       this.articleUpdateData=this.articleData
+      if(this.articleUpdateData.categoryId===1){
+        this.selectedTBG='쉘위배달'
+      }else if(this.articleUpdateData.categoryId===2){
+        this.selectedTBG='쉘위택배'
+      }else{
+        this.selectedTBG='쉘위공구'
+      }
     },
     computed:{
       ...mapState(['articleData'])

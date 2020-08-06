@@ -262,10 +262,12 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({state},updateData){
+      if(updateData.articleUpdateData.endTime.length<8){
+        updateData.articleUpdateData.endTime=updateData.articleUpdateData.endTime+":00"
+      }
       updateData.articleUpdateData.token=state.authToken
-      console.log(updateData.articleUpdateData)
       axios.post(`${BACK_URL}/post/update/${updateData.temp}`, updateData.articleUpdateData)
-      .then((response) => {
+      .then(() => {
         router.push(`/detail/${updateData.articleUpdateData.articleId}`)
       })
       .catch((err)=>{
