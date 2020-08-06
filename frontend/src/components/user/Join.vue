@@ -463,7 +463,7 @@ label{
     color: black;
 }
 .joinInput{
-    width: 270px;
+    width: 260px;
     height: 40px;
     border: 1px solid grey;
     border-radius: 5px;

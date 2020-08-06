@@ -87,6 +87,9 @@ export default new Vuex.Store({
     sendCheck(state){
       state.isSended=true
     },
+    CheckFalse(state){
+      state.isSended=false
+    },
     termCheck(state){
       
       if(state.isTerm){
@@ -161,6 +164,7 @@ export default new Vuex.Store({
         axios.post(`${BACK_URL}/account/signup`, signUpData.signUpDataForSend)
         .then(() => {
             alert("회원가입이 완료되었습니다.")
+            this.commit('CheckFalse')
             router.push('/');
         })
         .catch((err) => {
