@@ -11,7 +11,7 @@
         <div class="wall" v-show="!isLoggedin">|</div>
 
         <!--modal-->
-        <div class="modal fade" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <div class="modal fade" v-if="modal" id="Login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
         <div class="modal-dialog modalsize">
             <div class="modal-content modalsize">
             <!-- <div class="modal-header">
@@ -59,12 +59,19 @@
                   <button type="submit" class="submit-btn" 
                   @click="login(loginData)" data-dismiss="modal">로그인</button>
 
+                  <div class="row-items d-flex justify-content-start">
+                    <div class="bottom-line"></div>
+                    <!-- <div class="or">또는</div> -->
+                    <!-- <hr class="or-line"> -->
+                    <!-- <div class="bottom-line"></div> -->
+                  </div>
+
                   <button class="kakao-btn">
-                    <img src="../../assets/img/kakao_btn.png" class="kakao-img">
+                    <img src="../../assets/img/kakao_logo.jpg" class="kakao-img">
                     카톡 로그인</button>
                     <div class="blank"></div>
                   <button class="google-btn">
-                  <img src="../../assets/img/google_btn2.png" class="google-img">
+                  <img src="../../assets/img/google_logo.png" class="google-img">
                   구글 로그인</button>
                 </div>
               </div>
@@ -239,7 +246,7 @@ export default {
 
   },
   computed:{
-    ...mapState(['isLoggedin'])
+    ...mapState(['isLoggedin','modal'])
   },
   created:function(){
     this.loginCheck()
@@ -318,12 +325,22 @@ font-style: normal;
   margin: 2% 0 0 0;
   width: 100%;
 }
+.row-items{
+  width: 100%;
+  height: 40%;
+}
+.or-line{
+  background-color: blue;
+}
+.bottom-line, .or{
+  margin: 7% 0 0 0;
+  width: 100%;
+  border-bottom: 1px solid grey;
+}
 .kakao-btn, .google-btn{
   margin: 5% 0 0 0;
-  width: 48%;
-}
-.kakao-btn{
-  background-color: rgb(250,227,1);
+  width: 100%;
+  background-color: transparent;
   color: rgb(26, 12, 12);
 }
 .kakao-img{
@@ -331,13 +348,10 @@ font-style: normal;
   width: 25px;
 }
 .google-img{
-  height: 25px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
 }
-.google-btn{
-  background-color: rgb(220,78,65);
-  color: white;
-}
+
 .blank{
   width: 10px;
 }
