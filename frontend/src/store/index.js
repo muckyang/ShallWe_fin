@@ -273,15 +273,19 @@ export default new Vuex.Store({
     },
     //게시글 검색
     search({commit},searchData){
+      console.log(searchData)
       cookies.set('searchData',searchData,0)
       if(searchData.searchDataForSend.word&&searchData.searchDataForSend.subject&&searchData.categoryId){
+        searchData.categoryId=0
         axios.post(`${BACK_URL}/post/search/1/${searchData.categoryId}`, searchData.searchDataForSend)
           .then((res) =>{
             commit('GET_ARTICLES',res.data.postList)
             router.push({name:"searchList"})
+            searchData.categoryId='기본값'
           })
           .catch((err)=>{
             console.log(err)
+            searchData.categoryId='기본값'
           })
       }else if(!searchData.searchDataForSend.subject){
         alert('분류를 입력하세요!')
