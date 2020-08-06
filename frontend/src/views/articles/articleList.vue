@@ -30,11 +30,11 @@
                 <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
                   <b-card class="article-card m-4 _card card__one" align="left" img-width="100%" 
                 img-height="60%" :img-src="article.image"
-                img-alt="Image" img-top>
+                img-alt="Image" img-top footer-bg-variant="#ee6e9f" footer-class="card-end" >
                     <b-card-text>
                       <h5 class="article-title">{{ article.title }}</h5>
-                      <h6 class="article-address">{{ article.address }}</h6>
-                      <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                      <small class="article-address" style="font-size: 13.5px;">{{ article.address }}</small><br>
+                      <small class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</small>
                     </b-card-text>
                     <template v-slot:footer>
                       <div class="d-flex justify-content-between">
@@ -58,13 +58,13 @@
             v-for="article in articles" 
             :key="article.articleId">
                 <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
-                  <b-card class="article-card m-4 _card card__one" align="left" img-width="100%" 
+                <b-card class="article-card m-4 _card card__one" align="left" img-width="100%" 
                 img-height="60%" :img-src="article.image"
-                img-alt="Image" img-top>
+                img-alt="Image" img-top footer-bg-variant="#ee6e9f" footer-class="card-end" >
                     <b-card-text>
                       <h5 class="article-title">{{ article.title }}</h5>
-                      <h6 class="article-address">{{ article.address }}</h6>
-                      <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                      <small class="article-address" style="font-size: 13.5px;">{{ article.address }}</small><br>
+                      <small class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</small>
                     </b-card-text>
                     <template v-slot:footer>
                       <div class="d-flex justify-content-between">
@@ -91,11 +91,11 @@
                 <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
                   <b-card class="article-card m-4 _card card__one" align="left" img-width="100%" 
                 img-height="60%" :img-src="article.image"
-                img-alt="Image" img-top>
+                img-alt="Image" img-top footer-bg-variant="#ee6e9f" footer-class="card-end" >
                     <b-card-text>
                       <h5 class="article-title">{{ article.title }}</h5>
-                      <h6 class="article-address">{{ article.address }}</h6>
-                      <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                      <small class="article-address" style="font-size: 13.5px;">{{ article.address }}</small><br>
+                      <small class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</small>
                     </b-card-text>
                     <template v-slot:footer>
                       <div class="d-flex justify-content-between">
@@ -121,11 +121,11 @@
               <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
                   <b-card class="article-card m-4 _card card__one" align="left" img-width="100%" 
                 img-height="60%" :img-src="article.image"
-                img-alt="Image" img-top>
+                img-alt="Image" img-top footer-bg-variant="#ee6e9f" footer-class="card-end" >
                     <b-card-text>
                       <h5 class="article-title">{{ article.title }}</h5>
-                      <h6 class="article-address">{{ article.address }}</h6>
-                      <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                      <small class="article-address" style="font-size: 13.5px;">{{ article.address }}</small><br>
+                      <small class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</small>
                     </b-card-text>
                     <template v-slot:footer>
                       <div class="d-flex justify-content-between">
@@ -199,9 +199,13 @@ export default {
   white-space:nowrap;
   text-overflow:ellipsis;
   line-height:1.2;
+  font-size: 13.5px;
 }
 .article-card {
   height: 400px;
+}
+.article-price {
+  font-size: 13.5px;
 }
 </style>
 
@@ -250,5 +254,9 @@ $x-large: 1200px;
       opacity: 1;
     }
   }
+}
+.card-end {
+  background-color: #FFCBDB;
+  // opacity: 0.7;
 }
 </style>
