@@ -35,6 +35,7 @@ public class Post {
     private int sumPrice;
     private int likeNum;
     private int commentNum;
+    private String tag;
     private String urlLink;
     private String image;
     private int temp;
