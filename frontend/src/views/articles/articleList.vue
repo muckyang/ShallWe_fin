@@ -256,7 +256,7 @@ $x-large: 1200px;
   }
 }
 .card-end {
-  background-color: #FFCBDB;
+  // background-color: #FFCBDB;
   // opacity: 0.7;
 }
 </style>
