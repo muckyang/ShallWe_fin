@@ -371,10 +371,11 @@ public class PostController {
                 String nickname = user.getNickname();
 
                 result.commentList.add(new CommentRes(clist.get(i).getCommentId(),clist.get(i).getArticleId(),clist.get(i).getUserId(),
-                nickname,clist.get(i).getContent(),clist.get(i).getCreateTime()));               
-                
+                nickname,clist.get(i).getContent(),clist.get(i).getCreateTime()));                        
 
                 System.out.println(nickname);
+                System.out.println(result);
+                System.out.println("결과결과");
             }   
 
             return new ResponseEntity<>(result, HttpStatus.OK);
