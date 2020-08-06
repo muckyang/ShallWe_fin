@@ -3,7 +3,7 @@
     <div class="d-flex ">
         <div class="comment-box">
             <div class="comment-user">
-                {{commentData.userId}}
+                {{user}}
 
                 <div class="comment-drop dropdown dropleft" v-if="checkAuth">
                     <button type="button" class="comment-btn" data-toggle="dropdown">

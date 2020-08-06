@@ -34,7 +34,7 @@
             <div class="detail-address">{{articleData.address}}<br></div>
             <div class="detail-price">{{articleData.sumPrice}}원 / {{articleData.minPrice}}원</div>
             <div class="detail-endTime">{{articleData.endTime}}까지{{articleData.endTime}}</div>
-          </div>          
+          </div>  
           <div class="detail-btns">
             <articleLike  @like-change="likeChange" 
             :isLiked="isLiked" :article="articleData"/>
@@ -144,7 +144,7 @@
       }
     },
     computed:{
-      ...mapState(['articleData', 'comments', 'userData'])
+      ...mapState(['articleData', 'userData'])
     },
     methods: {
       ...mapActions(['getArticle', 'getUserData']),
@@ -217,9 +217,6 @@
     created: function(){
       this.getArticle(this.$route.params.ID)
       this.getUserData()
-      console.log(this.articleData, '나옴 ?')
-      console.log(this.userData, '유저 나옴?')
-      console.log(this.comments, '댓글댓글')
     },
 
   }
