@@ -52,12 +52,12 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> 
             <div class="detail-price">
               <div class="min-price">최소 주문 금액: {{articleData.minPrice}}원</div>
               <div class="min-price">모인 금액: {{articleData.sumPrice}}원 </div>
             </div>
-            <div class="detail-endTime">마감 시간: {{articleData.endTime}}까지</div>
+            <div class="detail-endTime">마감 시간: {{cutDate(articleData.endTime)}}까지</div>
           </div>  
           <div class="detail-btns">
             <articleLike  @like-change="likeChange" 
@@ -72,13 +72,13 @@
                   공유
                 </a>
               </button>
-
-              <b-button class="detail-join" v-if="articleData.userId != userData.userId" 
-              v-b-modal.modal-prevent-closing>
-              <i class="fas fa-user-plus"></i> 참여</b-button>
-
+                <b-button id="show-btn" v-b-modal.join-modal class="detail-join" 
+                v-if="articleData.userId != userData.userId" >
+                    <i class="fas fa-user-plus"></i> 참여
+                </b-button>
                 <b-modal
-                  id="modal-prevent-closing"
+                  id="join-modal"
+                  size="xl"
                   ref="modal"
                   title="참여하기"
                   @ok="sendJoinData"
@@ -125,8 +125,8 @@
                     </b-form-group>
 
                   </form>
+                  <b-button>수정</b-button>
                 </b-modal>
-
           </div>
           
         </div>
@@ -137,6 +137,17 @@
           <p>{{ articleData.description }}</p>
         </div>
       </div>
+      <div class="participants">
+        <h5 class="m-0">참여 멤버 목록</h5>
+        <div class="list">
+          닉네임: <br>
+          가격: <br>
+          제목: <br>
+          요구사항: <br>
+        </div>
+        
+      </div>
+      <!-- <membersList/> -->
       <commentList/>
     </div>
   
@@ -149,6 +160,7 @@
   import commentList from '@/components/comments/commentList'
   import articleLike from '@/components/articles/articleLike'
   import kakaoMapForDetail from '@/components/articles/kakaoMapForDetail'
+  // import membersList from '@/components/articles/membersList'
   
   export default {
     name:'articleDetail',
@@ -176,6 +188,16 @@
     methods: {
       ...mapActions(['getArticle', 'getUserData']),
 
+      cutDate(date) {
+      let CD = date + '';
+      const year = CD.substring(0,4) + '년 ';
+      const month = CD.substring(5,7) + '월';
+      const day = CD.substring(8,10) + '일 ';
+      const hour = CD.substring(11,13) + '시';
+      const minute = CD.substring(14,16) + '분';    
+      const res = year + month + day + hour + minute
+      return res;
+      },
       sendJoinData(){
         axios.post(`${BACK_URL}/participant/create`,this.joinData)
           .then((response)=>{
@@ -255,7 +277,7 @@
 .detail{
   border: 1px solid rgb(224, 221, 221);
   border-radius: 1.5%;
-  width: 75%
+  width: 75%;
 }
 .MyImage{
   width: 45%;
@@ -448,5 +470,13 @@ a{
 .dropdown-item{
   cursor:pointer;
   text-decoration: none;
+}
+.participants{
+  width: 75%;
+  margin: auto;
+  text-align: left;
+  margin-top: 3%;
+  border: 1px solid rgb(179, 175, 175);
+  border-radius: 3px;
 }
 </style>
