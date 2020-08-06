@@ -302,10 +302,10 @@ public class PostController {
             
             System.out.println("address로 검색");
             List<String> addList = new ArrayList<>();
-            String pAddress = request.getAddress();
-            StringTokenizer st = new StringTokenizer(pAddress);
+            
+            StringTokenizer st = new StringTokenizer(word);
             while(st.hasMoreTokens()){
-                addList.add(st.nextToken());
+                addList.add("%" + st.nextToken() + "%");
             }
             
 

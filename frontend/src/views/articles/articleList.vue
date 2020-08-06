@@ -159,8 +159,9 @@ export default {
       searchData:{
         searchDataForSend:{
           word:'',
+          subject:'address',
         },
-        categoryId:'',
+        categoryId:'기본값',
       },
     }
   },
@@ -176,7 +177,6 @@ export default {
   },
   created () {
     this.getArticles({temp:1,categoryId:this.categoryNum})
-    console.log(this.articles, '아티클리스츠')
   },
 }
 </script>
