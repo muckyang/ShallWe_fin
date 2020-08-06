@@ -3,9 +3,11 @@ package com.web.blog.controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
@@ -263,7 +265,53 @@ public class PostController {
             
 
             return new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
+        }else if(subject.equals("address")){
+            
+            System.out.println("address로 검색");
+            List<String> addList = new ArrayList<>();
+            String pAddress = request.getAddress();
+            StringTokenizer st = new StringTokenizer(pAddress);
+            while(st.hasMoreTokens()){
+                addList.add(st.nextToken());
+            }
+            
+
+            if (categoryId == 0)
+                if(addList.size() == 1){
+                    plist = postDao.findPostByAddressLike(addList.get(0));
+                }
+                else if(addList.size() == 2){
+                    plist = postDao.findPostByAddressLike(addList.get(0), addList.get(1));
+                }
+                else if(addList.size() == 3){
+                    plist = postDao.findPostByAddressLike(addList.get(0), addList.get(1), addList.get(2));
+                }
+                else if(addList.size() == 4){
+                    plist = postDao.findPostByAddressLike(addList.get(0), addList.get(1), addList.get(2), addList.get(3));
+                }
+
+                
+            else{
+                if(addList.size()==1){
+                    plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0));
+                }
+                else if(addList.size() == 2){
+                    plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0), addList.get(1));
+                }
+                else if(addList.size() == 3){
+                    plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0), addList.get(1), addList.get(2));
+                }
+                else if(addList.size() == 4){
+                    plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0), addList.get(1), addList.get(2), addList.get(3));
+                }
+            }
+            PostListResponse result = new PostListResponse();
+            result.postList = getPostList(plist, temp);
+
+            System.out.println("address로 검색 확인");
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } 
+        else {
             return new ResponseEntity<>("temp 해당 없음", HttpStatus.BAD_REQUEST);
         }
     }

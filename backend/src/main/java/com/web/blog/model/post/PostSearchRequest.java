@@ -9,4 +9,5 @@ import javax.validation.Valid;
 public class PostSearchRequest {
     String subject;
     String word;
+    String address;
 }   

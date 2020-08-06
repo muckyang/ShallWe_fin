@@ -23,6 +23,15 @@ public interface PostDao extends JpaRepository<Post, String> {
     List<Post> findPostByTempAndCategoryIdAndTitleLike(int temp ,int categoryId, String word);
     List<Post> findPostByTempAndWriterLike(int temp , String word);
     List<Post> findPostByTempAndCategoryIdAndWriterLike(int temp ,int categoryId, String word);
+    // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때
+    List<Post> findPostByAddressLike(String st1);
+    List<Post> findPostByAddressLike(String st1, String st2);
+    List<Post> findPostByAddressLike(String st1, String st2, String st3);
+    List<Post> findPostByAddressLike(String st1, String st2, String st3, String st4);
 
+    List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1);
+    List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1, String st2);
+    List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1, String st2, String st3);
+    List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1, String st2, String st3, String st4);
 
 }
