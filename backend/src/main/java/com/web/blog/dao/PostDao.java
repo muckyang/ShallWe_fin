@@ -25,14 +25,15 @@ public interface PostDao extends JpaRepository<Post, String> {
     List<Post> findPostByTempAndCategoryIdAndTitleLike(int temp ,int categoryId, String word);
     List<Post> findPostByTempAndWriterLike(int temp , String word);
     List<Post> findPostByTempAndCategoryIdAndWriterLike(int temp ,int categoryId, String word);
-    // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때
+    // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때 (전체)
     List<Post> findPostByAddressLike(String st1);
-    List<Post> findPostByAddressLike(String st1, String st2);
-    List<Post> findPostByAddressLike(String st1, String st2, String st3);
-    List<Post> findPostByAddressLike(String st1, String st2, String st3, String st4);
-
+    List<Post> findPostByAddressLikeAndAddressLike(String st1, String st2);
+    List<Post> findPostByAddressLikeAndAddressLikeAndAddressLike(String st1, String st2, String st3);
+    List<Post> findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(String st1, String st2, String st3, String st4);
+    // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때 (카테고리별)
     List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1);
-    List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1, String st2);
-    List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1, String st2, String st3);
-    List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1, String st2, String st3, String st4);
+    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2);
+    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2, String st3);
+    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2, String st3, String st4);
+
 }
