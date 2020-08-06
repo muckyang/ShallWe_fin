@@ -11,15 +11,64 @@
     <div class="tab-content" id="nav-tabContent">
         <div v-if="categoryNum === 100" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             전체
-            <div v-for="article in articles" :key="article.articleId"><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"><p>{{ article.title }}</p></router-link></div>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">writer</th>
+                    <th scope="col">Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="article in articles" :key="article.articleId">
+                    <th scope="row">1</th>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.title }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.writer }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.content }}</router-link></td>
+                </tr>
+            </tbody>
+            </table>
         </div>
         <div v-if="categoryNum === 101" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            후기
-            <div v-for="article in articles" :key="article.articleId"><p>{{ article.title }}</p></div>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">writer</th>
+                    <th scope="col">Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="article in articles" :key="article.articleId">
+                    <th scope="row">1</th>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.title }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.writer }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.content }}</router-link></td>
+                </tr>
+            </tbody>
+            </table>
         </div>
         <div v-if="categoryNum === 102" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            자유
-            <div v-for="article in articles" :key="article.articleId"><p>{{ article.title }}</p></div>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">writer</th>
+                    <th scope="col">Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="article in articles" :key="article.articleId">
+                    <th scope="row">1</th>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.title }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.writer }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.content }}</router-link></td>
+                </tr>
+            </tbody>
+            </table>
         </div>
     </div>
   </div>
