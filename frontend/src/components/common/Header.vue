@@ -60,8 +60,12 @@
                   @click="login(loginData)" data-dismiss="modal">로그인</button>
 
                   <button class="kakao-btn">
-                    <img src="../../assets/img/kakao_btn.png" class="kakao">
-                    카카오톡으로 로그인</button>
+                    <img src="../../assets/img/kakao_btn.png" class="kakao-img">
+                    카톡 로그인</button>
+                    <div class="blank"></div>
+                  <button class="google-btn">
+                  <img src="../../assets/img/google_btn2.png" class="google-img">
+                  구글 로그인</button>
                 </div>
               </div>
 
@@ -186,7 +190,6 @@ export default {
       email:' \uf0e0'+ '  이메일',
       pw: ' \uf084'+ '  비밀번호',
       constants,
-      // icon:'\uf002',
       item1:'',
       item2:'',
       searchData:{
@@ -286,7 +289,7 @@ font-style: normal;
   float: right;
 }
 .login-input{
-  margin: 10% 0 5% 0;
+  margin: 7% 0 5% 0;
 }
 .login-email:focus::placeholder{
   color: transparent;
@@ -301,22 +304,39 @@ font-style: normal;
 .modal-body .login-submit{
   margin: 0 0 10% 0;
 }
-.submit-btn, .kakao-btn{
-  width: 100%;
+.submit-btn, .kakao-btn, .google-btn{
   border-radius: 4px;
-  margin: 2% 0 0 0;
   border: none;
   font-weight: bold;
+  height: 35px;
+  text-align: center;
+  vertical-align: middle; /* 적용 안 됨 */
 }
 .submit-btn{
   background-color: #ee6e9f;
   color: white;
-  height: 35px;
+  margin: 2% 0 0 0;
+  width: 100%;
+}
+.kakao-btn, .google-btn{
+  margin: 5% 0 0 0;
+  width: 48%;
 }
 .kakao-btn{
-  margin-top: 5%;
-  background-color: transparent;
+  background-color: rgb(250,227,1);
   color: rgb(26, 12, 12);
+}
+.kakao-img{
+  height: 25px;
+  width: 25px;
+}
+.google-img{
+  height: 25px;
+  width: 30px;
+}
+.google-btn{
+  background-color: rgb(220,78,65);
+  color: white;
 }
 .blank{
   width: 10px;

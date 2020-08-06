@@ -144,7 +144,7 @@
       }
     },
     computed:{
-      ...mapState(['articleData','userData'])
+      ...mapState(['articleData', 'comments', 'userData'])
     },
     methods: {
       ...mapActions(['getArticle', 'getUserData']),
@@ -219,6 +219,7 @@
       this.getUserData()
       console.log(this.articleData, '나옴 ?')
       console.log(this.userData, '유저 나옴?')
+      console.log(this.comments, '댓글댓글')
     },
 
   }
@@ -294,10 +295,10 @@ a{
   font-weight: bold;
   margin-bottom: 5px;
 }
-.kakao{
+/* .kakao{
   height: 25px;
   width: 25px;
-}
+} */
 .detail-content{
   /* border: 1px solid blue; */
   margin: 30px 0;

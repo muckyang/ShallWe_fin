@@ -43,6 +43,7 @@ export default new Vuex.Store({
       endTime:'',
       createTime:'',
     },
+    comments:[],
     isSended:false,
 
     //게시글
@@ -118,6 +119,9 @@ export default new Vuex.Store({
       state.articleData.endTime=response.data.endTime,
       state.articleData.createTime=response.data.createdTime
     },
+    GET_COMMENTS(state,comments){
+      state.comments = comments
+    }
 
   },
 
@@ -207,6 +211,7 @@ export default new Vuex.Store({
       const auth={token:state.authToken}
       axios.post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}`,auth)
         .then((response) => {
+          console.log(response, '아티클리스트')
           commit('GET_ARTICLES',response.data.postList)
         })
         .catch((err) => {
@@ -218,7 +223,10 @@ export default new Vuex.Store({
       const auth={token:state.authToken}
       axios.post(`${BACK_URL}/post/detail/${articleID}`,auth)
         .then((response)=>{
+          console.log(response, '응답응답')
+          console.log(response.data.commentList, '댓글리스트')
           commit('GET_ARTICLE',response)
+          commit('GET_COMMENTS', response.data.commentList)
         })
         .catch((err)=>{
           console.error(err)
