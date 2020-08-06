@@ -18,6 +18,17 @@
             <b-form-input type="text" v-model="articleData.title"></b-form-input>
           </td>
         </tr>
+      </tbody>
+    </table>
+    <hr>
+    <div>
+      <div class="bg-secondary text-light">
+        <h3>어디서 만날까? - {{articleData.address}}</h3>
+      </div>
+      <kakaoMap @setAddress="setAddress"/>
+    </div>
+    <table class="table mt-5">
+      <tbody>
         <tr>
           <th scope="row">시작금액/전체금액</th>
           <td class="d-flex">
@@ -69,8 +80,6 @@
     <hr>
     <button class="btn btn-primary" type="submit" @click="createArticle({articleData,temp:1})" value="Submit">작성완료</button>
     <button class="btn btn-info" @click="createArticle({articleData,temp:0})">임시저장</button>
-    <div>{{articleData.address}}</div>
-    <kakaoMap @setAddress="setAddress"/>
   </div>
 </template>
 
@@ -91,7 +100,7 @@
         articleData: {
           categoryId : '카테고리',
           title: null,
-          address: null,
+          address: '만남의 장소',
           description: null,
           minPrice: null,
           myPrice: null,

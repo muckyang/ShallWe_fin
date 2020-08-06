@@ -237,7 +237,12 @@ export default new Vuex.Store({
     },
     //게시글 생성
     createArticle(context,articleData){
-      articleData.articleData.endTime=articleData.articleData.endTime+':00'
+      if(articleData.temp===1||articleData.temp===0){
+        if(articleData.articleData.endTime.length<8){
+          articleData.articleData.endTime=articleData.articleData.endTime+':00'
+        }
+      }
+      console.log(articleData.articleData)
       axios.post(`${BACK_URL}/post/create/${articleData.temp}` ,articleData.articleData)
         .then(() => { 
           router.push('/article')
