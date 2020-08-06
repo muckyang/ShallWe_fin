@@ -121,7 +121,7 @@
               <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
                   <b-card class="article-card m-4 _card card__one" align="left" img-width="100%" 
                 img-height="60%" :img-src="article.image"
-                img-alt="Image" img-top>
+                img-alt="Image" img-top footer-bg-variant="#ee6e9f" footer-class="card-end" >
                     <b-card-text>
                       <h5 class="article-title">{{ article.title }}</h5>
                       <h6 class="article-address">{{ article.address }}</h6>
@@ -250,5 +250,9 @@ $x-large: 1200px;
       opacity: 1;
     }
   }
+}
+.card-end {
+  // background-color: #FFCBDB;
+  // opacity: 0.7;
 }
 </style>
