@@ -120,13 +120,67 @@
                     >
                       <b-form-input
                         id="order-input"
-                        v-model="joinData.order"
+                        v-model="joinData.description"
                       ></b-form-input>
                     </b-form-group>
 
                   </form>
-                  <b-button>수정</b-button>
                 </b-modal>
+
+
+                <!--임시modal-->
+                <b-modal
+                  id="update-modal"
+                  size="xl"
+                  ref="modal"
+                  title="수정하기"
+                  @ok="updateJoinData"
+                >
+                  <form ref="form" @submit.stop.prevent="handleSubmit">
+                    <b-form-group
+                      label="제목"
+                      label-for="title-input"
+                    >
+                      <b-form-input
+                        id="title-input"
+                        v-model="joinData.title"
+                      ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      label="url"
+                      label-for="url-input"
+                    >
+                      <b-form-input
+                        id="url-input"
+                        v-model="joinData.url"
+                      ></b-form-input>
+                    </b-form-group>
+
+                    <b-form-group
+                      label="가격"
+                      label-for="price-input"
+                    >
+                      <b-form-input
+                        id="price-input"
+                        v-model="joinData.price"
+                      ></b-form-input>원
+                    </b-form-group>
+
+                    <b-form-group
+                      label="요구사항"
+                      label-for="order-input"
+                    >
+                      <b-form-input
+                        id="order-input"
+                        v-model="joinData.description"
+                      ></b-form-input>
+                    </b-form-group>
+                  </form>
+                  <b-button @click="cancel">삭제</b-button>
+                </b-modal>
+                <!--임시 modal-->
+
           </div>
           
         </div>
@@ -139,11 +193,13 @@
       </div>
       <div class="participants">
         <h5 class="m-0">참여 멤버 목록</h5>
-        <div class="list">
-          닉네임: <br>
-          가격: <br>
-          제목: <br>
-          요구사항: <br>
+        <div class="list" v-for="participant in participants" v-bind:key="participant.no">
+          닉네임: {{participant.no}}<br>
+          가격: {{participant.price}}<br>
+          제목: {{participant.title}}<br>
+          요구사항: {{participant.description}}<br>
+          <b-button v-b-modal.update-modal @click="changeNo(participant.no)">수정</b-button>
+          <hr>
         </div>
         
       </div>
@@ -179,7 +235,9 @@
           price: '',
           description: '',
           token:this.$cookies.get('auth-token')
-        }
+        },
+        participants:{},
+        no:'',
       }
     },
     computed:{
@@ -205,8 +263,37 @@
             alert('등록이 완료되었습니다!')
           })
           .catch((error)=>{
-            console.log(error,"AAAA")
+            console.log(error)
           })
+      },
+      updateJoinData(){
+        this.joinData.no=this.no
+        axios.post(`${BACK_URL}/participant/update`,this.joinData)
+          .then((response)=>{
+            this.participants=response.data.participantList
+            this.getparticipantData()        
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+      },
+      getparticipantData(){
+        axios.post(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
+          .then((response)=>{
+            this.participants=response.data.participantList    
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+      },
+      cancel(){
+        axios.post(`${BACK_URL}/participant/delete/${this.no}`)
+          .then(()=>{})
+          .catch((err)=>{console.log(err)})
+          this.getparticipantData() 
+      },
+      changeNo(no){
+        this.no=no
       },
 
       shareContent(){
@@ -267,6 +354,7 @@
       this.getArticle(this.$route.params.ID)
       this.getUserData()
       this.likeCheck()
+      this.getparticipantData()
 
     },
 
