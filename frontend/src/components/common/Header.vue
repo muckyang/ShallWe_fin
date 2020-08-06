@@ -325,19 +325,20 @@ font-style: normal;
   width: 100%;
 }
 .row-items{
-  margin: 5% 0 0 0 ;
+  margin: 5% 0 3% 0 ;
   width: 100%;
   height: 40%;
 }
 .or{
   border: 0px solid grey;
-  margin: 2% 1% 0 1%;
+  margin: 2px 1.5% 0 1.5%;
   font-size: small;
+  color: rgb(153, 151, 151);
 }
 .bottom-line{
-  margin: 7% 0 6% 0;
-  width: 42%;
-  border-bottom: 1px solid grey;
+  margin: 7px 0 8px 0;
+  width: 44%;
+  border-bottom: 1px solid rgb(216, 211, 211);
 }
 .kakao-btn, .google-btn{
   margin: 2% 0 0 0;
@@ -352,6 +353,7 @@ font-style: normal;
 .google-img{
   height: 20px;
   width: 20px;
+  margin: 0 0 0 5px;
 }
 
 .blank{
