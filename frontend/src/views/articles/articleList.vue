@@ -39,8 +39,8 @@
                     <template v-slot:footer>
                       <div class="d-flex justify-content-between">
                           <small>
-                            <b-icon-heart></b-icon-heart> 0개
-                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+                            <b-icon-heart></b-icon-heart> {{article.likeNum}}개
+                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> {{article.commentNum}}
                           </small>
                           <small class="text-muted">{{ article.timeAgo }}</small>
                       </div>
@@ -69,8 +69,8 @@
                     <template v-slot:footer>
                       <div class="d-flex justify-content-between">
                           <small>
-                            <b-icon-heart></b-icon-heart> 0개
-                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+                            <b-icon-heart></b-icon-heart> {{article.likeNum}}개
+                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> {{article.commentNum}}
                           </small>
                           <small class="text-muted">{{ article.timeAgo }}</small>
                       </div>
@@ -100,8 +100,8 @@
                     <template v-slot:footer>
                       <div class="d-flex justify-content-between">
                           <small>
-                            <b-icon-heart></b-icon-heart> 0개
-                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
+                            <b-icon-heart></b-icon-heart> {{article.likeNum}}개
+                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> {{article.commentNum}}
                           </small>
                           <small class="text-muted">{{ article.timeAgo }}</small>
                       </div>
