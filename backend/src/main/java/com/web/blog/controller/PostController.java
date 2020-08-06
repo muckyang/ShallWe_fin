@@ -183,7 +183,8 @@ public class PostController {
 
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                         p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(),
-                        p.getUrlLink(), p.getImage(), temp, p.getEndTime()));
+                        p.getUrlLink(), p.getImage(), temp, p.getEndTime() , BeforeCreateTime(p.getCreateTime())));
+                        
 
             }
             return new ResponseEntity<>(result, HttpStatus.OK);
@@ -332,7 +333,7 @@ public class PostController {
             Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
-                    p.getImage(), p.getTemp(), p.getEndTime());
+                    p.getImage(), p.getTemp(), p.getEndTime(), BeforeCreateTime(p.getCreateTime()));
       
                     List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
                     List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
@@ -560,7 +561,7 @@ public class PostController {
 
             result.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(), p.getWriter(), p.getUrlLink(),
-                    p.getImage(), temp, p.getEndTime()));
+                    p.getImage(), temp, p.getEndTime(),BeforeCreateTime(p.getCreateTime())));
 
             // Optional<Like> llist = likeDao.findLikeByArticleno(articleno);
             List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
@@ -576,5 +577,54 @@ public class PostController {
         }
 
         return result;
+    }
+
+    
+    private static String BeforeCreateTime(LocalDateTime createTime) {
+        String result = "";
+        int before = 0;
+        LocalDateTime nowTime = LocalDateTime.now();
+        if (createTime.getYear() == nowTime.getYear()) {
+            if (createTime.getMonth() == nowTime.getMonth()) {
+                if (createTime.getDayOfMonth() == nowTime.getDayOfMonth()) {
+                    if (createTime.getHour() == nowTime.getHour()) {
+                        if (createTime.getMinute() == nowTime.getMinute()) {
+                            result = "1분 전";
+                        } else {
+                            before = createTime.getMinute() -  nowTime.getMinute() ;
+                            if (before < 0)
+                                before = 60 + before;
+                            result = before + "분 전";
+                        }
+                    } else {
+                        before = createTime.getHour() - nowTime.getHour();
+                       
+                        if (before < 0)
+                            before = before + 24;
+                        result = before + "시간 전";
+                    }
+                } else {
+                    before = createTime.getDayOfYear() - nowTime.getDayOfYear();
+                    if (before < 0)
+                        before = 365 + before;
+                    if (before < 0) {
+                        result = "1달 전";
+                        return result;
+                    }
+                    result = before + "일 전";
+                }
+            } else {
+                before = createTime.getMonthValue()-  nowTime.getMonthValue() ;
+                if (before < 0)
+                    before = 12 + before;
+                result = before + "달 전";
+            }
+        } else {
+            before = createTime.getYear() - nowTime.getYear() ;
+       
+            result = before + "달 전";
+        }
+        return result;
+
     }
 }
