@@ -48,7 +48,7 @@
                           id="password"
                           style="font-family: FontAwesome;" 
                           :placeholder="pw"
-                          @keypress.enter="login"/>
+                          @keypress.enter="login(loginData)"/>
                       </div>
                   </div>
                 </form>

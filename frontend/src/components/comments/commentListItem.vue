@@ -3,7 +3,7 @@
     <div class="d-flex ">
         <div class="comment-box">
             <div class="comment-user">
-                {{user}}
+                {{comment.nickname}}
 
                 <div class="comment-drop dropdown dropleft" v-if="checkAuth">
                     <button type="button" class="comment-btn" data-toggle="dropdown">
@@ -16,13 +16,10 @@
                 </div>
 
             </div>
-            <div class="comment-content">{{commentData.content}}</div>
-            <div class="comment-create-time">{{commentData.createTime}}</div>
+            <div class="comment-content">{{comment.content}}</div>
+            <div class="comment-create-time">{{comment.createTime}}</div>
         </div>
     </div>
-    <!-- v-for="comment in comments" 
-    :key="comment.comment_id" :comment="comment" 
-    @re-render="getComments" :user="comment.writer" -->
 
     <!-- 댓글 수정 -->
 
@@ -48,7 +45,6 @@ export default {
     name:'commentListItem',
     props:{
         comment:Object,
-        user:String,      
     },
     data(){
         return{
@@ -58,7 +54,7 @@ export default {
             commentData:{
                 commentId:this.comment.commentId,
                 content:this.comment.content,
-                userId: this.comment.userId,
+                user: this.comment.userId,
                 createTime: this.comment.createTime,
                 token:this.$cookies.get('auth-token')
             },
@@ -74,9 +70,6 @@ export default {
     },
     computed:{
         checkAuth(){
-            console.log(this.commentData,'아이디')
-            console.log(this.comment, '댓글')
-            console.log(this.user, '유저')
             return this.comment.userId===this.userIdForCheck.userId
         },
         ...mapState(['userData'])
@@ -141,6 +134,7 @@ export default {
     flex-direction: column;
     width: 100%;
     margin-bottom: 1%;
+    padding: 0 0 0 0.3%;
 }
 .comment-user{
     text-align: left;
@@ -151,6 +145,12 @@ export default {
 }
 .comment-content{
     text-align: left;
+}
+.comment-create-time{
+    text-align: left;
+    color:rgb(145, 141, 141);
+    font-size: small;
+    margin-bottom: 1%;
 }
 .comment-drop{
     display: flex;
