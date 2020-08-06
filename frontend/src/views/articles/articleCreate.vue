@@ -19,12 +19,6 @@
           </td>
         </tr>
         <tr>
-          <th scope="row">지역</th>
-          <td>
-            <b-form-input type="text" v-model="articleData.address"></b-form-input>
-          </td>
-        </tr>
-        <tr>
           <th scope="row">시작금액/전체금액</th>
           <td class="d-flex">
             <b-form-input type="number" v-model="articleData.myPrice"></b-form-input>
@@ -66,7 +60,7 @@
           <th scope="row">태그</th>
           <td>
             <div>
-              <b-form-tags input-id="tags-basic" v-model="value" class="mb-2"></b-form-tags>
+              <b-form-tags input-id="tags-basic" v-model="articleData.tags" class="mb-2"></b-form-tags>
           </div>
           </td>
         </tr>
@@ -75,7 +69,8 @@
     <hr>
     <button class="btn btn-primary" type="submit" @click="createArticle({articleData,temp:1})" value="Submit">작성완료</button>
     <button class="btn btn-info" @click="createArticle({articleData,temp:0})">임시저장</button>
-    <kakaoMap/>
+    <div>{{articleData.address}}</div>
+    <kakaoMap @setAddress="setAddress"/>
   </div>
 </template>
 
@@ -101,13 +96,13 @@
           minPrice: null,
           myPrice: null,
           urlLink: null,
-          imgae: null,
           endDate:null,
           endTime:null,
+          image:'',
+          tags: [],
           token:this.$cookies.get('auth-token')
         },
         imageUrl: null, //다시 검토
-        value: [],
         selectedTBG:'카테고리'
       };
     },
@@ -138,6 +133,9 @@
       imageUpload(){
         this.$refs.imageInput.click()
       },
+      setAddress(address){
+        this.articleData.address=address
+      }
     }
   }
 </script>

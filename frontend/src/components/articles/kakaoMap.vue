@@ -21,6 +21,7 @@
 </template>
 <script>
 
+
 export default {
     data(){
         return{
@@ -65,14 +66,13 @@ export default {
             }
 
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-            console.log(this.ps)
             this.ps.keywordSearch(keyword, this.placesSearchCB);
              
         },
         placesSearchCB(data, status, pagination) {
             if (status === kakao.maps.services.Status.OK) {
                 // 정상적으로 검색이 완료됐으면
-                // 검색 목록과 마커를 표출합니다
+                // 검색 목록과 마커를 표출합니다.
                 this.displayPlaces(data);
 
                 // 페이지 번호를 표출합니다
@@ -108,7 +108,7 @@ export default {
 
                 // 마커를 생성하고 지도에 표시합니다
                 var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
-                    marker = this.addMarker(placePosition, i), 
+                    marker = this.addMarker(placePosition, i),
                     itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
                 // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -118,7 +118,8 @@ export default {
                 // 마커와 검색결과 항목에 mouseover 했을때
                 // 해당 장소에 인포윈도우에 장소명을 표시합니다
                 // mouseout 했을 때는 인포윈도우를 닫습니다
-                (function(marker, title) {
+                ((marker, title)=> {
+                    var ditemEl = itemEl
                     var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
                     kakao.maps.event.addListener(marker, 'mouseover', function() {
                         infowindow.setContent(content);
@@ -128,14 +129,18 @@ export default {
                     kakao.maps.event.addListener(marker, 'mouseout', function() {
                         infowindow.close();
                     });
-
+                    kakao.maps.event.addListener(marker, 'click', () => {
+                        this.$emit('setAddress',ditemEl.querySelector('.jibun').innerText)
+                    });
                     itemEl.onmouseover =  function () {
                         infowindow.setContent(content);
                         infowindow.open(map, marker);
                     };
-
                     itemEl.onmouseout =  function () {
                         infowindow.close();
+                    };
+                    itemEl.onclick = () => {
+                        this.$emit('setAddress',ditemEl.querySelector('.jibun').innerText)
                     };
                 })(marker, places[i].place_name);
 
@@ -230,7 +235,10 @@ export default {
                 el.removeChild (el.lastChild);
             }
         },
-    }
+        changeD(el){
+            console.log(el,"ASDASDASDA")
+        }
+    },
 }
 </script>
 
