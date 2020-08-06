@@ -31,7 +31,7 @@
                             <b-icon-heart></b-icon-heart> 0개
                             <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
                           </small>
-                          <small class="text-muted">10분 전</small>
+                          <small class="text-muted">{{ article.timeAgo }}</small>
                       </div>
                     </template>
                 </b-card>
@@ -61,7 +61,7 @@
                             <b-icon-heart></b-icon-heart> 0개
                             <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
                           </small>
-                          <small class="text-muted">10분 전</small>
+                          <small class="text-muted">{{ article.timeAgo }}</small>
                       </div>
                     </template>
                 </b-card>
@@ -92,7 +92,7 @@
                             <b-icon-heart></b-icon-heart> 0개
                             <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
                           </small>
-                          <small class="text-muted">10분 전</small>
+                          <small class="text-muted">{{ article.timeAgo }}</small>
                       </div>
                     </template>
                 </b-card>
@@ -122,7 +122,7 @@
                             <b-icon-heart></b-icon-heart> 0개
                             <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
                           </small>
-                          <small class="text-muted">10분 전</small>
+                          <small class="text-muted">{{ article.timeAgo }}</small>
                       </div>
                     </template>
                 </b-card>

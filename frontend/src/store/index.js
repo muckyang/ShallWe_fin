@@ -15,7 +15,6 @@ export default new Vuex.Store({
   state: {
     //사용자 인증
     authToken: cookies.get('auth-token'),
-    modal: true,
     isLoggedin:false,
     userData:{
       name:'',
@@ -62,9 +61,9 @@ export default new Vuex.Store({
       state.authToken=token
       cookies.set('auth-token', token, 0)
       state.isLoggedin=true
-      state.modal = false
-      alert("반갑습니다!")
       router.push('/')
+      console.log('로그인 성공')
+      router.go()
     },
     REMOVE_TOKEN(state){
       state.authToken=null
@@ -123,6 +122,7 @@ export default new Vuex.Store({
       state.articleData.temp=response.data.temp,
       state.articleData.endTime=response.data.endTime,
       state.articleData.createTime=response.data.createdTime
+      state.articleData.timeAgo=response.data.timeAgo
     },
     GET_COMMENTS(state,comments){
       state.comments = comments
