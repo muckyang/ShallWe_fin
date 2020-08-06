@@ -10,8 +10,9 @@
                 {{ selectedTBG }}
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" @click="selectCategory(1)">후기</a>
-                <a class="dropdown-item" href="#" @click="selectCategory(2)">자유</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(101)">질문</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(102)">후기</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
               </div>
             </div>
             <b-form-input type="text" v-model="articleData.title"></b-form-input>
@@ -46,7 +47,7 @@
       </tbody>
     </table>
     <hr>
-    <button class="btn btn-primary" type="submit" @click="createArticle({articleData,temp:1})" value="Submit">작성완료</button>
+    <button class="btn btn-primary" type="submit" @click="createArticle({articleData,temp:2})" value="Submit">작성완료</button>
     <button class="btn btn-info" @click="createArticle({articleData,temp:0})">임시저장</button>
   </div>
 </template>
@@ -65,7 +66,6 @@
           categoryId : '카테고리',
           title: null,
           description: null,
-          imgae: null,
           token:this.$cookies.get('auth-token')
         },
         imageUrl: null, //다시 검토
@@ -77,9 +77,11 @@
       ...mapActions(['createArticle','tempSaveArticle']),
       selectCategory(num){
         this.articleData.categoryId=num
-        if(num===1){
+        if(num===101){
+          this.selectedTBG='질문'
+        }else if (num===102) {
           this.selectedTBG='후기'
-        }else{
+        }else {
           this.selectedTBG='자유'
         }
       },

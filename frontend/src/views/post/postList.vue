@@ -2,21 +2,24 @@
   <div>
     <nav class="mt-4 mb-3 ml-3">
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a @click="changeCategory(0)" class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">전체보기</a>
-        <a @click="changeCategory(1)" class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">후기</a>
-        <a @click="changeCategory(2)" class="nav-item nav-link text-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">자유</a>
+        <a @click="changeCategory(100)" class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">전체보기</a>
+        <a @click="changeCategory(101)" class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">후기</a>
+        <a @click="changeCategory(102)" class="nav-item nav-link text-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">자유</a>
         <router-link class="nav-item nav-link" :to="{name:'postCreate'}">글쓰기</router-link>
       </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
-        <div v-if="categoryNum === 0" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div v-if="categoryNum === 100" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             전체
+            <div v-for="article in articles" :key="article.articleId"><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"><p>{{ article.title }}</p></router-link></div>
         </div>
-        <div v-if="categoryNum === 1" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div v-if="categoryNum === 101" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             후기
+            <div v-for="article in articles" :key="article.articleId"><p>{{ article.title }}</p></div>
         </div>
-        <div v-if="categoryNum === 2" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div v-if="categoryNum === 102" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             자유
+            <div v-for="article in articles" :key="article.articleId"><p>{{ article.title }}</p></div>
         </div>
     </div>
   </div>
@@ -29,13 +32,13 @@ export default {
     name:'postList',
     data(){
         return{
-            categoryNum:0,
+            categoryNum:100,
         }
     },
     methods:{
         ...mapActions(['getArticles']),
         changeCategory(num){
-            this.categoryNum=num
+            this.categoryNum = num
             this.getArticles({temp:2,categoryId:this.categoryNum})
         }
     },
@@ -44,6 +47,7 @@ export default {
     },  
     created(){
         this.getArticles({temp:2,categoryId:this.categoryNum})
+        console.log(this.articles, '아티클리스츠')
     }
 
 }
