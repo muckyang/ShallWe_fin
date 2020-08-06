@@ -122,7 +122,7 @@ export default new Vuex.Store({
       state.articleData.image=response.data.image,
       state.articleData.temp=response.data.temp,
       state.articleData.endTime=response.data.endTime,
-      state.articleData.createTime=response.data.createdTime
+      state.articleData.createTime=response.data.createTime
     },
     GET_COMMENTS(state,comments){
       state.comments = comments
