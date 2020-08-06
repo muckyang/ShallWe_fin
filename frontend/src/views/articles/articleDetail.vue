@@ -31,8 +31,8 @@
         <div class="articleInfo">
           <div class="detail-info">
             <div class="detail-address">만남의 장소: {{articleData.address}}
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                지도 보기
+              <button type="button" class="map-btn" data-toggle="modal" data-target="#exampleModal">
+                <i class="fas fa-map-marker-alt"></i>
               </button>
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -53,8 +53,11 @@
                 </div>
               </div>
             </div>
-            <div class="detail-price">{{articleData.sumPrice}}원 / {{articleData.minPrice}}원</div>
-            <div class="detail-endTime">{{articleData.endTime}}까지</div>
+            <div class="detail-price">
+              <div class="min-price">최소 주문 금액: {{articleData.minPrice}}원</div>
+              <div class="min-price">모인 금액: {{articleData.sumPrice}}원 </div>
+            </div>
+            <div class="detail-endTime">마감 시간: {{articleData.endTime}}까지</div>
           </div>  
           <div class="detail-btns">
             <articleLike  @like-change="likeChange" 
@@ -296,6 +299,14 @@ a{
 .top-line{
   margin: 0% 0% 2% 0%; 
 }
+.map-btn{
+  font-size: medium;
+  color: white;
+  border:none;
+  background-color:rgb(15, 190, 182);
+  border-radius: 3px;
+  padding: 1% 2% 1% 2%;
+}
 .middle-row{
   display: flex;
   /* border: 1px solid blue; */
@@ -318,8 +329,12 @@ a{
   font-weight: bold;
   margin-bottom: 5px;
 }
+.detail-price{
+  margin: 5% 0 0 0;
+}
 .detail-endTime{
-  font-size: x-small;
+  margin: 5% 0 0 0;
+  font-size: medium;
 }
 .kakao{
   height: 25px;
