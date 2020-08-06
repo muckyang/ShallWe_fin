@@ -33,7 +33,7 @@
                 img-alt="Image" img-top>
                     <b-card-text>
                       <h5 class="article-title">{{ article.title }}</h5>
-                      <h6 class="article-area">{{ article.address }}</h6>
+                      <h6 class="article-address">{{ article.address }}</h6>
                       <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                     </b-card-text>
                     <template v-slot:footer>
@@ -63,7 +63,7 @@
                 img-alt="Image" img-top>
                     <b-card-text>
                       <h5 class="article-title">{{ article.title }}</h5>
-                      <h6 class="article-area">{{ article.address }}</h6>
+                      <h6 class="article-address">{{ article.address }}</h6>
                       <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                     </b-card-text>
                     <template v-slot:footer>
@@ -94,7 +94,7 @@
                 img-alt="Image" img-top>
                     <b-card-text>
                       <h5 class="article-title">{{ article.title }}</h5>
-                      <h6 class="article-area">{{ article.address }}</h6>
+                      <h6 class="article-address">{{ article.address }}</h6>
                       <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                     </b-card-text>
                     <template v-slot:footer>
@@ -124,7 +124,7 @@
                 img-alt="Image" img-top>
                     <b-card-text>
                       <h5 class="article-title">{{ article.title }}</h5>
-                      <h6 class="article-area">{{ article.address }}</h6>
+                      <h6 class="article-address">{{ article.address }}</h6>
                       <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                     </b-card-text>
                     <template v-slot:footer>
@@ -193,8 +193,12 @@ export default {
   margin-bottom: 10px;
   line-height: 1.2;
 }
-.article-area{
-  margin-bottom: 10px;;
+.article-address{
+  margin-bottom: 10px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  line-height:1.2;
 }
 .article-card {
   height: 400px;
@@ -223,7 +227,7 @@ $x-large: 1200px;
   }
 }
 .card__one {
-  transition: transform .5s;
+  transition: transform .3s;
 
   &::after {
     position: absolute;
