@@ -181,7 +181,7 @@ public class AccountController {
             result.reviewCount = result.reviewList.size();
             result.likeCount = result.likeList.size();
             result.tempCount = result.tempList.size();
-
+            System.out.println("리턴 !!! ");
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

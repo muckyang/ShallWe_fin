@@ -25,6 +25,14 @@ export default new Vuex.Store({
       password:'',
       birthday:'',
       userPoint:'',
+      articleCount:'',
+      reviewCount:'',
+      likeCount:'',
+      tempCount:'',
+      articleList: [],
+      reviewList: [],
+      likeList: [],
+      tempList: [],
     },
     isTerm:false,
     articleData:{
@@ -108,6 +116,14 @@ export default new Vuex.Store({
       state.userData.userId=userData.userId
       state.userData.password=userData.password
       state.userData.birthday=userData.birthday
+      state.userData.articleCount=userData.articleCount
+      state.userData.reviewCount=userData.reviewCount
+      state.userData.likeCount=userData.likeCount
+      state.userData.tempCount=userData.tempCount
+      state.userData.articleList=userData.articleList
+      state.userData.reviewList=userData.reviewList
+      state.userData.likeList=userData.likeList
+      state.userData.tempList=userData.tempList
     },
 
     //게시글 관리
