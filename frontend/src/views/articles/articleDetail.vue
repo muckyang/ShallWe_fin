@@ -209,11 +209,12 @@
         <div class="d-flex">
           <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
               <div class="member">
-                <div class="member-title">제목: {{participant.title}}</div>
+                <div class="member-writer">{{participant.writer}}</div>
                       <b-button size="sm" v-b-modal.update-modal 
                       v-if="participant.userId === userData.userId" 
                       @click="changeNo(participant.no)">수정</b-button>
               </div>
+              <div class="member-title">제목: {{participant.title}}</div>
               <div class="member-price">가격: {{participant.price}}</div>
               <div class="member-content">요구사항: {{participant.description}}</div>
               <div class="member-create-time">{{participant.createTime}}</div>
