@@ -258,7 +258,6 @@ export default new Vuex.Store({
         .then((response)=>{
           commit('GET_ARTICLE',response)
           commit('GET_COMMENTS', response.data.commentList)
-          console.log(resposne.data)
         })
         .catch((err)=>{
           console.error(err)
