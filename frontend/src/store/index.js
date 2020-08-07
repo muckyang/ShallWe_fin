@@ -25,6 +25,14 @@ export default new Vuex.Store({
       password:'',
       birthday:'',
       userPoint:'',
+      articleCount:'',
+      reviewCount:'',
+      likeCount:'',
+      tempCount:'',
+      articleList: [],
+      reviewList: [],
+      likeList: [],
+      tempList: [],
     },
     isTerm:false,
     articleData:{
@@ -42,11 +50,17 @@ export default new Vuex.Store({
       temp:'',
       endTime:'',
       createTime:'',
+      likeNum:'',
+      commentNum:'',
+      timeAgo:'',
+      partList:[],
     },
+    
     isSended:false,
 
     //게시글
     articles:[],
+    comments:[],
   },
 
   getters:{
@@ -57,15 +71,16 @@ export default new Vuex.Store({
     //사용자 관리
     SET_TOKEN(state,token){
       state.authToken=token
-      cookies.set('auth-token', token)
+      cookies.set('auth-token', token, 0)
       state.isLoggedin=true
-      alert("login success")
       router.push('/')
+      router.go()
     },
     REMOVE_TOKEN(state){
       state.authToken=null
       cookies.remove('auth-token')
       state.isLoggedin=false
+      state.modal = true
       router.push('/')
     },
     loginCheck(state){
@@ -73,10 +88,14 @@ export default new Vuex.Store({
         state.isLoggedin = true
       }else{
         state.isLoggedin = false
+        
       }
     },
     sendCheck(state){
       state.isSended=true
+    },
+    CheckFalse(state){
+      state.isSended=false
     },
     termCheck(state){
       
@@ -96,6 +115,14 @@ export default new Vuex.Store({
       state.userData.userId=userData.userId
       state.userData.password=userData.password
       state.userData.birthday=userData.birthday
+      state.userData.articleCount=userData.articleCount
+      state.userData.reviewCount=userData.reviewCount
+      state.userData.likeCount=userData.likeCount
+      state.userData.tempCount=userData.tempCount
+      state.userData.articleList=userData.articleList
+      state.userData.reviewList=userData.reviewList
+      state.userData.likeList=userData.likeList
+      state.userData.tempList=userData.tempList
     },
 
     //게시글 관리
@@ -112,12 +139,20 @@ export default new Vuex.Store({
       state.articleData.description = response.data.description,
       state.articleData.minPrice = response.data.minPrice,
       state.articleData.sumPrice = response.data.sumPrice,
+      state.articleData.likeNum = response.data.likeNum,
+      state.articleData.commentNum=response.data.commentNum,
       state.articleData.urlLink=response.data.urlLink,
       state.articleData.image=response.data.image,
       state.articleData.temp=response.data.temp,
       state.articleData.endTime=response.data.endTime,
       state.articleData.createTime=response.data.createdTime
+      state.articleData.timeAgo=response.data.timeAgo
+      state.articleData.partList = response.data.partList
+      console.log(state.articleData)
     },
+    GET_COMMENTS(state,comments){
+      state.comments = comments
+    }
 
   },
 
@@ -126,10 +161,11 @@ export default new Vuex.Store({
     sendEmail({state},data){
       if(state.isTerm){
         if (data.signUpDataForSend.password===data.password2){
+          alert("메일로 인증 코드가 발송되었습니다.")
+          this.commit('sendCheck')
           axios.post(`${BACK_URL}/account/sendmail`, data.signUpDataForSend)
           .then((res)=>{
-            this.commit('sendCheck')
-            alert("메일로 인증 코드가 발송되었습니다.")
+            // this.commit('sendCheck')
           })
           .catch((err)=>{
             console.log(err)
@@ -145,6 +181,7 @@ export default new Vuex.Store({
         axios.post(`${BACK_URL}/account/signup`, signUpData.signUpDataForSend)
         .then(() => {
             alert("회원가입이 완료되었습니다.")
+            this.commit('CheckFalse')
             router.push('/');
         })
         .catch((err) => {
@@ -153,14 +190,13 @@ export default new Vuex.Store({
         });
     },
     login({commit},loginData){
-      event.preventDefault()
-        axios.get(`${BACK_URL}/account/login/${loginData.id}/${loginData.password}`)
-        .then(response=>{
-          commit('SET_TOKEN',response.data) 
-        })
-        .catch(err=>{
-            console.log(err)
-        });
+      axios.post(`${BACK_URL}/account/login`,loginData)
+      .then(response=>{
+        commit('SET_TOKEN',response.data) 
+      })
+      .catch(err=>{
+          console.log(err)
+      });
     },
     //profile
     getUserData({state,commit}){
@@ -174,14 +210,15 @@ export default new Vuex.Store({
       })
     },
     editUser({state,commit},editData){
-      if(editData.editDataForSend.password===editData.password2){ 
-          axios.post(`${BACK_URL}/account/update`,editData.editDataForSend)
-            .then(()=>{
-              alert("수정이 완료되었습니다. 다시 로그인해 주세요")
-              commit('REMOVE_TOKEN')
-            })
-            .catch((err)=>{
-              console.error(err)
+      if(editData.editDataForSend.password===editData.password2){
+        editData.editDataForSend.token=state.authToken
+        axios.post(`${BACK_URL}/account/update`,editData.editDataForSend)
+          .then(()=>{
+            alert("수정이 완료되었습니다. 다시 로그인해 주세요")
+            commit('REMOVE_TOKEN')
+          })
+          .catch((err)=>{
+            console.error(err)
             })
       }else{
           alert("비밀번호를 확인해 주세요")
@@ -207,7 +244,7 @@ export default new Vuex.Store({
       const auth={token:state.authToken}
       axios.post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}`,auth)
         .then((response) => {
-          console.log(response.data.postList,"AAAAAAAAAAA")
+          console.log(response, '아티클리스트')
           commit('GET_ARTICLES',response.data.postList)
         })
         .catch((err) => {
@@ -220,6 +257,7 @@ export default new Vuex.Store({
       axios.post(`${BACK_URL}/post/detail/${articleID}`,auth)
         .then((response)=>{
           commit('GET_ARTICLE',response)
+          commit('GET_COMMENTS', response.data.commentList)
         })
         .catch((err)=>{
           console.error(err)
@@ -227,6 +265,12 @@ export default new Vuex.Store({
     },
     //게시글 생성
     createArticle(context,articleData){
+      if(articleData.temp===1||articleData.temp===0){
+        if(articleData.articleData.endTime.length<8){
+          articleData.articleData.endTime=articleData.articleData.endTime+':00'
+        }
+      }
+      console.log(articleData.articleData)
       axios.post(`${BACK_URL}/post/create/${articleData.temp}` ,articleData.articleData)
         .then(() => { 
           router.push('/article')
@@ -235,8 +279,12 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({state},updateData){
+      if(updateData.articleUpdateData.endTime.length<8){
+        updateData.articleUpdateData.endTime=updateData.articleUpdateData.endTime+":00"
+      }
+      updateData.articleUpdateData.token=state.authToken
       axios.post(`${BACK_URL}/post/update/${updateData.temp}`, updateData.articleUpdateData)
-      .then((response) => {
+      .then(() => {
         router.push(`/detail/${updateData.articleUpdateData.articleId}`)
       })
       .catch((err)=>{
@@ -244,11 +292,15 @@ export default new Vuex.Store({
       })
     },
     //게시글 삭제하기
-    deleteArticle({state},articleId){
+    deleteArticle({state,dispatch},article){
       const auth={token:state.authToken}
-      axios.get(`${BACK_URL}/post/delete/${articleId}`,auth)
+      axios.get(`${BACK_URL}/post/delete/${article.id}`,auth)
        .then(()=>{
+         if(article.temp===1){
           router.push('/article')
+         }else{
+          dispatch('getArticles',{temp:0,categoryId:0})
+         }
        })
        .catch((err)=>{
          console.log(err)
@@ -256,17 +308,19 @@ export default new Vuex.Store({
     },
     //게시글 검색
     search({commit},searchData){
-      console.log(searchData.searchDataForSend.subject)
-      console.log(searchData.searchDataForSend.word)
-      console.log(searchData.categoryId)
+      console.log(searchData)
+      cookies.set('searchData',searchData,0)
       if(searchData.searchDataForSend.word&&searchData.searchDataForSend.subject&&searchData.categoryId){
+        searchData.categoryId=0
         axios.post(`${BACK_URL}/post/search/1/${searchData.categoryId}`, searchData.searchDataForSend)
           .then((res) =>{
             commit('GET_ARTICLES',res.data.postList)
             router.push({name:"searchList"})
+            searchData.categoryId='기본값'
           })
           .catch((err)=>{
             console.log(err)
+            searchData.categoryId='기본값'
           })
       }else if(!searchData.searchDataForSend.subject){
         alert('분류를 입력하세요!')

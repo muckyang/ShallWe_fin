@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-// import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDate;
@@ -21,21 +20,42 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "user") // 이어줄 테이블명 지정 
-public class User  {
-    
+@Table(name = "user") // 이어줄 테이블명 지정
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
-    private String password;
     private String email;
+    private String password;
     private String name;
     private String nickname;
     private String address;
     private int userPoint;
     private LocalDate birthday;
-    // 생성시간은 자동생성
+    @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
+    public User(String email , String password, String name, String nickname, String address, LocalDate birthday) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+        this.address = address;
+        this.userPoint = 1000;
+        this.birthday = birthday;
+    }
+
+    public void UserUpdate(SignupRequest req) {
+        this.password = req.getPassword();
+        this.name = req.getName();
+        this.nickname = req.getNickname();
+        this.address= req.getAddress();
+        this.birthday = req.getBirthday();
+    }
 }

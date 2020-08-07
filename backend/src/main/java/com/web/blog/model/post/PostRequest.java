@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 @Data
 @Valid
 public class PostRequest {
@@ -18,19 +19,26 @@ public class PostRequest {
     @NotNull
     String title;
     String writer;
-    @ApiModelProperty(required = true)
-    @NotNull
+
     String address;
-    @ApiModelProperty(required = true)
-    @NotNull
+
     int minPrice;
+    int myPrice;
     @ApiModelProperty(required = true)
     @NotNull
     String description;
     String urlLink;
     String image;
     String token;
+    int likeNum;
+    int commentNum;
+    String tag;
+
+    // TODO tag
+    String[] tags;
     int temp;
-    LocalDateTime endTime;
-        
+ 
+    String endDate;
+    String endTime;
+    LocalDateTime endT;
 }

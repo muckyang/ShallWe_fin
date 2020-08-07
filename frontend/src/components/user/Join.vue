@@ -100,8 +100,6 @@
                             placeholder=" YYYY-MM-DD"
                             type="text"/>
                     </div>
-
-                    
                 </div>
 
                 <div class="seeModal">
@@ -465,7 +463,7 @@ label{
     color: black;
 }
 .joinInput{
-    width: 270px;
+    width: 260px;
     height: 40px;
     border: 1px solid grey;
     border-radius: 5px;

@@ -24,6 +24,7 @@ public class Participant {
     private int articleId;
     private String title;
     private int price;
+    private String writer;
     private String description;
 
 }

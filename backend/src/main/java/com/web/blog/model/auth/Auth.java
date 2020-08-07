@@ -20,4 +20,9 @@ public class Auth {
     int authId;
     String email;
     int authNumber;
+    public Auth(String email,int authNumber){
+        super();
+        this.email = email;
+        this.authNumber = authNumber;
+    }
 }

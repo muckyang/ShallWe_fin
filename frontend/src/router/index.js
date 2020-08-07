@@ -10,7 +10,6 @@ import Login from '../components/user/Login.vue'
 import Join from '../components/user/Join.vue'
 import editUser from '../components/user/editUser.vue'
 import Profile from '../components/user/Profile.vue'
-import emailAuthenticate from '../components/user/emailAuthenticate.vue'
 import SignUpComplete from '../components/user/SignUpComplete.vue'
 
 // 아티클
@@ -18,6 +17,12 @@ import articleCreate from '../views/articles/articleCreate.vue'
 import articleDetail from '../views/articles/articleDetail.vue'
 import articleUpdate from '../views/articles/articleUpdate.vue'
 import articleList from '../views/articles/articleList.vue'
+
+//자유게시판
+import postCreate from '../views/post/postCreate'
+import postDetail from '../views/post/postDetail'
+import postUpdate from '../views/post/postUpdate'
+import postList from '../views/post/postList'
 
 //임시저장
 import tempList from '../views/articles/tempList.vue'
@@ -65,12 +70,6 @@ Vue.use(VueRouter)
       component: editUser
     },
    
-    //이메일 인증
-    {
-      path: '/user/email',
-      name: constants.URL_TYPE.USER.EMAIL,
-      component: emailAuthenticate
-    },
     //게시글 CRUD
     {
       path: '/create',
@@ -96,6 +95,27 @@ Vue.use(VueRouter)
       path: '/templist',
       name: 'tempList',
       component: tempList
+    },
+    //자유게시판CRUD
+    {
+      path: '/pcreate',
+      name: 'postCreate',
+      component: postCreate
+    },
+    {
+      path: '/pupdate',
+      name: 'postDetail',
+      component: postDetail
+    },
+    {
+      path: '/pupdate',
+      name: 'postUpdate',
+      component: postUpdate
+    },
+    {
+      path: '/posts',
+      name: 'postList',
+      component: postList
     },
     //검색
     {
@@ -144,7 +164,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   //로그인 하지 않아도 되는 페이지
-  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList']
+  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList']
   //로그인 하면 안되는 페이지
   const authPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN]
   

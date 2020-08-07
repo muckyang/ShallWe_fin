@@ -1,7 +1,12 @@
 <template>
   <div class="like-content">
-    <button v-if="!isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart"></i> 찜하기</button>
-    <button v-if="isLiked" @click="like" class="btn-secondary like-review"><i class="fas fa-heart-broken"></i> 찜하기 취소</button>
+    <button v-if="!isLiked" @click="like" 
+    class="like-review">
+    <i class="fas fa-heart"></i> 찜</button>
+
+    <button v-if="isLiked" @click="like" 
+    class="like-review">
+    <i class="fas fa-heart-broken"></i> 찜 취소</button>
   </div>
 </template>
 
@@ -37,16 +42,10 @@ export default {
 
 <style>
 .like-content {
-    /* display: inline-block; */
-    width: 100%;
-    /* margin: 40px 0 0;
-    padding: 47px 0 0; */
     font-size: 17px;
-    /* border-top: 10px dashed #eee; */
     text-align: center;
-    margin-top: 20px;
 }
-.like-content .btn-secondary {
+.like-content .like-review {
     display: block;
     /* margin: 40px auto 0px; */
     text-align: center;
@@ -62,21 +61,12 @@ export default {
     text-decoration: none;
     -webkit-transition: 0.3s ease;
     transition: 0.3s ease;
+    /* margin: 0 1% 0 1%; */
 }
-.like-content .btn-secondary:hover {
+.like-content .like-review:hover {
       transform: translateY(-3px);
 }
-.like-content .btn-secondary .fa {
+.like-content .like-review .fa {
       margin-right: 5px;
 }
-/* .animate-like {
-    animation-name: likeAnimation;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-duration: 0.65s;
-}
-@keyframes likeAnimation {
-  0%   { transform: scale(30); }
-  100% { transform: scale(1); }
-} */
 </style>
