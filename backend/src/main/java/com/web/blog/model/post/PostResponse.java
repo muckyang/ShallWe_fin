@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.web.blog.model.comment.CommentRes;
+import com.web.blog.model.participant.Participant;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -74,5 +75,8 @@ public class PostResponse {
      public List<CommentRes> commentList;
      @ApiModelProperty(value = "timeAgo", position = 18)
      public String timeAgo;
+
+     @ApiModelProperty(value = "partList", position = 19)
+     public List<Participant> partList;
 
 }

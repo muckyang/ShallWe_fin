@@ -128,7 +128,7 @@ public class PostController {
                 Participant participant = new Participant();
                 participant.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
                 participant.setArticleId(artiId);
-                
+
                 System.out.println(post.getTitle() + " " + artiId);
                 participant.setTitle(def_mes);
                 participant.setPrice(myPrice);
@@ -303,9 +303,9 @@ public class PostController {
 
             System.out.println("address로 검색");
             List<String> addList = new ArrayList<>();
-            
+
             StringTokenizer st = new StringTokenizer(word);
-            while(st.hasMoreTokens()){
+            while (st.hasMoreTokens()) {
                 addList.add("%" + st.nextToken() + "%");
             }
 
@@ -373,6 +373,8 @@ public class PostController {
             for (int i = 0; i < tags.length; i++) {
                 tags[i] = tlist.get(i).getName();
             }
+            List<Participant> partlist = participantDao.findParticipantByArticleId(articleId);
+            result.partList = partlist;
             result.tags = tags;
 
             if (userOpt.isPresent()) {// 로그인 상태일때
@@ -396,7 +398,8 @@ public class PostController {
                 String nickname = user.getNickname();
 
                 result.commentList.add(new CommentRes(clist.get(i).getCommentId(), clist.get(i).getArticleId(),
-                        clist.get(i).getUserId(), nickname, clist.get(i).getContent(), BeforeCreateTime(clist.get(i).getCreateTime()),clist.get(i).getCreateTime()));
+                        clist.get(i).getUserId(), nickname, clist.get(i).getContent(),
+                        BeforeCreateTime(clist.get(i).getCreateTime()), clist.get(i).getCreateTime()));
 
                 System.out.println(nickname);
             }
@@ -444,7 +447,6 @@ public class PostController {
             post.setImage(req.getImage());
             post.setTemp(temp);
             post.setEndTime(endTime);
-
 
             postDao.save(post);
 
