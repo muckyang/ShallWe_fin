@@ -198,12 +198,19 @@ export default {
       constants,
       item1:'',
       item2:'',
+      // searchData:{
+      //   searchDataForSend:{
+      //     subject:'',
+      //     word:'',
+      //   },
+      //   categoryId:'',
+      // },
       searchData:{
         searchDataForSend:{
-          subject:'',
           word:'',
+          subject:'address',
         },
-        categoryId:'',
+        categoryId:'기본값',
       },
       loginData:{
         email: '',
