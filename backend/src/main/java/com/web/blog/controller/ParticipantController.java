@@ -80,6 +80,7 @@ public class ParticipantController {
             participant.setArticleId(request.getArticleId());
             participant.setTitle(title);
             participant.setPrice(price);
+            participant.setWriter(userOpt.get().getNickname());
             participant.setDescription(description);
             participantDao.save(participant);// 참가자 DB에 등록 완료
 
@@ -118,10 +119,12 @@ public class ParticipantController {
     @ApiOperation(value = "참가자 수정")
     public Object update(@Valid @RequestBody ParticipantRequest request) {
 
-        int participantNo = request.getNo();// 해당 클릭의 No를 가져와서
-        Participant participant = participantDao.getParticipantByNo(participantNo);// 참가자의 해당 정보를 가져옴
-        int old_price = participant.getPrice();// 원래 참가자의 가격정보
+        int articleId = request.getArticleId();// 해당 클릭의 No를 가져와서
+        int userId = request.getUserId();// 해당 클릭의 No를 가져와서
+        Optional<Participant> partOpt = participantDao.getParticipantByUserIdAndArticleId(userId,articleId);// 참가자의 해당 정보를 가져옴
+        int old_price = partOpt.get().getPrice();// 원래 참가자의 가격정보
         int new_price = request.getPrice();// 새로운 참가자의 가격정보
+        
         if (new_price < 0) {
             String message = "수정할 값이 0원보다 값이 작습니다.";
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
@@ -135,12 +138,12 @@ public class ParticipantController {
         post.setSumPrice(sumPrice);
         postDao.save(post);// 다시 DB에 넣어줌
 
-        participant.setTitle(request.getTitle());
-        participant.setPrice(new_price);
-        participant.setDescription(request.getDescription());
-        participantDao.save(participant);// 다시 세팅해서 참가자 DB에 넣어줌
+        partOpt.get().setTitle(request.getTitle());
+        partOpt.get().setPrice(new_price);
+        partOpt.get().setDescription(request.getDescription());
+        participantDao.save(partOpt.get());// 다시 세팅해서 참가자 DB에 넣어줌
 
-        System.out.println(participantNo+"번째 참가자 수정 완료");
+        System.out.println(partOpt.get().getNo()+"번째 참가자 수정 완료");
         
         return new ResponseEntity<>("참가자 수정 완료", HttpStatus.OK);
     }

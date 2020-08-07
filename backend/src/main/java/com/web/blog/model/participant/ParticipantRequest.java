@@ -29,7 +29,7 @@ public class ParticipantRequest {
     @ApiModelProperty(required = true)
     @NotNull
     int price;
-    
+    String writer;
     @ApiModelProperty(required = true)
     String description;
 

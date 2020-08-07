@@ -1,6 +1,7 @@
 package com.web.blog.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -14,6 +15,8 @@ import com.web.blog.dao.LikeDao;
 import com.web.blog.dao.UserDao;
 import com.web.blog.model.user.UserResponse;
 import com.web.blog.model.auth.Auth;
+import com.web.blog.model.comment.Comment;
+import com.web.blog.model.post.Post;
 import com.web.blog.model.user.AuthRequest;
 import com.web.blog.model.user.LoginRequest;
 import com.web.blog.model.user.SignupRequest;
@@ -30,6 +33,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -68,12 +72,13 @@ public class AccountController {
     private JwtService jwtService;
     @Autowired
     KakaoService kakao;
+
     @RequestMapping("/account/kakaoLogin")
     @ApiOperation(value = "카카오 로그인") // SWAGGER UI에 보이는 이름
     public Object kakaoLogin(@RequestParam("code") String code) {
         String access_Token = kakao.getAccessToken(code);
         System.out.println("controller access_token : " + access_Token);
-   
+
         System.out.println("카카오 로그인 체크 : " + code);
         return new ResponseEntity<>(code, HttpStatus.NOT_FOUND);
     }
@@ -81,7 +86,7 @@ public class AccountController {
     @PostMapping("/account/login") // SWAGGER UI에 보이는 REQUEST명
     @ApiOperation(value = "로그인") // SWAGGER UI에 보이는 이름
     public Object login(@RequestBody LoginRequest req) {
-     
+
         String email = req.getEmail();
         String password = req.getPassword();
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(email, password);
@@ -146,7 +151,7 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/account/read") // SWAGGER UI에 보이는 REQUEST명
+    @GetMapping("/account/read") // SWAGGER UI에 보이는 REQUEST명
     @ApiOperation(value = "프로필 조회")
     public Object info(@RequestBody TokenRequest req) {
         String token = req.getToken();
@@ -158,7 +163,7 @@ public class AccountController {
             UserResponse result = getUserResponse(userOpt.get());
             result.userId = userOpt.get().getUserId();
             result.email = userOpt.get().getEmail();
-            result.userPoint =userOpt.get().getUserPoint();
+            result.userPoint = userOpt.get().getUserPoint();
 
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -180,6 +185,27 @@ public class AccountController {
         if (userOpt.isPresent()) {
             User user = userDao.getUserByEmail(jwtuser.getEmail());
             user.UserUpdate(req);
+
+            if (user.getNickname() != req.getNickname()) {
+
+            //닉네임 유효성 검사 해야함
+
+
+
+                List<Post> plist = postDao.findPostByUserId(user.getUserId());
+                for (int i = 0; i < plist.size(); i++) {
+                    Post p = plist.get(i);
+                    p.setWriter(req.getNickname());
+                    postDao.save(p);
+                }
+                List<Comment> clist = commentDao.findCommentByUserId(user.getUserId());
+                for (int i = 0; i < clist.size(); i++) {
+                    Comment c = clist.get(i);
+                    c.setWriter(req.getNickname());
+                    commentDao.save(c);
+                }
+                
+            }
             userDao.save(user); // 수정내용 저장
             System.out.println("수정하기 완료!! ");
             User result = user;
@@ -231,12 +257,13 @@ public class AccountController {
         return authNumber;
     }
 
-    private UserResponse getUserResponse(User user){
-        UserResponse result = new UserResponse(user.getPassword(),user.getName(),user.getNickname(),user.getAddress(),user.getBirthday());
-        result.articleCount = postDao.findPostByUserIdAndTemp(user.getUserId(),1).size();
-        result.reviewCount = postDao.findPostByUserIdAndCategoryId(user.getUserId(),102).size();
+    private UserResponse getUserResponse(User user) {
+        UserResponse result = new UserResponse(user.getPassword(), user.getName(), user.getNickname(),
+                user.getAddress(), user.getBirthday());
+        result.articleCount = postDao.findPostByUserIdAndTemp(user.getUserId(), 1).size();
+        result.reviewCount = postDao.findPostByUserIdAndCategoryId(user.getUserId(), 102).size();
         result.likeCount = likeDao.findLikeByUserId(user.getUserId()).size();
-        result.tempCount = postDao.findPostByUserIdAndTemp(user.getUserId(),2).size();
+        result.tempCount = postDao.findPostByUserIdAndTemp(user.getUserId(), 2).size();
         return result;
     }
 }

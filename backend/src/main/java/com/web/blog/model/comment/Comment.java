@@ -28,6 +28,7 @@ public class Comment {
     private int commentId;
     private int articleId;
     private int userId;
+    private String writer;
     private String content;
     
     @Column(insertable = false, updatable = false)
