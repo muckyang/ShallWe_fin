@@ -69,25 +69,25 @@
             <b-card bg-variant="light" text-variant="dark" class="mb-4">
               <b-card-text>
                 <div class="container">
-                      <div class="row">
-                        <div class="col-3">
-                          <h2>0 개</h2>
-                          <small>내가 쓴 게시물</small>
-                        </div>
-                        <div class="col-3">
-                          <h2>0 개</h2>
-                          <small>내가 쓴 후기</small>
-                        </div>
-                        <div class="col-3">
-                          <h2>0 개</h2>
-                          <small>찜 목록</small>
-                        </div>
-                        <div class="col-3">
-                          <h2>0 개</h2>
-                          <small>임시 저장</small>
-                        </div>
-                      </div>
+                  <div class="row">
+                    <div class="col-3">
+                      <h2>{{ userData.articleCount }} 개</h2>
+                      <small>내가 쓴 게시물</small>
                     </div>
+                    <div class="col-3">
+                      <h2>{{ userData.reviewCount }} 개</h2>
+                      <small>내가 쓴 후기</small>
+                    </div>
+                    <div class="col-3">
+                      <h2>{{ userData.likeCount }} 개</h2>
+                      <small>찜 목록</small>
+                    </div>
+                    <div class="col-3">
+                      <h2>{{ userData.tempCount }} 개</h2>
+                      <small>임시 저장</small>
+                    </div>
+                  </div>
+                </div>
               </b-card-text>
             </b-card>
           </div>
@@ -107,15 +107,26 @@
           </div>
           <div class="col-9">
               <div class="tab-content" id="v-pills-tabContent">
-                  <div class="tab-pane fade show active text-dark" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">내가 쓴 게시물 목록</div>
+                  <div class="tab-pane fade show active text-dark" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">내가 쓴 게시물 목록
+                    {{ userData.articleList }}</div>
                   <div class="tab-pane fade text-dark" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">내가 쓴 후기 목록</div>
                   <div class="tab-pane fade text-dark" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">내가 찜한 목록</div>
                   <div class="tab-pane fade text-dark" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
                       <div v-for="article in articles" :key="article.articleId">
                           <!-- <tempList/> -->
-                          <span>{{article.title}}</span>
-                          <button class="btn btn-info"><router-link :to="{name:'articleUpdate', params: {ID:article.articleId}}">작성하기</router-link></button>
-                          <button class="btn btn-danger" @click="deleteArticle({id:article.articleId,temp:0})">삭제하기</button>
+                       <router-link :to="{name:'articleUpdate', params: {ID:article.articleId}}" class="text-decoration-none">
+                          <b-card class="">
+                            <b-card-text class="d-flex justify-content-between">
+                              <h6>제목: {{article.title}}</h6>
+                              <div>
+                          
+                                <button class="btn btn-danger btn-sm" @click="deleteArticle({id:article.articleId,temp:0})">삭제하기</button>
+                              </div>
+                            </b-card-text>
+                           
+                          </b-card>
+                          </router-link>
+              
                       </div>
                   </div>
               </div>
@@ -124,8 +135,8 @@
     </div>
     <hr>
     <div class="mb-5">
-        <button class="btn btn-danger mr-1" @click="deleteUser">회원 탈퇴 하기</button>
-        <router-link class="btn btn-info ml-1" v-bind:to="{name:constants.URL_TYPE.USER.EDIT}">회원 정보 수정하기</router-link>
+        <router-link class="btn btn-info ml-1" v-bind:to="{name:constants.URL_TYPE.USER.EDIT}">회원수정</router-link>
+        <button class="btn btn-danger mr-1" @click="deleteUser">회원탈퇴</button>
     </div>
   </div>
 </template>
@@ -155,6 +166,7 @@ export default {
     created: function(){
         this.getUserData()
         this.getArticles({temp:0,categoryId:0})
+        console.log(this.userData)
         console.log("created")
     },
 }
