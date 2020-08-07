@@ -19,6 +19,7 @@ import com.web.blog.model.auth.Auth;
 import com.web.blog.model.comment.Comment;
 import com.web.blog.model.like.Like;
 import com.web.blog.model.post.Post;
+import com.web.blog.model.post.PostResponse;
 import com.web.blog.model.user.AuthRequest;
 import com.web.blog.model.user.LoginRequest;
 import com.web.blog.model.user.SignupRequest;
@@ -167,10 +168,22 @@ public class AccountController {
             result.email = userOpt.get().getEmail();
             result.userPoint = userOpt.get().getUserPoint();
 
-            result.articleList = postDao.findPostByUserIdAndTemp(userId, 1);
-            result.reviewList = postDao.findPostByUserIdAndTemp(userId, 102);
-            result.tempList = postDao.findPostByUserIdAndTemp(userId, 0);
+            result.articleList = new LinkedList<>();
+            result.reviewList = new LinkedList<>();
+            result.tempList = new LinkedList<>();
 
+            List<Post> plist = postDao.findPostByUserId(userId);
+
+            for (int i = 0; i < plist.size(); i++) {
+                Post p = plist.get(i);
+                if (p.getTemp() == 1) {
+                    result.articleList.add(p);
+                } else if (p.getTemp() == 102) {
+                    result.reviewList.add(p);
+                } else if (p.getTemp() == 0) {
+                    result.tempList.add(p);
+                }
+            }
             List<Like> llist = likeDao.findLikeByUserId(userId);
             result.likeList = new LinkedList<>();
             for (int i = 0; i < llist.size(); i++) {
