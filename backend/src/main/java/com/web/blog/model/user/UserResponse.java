@@ -1,6 +1,9 @@
 package com.web.blog.model.user;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import com.web.blog.model.post.Post;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -35,6 +38,19 @@ public class UserResponse {
 
     @ApiModelProperty(value = "tempCount", position = 12)
     public int tempCount;
+
+
+    @ApiModelProperty(value = "articleList", position = 13)
+    public List<Post> articleList;
+
+    @ApiModelProperty(value = "reviewList", position = 14)
+    public List<Post> reviewList;
+
+    @ApiModelProperty(value = "likeList", position = 15)
+    public List<Post> likeList;
+
+    @ApiModelProperty(value = "tempList", position = 16)
+    public List<Post> tempList;
 
     public UserResponse(String password, String name, String nickname, String address, LocalDate birthday) {
         this.password = password;

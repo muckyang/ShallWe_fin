@@ -195,7 +195,7 @@ public class PostController {
             User jwtuser = jwtService.getUser(token);
             Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
 
-            String writer = userOpt.get().getName();
+            String writer = userOpt.get().getNickname();
             List<Post> plist = postDao.findPostByTempAndWriter(temp, writer);
 
             PostListResponse result = new PostListResponse();
