@@ -12,15 +12,15 @@ export default {
     },
     mounted() {
         if (window.kakao && window.kakao.maps) {
-            // setTimeout(()=>{
-            //     this.initMap();
-            // },250)
+            setTimeout(()=>{
+                this.initMap();
+            },250)
 
-            setTimeout(function() {
-                map.relayout();
-                map.setCenter(new kakao.maps.LatLng(lat, lng));
-                // map.setLevel(2); 필요하면 레벨조정
-            }, 1000);
+            // setTimeout(function() {
+            //     map.relayout();
+            //     map.setCenter(new kakao.maps.LatLng(lat, lng));
+            //     // map.setLevel(2); 필요하면 레벨조정
+            // }, 1000);
             
         } else {
             const script = document.createElement('script');
