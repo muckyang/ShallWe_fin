@@ -249,7 +249,7 @@
           description: '',
           token:this.$cookies.get('auth-token')
         },
-        participants:{},
+        // participants:{},
         no:'',
       }
     },
@@ -292,17 +292,17 @@
             console.log(err)
           })
       },
-      getparticipantData(){
-        axios.post(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
-          .then((response)=>{
-            this.participants=response.data.participantList    
-            console.log(response.data.participantList, '참여자리스트')
-            console.log(this.participants, 'ㄹㅇ')
-          })
-          .catch((err)=>{
-            console.log(err)
-          })
-      },
+      // getparticipantData(){
+      //   axios.post(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
+      //     .then((response)=>{
+      //       this.participants=response.data.participantList    
+      //       console.log(response.data.participantList, '참여자리스트')
+      //       console.log(this.participants, 'ㄹㅇ')
+      //     })
+      //     .catch((err)=>{
+      //       console.log(err)
+      //     })
+      // },
       cancel(){
         axios.post(`${BACK_URL}/participant/delete/${this.no}`)
           .then(()=>{})
@@ -371,7 +371,7 @@
       this.getArticle(this.$route.params.ID)
       this.getUserData()
       this.likeCheck()
-      this.getparticipantData()
+      // this.getparticipantData()
 
     },
 
