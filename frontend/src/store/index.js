@@ -53,6 +53,7 @@ export default new Vuex.Store({
       likeNum:'',
       commentNum:'',
       timeAgo:'',
+      partList:[],
     },
     
     isSended:false,
@@ -146,6 +147,8 @@ export default new Vuex.Store({
       state.articleData.endTime=response.data.endTime,
       state.articleData.createTime=response.data.createdTime
       state.articleData.timeAgo=response.data.timeAgo
+      state.articleData.partList = response.data.partList
+      console.log(state.articleData)
     },
     GET_COMMENTS(state,comments){
       state.comments = comments

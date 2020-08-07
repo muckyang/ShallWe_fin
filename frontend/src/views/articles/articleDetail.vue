@@ -198,19 +198,17 @@
       </div>
       <div class="members">
         <div class="members-start">
-          <i class="fas fa-users"></i> 참여 멤버 (총 {{participants.length}}명)
+          <i class="fas fa-users"></i> 참여 멤버 (총 {{articleData.partList.length}}명)
         </div>
-        <!--참여자 목록 -->  
         <div class="d-flex">
-          <div class="member-list" v-for="participant in participants" :key="participant.no">
+          <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
               <div class="member">
-                  닉네임: {{participant.no}}
-                      <b-button v-b-modal.update-modal 
+                <div class="member-title">제목: {{participant.title}}</div>
+                      <b-button size="sm" v-b-modal.update-modal 
                       v-if="participant.userId === userData.userId" 
                       @click="changeNo(participant.no)">수정</b-button>
               </div>
               <div class="member-price">가격: {{participant.price}}</div>
-              <div class="member-title">제목: {{participant.title}}</div>
               <div class="member-content">요구사항: {{participant.description}}</div>
               <div class="member-create-time">{{participant.createTime}}</div>
           </div>
@@ -249,7 +247,7 @@
           description: '',
           token:this.$cookies.get('auth-token')
         },
-        // participants:{},
+        participants:{},
         no:'',
       }
     },
@@ -379,7 +377,7 @@
 </script>
 
 <style>
-.member-content, .member-title, .memberprice, .member-create-time{
+.member-content, .member-title, .member-price, .member-create-time{
     text-align: left;
 }
 .member-create-time{
