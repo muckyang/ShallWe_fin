@@ -13,7 +13,6 @@
                         <a class="dropdown-item" @click="deleteComment">삭제</a>
                     </div>
                 </div>
-
             </div>
             <div class="comment-content">{{comment.content}}</div>
             <div class="comment-create-time">{{comment.createTime}}</div>

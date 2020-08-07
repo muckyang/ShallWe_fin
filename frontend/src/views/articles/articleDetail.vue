@@ -196,36 +196,25 @@
           <p>{{ articleData.description }}</p>
         </div>
       </div>
-      {{participants}}
       <div class="members">
         <div class="members-start">
           <i class="fas fa-users"></i> 참여 멤버 (총 {{participants.length}}명)
-          {{participants}}
         </div>
         <!--참여자 목록 -->  
-      <div class="d-flex ">
-        <div class="member-box" v-for="participant in participants" v-bind:key="participant.no">
-            <div class="comment-user">
-                닉네임: {{participant.no}}
-                <div class="comment-drop dropdown dropleft" v-if="participant.userId === userData.userId">
-                    <b-button v-b-modal.update-modal 
-                    v-if="participant.no === userData.userId" @click="changeNo(participant.no)">수정</b-button>
-                    
-                </div>
-            </div>
-            <div class="comment-content">가격: {{participant.price}}</div>
-            <div class="comment-content">제목: {{participant.title}}</div>
-            <div class="comment-content">요구사항: {{participant.description}}</div>
-            <div class="comment-create-time">{{comment.createTime}}</div>
-        </div>
-      </div>  
-
-        <div class="list" v-for="participant in participants" v-bind:key="participant.no">
-       
-          <b-button v-b-modal.update-modal @click="changeNo(participant.no)">수정</b-button>
-          <hr>
-        </div>
-        
+        <div class="d-flex">
+          <div class="member-list" v-for="participant in participants" :key="participant.no">
+              <div class="member">
+                  닉네임: {{participant.no}}
+                      <b-button v-b-modal.update-modal 
+                      v-if="participant.userId === userData.userId" 
+                      @click="changeNo(participant.no)">수정</b-button>
+              </div>
+              <div class="member-price">가격: {{participant.price}}</div>
+              <div class="member-title">제목: {{participant.title}}</div>
+              <div class="member-content">요구사항: {{participant.description}}</div>
+              <div class="member-create-time">{{participant.createTime}}</div>
+          </div>
+        </div> 
       </div>
       <!-- <membersList/> -->
       <commentList/>
@@ -291,8 +280,9 @@
           })
       },
       updateJoinData(){
-        this.joinData.no=this.no
-        axios.post(`${BACK_URL}/participant/update`,this.joinData)
+        this.joinData.articleId=this.articleData.articleId
+        // const auth={token:this.$cookies.get('auth-token')}
+        axios.post(`${BACK_URL}/participant/update`, this.joinData)
           .then((response)=>{
             console.log(response.data.participantList, '참여자리스트')
             this.participants=response.data.participantList
@@ -303,7 +293,7 @@
           })
       },
       getparticipantData(){
-        axios.get(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
+        axios.post(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
           .then((response)=>{
             this.participants=response.data.participantList    
             console.log(response.data.participantList, '참여자리스트')
@@ -389,6 +379,29 @@
 </script>
 
 <style>
+.member-content, .member-title, .memberprice, .member-create-time{
+    text-align: left;
+}
+.member-create-time{
+    color:rgb(145, 141, 141);
+    font-size: small;
+    margin-bottom: 1%;
+}
+.member-list{
+    border-bottom: 1px solid rgb(237, 237, 240);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1%;
+    padding: 0 0 0 0.3%;
+}
+.member{
+    text-align: left;
+    font-weight: bold;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .members{
   /* border: 1px solid red; */
   width: 75%;
