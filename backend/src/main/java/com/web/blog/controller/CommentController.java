@@ -49,24 +49,24 @@ public class CommentController {
 
     @PostMapping("/comment/create")
     @ApiOperation(value = "댓글등록")
-    public Object create(@Valid @RequestBody CommentRequest request)throws MessagingException, IOException {
+    public Object create(@Valid @RequestBody CommentRequest req)throws MessagingException, IOException {
         System.out.println("댓글등록");
-        System.out.println(request.getArticleId());
-        String token = request.getToken();
+        System.out.println(req.getArticleId());
 
-        String content = request.getContent();
-        int articleId = request.getArticleId();
-        User jwtuser = jwtService.getUser(token);
+
+
+        User jwtuser = jwtService.getUser(req.getToken());
 
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
         if (userOpt.isPresent()) {
             Comment comment = new Comment();
-            comment.setArticleId(articleId);
-            comment.setContent(content);
+            comment.setArticleId(req.getArticleId());
+            comment.setContent(req.getContent());
+            comment.setWriter(userOpt.get().getNickname());
             comment.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
             commentDao.save(comment);
 
-            Post post = postDao.getPostByArticleId(articleId);
+            Post post = postDao.getPostByArticleId(req.getArticleId());
             post.setCommentNum(post.getCommentNum()+1);
             postDao.save(post);
             System.out.println("댓글 등록!!");
