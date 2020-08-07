@@ -31,7 +31,7 @@
         <div class="articleInfo">
           <div class="detail-info">
             <div class="detail-address">만남의 장소: {{articleData.address}}
-              <button type="button" class="map-btn" data-toggle="modal" data-target="#exampleModal">
+              <!-- <button type="button" class="map-btn" data-toggle="modal" data-target="#exampleModal">
                 <i class="fas fa-map-marker-alt"></i>
               </button>
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -51,7 +51,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div> 
             <div class="detail-price">
               <div class="min-price">최소 주문 금액: {{articleData.minPrice}}원</div>
@@ -196,6 +196,12 @@
           <p>{{ articleData.description }}</p>
         </div>
       </div>
+      <!-- s -->
+        <div class="kakao-map">
+          
+          <kakaoMapForDetail/>
+        </div>
+        
       <div class="members">
         <div class="members-start">
           <i class="fas fa-users"></i> 참여 멤버 (총 {{articleData.partList.length}}명)
@@ -377,6 +383,15 @@
 </script>
 
 <style>
+.kakao-map{
+  display: flex;
+  /* border: 0.5px solid grey; */
+  width: 100%;
+  margin: 3% 0 0 0;
+  padding: auto;
+  justify-content: center;
+  text-align: center;
+}
 .member-content, .member-title, .member-price, .member-create-time{
     text-align: left;
 }
