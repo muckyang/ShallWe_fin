@@ -65,9 +65,7 @@ export default new Vuex.Store({
       cookies.set('auth-token', token, 0)
       state.isLoggedin=true
       router.push('/')
-      console.log('로그인 성공')
       router.go()
-      alert('로그인 성공')
     },
     REMOVE_TOKEN(state){
       state.authToken=null
