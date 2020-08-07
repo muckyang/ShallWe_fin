@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3">
+  <div class="mt-5">
     <div class="container detail">
       <!--Top 부분. 제목, 작성자, create time -->
       <div class="top">
@@ -11,8 +11,8 @@
                   <i class="fas fa-ellipsis-v"></i>
             </button>
             <div class="dropdown-menu">
-                <a class="dropdown-item"><router-link class="articleUpdate" :to="{name:'articleUpdate',
-                params: {ID:this.$route.params.ID}}">수정</router-link></a>
+                <router-link class="articleUpdate" :to="{name:'articleUpdate',
+                params: {ID:this.$route.params.ID}}"><a class="dropdown-item articleUpdate">수정</a></router-link>
                 <a class="dropdown-item">삭제</a><!--다시 보기!!!!!!!1 -->
             </div>
           </div>  
@@ -20,7 +20,7 @@
         </div>
         <div class="in-the-top">
           <div class="writer">{{ articleData.writer }}<br></div>
-          <div class="create-time">{{ articleData.createTime }}2020.08.04. 08:36</div>        
+          <div class="create-time">{{ articleData.timeAgo }}</div>        
         </div>
       </div>
       <hr class="top-line">
@@ -81,9 +81,10 @@
                   size="xl"
                   ref="modal"
                   title="참여하기"
+                  class="form-input"
                   @ok="sendJoinData"
                 >
-                  <form ref="form" @submit.stop.prevent="handleSubmit">
+                  <form ref="form" class="form-input" @submit.stop.prevent="handleSubmit">
                     <b-form-group
                       label="제목"
                       label-for="title-input"
@@ -91,6 +92,7 @@
                       <b-form-input
                         id="title-input"
                         v-model="joinData.title"
+                        class="form-input"
                       ></b-form-input>
                     </b-form-group>
 
@@ -101,17 +103,19 @@
                       <b-form-input
                         id="url-input"
                         v-model="joinData.url"
+                        class="form-input"
                       ></b-form-input>
                     </b-form-group>
 
                     <b-form-group
-                      label="가격"
+                      label="가격(숫자만 입력하세요.)"
                       label-for="price-input"
                     >
                       <b-form-input
                         id="price-input"
                         v-model="joinData.price"
-                      ></b-form-input>원
+                        class="form-input"
+                      ></b-form-input>
                     </b-form-group>
 
                     <b-form-group
@@ -121,6 +125,7 @@
                       <b-form-input
                         id="order-input"
                         v-model="joinData.description"
+                        class="form-input"
                       ></b-form-input>
                     </b-form-group>
 
@@ -191,13 +196,32 @@
           <p>{{ articleData.description }}</p>
         </div>
       </div>
-      <div class="participants">
-        <h5 class="m-0">참여 멤버 목록</h5>
+      {{participants}}
+      <div class="members">
+        <div class="members-start">
+          <i class="fas fa-users"></i> 참여 멤버 (총 {{participants.length}}명)
+          {{participants}}
+        </div>
+        <!--참여자 목록 -->  
+      <div class="d-flex ">
+        <div class="member-box" v-for="participant in participants" v-bind:key="participant.no">
+            <div class="comment-user">
+                닉네임: {{participant.no}}
+                <div class="comment-drop dropdown dropleft" v-if="participant.userId === userData.userId">
+                    <b-button v-b-modal.update-modal 
+                    v-if="participant.no === userData.userId" @click="changeNo(participant.no)">수정</b-button>
+                    
+                </div>
+            </div>
+            <div class="comment-content">가격: {{participant.price}}</div>
+            <div class="comment-content">제목: {{participant.title}}</div>
+            <div class="comment-content">요구사항: {{participant.description}}</div>
+            <div class="comment-create-time">{{comment.createTime}}</div>
+        </div>
+      </div>  
+
         <div class="list" v-for="participant in participants" v-bind:key="participant.no">
-          닉네임: {{participant.no}}<br>
-          가격: {{participant.price}}<br>
-          제목: {{participant.title}}<br>
-          요구사항: {{participant.description}}<br>
+       
           <b-button v-b-modal.update-modal @click="changeNo(participant.no)">수정</b-button>
           <hr>
         </div>
@@ -270,17 +294,20 @@
         this.joinData.no=this.no
         axios.post(`${BACK_URL}/participant/update`,this.joinData)
           .then((response)=>{
+            console.log(response.data.participantList, '참여자리스트')
             this.participants=response.data.participantList
             this.getparticipantData()        
-          })
+          }) //아티클아이디 유저아이디 넘기는걸로
           .catch((err)=>{
             console.log(err)
           })
       },
       getparticipantData(){
-        axios.post(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
+        axios.get(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
           .then((response)=>{
             this.participants=response.data.participantList    
+            console.log(response.data.participantList, '참여자리스트')
+            console.log(this.participants, 'ㄹㅇ')
           })
           .catch((err)=>{
             console.log(err)
@@ -362,6 +389,41 @@
 </script>
 
 <style>
+.members{
+  /* border: 1px solid red; */
+  width: 75%;
+  margin: 3% auto;
+}
+.members-start{
+  width: 100%;
+  padding: 0 0 0.5% 0.5%;
+  text-align: left;
+  border-bottom: 0.5px solid rgb(218, 215, 215);
+  margin: 0 0 2% 0;
+}
+ @media screen and (min-width: 768px) { 
+  b-modal:before {
+          display: inline-block;
+          vertical-align: middle;
+          content: " ";
+          height: 100%;
+  }
+}
+b-modal{
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+b-modal.form-input {
+  width: 27%;
+  height: 85%;
+  margin: 0;
+  padding: 0;
+}
+/* .modal-content.modalsize {
+  height: auto;
+  min-width: 10%;
+} */
 .detail{
   border: 1px solid rgb(224, 221, 221);
   border-radius: 1.5%;
@@ -384,6 +446,7 @@ a{
   text-decoration: none;
   color: black;
 }
+
 .top{
   margin-bottom:2%;
   margin-top: 2%;
@@ -549,8 +612,18 @@ a{
     border: none;
     outline: none;
 } */
+.router-link-active{
+  color: white;
+}
+.router-link-exact-active a{
+  color: white;
+}
 .articleUpdate{
-  text-decoration: none;;
+  text-decoration: none;
+  width:100%;
+}
+.article:hover{
+  text-decoration: none;
 }
 .share{
   display: flex;
@@ -566,5 +639,8 @@ a{
   margin-top: 3%;
   border: 1px solid rgb(179, 175, 175);
   border-radius: 3px;
+}
+.form-input{
+  width:150%;
 }
 </style>
