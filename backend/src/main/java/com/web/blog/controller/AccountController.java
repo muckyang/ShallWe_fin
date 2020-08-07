@@ -1,6 +1,7 @@
 package com.web.blog.controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import com.web.blog.dao.UserDao;
 import com.web.blog.model.user.UserResponse;
 import com.web.blog.model.auth.Auth;
 import com.web.blog.model.comment.Comment;
+import com.web.blog.model.like.Like;
 import com.web.blog.model.post.Post;
 import com.web.blog.model.user.AuthRequest;
 import com.web.blog.model.user.LoginRequest;
@@ -33,7 +35,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -151,7 +152,7 @@ public class AccountController {
         }
     }
 
-    @GetMapping("/account/read") // SWAGGER UI에 보이는 REQUEST명
+    @PostMapping("/account/read") // SWAGGER UI에 보이는 REQUEST명
     @ApiOperation(value = "프로필 조회")
     public Object info(@RequestBody TokenRequest req) {
         String token = req.getToken();
@@ -159,11 +160,27 @@ public class AccountController {
         System.out.println("프로필 조회 ! ");
         User jwtuser = jwtService.getUser(token);
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        int userId = userOpt.get().getUserId();
         if (userOpt.isPresent()) {
             UserResponse result = getUserResponse(userOpt.get());
             result.userId = userOpt.get().getUserId();
             result.email = userOpt.get().getEmail();
             result.userPoint = userOpt.get().getUserPoint();
+
+            result.articleList = postDao.findPostByUserIdAndTemp(userId, 1);
+            result.reviewList = postDao.findPostByUserIdAndTemp(userId, 102);
+            result.tempList = postDao.findPostByUserIdAndTemp(userId, 0);
+
+            List<Like> llist = likeDao.findLikeByUserId(userId);
+            result.likeList = new LinkedList<>();
+            for (int i = 0; i < llist.size(); i++) {
+                result.likeList.add(postDao.getPostByArticleId(llist.get(i).getArticleId()));
+            }
+
+            result.articleCount = result.articleList.size();
+            result.reviewCount = result.reviewList.size();
+            result.likeCount = result.likeList.size();
+            result.tempCount = result.tempList.size();
 
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -188,9 +205,7 @@ public class AccountController {
 
             if (user.getNickname() != req.getNickname()) {
 
-            //닉네임 유효성 검사 해야함
-
-
+                // 닉네임 유효성 검사 해야함
 
                 List<Post> plist = postDao.findPostByUserId(user.getUserId());
                 for (int i = 0; i < plist.size(); i++) {
@@ -204,7 +219,7 @@ public class AccountController {
                     c.setWriter(req.getNickname());
                     commentDao.save(c);
                 }
-                
+
             }
             userDao.save(user); // 수정내용 저장
             System.out.println("수정하기 완료!! ");

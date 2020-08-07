@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -99,7 +100,7 @@ public class ParticipantController {
 
     }
 
-    @PostMapping("/participant/read/{articleId}")
+    @GetMapping("/participant/read/{articleId}")
     @ApiOperation(value = "참가자 목록")
     public Object read(@PathVariable int articleId) throws MessagingException, IOException {
 
@@ -124,7 +125,7 @@ public class ParticipantController {
         Optional<Participant> partOpt = participantDao.getParticipantByUserIdAndArticleId(userId,articleId);// 참가자의 해당 정보를 가져옴
         int old_price = partOpt.get().getPrice();// 원래 참가자의 가격정보
         int new_price = request.getPrice();// 새로운 참가자의 가격정보
-        
+
         if (new_price < 0) {
             String message = "수정할 값이 0원보다 값이 작습니다.";
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
