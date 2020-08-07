@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input class="searchInput" type="search" 
+    <!-- <input class="searchInput" type="search" 
     v-model="searchData.searchDataForSend.word"
     @keypress.enter="search(searchData)"
     style="font-family: FontAwesome;" 
@@ -9,7 +9,7 @@
     <button class="searchBtn 
     my-2 my-sm-0" 
     type="submit" @click="search(searchData)">
-    <i class="fas fa-search"></i></button>
+    <i class="fas fa-search"></i></button> -->
 
     <nav class="mt-4 mb-3 ml-3">
       <div class="nav nav-tabs" id="nav-tab" role="tablist">
