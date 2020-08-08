@@ -19,19 +19,16 @@
           <td>이름</td>
           <td>닉네임</td>
           <td>지역</td>
-          <td>
-            <button class="btn btn-warning btn-sm">신고내역</button>
-            <button class="btn btn-danger btn-sm">회원삭제</button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">1</th>
-          <td>이메일</td>
-          <td>이름</td>
-          <td>닉네임</td>
-          <td>지역</td>
-          <td>
-            <button class="btn btn-warning btn-sm">신고내역</button>
+          <td class="d-flex justify-content-center">
+            <b-button v-b-modal.modal-scrollable class="btn btn-warning btn-sm">신고내역</b-button>
+            <div>
+              <b-modal id="modal-scrollable" scrollable title="Scrollable Content">
+                <p class="my-4" v-for="i in 20" :key="i">
+                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+                  in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                </p>
+              </b-modal>
+            </div>
             <button class="btn btn-danger btn-sm">회원삭제</button>
           </td>
         </tr>
@@ -42,7 +39,15 @@
 
 <script>
 export default {
+  name: 'adminPage',
+  data() {
+    return {
 
+    }
+  },
+  methods: {
+    
+  },
 }
 </script>
 
