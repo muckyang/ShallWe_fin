@@ -18,7 +18,6 @@ import com.web.blog.dao.ParticipantDao;
 import com.web.blog.dao.PostDao;
 import com.web.blog.dao.TagDao;
 import com.web.blog.dao.UserDao;
-import com.web.blog.dao.Post.SearchPostDao;
 import com.web.blog.model.post.PostListResponse;
 import com.web.blog.model.post.PostResponse;
 import com.web.blog.model.post.PostSearchRequest;
@@ -53,8 +52,7 @@ import io.swagger.annotations.ApiOperation;
 public class SearchController {
     @Autowired
     PostDao postDao;
-    @Autowired
-    SearchPostDao searchPostDao;
+
 
     @Autowired
     UserDao userDao;
@@ -105,23 +103,24 @@ public class SearchController {
             return result;
         } else if (temp == 1) {
             List<Post> plist;
-            System.out.println("게시물 목록 출력!!" + System.currentTimeMillis());
+            System.out.println("게시물 목록 출력!!" );
+            long before = System.currentTimeMillis();
             if (categoryId == 0)// 전체 게시물 출력
-            plist = searchPostDao.findPostByTemp(temp);
+            plist = postDao.findPostByTemp(temp);
             else
-            plist = searchPostDao.findPostByTempAndCategoryId(temp, categoryId);
+            plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
             
             result = new PostListResponse();
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
-            System.out.println("리턴!!" + System.currentTimeMillis());
-
+            System.out.println("리턴!!" + (System.currentTimeMillis()-before) +"초 ");
+        
             return result;
         } else if (temp == 2) { // 자유게시판
             List<Post> plist;
             if (categoryId == 100)// 전체 게시물 출력
-                plist = searchPostDao.findPostByTemp(temp);
+                plist = postDao.findPostByTemp(temp);
             else
-                plist = searchPostDao .findPostByTempAndCategoryId(temp, categoryId);
+                plist = postDao .findPostByTempAndCategoryId(temp, categoryId);
 
           result = new PostListResponse();
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수

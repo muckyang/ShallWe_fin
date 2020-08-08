@@ -19,7 +19,6 @@ import com.web.blog.model.auth.Auth;
 import com.web.blog.model.comment.Comment;
 import com.web.blog.model.like.Like;
 import com.web.blog.model.post.Post;
-import com.web.blog.model.post.PostResponse;
 import com.web.blog.model.user.AuthRequest;
 import com.web.blog.model.user.LoginRequest;
 import com.web.blog.model.user.SignupRequest;
@@ -86,11 +85,12 @@ public class AccountController {
         System.out.println("카카오 로그인 체크 : " + code);
         return new ResponseEntity<>(code, HttpStatus.NOT_FOUND);
     }
+
     @GetMapping("/account/emailcheck/{email}")
-    @ApiOperation(value =  "이메일 중복체크")
-    public Object emailcheck(@PathVariable String email){
+    @ApiOperation(value = "이메일 중복체크")
+    public Object emailcheck(@PathVariable String email) {
         Optional<User> userOpt = userDao.findUserByEmail(email);
-        if(userOpt.isPresent()){
+        if (userOpt.isPresent()) {
             return new ResponseEntity<>("이미 가입된 Email입니다.", HttpStatus.OK);
         }
         return new ResponseEntity<>("사용가능한 Email입니다.", HttpStatus.OK);
@@ -98,9 +98,9 @@ public class AccountController {
 
     @GetMapping("/account/nicknamecheck/{nickname}")
     @ApiOperation(value = "닉네임 중복체크")
-    public Object nicknamecheck(@PathVariable String nickname){
+    public Object nicknamecheck(@PathVariable String nickname) {
         Optional<User> userOpt = userDao.findUserByNickname(nickname);
-        if(userOpt.isPresent()){
+        if (userOpt.isPresent()) {
             return new ResponseEntity<>("이미 사용중인 닉네임입니다.", HttpStatus.OK);
         }
         return new ResponseEntity<>("사용가능한 닉네임입니다.", HttpStatus.OK);
@@ -182,9 +182,12 @@ public class AccountController {
         System.out.println("프로필 조회 ! ");
         User jwtuser = jwtService.getUser(token);
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
-        int userId = userOpt.get().getUserId();
+
         if (userOpt.isPresent()) {
-            UserResponse result = getUserResponse(userOpt.get());
+            User user = userOpt.get();
+            int userId = user.getUserId();
+            UserResponse result = new UserResponse(user.getPassword(), user.getName(), user.getNickname(),
+                    user.getAddress(), user.getBirthday());
             result.userId = userOpt.get().getUserId();
             result.email = userOpt.get().getEmail();
             result.userPoint = userOpt.get().getUserPoint();
@@ -208,7 +211,7 @@ public class AccountController {
             List<Like> llist = likeDao.findLikeByUserId(userId);
             result.likeList = new LinkedList<>();
             for (int i = 0; i < llist.size(); i++) {
-                result.likeList.add(postDao.getPostByArticleId(llist.get(i).getArticleId()));
+                result.likeList.add(postDao.findPostByArticleId(llist.get(i).getArticleId()));
             }
 
             result.articleCount = result.articleList.size();
@@ -241,13 +244,13 @@ public class AccountController {
 
                 // 닉네임 유효성 검사 해야함
 
-                List<Post> plist = postDao.findPostByUserId(user.getUserId());
+                List<Post> plist = postDao.getPostByUserId(user.getUserId());
                 for (int i = 0; i < plist.size(); i++) {
                     Post p = plist.get(i);
                     p.setWriter(req.getNickname());
                     postDao.save(p);
                 }
-                List<Comment> clist = commentDao.findCommentByUserId(user.getUserId());
+                List<Comment> clist = commentDao.getCommentByUserId(user.getUserId());
                 for (int i = 0; i < clist.size(); i++) {
                     Comment c = clist.get(i);
                     c.setWriter(req.getNickname());
@@ -306,13 +309,4 @@ public class AccountController {
         return authNumber;
     }
 
-    private UserResponse getUserResponse(User user) {
-        UserResponse result = new UserResponse(user.getPassword(), user.getName(), user.getNickname(),
-                user.getAddress(), user.getBirthday());
-        result.articleCount = postDao.findPostByUserIdAndTemp(user.getUserId(), 1).size();
-        result.reviewCount = postDao.findPostByUserIdAndCategoryId(user.getUserId(), 102).size();
-        result.likeCount = likeDao.findLikeByUserId(user.getUserId()).size();
-        result.tempCount = postDao.findPostByUserIdAndTemp(user.getUserId(), 2).size();
-        return result;
-    }
 }

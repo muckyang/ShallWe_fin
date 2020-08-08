@@ -22,9 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -60,8 +58,8 @@ public class ParticipantController {
 
         // 게시자는 바로 참가자로 등록됨
         // 만약 게시자가 참가자 버튼을 눌렀을 때 안되도록 하기
-        Optional<Participant> partiOpt = participantDao.getParticipantByUserIdAndArticleId(request.getUserId(),request.getArticleId());
-        if(partiOpt.isPresent()){//이 게시물(ArticleId)에 해당하는 유저아이디(UserId)가 Participant DB에 있으면
+        Participant part = participantDao.getParticipantByUserIdAndArticleId(request.getUserId(),request.getArticleId());
+        if(part!=null){//이 게시물(ArticleId)에 해당하는 유저아이디(UserId)가 Participant DB에 있으면
             String message = "이미 참가되셨습니다.";
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
@@ -123,8 +121,8 @@ public class ParticipantController {
 
         int articleId = request.getArticleId();// 해당 클릭의 No를 가져와서
         int userId = request.getUserId();// 해당 클릭의 No를 가져와서
-        Optional<Participant> partOpt = participantDao.getParticipantByUserIdAndArticleId(userId,articleId);// 참가자의 해당 정보를 가져옴
-        int old_price = partOpt.get().getPrice();// 원래 참가자의 가격정보
+        Participant part = participantDao.getParticipantByUserIdAndArticleId(userId,articleId);// 참가자의 해당 정보를 가져옴
+        int old_price = part.getPrice();// 원래 참가자의 가격정보
         int new_price = request.getPrice();// 새로운 참가자의 가격정보
 
         if (new_price < 0) {
@@ -140,12 +138,12 @@ public class ParticipantController {
         post.setSumPrice(sumPrice);
         postDao.save(post);// 다시 DB에 넣어줌
 
-        partOpt.get().setTitle(request.getTitle());
-        partOpt.get().setPrice(new_price);
-        partOpt.get().setDescription(request.getDescription());
-        participantDao.save(partOpt.get());// 다시 세팅해서 참가자 DB에 넣어줌
+        part.setTitle(request.getTitle());
+        part.setPrice(new_price);
+        part.setDescription(request.getDescription());
+        participantDao.save(part);// 다시 세팅해서 참가자 DB에 넣어줌
 
-        System.out.println(partOpt.get().getNo()+"번째 참가자 수정 완료");
+        System.out.println(part.getNo()+"번째 참가자 수정 완료");
         
         return new ResponseEntity<>("참가자 수정 완료", HttpStatus.OK);
     }
