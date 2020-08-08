@@ -36,6 +36,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -83,6 +85,25 @@ public class AccountController {
 
         System.out.println("카카오 로그인 체크 : " + code);
         return new ResponseEntity<>(code, HttpStatus.NOT_FOUND);
+    }
+    @GetMapping("/account/emailcheck/{email}")
+    @ApiOperation(value =  "이메일 중복체크")
+    public Object emailcheck(@PathVariable String email){
+        Optional<User> userOpt = userDao.findUserByEmail(email);
+        if(userOpt.isPresent()){
+            return new ResponseEntity<>("이미 가입된 Email입니다.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("사용가능한 Email입니다.", HttpStatus.OK);
+    }
+
+    @GetMapping("/account/nicknamecheck/{nickname}")
+    @ApiOperation(value = "닉네임 중복체크")
+    public Object nicknamecheck(@PathVariable String nickname){
+        Optional<User> userOpt = userDao.findUserByNickname(nickname);
+        if(userOpt.isPresent()){
+            return new ResponseEntity<>("이미 사용중인 닉네임입니다.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("사용가능한 닉네임입니다.", HttpStatus.OK);
     }
 
     @PostMapping("/account/login") // SWAGGER UI에 보이는 REQUEST명
