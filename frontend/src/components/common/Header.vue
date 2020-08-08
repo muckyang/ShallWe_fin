@@ -4,7 +4,7 @@
     <nav class="navbar navbar-light d-flex justify-content-between navbar1 p-0 my-navbar">
       <!-- 관리자페이지 -->
       <ul class="navbar-nav">
-        <li class="nav-item"><a href="" class="nav-link navbar1-item">관리자페이지</a></li>
+        <li class="nav-item"><a href="/user/admin" class="nav-link navbar1-item">관리자페이지</a></li>
       </ul>
       
       <ul class="navbar-nav d-flex flex-row">
