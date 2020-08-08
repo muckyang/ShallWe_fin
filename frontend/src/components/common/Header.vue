@@ -1,7 +1,12 @@
 <template>
   <div>
     <!-- Navbar1 -->
-    <nav class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar">
+    <nav class="navbar navbar-light d-flex justify-content-between navbar1 p-0 my-navbar">
+      <!-- 관리자페이지 -->
+      <ul class="navbar-nav">
+        <li class="nav-item"><a href="" class="nav-link navbar1-item">관리자페이지</a></li>
+      </ul>
+      
       <ul class="navbar-nav d-flex flex-row">
         <!-- 로그인 X -->
         <li class="nav-item mr-1"><a v-if="!isLoggedin" 
