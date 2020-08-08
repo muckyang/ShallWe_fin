@@ -5,9 +5,10 @@ import java.util.Optional;
 
 import com.web.blog.model.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 
-
+@Repository
 public interface PostDao extends JpaRepository<Post, String> {
     // Post getUserByEmail(String email);
     // Post getUserByNickname(String nickname);
@@ -17,8 +18,7 @@ public interface PostDao extends JpaRepository<Post, String> {
     List<Post> findPostByUserIdAndTemp(int userId,int temp);
     List<Post> findPostByUserIdAndCategoryId(int userId,int categoryId);
 
-    List<Post> findPostByTemp(int temp);
-    List<Post> findPostByTempAndCategoryId(int temp,int categoryId);
+
     List<Post> findPostByTempAndWriter(int temp, String writer);
     Optional<Post> findPostByArticleId(int articleId);
 

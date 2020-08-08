@@ -18,6 +18,7 @@ import com.web.blog.dao.ParticipantDao;
 import com.web.blog.dao.PostDao;
 import com.web.blog.dao.TagDao;
 import com.web.blog.dao.UserDao;
+import com.web.blog.dao.Post.SearchPostDao;
 import com.web.blog.model.post.PostListResponse;
 import com.web.blog.model.post.PostResponse;
 import com.web.blog.model.post.PostSearchRequest;
@@ -52,6 +53,8 @@ import io.swagger.annotations.ApiOperation;
 public class SearchController {
     @Autowired
     PostDao postDao;
+    @Autowired
+    SearchPostDao searchPostDao;
 
     @Autowired
     UserDao userDao;
@@ -76,9 +79,10 @@ public class SearchController {
 
     @PostMapping("/post/read/{temp}/{categoryId}") 
     @ApiOperation(value = "게시글 및 임시글 목록")
-    public Object read(@RequestBody TokenRequest req, @PathVariable int temp, @PathVariable int categoryId)
+    public PostListResponse read(@RequestBody TokenRequest req, @PathVariable int temp, @PathVariable int categoryId)
             throws MessagingException, IOException {
-        if (temp == 0) {
+       PostListResponse result= null;
+                if (temp == 0) {
             System.out.println("임시글 목록 출력!!");
             String token = req.getToken();
             User jwtuser = jwtService.getUser(token);
@@ -87,7 +91,7 @@ public class SearchController {
             String writer = userOpt.get().getNickname();
             List<Post> plist = postDao.findPostByTempAndWriter(temp, writer);
 
-            PostListResponse result = new PostListResponse();
+            result = new PostListResponse();
             result.postList = new LinkedList<>();
             for (int i = 0; i < plist.size(); i++) {
                 Post p = plist.get(i);
@@ -98,33 +102,34 @@ public class SearchController {
                         BeforeCreateTime(p.getCreateTime())));
 
             }
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return result;
         } else if (temp == 1) {
             List<Post> plist;
-            System.out.println("게시물 목록 출력!!");
+            System.out.println("게시물 목록 출력!!" + System.currentTimeMillis());
             if (categoryId == 0)// 전체 게시물 출력
-                plist = postDao.findPostByTemp(temp);
+            plist = searchPostDao.findPostByTemp(temp);
             else
-                plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
-
-            PostListResponse result = new PostListResponse();
+            plist = searchPostDao.findPostByTempAndCategoryId(temp, categoryId);
+            
+            result = new PostListResponse();
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
+            System.out.println("리턴!!" + System.currentTimeMillis());
 
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return result;
         } else if (temp == 2) { // 자유게시판
             List<Post> plist;
             if (categoryId == 100)// 전체 게시물 출력
-                plist = postDao.findPostByTemp(temp);
+                plist = searchPostDao.findPostByTemp(temp);
             else
-                plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
+                plist = searchPostDao .findPostByTempAndCategoryId(temp, categoryId);
 
-            PostListResponse result = new PostListResponse();
+          result = new PostListResponse();
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
 
             System.out.println("자유글 목록 출력!!");
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return result;
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return result;
         }
     }
 
