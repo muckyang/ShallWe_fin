@@ -15,7 +15,7 @@
             <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">카테고리</th>
                     <th scope="col">Title</th>
                     <th scope="col">writer</th>
                     <th scope="col">Content</th>
@@ -35,7 +35,7 @@
             <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">카테고리</th>
                     <th scope="col">Title</th>
                     <th scope="col">writer</th>
                     <th scope="col">Content</th>
@@ -55,7 +55,7 @@
             <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">카테고리</th>
                     <th scope="col">Title</th>
                     <th scope="col">writer</th>
                     <th scope="col">Content</th>
@@ -75,7 +75,7 @@
             <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">카테고리</th>
                     <th scope="col">Title</th>
                     <th scope="col">writer</th>
                     <th scope="col">Content</th>

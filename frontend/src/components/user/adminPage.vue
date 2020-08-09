@@ -32,7 +32,7 @@
             </select>
           </td>
           <td class="d-flex justify-content-center">
-            <b-button v-b-modal.modal-scrollable class="btn btn-warning btn-sm">신고내역</b-button>
+            <b-button v-b-modal.modal-scrollable class="btn btn-warning btn-sm text-white">신고내역</b-button>
             <div>
               <b-modal id="modal-scrollable" scrollable title="신고내역">
                 <p class="my-4" v-for="i in 20" :key="i">
