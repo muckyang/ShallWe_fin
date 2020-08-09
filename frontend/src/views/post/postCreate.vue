@@ -13,6 +13,8 @@
                 <a class="dropdown-item" href="#" @click="selectCategory(101)">질문</a>
                 <a class="dropdown-item" href="#" @click="selectCategory(102)">후기</a>
                 <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
+                <!-- 관리자라면 선택할 수 있음
+                <a class="dropdown-item" href="#" @click="selectCategory(104)">공지사항</a> -->
               </div>
             </div>
             <b-form-input type="text" v-model="articleData.title"></b-form-input>

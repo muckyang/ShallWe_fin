@@ -5,6 +5,7 @@
         <a @click="changeCategory(100)" class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">전체보기</a>
         <a @click="changeCategory(101)" class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">후기</a>
         <a @click="changeCategory(102)" class="nav-item nav-link text-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">자유</a>
+        <a @click="changeCategory(103)" class="nav-item nav-link text-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">공지사항</a>
         <router-link class="nav-item nav-link" :to="{name:'postCreate'}">글쓰기</router-link>
       </div>
     </nav>
@@ -51,6 +52,26 @@
             </table>
         </div>
         <div v-if="categoryNum === 102" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">writer</th>
+                    <th scope="col">Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="article in articles" :key="article.articleId">
+                    <th scope="row">1</th>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.title }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.writer }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.content }}</router-link></td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        <div v-if="categoryNum === 103" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             <table class="table">
             <thead>
                 <tr>
