@@ -93,7 +93,7 @@ public class SearchController {
             result.postList = new LinkedList<>();
             for (int i = 0; i < plist.size(); i++) {
                 Post p = plist.get(i);
-
+    
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                         p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
                         p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), temp, p.getEndTime(),

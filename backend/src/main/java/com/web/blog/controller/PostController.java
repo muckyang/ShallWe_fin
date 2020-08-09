@@ -140,12 +140,7 @@ public class PostController {
                 // 태그 등록
                 String[] tags = req.getTags();// 태그 내용
                 // artiId 게시물 PK
-                for (int i = 0; i < tags.length; i++) {
-                    Tag tag = new Tag();
-                    tag.setName(tags[i]);
-                    tag.setArticleId(artiId);
-                    tagDao.save(tag);
-                }
+                tagAdd(tags,artiId);
 
                 return new ResponseEntity<>("태그 등록 및 참가자 등록 및 게시물 등록", HttpStatus.OK);
 
@@ -164,12 +159,8 @@ public class PostController {
                 // 태그 등록
                 String[] tags = req.getTags();// 태그 내용
                 // artiId 게시물 PK
-                for (int i = 0; i < tags.length; i++) {
-                    Tag tag = new Tag();
-                    tag.setName(tags[i]);
-                    tag.setArticleId(artiId);
-                    tagDao.save(tag);
-                }
+                tagAdd(tags,artiId);
+
                 return new ResponseEntity<>("자유게시물 등록", HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -199,7 +190,7 @@ public class PostController {
                     BeforeCreateTime(p.getCreateTime()));
 
             // 이 게시물에 해당되는 태그는 다 보내기
-            List<Tag> tlist = tagDao.getTagByArticleId(articleId);
+            List<Tag> tlist = tagDao.findTagByArticleId(articleId);
             String[] tags = new String[tlist.size()];
             for (int i = 0; i < tags.length; i++) {
                 tags[i] = tlist.get(i).getName();
@@ -324,21 +315,13 @@ public class PostController {
             post.setSumPrice(sumPrice);
             postDao.save(post);// 다시 DB에 넣어줌
 
-            // 태그 삭제
-            List<Tag> tList = tagDao.getTagByArticleId(req.getArticleId());
-            int atsize = tList.size();
-            for (int i = 0; i < atsize; i++) {
-                Tag l = tList.get(i);
-                tagDao.delete(l);
-            }
+            
+            tagDelete(req.getArticleId());
             // 태그 수정
             String[] tags = req.getTags();// 태그 내용
-            for (int i = 0; i < tags.length; i++) {
-                Tag tag = new Tag();
-                tag.setName(tags[i]);
-                tag.setArticleId(req.getArticleId());
-                tagDao.save(tag);
-            }
+            tagAdd(tags,req.getArticleId());
+
+           
 
             System.out.println(post.getArticleId() + "번째 게시물 수정 완료 ");
             return new ResponseEntity<>("게시물 수정 완료 ", HttpStatus.OK);
@@ -353,21 +336,12 @@ public class PostController {
             post.setImage(req.getImage());
             post.setTemp(temp);
             postDao.save(post);
-            // 태그 삭제
-            List<Tag> tList = tagDao.getTagByArticleId(req.getArticleId());
-            int atsize = tList.size();
-            for (int i = 0; i < atsize; i++) {
-                Tag l = tList.get(i);
-                tagDao.delete(l);
-            }
+            
+             // 태그 삭제
+            tagDelete(req.getArticleId());
             // 태그 수정
             String[] tags = req.getTags();// 태그 내용
-            for (int i = 0; i < tags.length; i++) {
-                Tag tag = new Tag();
-                tag.setName(tags[i]);
-                tag.setArticleId(req.getArticleId());
-                tagDao.save(tag);
-            }
+            tagAdd(tags,req.getArticleId());
 
             System.out.println(post.getArticleId() + "번째 자유글 수정 완료 ");
             return new ResponseEntity<>("자유글 수정 완료 ", HttpStatus.OK);
@@ -417,13 +391,7 @@ public class PostController {
             likeDao.delete(l);
         }
         // 태그 삭제
-        List<Tag> tList = tagDao.getTagByArticleId(articleId);
-        int atsize = tList.size();
-        for (int i = 0; i < atsize; i++) {
-            Tag l = tList.get(i);
-            tagDao.delete(l);
-        }
-
+        tagDelete(articleId);
         postDao.delete(post);
         System.out.println("삭제하기!! ");
         PostResponse result = new PostResponse();
@@ -476,5 +444,21 @@ public class PostController {
         }
         return result;
 
+    }
+    private void tagDelete(int articleId){
+        List<Tag> tList = tagDao.getTagByArticleId(articleId);
+        int atsize = tList.size();
+        for (int i = 0; i < atsize; i++) {
+            Tag l = tList.get(i);
+            tagDao.delete(l);
+        }
+    }
+    private void tagAdd(String [] tags ,int articleId){
+        for (int i = 0; i < tags.length; i++) {
+            Tag tag = new Tag();
+            tag.setName(tags[i]);
+            tag.setArticleId(articleId);
+            tagDao.save(tag);
+        }
     }
 }
