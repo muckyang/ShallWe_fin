@@ -34,10 +34,19 @@
           <td class="d-flex justify-content-center">
             <b-button v-b-modal.modal-scrollable class="btn btn-warning btn-sm">신고내역</b-button>
             <div>
-              <b-modal id="modal-scrollable" scrollable title="Scrollable Content">
+              <b-modal id="modal-scrollable" scrollable title="신고내역">
                 <p class="my-4" v-for="i in 20" :key="i">
-                  Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                  in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                  <b-card title="Card title" sub-title="Card subtitle">
+                    <b-card-text>
+                      Some quick example text to build on the <em>card title</em> and make up the bulk of the card's
+                      content.
+                    </b-card-text>
+
+                    <b-card-text>A second paragraph of text in the card.</b-card-text>
+
+                    <a href="#" class="card-link">Card link</a>
+                    <b-link href="#" class="card-link">Another link</b-link>
+                  </b-card>
                 </p>
               </b-modal>
             </div>
