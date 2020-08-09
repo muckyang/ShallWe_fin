@@ -16,4 +16,5 @@ public interface ParticipantDao extends JpaRepository<Participant, String> {
     Participant getParticipantByUserIdAndArticleId(int userId, int articleId);
     @Transactional(readOnly = true) 
     List<Participant> findParticipantByArticleId(int articleId);
+    List<Participant> getParticipantByArticleId(int articleId);
 }
