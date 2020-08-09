@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.StringTokenizer;
 
 import javax.mail.MessagingException;
 import javax.validation.Valid;
@@ -109,6 +110,16 @@ public class PostController {
                 post.setLikeNum(0);
                 post.setCommentNum(0);
 
+
+                // 태그 등록
+                String[] tags = req.getTags();// 태그 내용
+                String ptag ="#";
+                for(int i = 0 ; i < tags.length;i++){
+                    ptag+=tags[i]+"#";
+                
+                }
+                ptag.substring(0, ptag.length()-1);
+                post.setTag(ptag);
                 postDao.save(post);
                 int artiId = post.getArticleId();
                 System.out.println("게시물 등록!!");
@@ -129,18 +140,15 @@ public class PostController {
                 participant.setPrice(myPrice);
                 participant.setDescription(def_mes);
                 participantDao.save(participant);// 참가자 DB에 등록 완료
-
-                // 게시물 sum_price에 더하기
-                post = postDao.getPostByArticleId(artiId);// 해당 구매게시물을 얻어옴
-                post.setSumPrice(myPrice);
-                postDao.save(post);// 다시 DB에 넣어줌
+                tagAdd(tags,artiId);
+                // // 게시물 sum_price에 더하기
+                // post = postDao.getPostByArticleId(artiId);// 해당 구매게시물을 얻어옴
+                // post.setSumPrice(myPrice);
+                // postDao.save(post);// 다시 DB에 넣어줌
 
                 System.out.println("참가자 등록!!");
 
-                // 태그 등록
-                String[] tags = req.getTags();// 태그 내용
-                // artiId 게시물 PK
-                tagAdd(tags,artiId);
+                
 
                 return new ResponseEntity<>("태그 등록 및 참가자 등록 및 게시물 등록", HttpStatus.OK);
 
@@ -153,12 +161,21 @@ public class PostController {
                 post.setDescription(req.getDescription());
                 post.setImage(req.getImage());
                 post.setTemp(temp);
+
+
+                String[] tags = req.getTags();// 태그 내용
+                String ptag ="#";
+                for(int i = 0 ; i < tags.length;i++){
+                    ptag+=tags[i]+"#";
+                
+                }
+                ptag.substring(0, ptag.length()-1);
+                post.setTag(ptag);
+
                 postDao.save(post);
 
                 int artiId = post.getArticleId();
                 // 태그 등록
-                String[] tags = req.getTags();// 태그 내용
-                // artiId 게시물 PK
                 tagAdd(tags,artiId);
 
                 return new ResponseEntity<>("자유게시물 등록", HttpStatus.OK);
@@ -182,18 +199,26 @@ public class PostController {
         if (p != null) {
             String token = request.getToken();
             User jwtuser = jwtService.getUser(token);
+            
+            String tag = p.getTag();
+            StringTokenizer st = new StringTokenizer(tag,"#");
 
+           List<String> taglist = new LinkedList<>();  
+           while(!st.hasMoreTokens()){
+               taglist.add(st.nextToken());
+           }
+           
             Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
-                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime(),
+                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(),taglist, p.getTemp(), p.getEndTime(),
                     BeforeCreateTime(p.getCreateTime()));
 
             // 이 게시물에 해당되는 태그는 다 보내기
             List<Tag> tlist = tagDao.findTagByArticleId(articleId);
-            String[] tags = new String[tlist.size()];
-            for (int i = 0; i < tags.length; i++) {
-                tags[i] = tlist.get(i).getName();
+            List<String> tags = new LinkedList<>();
+            for (int i = 0; i < tlist.size(); i++) {
+                tags.add(tlist.get(i).getName());
             }
             List<Participant> partlist = participantDao.findParticipantByArticleId(articleId);
             result.partList = partlist;
@@ -296,8 +321,7 @@ public class PostController {
                 return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
             }
 
-           Participant part = participantDao.getParticipantByUserIdAndArticleId(userId,
-                    req.getArticleId());
+           Participant part = participantDao.getParticipantByUserIdAndArticleId(userId,req.getArticleId());
             if (part==null) {// 존재하지않는 참가자입니다.
                 return new ResponseEntity<>("존재하지 않는 참가자 입니다.", HttpStatus.BAD_REQUEST);
             }

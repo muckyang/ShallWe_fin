@@ -41,7 +41,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ApiOperation;
 
-
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = PostResponse.class),
         @ApiResponse(code = 403, message = "Forbidden", response = PostResponse.class),
         @ApiResponse(code = 404, message = "Not Found", response = PostResponse.class),
@@ -52,7 +51,6 @@ import io.swagger.annotations.ApiOperation;
 public class SearchController {
     @Autowired
     PostDao postDao;
-
 
     @Autowired
     UserDao userDao;
@@ -75,12 +73,12 @@ public class SearchController {
     @Autowired
     private JwtService jwtService;
 
-    @PostMapping("/post/read/{temp}/{categoryId}") 
+    @PostMapping("/post/read/{temp}/{categoryId}")
     @ApiOperation(value = "게시글 및 임시글 목록")
     public PostListResponse read(@RequestBody TokenRequest req, @PathVariable int temp, @PathVariable int categoryId)
             throws MessagingException, IOException {
-       PostListResponse result= null;
-                if (temp == 0) {
+        PostListResponse result = null;
+        if (temp == 0) {
             System.out.println("임시글 목록 출력!!");
             String token = req.getToken();
             User jwtuser = jwtService.getUser(token);
@@ -93,36 +91,38 @@ public class SearchController {
             result.postList = new LinkedList<>();
             for (int i = 0; i < plist.size(); i++) {
                 Post p = plist.get(i);
-    
+
+                List<String> empty = new LinkedList<>();
+
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                         p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
-                        p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), temp, p.getEndTime(),
+                        p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), empty, temp, p.getEndTime(),
                         BeforeCreateTime(p.getCreateTime())));
 
             }
             return result;
         } else if (temp == 1) {
             List<Post> plist;
-            System.out.println("게시물 목록 출력!!" );
+            System.out.println("게시물 목록 출력!!");
             long before = System.currentTimeMillis();
             if (categoryId == 0)// 전체 게시물 출력
-            plist = postDao.findPostByTemp(temp);
+                plist = postDao.findPostByTemp(temp);
             else
-            plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
-            
+                plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
+
             result = new PostListResponse();
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
-            System.out.println("리턴!!" + (System.currentTimeMillis()-before) +"초 ");
-        
+            System.out.println("리턴!!" + (System.currentTimeMillis() - before) + "초 ");
+
             return result;
         } else if (temp == 2) { // 자유게시판
             List<Post> plist;
             if (categoryId == 100)// 전체 게시물 출력
                 plist = postDao.findPostByTemp(temp);
             else
-                plist = postDao .findPostByTempAndCategoryId(temp, categoryId);
+                plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
 
-          result = new PostListResponse();
+            result = new PostListResponse();
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
 
             System.out.println("자유글 목록 출력!!");
@@ -246,17 +246,25 @@ public class SearchController {
 
         for (int i = 0; i < plist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
             Post p = plist.get(i);
+            List<String> taglist = new LinkedList<>();
+            String tag = p.getTag();
+            if (tag != null) {
+                StringTokenizer st = new StringTokenizer(tag, "#");
+                while (st.hasMoreTokens()) {
+                    taglist.add(st.nextToken());
+                }
+            }
 
             result.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
-                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), temp, p.getEndTime(),
+                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), taglist, temp, p.getEndTime(),
                     BeforeCreateTime(p.getCreateTime())));
 
         }
 
         return result;
     }
-    
+
     private static String BeforeCreateTime(LocalDateTime createTime) {
         String result = "";
         int before = 0;
