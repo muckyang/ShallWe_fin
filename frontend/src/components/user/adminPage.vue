@@ -36,16 +36,14 @@
             <div>
               <b-modal id="modal-scrollable" scrollable title="신고내역">
                 <p class="my-4" v-for="i in 20" :key="i">
-                  <b-card title="Card title" sub-title="Card subtitle">
+                  <b-card title="신고제목" sub-title="작성자">
                     <b-card-text>
-                      Some quick example text to build on the <em>card title</em> and make up the bulk of the card's
-                      content.
+                      신고내용신고내용신고내용신고내용신고내용신고내용신고내용
                     </b-card-text>
-
-                    <b-card-text>A second paragraph of text in the card.</b-card-text>
-
-                    <a href="#" class="card-link">Card link</a>
-                    <b-link href="#" class="card-link">Another link</b-link>
+                    <div class="d-flex justify-content-end">
+                      <a href="#" class="card-link btn btn-secondary btn-sm m-0">신고취소</a>
+                      <a href="#" class="card-link btn btn-danger btn-sm m-0">신고접수</a>
+                    </div>
                   </b-card>
                 </p>
               </b-modal>
