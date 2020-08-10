@@ -38,14 +38,6 @@
             <b-form-file class="mt-3" @change="imageChange" plain></b-form-file>
           </td>
         </tr>
-        <tr>
-          <th scope="row">태그</th>
-          <td>
-            <div>
-              <b-form-tags input-id="tags-basic" v-model="value" class="mb-2"></b-form-tags>
-          </div>
-          </td>
-        </tr>
       </tbody>
     </table>
     <hr>
@@ -80,10 +72,10 @@
       selectCategory(num){
         this.articleData.categoryId=num
         if(num===101){
-          this.selectedTBG='질문'
-        }else if (num===102) {
+          this.selectedTBG='공지'
+        } else if (num===102) {
           this.selectedTBG='후기'
-        }else {
+        } else {
           this.selectedTBG='자유'
         }
       },
