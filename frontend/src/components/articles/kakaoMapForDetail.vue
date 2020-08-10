@@ -1,25 +1,19 @@
 <template>
   <div id="app">
     <div id="map"></div>
+    <div>{{articleData.address}}</div>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 export default {
-    props:{
-        address:String
-    },
-    data(){
-        return{
-            addressForSearch:this.address
-        }
+    computed:{
+      ...mapState(['articleData'])
     },
     mounted() {
         if (window.kakao && window.kakao.maps) {
-            setTimeout(()=>{
-                this.initMap();
-            },500)
+            this.initMap();
 
             // setTimeout(function() {
             //     map.relayout();
@@ -30,9 +24,7 @@ export default {
         } else {
             const script = document.createElement('script');
             /* global kakao */
-            script.onload = () => kakao.maps.load(setTimeout(()=>{
-                this.initMap();
-            },500));
+            script.onload = () => kakao.maps.load(this.initMap);
             script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8500f9b4c8e3ef8075b8eeefaaae025f&libraries=services';
             document.head.appendChild(script);
         }
@@ -44,9 +36,10 @@ export default {
               center: new kakao.maps.LatLng(36.355539125856275, 127.29863289195224),
               level: 3
             };
+
             var map = new kakao.maps.Map(container, options);
             var geocoder = new kakao.maps.services.Geocoder();
-            geocoder.addressSearch(this.address, function(result, status) {
+            geocoder.addressSearch(this.articleData.address, function(result, status) {
 
                 // 정상적으로 검색이 완료됐으면 
                 if (status === kakao.maps.services.Status.OK) {
@@ -71,11 +64,9 @@ export default {
             });   
         }
     },
-    watch:{
-        addressForSearch:function(){
-            this.initMap()
-        },
-    },
+    updated:function(){
+        this.initMap()
+    }
 }
 </script>
 
