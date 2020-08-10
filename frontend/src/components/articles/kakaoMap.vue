@@ -8,9 +8,18 @@
           <div>
             <div>
               <div>
-                키워드 :
-                <input type="text" value="편의점" id="keyword" size="15" />
-                <button @click="searchPlaces">검색하기</button>
+                장소 :
+                <input
+                  type="text"
+                  value="편의점"
+                  id="keyword"
+                  size="15"
+                  @keypress.enter="searchPlaces"
+                />
+                <button class="kakao-search-btn" @click="searchPlaces">
+                  검색
+                  <i class="fas fa-search"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -262,13 +271,21 @@ export default {
 <style>
 .createMap {
   width: 38vw;
-  /* height: 70vh; */
+}
+.kakao-search-btn {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: rgb(211, 208, 208);
+}
+#keyword {
+  height: 30px;
 }
 .map_wrap,
 .map_wrap * {
   margin: 0;
   padding: 0;
-  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+  /* font-family: "Malgun Gothic", dotum, "돋움", sans-serif; */
   font-size: 12px;
 }
 .map_wrap a,
@@ -314,6 +331,7 @@ export default {
 }
 #menu_wrap .option button {
   margin-left: 5px;
+  padding: 5px;
 }
 #placesList li {
   list-style: none;
