@@ -7,7 +7,7 @@
         <div class="option">
             <div>
                 <div>
-                    키워드 : <input type="text" id="keyword" size="15"> 
+                    키워드 : <input type="text" value="편의점" id="keyword" size="15"> 
                     <button @click="searchPlaces">검색하기</button> 
                 </div>
             </div>
@@ -23,6 +23,9 @@
 
 
 export default {
+    props:{
+        coNum:String,
+    },
     data(){
         return{
             ps:'',
@@ -58,13 +61,11 @@ export default {
             this.searchPlaces();
         },
         searchPlaces() {
-            event.preventDefault()
-            var keyword = document.getElementById('keyword').value+'편의점';
-
-            if (!keyword) {
-                alert('키워드를 입력해주세요!');
+            if(document.getElementById('keyword').value.indexOf("편의점")===-1){
+                var keyword = document.getElementById('keyword').value+' 편의점';
+            }else{
+                var keyword = document.getElementById('keyword').value;
             }
-
             // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
             this.ps.keywordSearch(keyword, this.placesSearchCB);
              

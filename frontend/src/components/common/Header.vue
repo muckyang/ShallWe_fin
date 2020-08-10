@@ -144,6 +144,11 @@
             <router-link to="#" 
             class="nav-link mainMenu pb-0" 
             id="community">쉘위 소개</router-link></li>
+          
+          <li class="nav-item pb-0">
+            <router-link to="/localList" 
+            class="nav-link mainMenu pb-0" 
+            id="community">우리 동네</router-link></li>
         </ul>
         <!-- Search -->
         <!-- <div class="dropdown mr-1">
