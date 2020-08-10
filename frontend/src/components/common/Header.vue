@@ -1,12 +1,7 @@
 <template>
   <div>
     <!-- Navbar1 -->
-    <nav class="navbar navbar-light d-flex justify-content-between navbar1 p-0 my-navbar">
-      <!-- 관리자페이지 -->
-      <ul class="navbar-nav">
-        <li class="nav-item"><a href="/user/admin" class="nav-link navbar1-item">관리자페이지</a></li>
-      </ul>
-      
+    <nav class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar">
       <ul class="navbar-nav d-flex flex-row">
         <!-- 로그인 X -->
         <li class="nav-item mr-1"><a v-if="!isLoggedin" 
@@ -110,6 +105,13 @@
         v-bind:to="{name:constants.URL_TYPE.USER.PROFILE}" class="nav-link navbar1-item">
         마이페이지</router-link></li>
       </ul>
+      <div class="wall" v-show="isLoggedin">|</div>
+      <!-- 관리자페이지 -->
+      <div v-if="isLoggedin && userData.grade===0" class="d-flex align-items-starts">
+        <ul class="navbar-nav" >
+          <li class="nav-item"><a href="/user/admin" class="nav-link navbar1-item">관리자페이지</a></li>
+        </ul>
+      </div>
     </nav>
     <!-- Navbar2 -->
     <nav class="navbar navbar-light d-flex justify-content-center my-navbar p-1">
@@ -172,7 +174,7 @@
 
 <script>
 import constants from "../../lib/constants";
-import {mapState, mapMutations,mapActions} from 'vuex'
+import {mapState, mapMutations, mapActions} from 'vuex'
 import router from '@/router'
 import axios from "axios"
 const BACK_URL = "http://127.0.0.1:8080"
@@ -203,13 +205,45 @@ export default {
   },
   methods: {
     ...mapMutations(['REMOVE_TOKEN','loginCheck']),
-    ...mapActions(['search','login']),
+    ...mapActions(['search','login', 'getUserData']),
+
+
+    //검색
+    // selectSubject(num){
+    //   if(num==0){
+    //   this.searchData.searchDataForSend.subject='title'
+    //   this.item1 = '제목'
+    //   }else if(num==1){
+    //     this.searchData.searchDataForSend.subject = 'writer'
+    //     this.item1 = '작성자'
+    //   }else{
+    //     this.searchData.searchDataForSend.subject = 'tag'
+    //     this.item1 = '태그'
+    //   }
+    // },
+    // selectCategory(num){
+    //   if(num==1){
+    //   this.searchData.categoryId=1
+    //   this.item2="배달"
+    //   }else if(num==2){
+    //     this.searchData.categoryId = 2
+    //     this.item2="최저주문"
+    //   }else{
+    //     this.searchData.categoryId = 3
+    //     this.item2="공동구매"
+    //   }
+    // },
+
+
   },
   computed:{
-    ...mapState(['isLoggedin'])
+    ...mapState(['isLoggedin', 'userData'])
   },
   created:function(){
     this.loginCheck()
+    this.getUserData()
+    
+    console.log(this.userData)
   },
 };
 </script>

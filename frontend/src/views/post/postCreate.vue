@@ -10,7 +10,7 @@
                 {{ selectedTBG }}
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" @click="selectCategory(101)">질문</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(101)">공지</a>
                 <a class="dropdown-item" href="#" @click="selectCategory(102)">후기</a>
                 <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
                 <!-- 관리자라면 선택할 수 있음
@@ -36,14 +36,6 @@
           <th scope="row">사진첨부</th>
           <td>
             <b-form-file class="mt-3" @change="imageChange" plain></b-form-file>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">태그</th>
-          <td>
-            <div>
-              <b-form-tags input-id="tags-basic" v-model="value" class="mb-2"></b-form-tags>
-          </div>
           </td>
         </tr>
       </tbody>
@@ -80,10 +72,10 @@
       selectCategory(num){
         this.articleData.categoryId=num
         if(num===101){
-          this.selectedTBG='질문'
-        }else if (num===102) {
+          this.selectedTBG='공지'
+        } else if (num===102) {
           this.selectedTBG='후기'
-        }else {
+        } else {
           this.selectedTBG='자유'
         }
       },

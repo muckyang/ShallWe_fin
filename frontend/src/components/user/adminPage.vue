@@ -13,23 +13,30 @@
           <th scope="col">회원관리</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-for="user in users" :key="user.userId">
         <tr>
-          <th scope="row">1</th>
-          <td>이메일</td>
-          <td>이름</td>
-          <td>닉네임</td>
-          <td>지역</td>
+          <th scope="row">{{ user.userId }}</th>
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.nickname }}</td>
+          <td>{{ user.address }}</td>
           <td>
-            <!-- 만약 관리자 라면 -->
-            <!-- <p>관리자</p> -->
-            <select name="level">
-              <option value="1">Level 1</option>
-              <option value="2">Level 2</option>
-              <option value="3">Level 3</option>
-              <option value="4">Level 4</option>
-              <option value="5">Level 5</option>
-            </select>
+            <!-- 회원등급 Select -->
+            <p v-if="user.grade===0" name="level">
+              관리자
+            </p>
+            <div class="dropdown" v-else>
+              <a class="btn btn-info dropdown-toggle btn-sm" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Level {{ user.grade }}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#" @click="changeGrade({ changedGrade:user, grade: 1 })">Level 1</a>
+                <a class="dropdown-item" href="#" @click="changeGrade({ changedGrade:user, grade: 2 })">Level 2</a>
+                <a class="dropdown-item" href="#" @click="changeGrade({ changedGrade:user, grade: 3 })">Level 3</a>
+                <a class="dropdown-item" href="#" @click="changeGrade({ changedGrade:user, grade: 4 })">Level 4</a>
+                <a class="dropdown-item" href="#" @click="changeGrade({ changedGrade:user, grade: 5 })">Level 5</a>
+              </div>
+            </div>
           </td>
           <td class="d-flex justify-content-center">
             <b-button v-b-modal.modal-scrollable class="btn btn-warning btn-sm text-white">신고내역</b-button>
@@ -48,29 +55,32 @@
                 </p>
               </b-modal>
             </div>
-            <button class="btn btn-danger btn-sm">회원삭제</button>
+            <button class="btn btn-danger btn-sm" @click="deleteUser">회원삭제</button>
           </td>
         </tr>
       </tbody>
     </table>
+    <button class="btn btn-primary" @click="updateGrade({ updatedGrade })">수정완료</button>
   </div>
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: 'adminPage',
     data() {
       return {
-        
       }
     },
     methods: {
-      ...mapActions(['getUsers']),
+      ...mapActions([ 'getUsers', 'updateGrade', 'getArticles', 'deleteUser', 'deleteArticle' ]),
+      changeGrade(changedObj) {
+        changedObj.changedGrade.grade = changedObj.grade
+      }
     },
     computed: {
-      ...mapState(['users']),
+      ...mapState([ 'users', 'articles' ]),
     },
     created() {
       this.getUsers()
