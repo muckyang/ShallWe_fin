@@ -10,7 +10,7 @@
                 {{ selectedTBG }}
               </button>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" @click="selectCategory(101)">질문</a>
+                <a class="dropdown-item" href="#" @click="selectCategory(101)">공지</a>
                 <a class="dropdown-item" href="#" @click="selectCategory(102)">후기</a>
                 <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
                 <!-- 관리자라면 선택할 수 있음
