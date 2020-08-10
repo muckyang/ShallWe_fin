@@ -9,8 +9,6 @@ const BACK_URL = "http://127.0.0.1:8080"
 
 Vue.use(Vuex)
 
-
-
 export default new Vuex.Store({
   state: {
     //사용자 인증
@@ -33,6 +31,7 @@ export default new Vuex.Store({
       reviewList: [],
       likeList: [],
       tempList: [],
+      grade: '',
     },
     isTerm:false,
     articleData:{
@@ -59,8 +58,9 @@ export default new Vuex.Store({
     isSended:false,
 
     //게시글
-    articles:[],
-    comments:[],
+    articles: [],
+    comments: [],
+    users: [],
   },
 
   getters:{
@@ -96,15 +96,14 @@ export default new Vuex.Store({
     },
     CheckFalse(state){
       state.isSended=false
+      state.isTerm=false
     },
     termCheck(state){
-      
       if(state.isTerm){
         state.isTerm = false
       }else{
         state.isTerm = true
       }
-      console.log(state.isTerm)
     },
     GET_USERDATA(state,userData){
       state.userData.name=userData.name
@@ -123,6 +122,7 @@ export default new Vuex.Store({
       state.userData.reviewList=userData.reviewList
       state.userData.likeList=userData.likeList
       state.userData.tempList=userData.tempList
+      state.userData.grade=userData.grade
     },
 
     //게시글 관리
@@ -148,33 +148,38 @@ export default new Vuex.Store({
       state.articleData.createTime=response.data.createdTime
       state.articleData.timeAgo=response.data.timeAgo
       state.articleData.partList = response.data.partList
-      console.log(state.articleData)
     },
     GET_COMMENTS(state,comments){
       state.comments = comments
+    },
+    GET_USERS(state, users) {
+      state.users = users
     }
-
   },
 
   actions: {
     //사용자 인증
     sendEmail({state},data){
-      if(state.isTerm){
-        if (data.signUpDataForSend.password===data.password2){
-          alert("메일로 인증 코드가 발송되었습니다.")
-          this.commit('sendCheck')
-          axios.post(`${BACK_URL}/account/sendmail`, data.signUpDataForSend)
-          .then((res)=>{
-            // this.commit('sendCheck')
-          })
-          .catch((err)=>{
-            console.log(err)
-          })
+      if(Object.values(data.signUpDataForSend).indexOf('')===-1){
+        if(state.isTerm){
+          if (data.signUpDataForSend.password===data.password2){
+            alert("메일로 인증 코드가 발송되었습니다.")
+            this.commit('sendCheck')
+            axios.post(`${BACK_URL}/account/sendmail`, data.signUpDataForSend)
+            .then((res)=>{
+              // this.commit('sendCheck')
+            })
+            .catch((err)=>{
+              console.log(err)
+            })
+          }else{
+            alert("비밀번호를 다시 설정해주세요")
+          }
         }else{
-          alert("비밀번호를 다시 설정해주세요")
+          alert("약관에 동의해주세요")
         }
       }else{
-        alert("약관에 동의해주세요")
+        alert("빈 칸을 채워 주세요")
       }
     },
     signUp({commit},signUpData){
@@ -186,7 +191,7 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.log(err)
-            alert("인증 코드를 다시 확인해주세요")
+          alert("인증 코드를 다시 확인해주세요")
         });
     },
     login({commit},loginData){
@@ -244,7 +249,6 @@ export default new Vuex.Store({
       const auth={token:state.authToken}
       axios.post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}`,auth)
         .then((response) => {
-          console.log(response, '아티클리스트')
           commit('GET_ARTICLES',response.data.postList)
         })
         .catch((err) => {
@@ -270,7 +274,6 @@ export default new Vuex.Store({
           articleData.articleData.endTime=articleData.articleData.endTime+':00'
         }
       }
-      console.log(articleData.articleData)
       axios.post(`${BACK_URL}/post/create/${articleData.temp}` ,articleData.articleData)
         .then(() => { 
           router.push('/article')
@@ -308,7 +311,6 @@ export default new Vuex.Store({
     },
     //게시글 검색
     search({commit},searchData){
-      console.log(searchData)
       cookies.set('searchData',searchData,0)
       if(searchData.searchDataForSend.word&&searchData.searchDataForSend.subject&&searchData.categoryId){
         searchData.categoryId=0
@@ -329,6 +331,18 @@ export default new Vuex.Store({
       }else if(!searchData.searchDataForSend.word){
         alert('검색어를 입력해주세요!')
       }
+    },
+
+    // 관리자 페이지
+    getUsers({state, commit}, users) {
+      const auth={token: state.authToken}
+      axios.post(`${BACK_URL}/account/readAll`, auth)
+        .then((res) => {
+          commit('GET_USERS', res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
   modules: {

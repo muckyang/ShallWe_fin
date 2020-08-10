@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.web.blog.dao.AuthDao;
 import com.web.blog.dao.PostDao;
 import com.web.blog.dao.CommentDao;
@@ -26,6 +27,7 @@ import com.web.blog.model.user.TokenRequest;
 import com.web.blog.model.user.User;
 import com.web.blog.service.JwtService;
 import com.web.blog.service.KakaoService;
+import com.web.blog.service.KakaoUserInfo;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -76,13 +78,36 @@ public class AccountController {
     @Autowired
     KakaoService kakao;
 
+    @Autowired
+    KakaoUserInfo kakaoUserInfo;
+
     @RequestMapping("/account/kakaoLogin")
     @ApiOperation(value = "카카오 로그인") // SWAGGER UI에 보이는 이름
     public Object kakaoLogin(@RequestParam("code") String code) {
-        String access_Token = kakao.getAccessToken(code);
+        JsonNode access_Token = kakao.getAccessToken(code);
         System.out.println("controller access_token : " + access_Token);
 
         System.out.println("카카오 로그인 체크 : " + code);
+
+        // JsonNode userInfo = kakaoUserInfo.getKakaoUserInfo(access_Token);
+ 
+        // // Get id
+        // String id = userInfo.path("id").asText();
+        // String name = null;
+        // String email = null;
+ 
+        // // 유저정보 카카오에서 가져오기 Get properties
+        // JsonNode properties = userInfo.path("properties");
+        // JsonNode kakao_account = userInfo.path("kakao_account");
+ 
+        // name = properties.path("nickname").asText();
+        // email = kakao_account.path("email").asText();
+ 
+        // System.out.println("id : " + id);
+        // System.out.println("name : " + name);
+        // System.out.println("email : " + email);
+
+
         return new ResponseEntity<>(code, HttpStatus.NOT_FOUND);
     }
 

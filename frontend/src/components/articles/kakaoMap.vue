@@ -7,9 +7,10 @@
         <div class="option">
           <div>
             <div>
-              키워드 :
-              <input type="text" id="keyword" size="15" />
-              <button @click="searchPlaces">검색하기</button>
+                <div>
+                    키워드 : <input type="text" value="편의점" id="keyword" size="15"> 
+                    <button @click="searchPlaces">검색하기</button> 
+                </div>
             </div>
           </div>
         </div>
@@ -22,57 +23,66 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      ps: "",
-      infowindow: "",
-      markers: [],
-      map: "",
-    };
-  },
-  mounted() {
-    if (window.kakao && window.kakao.maps) {
-      this.initMap();
-    } else {
-      const script = document.createElement("script");
-      /* global kakao */
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8500f9b4c8e3ef8075b8eeefaaae025f&libraries=services";
-      document.head.appendChild(script);
-    }
-  },
-  methods: {
-    initMap() {
-      var mapContainer = document.getElementById("map");
-      var mapOptions = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3,
-      };
-      var map = new kakao.maps.Map(mapContainer, mapOptions);
-      var ps = new kakao.maps.services.Places();
-      this.ps = ps;
-      this.map = map;
-      var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-      this.infowindow = infowindow;
-      this.searchPlaces();
+    props:{
+        coNum:String,
     },
-    searchPlaces() {
-      event.preventDefault();
-      var keyword = document.getElementById("keyword").value + "편의점";
-
-      if (!keyword) {
-        alert("키워드를 입력해주세요!");
-      }
-
-      // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
-      this.ps.keywordSearch(keyword, this.placesSearchCB);
+    data(){
+        return{
+            ps:'',
+            infowindow:'',
+            markers:[],
+            map:'',
+        }
     },
-    placesSearchCB(data, status, pagination) {
-      if (status === kakao.maps.services.Status.OK) {
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다.
-        this.displayPlaces(data);
+    mounted() {
+        if (window.kakao && window.kakao.maps) {
+            this.initMap();
+        } else {
+            const script = document.createElement('script');
+            /* global kakao */
+            script.onload = () => kakao.maps.load(this.initMap);
+            script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8500f9b4c8e3ef8075b8eeefaaae025f&libraries=services';
+            document.head.appendChild(script);
+        }
+    },
+    methods: {
+        initMap() {
+            var mapContainer = document.getElementById('map');
+            var mapOptions = {
+              center: new kakao.maps.LatLng(33.450701, 126.570667),
+              level: 3
+            };
+            var map = new kakao.maps.Map(mapContainer, mapOptions);
+            var ps=new kakao.maps.services.Places()
+            this.ps=ps
+            this.map=map
+            var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+            this.infowindow=infowindow
+            this.searchPlaces();
+        },
+        searchPlaces() {
+            if(document.getElementById('keyword').value.indexOf("편의점")===-1){
+                var keyword = document.getElementById('keyword').value+' 편의점';
+            }else{
+                var keyword = document.getElementById('keyword').value;
+            }
+            // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
+            this.ps.keywordSearch(keyword, this.placesSearchCB);
+             
+        },
+        placesSearchCB(data, status, pagination) {
+            if (status === kakao.maps.services.Status.OK) {
+                // 정상적으로 검색이 완료됐으면
+                // 검색 목록과 마커를 표출합니다.
+                this.displayPlaces(data);
+
+                // 페이지 번호를 표출합니다
+                this.displayPagination(pagination);
+
+            } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
+
+                alert('검색 결과가 존재하지 않습니다.');
+                return;
 
         // 페이지 번호를 표출합니다
         this.displayPagination(pagination);

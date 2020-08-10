@@ -31,7 +31,6 @@ public class User {
     private String name;
     private String nickname;
     private String address;
-
     private int grade;
     private int userPoint;
     private LocalDate birthday;
