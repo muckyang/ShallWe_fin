@@ -5,7 +5,7 @@ import axios from "axios"
 import cookies from 'vue-cookies'
 import router from '../router';
 
-const BACK_URL = "http://127.0.0.1:8080"
+const BACK_URL = process.env.VUE_APP_BACK_URL
 
 Vue.use(Vuex)
 

@@ -177,7 +177,7 @@ import constants from "../../lib/constants";
 import {mapState, mapMutations, mapActions} from 'vuex'
 import router from '@/router'
 import axios from "axios"
-const BACK_URL = "http://127.0.0.1:8080"
+const BACK_URL = process.env.VUE_APP_BACK_URL
 
 export default {
   name: "Header",

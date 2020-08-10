@@ -35,7 +35,7 @@
 </template>
 
 <script>
-const BACK_URL = "http://127.0.0.1:8080"                
+const BACK_URL = process.env.VUE_APP_BACK_URL                
 import axios from "axios"
 import {mapState,mapActions} from 'vuex'
 
