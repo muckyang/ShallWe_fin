@@ -9,8 +9,6 @@ const BACK_URL = "http://127.0.0.1:8080"
 
 Vue.use(Vuex)
 
-
-
 export default new Vuex.Store({
   state: {
     //사용자 인증
@@ -33,6 +31,7 @@ export default new Vuex.Store({
       reviewList: [],
       likeList: [],
       tempList: [],
+      grade: '',
     },
     isTerm:false,
     articleData:{
@@ -59,8 +58,9 @@ export default new Vuex.Store({
     isSended:false,
 
     //게시글
-    articles:[],
-    comments:[],
+    articles: [],
+    comments: [],
+    users: [],
   },
 
   getters:{
@@ -123,6 +123,7 @@ export default new Vuex.Store({
       state.userData.reviewList=userData.reviewList
       state.userData.likeList=userData.likeList
       state.userData.tempList=userData.tempList
+      state.userData.grade=userData.grade
     },
 
     //게시글 관리
@@ -152,8 +153,11 @@ export default new Vuex.Store({
     },
     GET_COMMENTS(state,comments){
       state.comments = comments
+    },
+    GET_USERS(state, users) {
+      state.users = users
+      console.log(state.users)
     }
-
   },
 
   actions: {
@@ -329,6 +333,19 @@ export default new Vuex.Store({
       }else if(!searchData.searchDataForSend.word){
         alert('검색어를 입력해주세요!')
       }
+    },
+
+    // 관리자 페이지
+    getUsers({state, commit}, users) {
+      const auth={token: state.authToken}
+      axios.post(`${BACK_URL}/account/readAll`, auth)
+        .then((res) => {
+          console.log(res, 'users')
+          commit('GET_USERS', res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   },
   modules: {

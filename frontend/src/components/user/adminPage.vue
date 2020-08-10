@@ -57,18 +57,26 @@
 </template>
 
 <script>
-export default {
-  name: 'adminPage',
-  data() {
-    return {
-      
-    }
-  },
-  methods: {
-    
-  },
-}
-</script>
+  import {mapState, mapActions} from 'vuex'
+
+  export default {
+    name: 'adminPage',
+    data() {
+      return {
+        
+      }
+    },
+    methods: {
+      ...mapActions(['getUsers']),
+    },
+    computed: {
+      ...mapState(['users']),
+    },
+    created() {
+      this.getUsers()
+    },
+  }
+</script> 
 
 <style>
 
