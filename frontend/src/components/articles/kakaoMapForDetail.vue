@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <div id="map"></div>
-    <div>{{articleData.address}}</div>
   </div>
 </template>
 
