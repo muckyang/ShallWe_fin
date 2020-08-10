@@ -84,9 +84,14 @@
                             id="address"
                             class="joinInput"
                             name="address"
-                            placeholder=" 주소를 입력해주세요"
+                            placeholder="주소를 입력해주세요"
                             type="text"/>
                     </div>
+
+
+                    <kakaoMap :coNum="coNum" @setAddress="setAddress"/>
+
+
 
                     <div class="input-wrap birthday-warp" id="EmailBtnTop">
                         <div class="p-2">
@@ -118,7 +123,7 @@
                         </span> 
                         <input type="checkbox" name="termsBox" 
                             class="termsBox"
-                            v-model="isTerm" @click="termCheck">
+                            @click="termCheck">
                     </div>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -312,12 +317,11 @@
                                 본 약관은 2020년 8월 10일부터 적용합니다.
                             </div>
 
-
                         </div>
                         <div class="modal-footer"> 
                             <div class="agree">
                                 <label for="agreeType" class="agreeText">약관에 동의합니다.</label>
-                                <input type="checkbox" id="agreeType" v-model="isTerm" @click="termCheck">
+                                <input type="checkbox" id="agreeType" @click="termCheck">
                             </div>
                             <button type="button" class="btn btn-secondary agreeBtn" data-dismiss="modal">Close</button>
                         </div>
@@ -357,6 +361,7 @@
 
 
 <script>
+import kakaoMap from '@/components/articles/kakaoMap'
 import axios from "axios"
 import {mapActions, mapState, mapMutations} from 'vuex'
 const BACK_URL = "http://127.0.0.1:8080"
@@ -364,6 +369,7 @@ const BACK_URL = "http://127.0.0.1:8080"
     export default {
         name: "Signup",
         components: {
+            kakaoMap,
         },
         data: () => {
             return {
@@ -372,24 +378,25 @@ const BACK_URL = "http://127.0.0.1:8080"
                         address:'',
                         birthday:'',
                         email: '',
-                        id: '',
                         name:'', 
                         nickname: '',
                         password:'',
-                        authNumber:'',
                     },
                     password2:''       
                 },
-                isTerm: false,
+                coNum:"2",
             }
         },
         methods: {
             ...mapActions(["signUp","sendEmail"]),
-            ...mapMutations(["termCheck"])
+            ...mapMutations(["termCheck"]),
+            setAddress(address){
+                this.signUpData.signUpDataForSend.address=address
+            },
         },
         computed:{
             ...mapState(["isSended"])
-        }
+        },
     }
 
 </script>

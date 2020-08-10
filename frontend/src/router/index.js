@@ -18,6 +18,7 @@ import articleCreate from '../views/articles/articleCreate.vue'
 import articleDetail from '../views/articles/articleDetail.vue'
 import articleUpdate from '../views/articles/articleUpdate.vue'
 import articleList from '../views/articles/articleList.vue'
+import localList from '@/views/articles/localList.vue'
 
 //자유게시판
 import postCreate from '../views/post/postCreate'
@@ -96,6 +97,11 @@ Vue.use(VueRouter)
       path: '/templist',
       name: 'tempList',
       component: tempList
+    },
+    {
+      path:'/localList',
+      name:'localList',
+      component:localList
     },
     //자유게시판CRUD
     {

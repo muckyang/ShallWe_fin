@@ -182,7 +182,6 @@
                       ></b-form-input>
                     </b-form-group>
                   </form>
-                  <b-button @click="cancel">삭제</b-button>
                 </b-modal>
                 <!--임시 modal-->
 
@@ -201,7 +200,7 @@
         </button> -->
         <div class="kakao-map">
           
-          <kakaoMapForDetail/>
+          <kakaoMapForDetail :aaddress="articleData.address"/>
         </div>
         
       <div class="members">
@@ -214,7 +213,10 @@
                 <div class="member-writer">{{participant.writer}}</div>
                       <b-button variant="light" size="sm" v-b-modal.update-modal 
                       v-if="participant.userId === userData.userId" 
-                      @click="changeNo(participant.no)">수정</b-button>
+                      >수정</b-button>
+                      <b-button variant="light" size="sm"
+                      v-if="participant.userId === userData.userId" 
+                      @click="cancel(participant.no)">삭제</b-button>
               </div>
               <div class="member-title">제목: {{participant.title}}</div>
               <div class="member-price">가격: {{participant.price}}</div>
@@ -257,7 +259,6 @@
           token:this.$cookies.get('auth-token')
         },
         participants:{},
-        no:'',
       }
     },
     computed:{
@@ -279,45 +280,41 @@
       sendJoinData(){
         axios.post(`${BACK_URL}/participant/create`,this.joinData)
           .then((response)=>{
-            console.log(response)
+            this.getparticipantData()
             alert('등록이 완료되었습니다!')
           })
           .catch((error)=>{
             console.log(error)
+            alert('이미 참가한 게시글 입니다.')
           })
       },
       updateJoinData(){
         this.joinData.articleId=this.articleData.articleId
-        // const auth={token:this.$cookies.get('auth-token')}
         axios.post(`${BACK_URL}/participant/update`, this.joinData)
           .then((response)=>{
-            console.log(response.data.participantList, '참여자리스트')
-            this.participants=response.data.participantList
-            this.getparticipantData()        
-          }) //아티클아이디 유저아이디 넘기는걸로
+            this.getparticipantData()
+            alert("수정이 완료되었습니다.")        
+          })
           .catch((err)=>{
             console.log(err)
           })
       },
-      // getparticipantData(){
-      //   axios.post(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
-      //     .then((response)=>{
-      //       this.participants=response.data.participantList    
-      //       console.log(response.data.participantList, '참여자리스트')
-      //       console.log(this.participants, 'ㄹㅇ')
-      //     })
-      //     .catch((err)=>{
-      //       console.log(err)
-      //     })
-      // },
-      cancel(){
-        axios.post(`${BACK_URL}/participant/delete/${this.no}`)
-          .then(()=>{})
-          .catch((err)=>{console.log(err)})
-          this.getparticipantData() 
+      getparticipantData(){
+        axios.post(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
+          .then((response)=>{
+            this.articleData.partList=response.data.participantList
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
       },
-      changeNo(no){
-        this.no=no
+      cancel(no){
+        axios.post(`${BACK_URL}/participant/delete/${no}`)
+          .then((response)=>{
+            this.getparticipantData()
+            console.log("삭제가 완료되었습니다.") 
+          })
+          .catch((err)=>{console.log(err)})
       },
 
       shareContent(){
@@ -378,8 +375,6 @@
       this.getArticle(this.$route.params.ID)
       this.getUserData()
       this.likeCheck()
-      // this.getparticipantData()
-
     },
 
   }

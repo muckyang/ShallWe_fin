@@ -12,9 +12,7 @@ export default {
     },
     mounted() {
         if (window.kakao && window.kakao.maps) {
-            setTimeout(()=>{
-                this.initMap();
-            },250)
+            this.initMap();
 
             // setTimeout(function() {
             //     map.relayout();
@@ -25,9 +23,7 @@ export default {
         } else {
             const script = document.createElement('script');
             /* global kakao */
-            script.onload = () => kakao.maps.load(setTimeout(()=>{
-                this.initMap();
-            },250));
+            script.onload = () => kakao.maps.load(this.initMap);
             script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8500f9b4c8e3ef8075b8eeefaaae025f&libraries=services';
             document.head.appendChild(script);
         }
@@ -36,7 +32,7 @@ export default {
         initMap() {
             var container = document.getElementById('map');
             var options = {
-              center: new kakao.maps.LatLng(33.450701, 126.570667),
+              center: new kakao.maps.LatLng(36.355539125856275, 127.29863289195224),
               level: 3
             };
 
@@ -67,6 +63,9 @@ export default {
             });   
         }
     },
+    updated:function(){
+        this.initMap()
+    }
 }
 </script>
 
