@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab-content" id="nav-tabContent">
+    <div class="tab-content" id="nav-tabContent" v-if="articles">
       <div v-if="categoryNum === 0" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
         <b-container class="bv-example-row">
           <b-row align-h="start">
@@ -32,6 +32,8 @@
         </b-container>        
       </div>
     </div>
+    <br>
+    <div>게시글이 존재하지 않습니다.</div>
   </div>
 </template>
 
