@@ -76,7 +76,7 @@ public class SearchController {
 
     @PostMapping("/account/readAll")
     @ApiOperation(value = "유저 전체 리스트")
-    public List<User> userReadAll(@RequestBody TokenRequest req ){
+    public List<User> userReadAll(@RequestBody TokenRequest req) {
         List<User> result = null;
         String token = req.getToken();
         System.out.println(token);
@@ -84,22 +84,21 @@ public class SearchController {
         System.out.println(jwtuser.toString());
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
 
-        if(userOpt.isPresent() && userOpt.get().getGrade()==0){
+        if (userOpt.isPresent() && userOpt.get().getGrade() == 0) {
             result = userDao.findAll();
-        }else{
+        } else {
             return null;
         }
         return result;
 
-
     }
-
 
     @PostMapping("/post/read/{temp}/{categoryId}")
     @ApiOperation(value = "게시글 및 임시글 목록")
     public PostListResponse read(@RequestBody TokenRequest req, @PathVariable int temp, @PathVariable int categoryId)
             throws MessagingException, IOException {
         PostListResponse result = null;
+
         if (temp == 0) {
             System.out.println("임시글 목록 출력!!");
             String token = req.getToken();
@@ -148,6 +147,38 @@ public class SearchController {
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
 
             System.out.println("자유글 목록 출력!!");
+            return result;
+        } else if (temp == 3) {
+            System.out.println("내 주변 게시물 목록 출력!!");
+            String token = req.getToken();
+            User jwtuser = jwtService.getUser(token);
+            Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+
+            String writer = userOpt.get().getNickname();
+            List<Post> plist = postDao.findPostByTempAndWriter(temp, writer);
+
+            String uAddress = userOpt.get().getAddress();
+            int count = 0;
+            List<String> addList = new ArrayList<>();
+
+            StringTokenizer st = new StringTokenizer(uAddress);
+            // 동까지 자르면 스탑해
+            while (st.hasMoreTokens()) {
+                if(count==3){
+                    break;
+                }
+                count++;
+                addList.add("%" + st.nextToken() + "%");
+            }
+
+            
+            plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLike(addList.get(0), addList.get(1), addList.get(2));
+            
+
+            result = new PostListResponse();
+            result.postList = getPostList(plist, temp);
+
+            System.out.println("내 주변 게시물 검색 확인");
             return result;
         } else {
             return result;
