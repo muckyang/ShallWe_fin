@@ -245,13 +245,49 @@ export default {
 }
 .temp-form {
   background-color: rgb(177, 177, 177);
-  /* font-weight: bold; */
 }
 .complete-form {
-  background-color: #c42c66;
+  background-color: #ee6e9f;
 }
 .temp-form:hover,
 .complete-form:hover {
   opacity: 1;
 }
+
+/* .{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-top-color: rgba(255,255,255,0.5);
+  border-bottom-color: rgba(255,255,255,0.5);
+  -webkit-transform: scale(0.1, 1);
+  transform: scale(0.1, 1);
+}
+.:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    background-color: rgba(255,255,255,0.25);
+} */
 </style>
