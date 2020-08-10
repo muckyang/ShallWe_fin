@@ -14,9 +14,7 @@ public class ParticipantRequest {
     @NotNull
     int no;
     
-    @ApiModelProperty(required = true)
-    @NotNull
-    int userId;
+
     
     @ApiModelProperty(required = true)
     @NotNull
@@ -32,6 +30,7 @@ public class ParticipantRequest {
     String writer;
     @ApiModelProperty(required = true)
     String description;
-
+    @ApiModelProperty(required = true)
+    @NotNull
     String token;
 }

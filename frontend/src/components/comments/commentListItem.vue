@@ -89,7 +89,7 @@ export default {
                     console.error(err)
                 })
         },
-        updateCancel() {
+        updateCancel(){
             console.log(this.canceldata)
             console.log(this.comment, '바뀐 댓글데이타')
             this.comment = this.canceldata

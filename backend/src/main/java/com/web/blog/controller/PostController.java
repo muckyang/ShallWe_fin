@@ -3,7 +3,6 @@ package com.web.blog.controller;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -16,13 +15,10 @@ import com.web.blog.dao.ArticleTagDao;
 import com.web.blog.dao.CommentDao;
 import com.web.blog.dao.LikeDao;
 import com.web.blog.dao.ParticipantDao;
-// import com.web.blog.dao.LikeDao;
 import com.web.blog.dao.PostDao;
 import com.web.blog.dao.TagDao;
 import com.web.blog.dao.UserDao;
-import com.web.blog.model.post.PostListResponse;
 import com.web.blog.model.post.PostResponse;
-import com.web.blog.model.post.PostSearchRequest;
 import com.web.blog.model.tag.Tag;
 import com.web.blog.model.like.Like;
 import com.web.blog.model.participant.Participant;
@@ -114,6 +110,15 @@ public class PostController {
                 post.setLikeNum(0);
                 post.setCommentNum(0);
 
+                // 태그 등록
+                String[] tags = req.getTags();// 태그 내용
+                String ptag = "#";
+                for (int i = 0; i < tags.length; i++) {
+                    ptag += tags[i] + "#";
+
+                }
+
+                post.setTag(ptag.substring(0, ptag.length() - 1));
                 postDao.save(post);
                 int artiId = post.getArticleId();
                 System.out.println("게시물 등록!!");
@@ -134,23 +139,13 @@ public class PostController {
                 participant.setPrice(myPrice);
                 participant.setDescription(def_mes);
                 participantDao.save(participant);// 참가자 DB에 등록 완료
-
-                // 게시물 sum_price에 더하기
-                post = postDao.getPostByArticleId(artiId);// 해당 구매게시물을 얻어옴
-                post.setSumPrice(myPrice);
-                postDao.save(post);// 다시 DB에 넣어줌
+                tagAdd(tags, artiId);
+                // // 게시물 sum_price에 더하기
+                // post = postDao.getPostByArticleId(artiId);// 해당 구매게시물을 얻어옴
+                // post.setSumPrice(myPrice);
+                // postDao.save(post);// 다시 DB에 넣어줌
 
                 System.out.println("참가자 등록!!");
-
-                // 태그 등록
-                String[] tags = req.getTags();// 태그 내용
-                // artiId 게시물 PK
-                for (int i = 0; i < tags.length; i++) {
-                    Tag tag = new Tag();
-                    tag.setName(tags[i]);
-                    tag.setArticleId(artiId);
-                    tagDao.save(tag);
-                }
 
                 return new ResponseEntity<>("태그 등록 및 참가자 등록 및 게시물 등록", HttpStatus.OK);
 
@@ -163,18 +158,20 @@ public class PostController {
                 post.setDescription(req.getDescription());
                 post.setImage(req.getImage());
                 post.setTemp(temp);
-                postDao.save(post);
 
-                int artiId = post.getArticleId();
-                // 태그 등록
                 String[] tags = req.getTags();// 태그 내용
-                // artiId 게시물 PK
+                String ptag = "#";
                 for (int i = 0; i < tags.length; i++) {
-                    Tag tag = new Tag();
-                    tag.setName(tags[i]);
-                    tag.setArticleId(artiId);
-                    tagDao.save(tag);
+                    ptag += tags[i] + "#";
+
                 }
+
+                post.setTag(ptag.substring(0, ptag.length() - 1));
+                postDao.save(post);
+                int artiId = post.getArticleId();
+
+                tagAdd(tags, artiId);
+
                 return new ResponseEntity<>("자유게시물 등록", HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -185,193 +182,37 @@ public class PostController {
         }
     }
 
-    @PostMapping("/post/read/{temp}/{categoryId}") // temp 값 int 로 변경예정
-    @ApiOperation(value = "게시글 및 임시글 목록")
-    public Object read(@RequestBody TokenRequest request, @PathVariable int temp, @PathVariable int categoryId)
-            throws MessagingException, IOException {
-        if (temp == 0) {
-            System.out.println("임시글 목록 출력!!");
-            String token = request.getToken();
-            User jwtuser = jwtService.getUser(token);
-            Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
-
-            String writer = userOpt.get().getNickname();
-            List<Post> plist = postDao.findPostByTempAndWriter(temp, writer);
-
-            PostListResponse result = new PostListResponse();
-            result.postList = new LinkedList<>();
-            for (int i = 0; i < plist.size(); i++) {
-                Post p = plist.get(i);
-
-                result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
-                        p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), temp, p.getEndTime(),
-                        BeforeCreateTime(p.getCreateTime())));
-
-            }
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } else if (temp == 1) {
-            List<Post> plist;
-            System.out.println("게시물 목록 출력!!");
-            if (categoryId == 0)// 전체 게시물 출력
-                plist = postDao.findPostByTemp(temp);
-            else
-                plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
-
-            PostListResponse result = new PostListResponse();
-            result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
-
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } else if (temp == 2) { // 자유게시판
-            List<Post> plist;
-            if (categoryId == 100)// 전체 게시물 출력
-                plist = postDao.findPostByTemp(temp);
-            else
-                plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
-
-            PostListResponse result = new PostListResponse();
-            result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
-
-            System.out.println("자유글 목록 출력!!");
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @PostMapping("/post/search/{temp}/{categoryId}")
-    @ApiOperation(value = "구매게시판 검색 목록")
-    public Object search(@RequestBody PostSearchRequest request, @PathVariable int temp, @PathVariable int categoryId)
-            throws MessagingException, IOException {
-
-        String subject = request.getSubject();
-        String word = request.getWord();
-        List<Post> plist = new LinkedList<>();
-        if (subject.equals("title")) {
-            word = "%" + word + "%";
-            System.out.println("title로 검색");
-
-            if (categoryId == 0)
-                plist = postDao.findPostByTempAndTitleLike(temp, word);
-            else
-                plist = postDao.findPostByTempAndCategoryIdAndTitleLike(temp, categoryId, word);
-            PostListResponse result = new PostListResponse();
-
-            result.postList = getPostList(plist, temp);
-
-            System.out.println("title로 검색 확인");
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } else if (subject.equals("writer")) {
-            word = "%" + word + "%";
-
-            if (categoryId == 0)
-                plist = postDao.findPostByTempAndWriterLike(temp, word);
-            else
-                plist = postDao.findPostByTempAndCategoryIdAndWriterLike(temp, categoryId, word);
-            PostListResponse result = new PostListResponse();
-            result.postList = getPostList(plist, temp);
-
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } else if (subject.equals("tag")) {
-            List<Tag> taglist = tagDao.findTagByName(word);// 해당 태그의 tagId가져옴
-            PostListResponse result = new PostListResponse();
-            for (int i = 0; i < taglist.size(); i++) {
-                int aId = taglist.get(i).getArticleId();
-                Optional<Post> article = postDao.findPostByArticleIdAndTempAndCategoryId(aId, temp, categoryId);
-                plist.add(article.get());
-                // result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(),
-                // p.getUserId(), p.getTitle(),
-                // p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getDescription(),
-                // p.getWriter(),
-                // p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime()));
-
-                // List<Like> llist = likeDao.findLikeByArticleId(p.getArticleId());
-                // List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
-                // int likenum = llist.size();
-                // int commentnum = clist.size();
-                // System.out.println("list return success");
-                // System.out.println(likenum);
-
-                // result.postList.get(i).likenum = likenum;
-                // result.postList.get(i).commentnum = commentnum;
-            }
-
-            result.postList = getPostList(plist, temp);
-
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } else if (subject.equals("address")) {
-
-            System.out.println("address로 검색");
-            List<String> addList = new ArrayList<>();
-
-            StringTokenizer st = new StringTokenizer(word);
-            while (st.hasMoreTokens()) {
-                addList.add("%" + st.nextToken() + "%");
-            }
-
-            if (categoryId == 0)
-                if (addList.size() == 1) {
-                    plist = postDao.findPostByAddressLike(addList.get(0));
-                } else if (addList.size() == 2) {
-                    plist = postDao.findPostByAddressLikeAndAddressLike(addList.get(0), addList.get(1));
-                } else if (addList.size() == 3) {
-                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLike(addList.get(0), addList.get(1),
-                            addList.get(2));
-                } else if (addList.size() == 4) {
-                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(addList.get(0),
-                            addList.get(1), addList.get(2), addList.get(3));
-                }
-
-                else {
-                    if (addList.size() == 1) {
-                        plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0));
-                    } else if (addList.size() == 2) {
-                        plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLike(temp, categoryId,
-                                addList.get(0), addList.get(1));
-                    } else if (addList.size() == 3) {
-                        plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLike(temp,
-                                categoryId, addList.get(0), addList.get(1), addList.get(2));
-                    } else if (addList.size() == 4) {
-                        plist = postDao
-                                .findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(
-                                        temp, categoryId, addList.get(0), addList.get(1), addList.get(2),
-                                        addList.get(3));
-                    }
-                }
-            PostListResponse result = new PostListResponse();
-            result.postList = getPostList(plist, temp);
-
-            System.out.println("address로 검색 확인");
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("temp 해당 없음", HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @PostMapping("/post/detail/{articleId}") // SWAGGER UI에 보이는 REQUEST명
     @ApiOperation(value = "게시물상세보기") // SWAGGER UI에 보이는 이름
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
         // 토큰 받아오면 그 토큰으로 유효성 검사 후 uid 받아와서 좋아요 한지 여부 확인
 
         System.out.println("상세보기 들어옴 " + articleId);
-        Optional<Post> postOpt = postDao.findPostByArticleId(articleId);
-        Post p = postOpt.get();
+        Post p = postDao.findPostByArticleId(articleId);
 
-        if (postOpt.isPresent()) {
+        if (p != null) {
             String token = request.getToken();
             User jwtuser = jwtService.getUser(token);
+
+            String tag = p.getTag();
+            StringTokenizer st = new StringTokenizer(tag, "#");
+
+            List<String> taglist = new LinkedList<>();
+            while (!st.hasMoreTokens()) {
+                taglist.add(st.nextToken());
+            }
 
             Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
-                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), p.getTemp(), p.getEndTime(),
-                    BeforeCreateTime(p.getCreateTime()));
+                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), taglist, p.getTemp(),
+                    p.getEndTime(), BeforeCreateTime(p.getCreateTime()));
 
             // 이 게시물에 해당되는 태그는 다 보내기
             List<Tag> tlist = tagDao.findTagByArticleId(articleId);
-            String[] tags = new String[tlist.size()];
-            for (int i = 0; i < tags.length; i++) {
-                tags[i] = tlist.get(i).getName();
+            List<String> tags = new LinkedList<>();
+            for (int i = 0; i < tlist.size(); i++) {
+                tags.add(tlist.get(i).getName());
             }
             List<Participant> partlist = participantDao.findParticipantByArticleId(articleId);
             result.partList = partlist;
@@ -413,13 +254,13 @@ public class PostController {
     @PostMapping("/post/update/{temp}")
     @ApiOperation(value = "게시글 및 임시글 수정")
     public Object update(@Valid @RequestBody PostRequest req, @PathVariable int temp) {
-        Optional<Post> postOpt = postDao.findPostByArticleId(req.getArticleId());
-        Post p = postOpt.get();
+        Post p = postDao.findPostByArticleId(req.getArticleId());
+
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
         int userId;
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
-        if (userOpt.isPresent()) {
+        if (p != null) {
             userId = userOpt.get().getUserId();
         } else {
             return new ResponseEntity<>("로그인 상태를 확인하세요(token값 유효하지 않음)", HttpStatus.BAD_REQUEST);
@@ -474,19 +315,16 @@ public class PostController {
                 return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
             }
 
-            Participant participant = new Participant();
-
-            Optional<Participant> partOpt = participantDao.getParticipantByUserIdAndArticleId(userId,
-                    req.getArticleId());
-            if (partOpt.isPresent()) {// 이미 게시된 글이라면
-                participant = partOpt.get();
+            Participant part = participantDao.getParticipantByUserIdAndArticleId(userId, req.getArticleId());
+            if (part == null) {// 존재하지않는 참가자입니다.
+                return new ResponseEntity<>("존재하지 않는 참가자 입니다.", HttpStatus.BAD_REQUEST);
             }
 
-            int old_price = participant.getPrice();// 원래 참가자의 가격정보
+            int old_price = part.getPrice();// 원래 참가자의 가격정보
 
-            participant.setArticleId(req.getArticleId());
-            participant.setPrice(myPrice);
-            participantDao.save(participant);// 참가자 DB에 등록 완료
+            part.setArticleId(req.getArticleId());
+            part.setPrice(myPrice);
+            participantDao.save(part);// 참가자 DB에 등록 완료
 
             // 게시물 sum_price에 더하기
             post = postDao.getPostByArticleId(req.getArticleId());// 해당 구매게시물을 얻어옴
@@ -495,21 +333,10 @@ public class PostController {
             post.setSumPrice(sumPrice);
             postDao.save(post);// 다시 DB에 넣어줌
 
-            // 태그 삭제
-            List<Tag> tList = tagDao.findTagByArticleId(req.getArticleId());
-            int atsize = tList.size();
-            for (int i = 0; i < atsize; i++) {
-                Tag l = tList.get(i);
-                tagDao.delete(l);
-            }
+            tagDelete(req.getArticleId());
             // 태그 수정
             String[] tags = req.getTags();// 태그 내용
-            for (int i = 0; i < tags.length; i++) {
-                Tag tag = new Tag();
-                tag.setName(tags[i]);
-                tag.setArticleId(req.getArticleId());
-                tagDao.save(tag);
-            }
+            tagAdd(tags, req.getArticleId());
 
             System.out.println(post.getArticleId() + "번째 게시물 수정 완료 ");
             return new ResponseEntity<>("게시물 수정 완료 ", HttpStatus.OK);
@@ -524,21 +351,12 @@ public class PostController {
             post.setImage(req.getImage());
             post.setTemp(temp);
             postDao.save(post);
+
             // 태그 삭제
-            List<Tag> tList = tagDao.findTagByArticleId(req.getArticleId());
-            int atsize = tList.size();
-            for (int i = 0; i < atsize; i++) {
-                Tag l = tList.get(i);
-                tagDao.delete(l);
-            }
+            tagDelete(req.getArticleId());
             // 태그 수정
             String[] tags = req.getTags();// 태그 내용
-            for (int i = 0; i < tags.length; i++) {
-                Tag tag = new Tag();
-                tag.setName(tags[i]);
-                tag.setArticleId(req.getArticleId());
-                tagDao.save(tag);
-            }
+            tagAdd(tags, req.getArticleId());
 
             System.out.println(post.getArticleId() + "번째 자유글 수정 완료 ");
             return new ResponseEntity<>("자유글 수정 완료 ", HttpStatus.OK);
@@ -572,50 +390,34 @@ public class PostController {
         // return new ResponseEntity<>("로그인한 회원과 게시자가 일치하지 않습니다.",
         // HttpStatus.NOT_FOUND);
         // }
-
+        // 참여자 삭제
+        List<Participant> partList = participantDao.getParticipantByArticleId(articleId);
+        int pasize = partList.size();
+        for (int i = 0; i < pasize; i++) {
+            Participant p = partList.get(i);
+            participantDao.delete(p);
+        }
         // 댓글 삭제
-        List<Comment> commentList = commentDao.findCommentByArticleId(articleId);
+        List<Comment> commentList = commentDao.getCommentByArticleId(articleId);
         int csize = commentList.size();
         for (int i = 0; i < csize; i++) {
             Comment c = commentList.get(i);
             commentDao.delete(c);
         }
         /// 좋아요 삭제
-        List<Like> likeList = likeDao.findLikeByArticleId(articleId);
+        List<Like> likeList = likeDao.getLikeByArticleId(articleId);
         int lsize = likeList.size();
         for (int i = 0; i < lsize; i++) {
             Like l = likeList.get(i);
             likeDao.delete(l);
         }
         // 태그 삭제
-        List<Tag> tList = tagDao.findTagByArticleId(articleId);
-        int atsize = tList.size();
-        for (int i = 0; i < atsize; i++) {
-            Tag l = tList.get(i);
-            tagDao.delete(l);
-        }
-
+        tagDelete(articleId);
         postDao.delete(post);
         System.out.println("삭제하기!! ");
         PostResponse result = new PostResponse();
 
         return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
-    private List<PostResponse> getPostList(List<Post> plist, int temp) {
-        List<PostResponse> result = new LinkedList<>();
-
-        for (int i = 0; i < plist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
-            Post p = plist.get(i);
-
-            result.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                    p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
-                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), temp, p.getEndTime(),
-                    BeforeCreateTime(p.getCreateTime())));
-
-        }
-
-        return result;
     }
 
     private static String BeforeCreateTime(LocalDateTime createTime) {
@@ -663,5 +465,23 @@ public class PostController {
         }
         return result;
 
+    }
+
+    private void tagDelete(int articleId) {
+        List<Tag> tList = tagDao.getTagByArticleId(articleId);
+        int atsize = tList.size();
+        for (int i = 0; i < atsize; i++) {
+            Tag l = tList.get(i);
+            tagDao.delete(l);
+        }
+    }
+
+    private void tagAdd(String[] tags, int articleId) {
+        for (int i = 0; i < tags.length; i++) {
+            Tag tag = new Tag();
+            tag.setName(tags[i]);
+            tag.setArticleId(articleId);
+            tagDao.save(tag);
+        }
     }
 }

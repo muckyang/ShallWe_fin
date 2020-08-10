@@ -112,8 +112,7 @@ public class LikeController {
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
         if (userOpt.isPresent()) {
-            System.out.println("Like Number Check ");
-            // Post post = postDao.getPostByPid(pid);// 게시물 가져옴
+            
             Optional<Like> likeOpt = likeDao.findLikeByUserIdAndArticleId(userOpt.get().getUserId(), articleId);
             LikeResponse result = new LikeResponse();
         

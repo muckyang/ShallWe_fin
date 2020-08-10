@@ -22,9 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -57,26 +55,24 @@ public class ParticipantController {
     public Object create(@Valid @RequestBody ParticipantRequest request) throws MessagingException, IOException {
         System.out.println(request.getArticleId());
         String token = request.getToken();
-
-        // 게시자는 바로 참가자로 등록됨
-        // 만약 게시자가 참가자 버튼을 눌렀을 때 안되도록 하기
-        Optional<Participant> partiOpt = participantDao.getParticipantByUserIdAndArticleId(request.getUserId(),request.getArticleId());
-        if(partiOpt.isPresent()){//이 게시물(ArticleId)에 해당하는 유저아이디(UserId)가 Participant DB에 있으면
-            String message = "이미 참가되셨습니다.";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
-
-        String title = request.getTitle();
-        int price = request.getPrice();
-        if (price < 0) {
-            String message = "0원보다 값이 작습니다.";
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
-        }
-        String description = request.getDescription();
-        User jwtuser = jwtService.getUser(token);
-
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        User user = jwtService.getUser(token);
+        Optional<User> userOpt = userDao.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
         if (userOpt.isPresent()) {
+            int articleId = request.getArticleId();
+            Participant part = participantDao.getParticipantByUserIdAndArticleId(userOpt.get().getUserId(), articleId);
+            if (part != null) {// 이 게시물(ArticleId)에 해당하는 유저아이디(UserId)가 Participant DB에 있으면
+                String message = "이미 참가되셨습니다.";
+                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            }
+
+            String title = request.getTitle();
+            int price = request.getPrice();
+            if (price < 0) {
+                String message = "0원보다 값이 작습니다.";
+                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            }
+            String description = request.getDescription();
+
             Participant participant = new Participant();
             participant.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
             participant.setArticleId(request.getArticleId());
@@ -120,34 +116,43 @@ public class ParticipantController {
     @PostMapping("/participant/update")
     @ApiOperation(value = "참가자 수정")
     public Object update(@Valid @RequestBody ParticipantRequest request) {
+        System.out.println(request.toString());
+        String token = request.getToken();
+        User user = jwtService.getUser(token);
+        Optional<User> userOpt = userDao.findUserByEmail(user.getEmail());
+        if (userOpt.isPresent()) {
+            // System.out.println("유저아이디 : " + user.getUserId());
+            int articleId = request.getArticleId();
+            Participant part = participantDao.getParticipantByUserIdAndArticleId(userOpt.get().getUserId(), articleId);
+            int old_price = part.getPrice();
+            int new_price = request.getPrice();
 
-        int articleId = request.getArticleId();// 해당 클릭의 No를 가져와서
-        int userId = request.getUserId();// 해당 클릭의 No를 가져와서
-        Optional<Participant> partOpt = participantDao.getParticipantByUserIdAndArticleId(userId,articleId);// 참가자의 해당 정보를 가져옴
-        int old_price = partOpt.get().getPrice();// 원래 참가자의 가격정보
-        int new_price = request.getPrice();// 새로운 참가자의 가격정보
+            if (new_price < 0) {
+                String message = "수정할 값이 0원보다 값이 작습니다.";
+                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            }
+            int difference = (new_price - old_price);// article가격 추가될 것
 
-        if (new_price < 0) {
-            String message = "수정할 값이 0원보다 값이 작습니다.";
+            // 게시물 sum_price에 수정
+            Post post = postDao.getPostByArticleId(request.getArticleId());// 해당 구매게시물을 얻어옴
+            int sumPrice = post.getSumPrice();// sumPrice를 얻어옴
+            sumPrice = (sumPrice + difference);// 참가자의 수정 가격을 더해줌
+            post.setSumPrice(sumPrice);
+            postDao.save(post);// 다시 DB에 넣어줌
+
+            part.setTitle(request.getTitle());
+            part.setPrice(new_price);
+            part.setDescription(request.getDescription());
+            participantDao.save(part);// 다시 세팅해서 참가자 DB에 넣어줌
+
+            System.out.println(part.getNo() + "번째 참가자 수정 완료");
+
+            return new ResponseEntity<>("참가자 수정 완료", HttpStatus.OK);
+        } else {
+            String message = "로그인 상태를 확인하세요";
             return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
         }
-        int difference = (new_price - old_price);// article가격 추가될 것
 
-        // 게시물 sum_price에 수정
-        Post post = postDao.getPostByArticleId(request.getArticleId());// 해당 구매게시물을 얻어옴
-        int sumPrice = post.getSumPrice();// sumPrice를 얻어옴
-        sumPrice = (sumPrice + difference);// 참가자의 수정 가격을 더해줌
-        post.setSumPrice(sumPrice);
-        postDao.save(post);// 다시 DB에 넣어줌
-
-        partOpt.get().setTitle(request.getTitle());
-        partOpt.get().setPrice(new_price);
-        partOpt.get().setDescription(request.getDescription());
-        participantDao.save(partOpt.get());// 다시 세팅해서 참가자 DB에 넣어줌
-
-        System.out.println(partOpt.get().getNo()+"번째 참가자 수정 완료");
-        
-        return new ResponseEntity<>("참가자 수정 완료", HttpStatus.OK);
     }
 
     @PostMapping("/participant/delete/{no}")
