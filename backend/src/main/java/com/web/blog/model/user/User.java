@@ -31,6 +31,8 @@ public class User {
     private String name;
     private String nickname;
     private String address;
+
+    private int grade;
     private int userPoint;
     private LocalDate birthday;
     @Column(insertable = false, updatable = false)
@@ -47,6 +49,7 @@ public class User {
         this.name = name;
         this.nickname = nickname;
         this.address = address;
+        this.grade = 1;
         this.userPoint = 1000;
         this.birthday = birthday;
     }
