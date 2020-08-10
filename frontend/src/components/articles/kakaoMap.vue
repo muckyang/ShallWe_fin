@@ -276,10 +276,11 @@ export default {
   border: none;
   outline: none;
   border-radius: 4px;
-  background-color: rgb(211, 208, 208);
+  background-color: rgb(212, 205, 205);
 }
 #keyword {
   height: 30px;
+  width: 100px;
 }
 .map_wrap,
 .map_wrap * {
