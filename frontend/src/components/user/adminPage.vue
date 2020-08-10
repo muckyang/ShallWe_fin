@@ -55,7 +55,7 @@
                 </p>
               </b-modal>
             </div>
-            <button class="btn btn-danger btn-sm">회원삭제</button>
+            <button class="btn btn-danger btn-sm" @click="deleteUser">회원삭제</button>
           </td>
         </tr>
       </tbody>
@@ -74,13 +74,13 @@
       }
     },
     methods: {
-      ...mapActions([ 'getUsers', 'updateGrade' ]),
+      ...mapActions([ 'getUsers', 'updateGrade', 'getArticles', 'deleteUser', 'deleteArticle' ]),
       changeGrade(changedObj) {
         changedObj.changedGrade.grade = changedObj.grade
       }
     },
     computed: {
-      ...mapState([ 'users' ]),
+      ...mapState([ 'users', 'articles' ]),
     },
     created() {
       this.getUsers()

@@ -196,7 +196,8 @@ export default new Vuex.Store({
     login({commit},loginData){
       axios.post(`${BACK_URL}/account/login`,loginData)
       .then(response=>{
-        commit('SET_TOKEN',response.data) 
+        commit('SET_TOKEN',response.data)
+        alert('환영합니다.')
       })
       .catch(err=>{
           console.log(err)
