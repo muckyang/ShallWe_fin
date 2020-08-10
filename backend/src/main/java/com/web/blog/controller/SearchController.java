@@ -25,6 +25,7 @@ import com.web.blog.model.tag.Tag;
 import com.web.blog.model.post.Post;
 import com.web.blog.model.user.TokenRequest;
 import com.web.blog.model.user.User;
+import com.web.blog.model.user.UserResponse;
 import com.web.blog.service.JwtService;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -72,6 +73,25 @@ public class SearchController {
 
     @Autowired
     private JwtService jwtService;
+
+    @PostMapping("/account/readAll")
+    @ApiOperation(value = "유저 전체 리스트")
+    public List<User> userReadAll(@RequestBody TokenRequest req ){
+        List<User> result = null;
+        String token = req.getToken();
+        User jwtuser = jwtService.getUser(token);
+        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+
+        if(userOpt.isPresent() && userOpt.get().getGrade()==0){
+            result = userDao.findAll();
+        }else{
+            return null;
+        }
+        return result;
+
+
+    }
+
 
     @PostMapping("/post/read/{temp}/{categoryId}")
     @ApiOperation(value = "게시글 및 임시글 목록")

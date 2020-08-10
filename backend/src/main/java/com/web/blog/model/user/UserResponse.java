@@ -51,7 +51,8 @@ public class UserResponse {
 
     @ApiModelProperty(value = "tempList", position = 16)
     public List<Post> tempList;
-
+    @ApiModelProperty(value = "grade", position = 17)
+    public int grade;
     public UserResponse(String password, String name, String nickname, String address, LocalDate birthday) {
         this.password = password;
         this.name = name;
