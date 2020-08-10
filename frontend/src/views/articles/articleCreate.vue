@@ -248,6 +248,7 @@ export default {
   padding: 10px;
   border-radius: 4px;
   opacity: 0.85;
+  transition: 0.4s;
 }
 .temp-form {
   background-color: rgb(177, 177, 177);
