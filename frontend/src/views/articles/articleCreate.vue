@@ -83,8 +83,8 @@
               v-bind="inputAttrs"
               v-on="inputHandlers"
               placeholder="엔터를 누르면 태그가 추가돼요! :)"
-              class="form-control"
               id="tag-input"
+              class="form-control"
             ></b-form-input>
             <b-input-group-append>
               <div class="tag-btn">
@@ -274,6 +274,11 @@ input:focus::placeholder {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
   background-color: rgb(151, 151, 151);
+  opacity: 0.85;
+  transition: 0.3s;
+}
+.tag-btn:hover {
+  opacity: 1;
 }
 #tag-input {
   outline: none;
