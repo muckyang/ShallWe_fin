@@ -55,7 +55,7 @@
             aria-selected="false"
           >쉘위공구</a>
         </div>
-        <router-link class="nav-item nav-link" :to="{name:'articleCreate'}">
+        <router-link :to="{name:'articleCreate'}">
           <button class="write-btn">글쓰기</button>
         </router-link>
       </div>
