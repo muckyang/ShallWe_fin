@@ -1,12 +1,7 @@
 <template>
   <div>
     <!-- Navbar1 -->
-    <nav class="navbar navbar-light d-flex justify-content-between navbar1 p-0 my-navbar">
-      <!-- 관리자페이지 -->
-      <ul class="navbar-nav">
-        <li class="nav-item"><a href="/user/admin" class="nav-link navbar1-item">관리자페이지</a></li>
-      </ul>
-      
+    <nav class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar">
       <ul class="navbar-nav d-flex flex-row">
         <!-- 로그인 X -->
         <li class="nav-item mr-1"><a v-if="!isLoggedin" 
@@ -110,6 +105,13 @@
         v-bind:to="{name:constants.URL_TYPE.USER.PROFILE}" class="nav-link navbar1-item">
         마이페이지</router-link></li>
       </ul>
+      <div class="wall" v-show="isLoggedin">|</div>
+      <!-- 관리자페이지 -->
+      <div v-if="isLoggedin && userData.grade===0" class="d-flex align-items-starts">
+        <ul class="navbar-nav" >
+          <li class="nav-item"><a href="/user/admin" class="nav-link navbar1-item">관리자페이지</a></li>
+        </ul>
+      </div>
     </nav>
     <!-- Navbar2 -->
     <nav class="navbar navbar-light d-flex justify-content-center my-navbar p-1">
@@ -192,7 +194,7 @@
 
 <script>
 import constants from "../../lib/constants";
-import {mapState, mapMutations,mapActions} from 'vuex'
+import {mapState, mapMutations, mapActions} from 'vuex'
 import router from '@/router'
 import axios from "axios"
 const BACK_URL = "http://127.0.0.1:8080"
@@ -230,7 +232,7 @@ export default {
   },
   methods: {
     ...mapMutations(['REMOVE_TOKEN','loginCheck']),
-    ...mapActions(['search','login']),
+    ...mapActions(['search','login', 'getUserData']),
 
 
     //검색
@@ -262,10 +264,13 @@ export default {
 
   },
   computed:{
-    ...mapState(['isLoggedin'])
+    ...mapState(['isLoggedin', 'userData'])
   },
   created:function(){
     this.loginCheck()
+    this.getUserData()
+    
+    console.log(this.userData)
   },
 };
 </script>

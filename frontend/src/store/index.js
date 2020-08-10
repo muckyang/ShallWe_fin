@@ -197,7 +197,8 @@ export default new Vuex.Store({
     login({commit},loginData){
       axios.post(`${BACK_URL}/account/login`,loginData)
       .then(response=>{
-        commit('SET_TOKEN',response.data) 
+        commit('SET_TOKEN',response.data)
+        alert('환영합니다.')
       })
       .catch(err=>{
           console.log(err)
@@ -334,7 +335,7 @@ export default new Vuex.Store({
     },
 
     // 관리자 페이지
-    getUsers({state, commit}, users) {
+    getUsers({ state, commit }, users) {
       const auth={token: state.authToken}
       axios.post(`${BACK_URL}/account/readAll`, auth)
         .then((res) => {
@@ -343,7 +344,17 @@ export default new Vuex.Store({
         .catch((err) => {
           console.log(err)
         })
-    }
+    },
+    updateGrade({ state }, updateGrade) {
+      changedObj.changedGrade.token = state.authToken
+      axios.post(`${BACK_URL}/`, changedObj.changedGrade)
+        .then(() => {
+          router.push('/user/admin')
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
   },
   modules: {
   }
