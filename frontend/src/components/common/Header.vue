@@ -152,30 +152,10 @@
             class="nav-link mainMenu pb-0" 
             id="community">우리 동네</router-link></li>
         </ul>
+
         <!-- Search -->
-        <!-- <div class="dropdown mr-1">
-          <button class="downBtn btn btn-secondary" 
-            type="button" id="dropdownMenuButton" 
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{item1 }}<i class="down fas fa-sort-down"></i> 
-            </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#" @click="selectSubject(0)">제목</a>
-            <a class="dropdown-item" href="#" @click="selectSubject(1)">작성자</a>
-            <a class="dropdown-item" href="#" @click="selectSubject(2)">태그</a>
-          </div>
-        </div> -->
-        <!-- <div class="form-inline my-2 my-lg-0 mb-1"> -->
-          <!-- <div class="dropdown mr-1">
-            <button class="downBtn btn btn-secondary" 
-            type="button" id="dropdownMenuButton" 
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{item2}}<i class="down fas fa-sort-down"></i> 
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#" @click="selectCategory(1)">배달</a>
-              <a class="dropdown-item" href="#" @click="selectCategory(2)">최저주문</a>
-              <a class="dropdown-item" href="#" @click="selectCategory(3)">공동구매</a>
-          </div>
-        </div> -->
+        
+
           <input class="searchInput" type="search" 
           style="font-family: FontAwesome;" 
           placeholder="Search" 
@@ -210,13 +190,6 @@ export default {
       constants,
       item1:'',
       item2:'',
-      // searchData:{
-      //   searchDataForSend:{
-      //     subject:'',
-      //     word:'',
-      //   },
-      //   categoryId:'',
-      // },
       searchData:{
         searchDataForSend:{
           word:'',

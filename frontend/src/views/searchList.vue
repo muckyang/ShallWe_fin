@@ -1,5 +1,54 @@
 <template>
   <div>
+    <div class="dropdown mr-1">
+      <button class="downBtn btn btn-secondary" 
+        type="button" id="dropdownMenuButton" 
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{item3}}<i class="down fas fa-sort-down"></i> 
+        </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" @click="selectTemp(1)">구매글</a>
+        <a class="dropdown-item" href="#" @click="selectTemp(2)">자유게시글</a>
+      </div>
+    </div>
+    
+    <div v-if="searchData.temp!==0" class="dropdown mr-1">
+      <button class="downBtn btn btn-secondary" 
+      type="button" id="dropdownMenuButton" 
+      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{item2}}<i class="down fas fa-sort-down"></i> 
+      </button>
+      <div v-if="searchData.temp===1" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" @click="selectCategory(1)">배달</a>
+        <a class="dropdown-item" href="#" @click="selectCategory(2)">최저주문</a>
+        <a class="dropdown-item" href="#" @click="selectCategory(3)">공동구매</a>
+      </div>
+      <div v-if="searchData.temp===2" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" @click="selectCategory(101)">질문</a>
+        <a class="dropdown-item" href="#" @click="selectCategory(102)">후기</a>
+        <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
+      </div>
+    </div>
+
+    <div v-if="searchData.temp!==0" class="dropdown mr-1">
+      <button class="downBtn btn btn-secondary" 
+        type="button" id="dropdownMenuButton" 
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{item1}}<i class="down fas fa-sort-down"></i> 
+        </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#" @click="selectSubject(0)">제목</a>
+        <a class="dropdown-item" href="#" @click="selectSubject(1)">작성자</a>
+        <a v-if="searchData.temp===1" class="dropdown-item" href="#" @click="selectSubject(2)">태그</a>
+      </div>
+    </div>
+    
+    <input class="searchInput" type="search" 
+    style="font-family: FontAwesome;" 
+    placeholder="Search"  
+    >
+    <button class="searchBtn 
+    my-2 my-sm-0" 
+    type="submit">
+    <i class="fas fa-search"></i></button>
+    
      <b-container class="bv-example-row">
           <b-row align-h="start">
             <b-col cols="4"
@@ -35,8 +84,67 @@
 import { mapState, mapActions } from 'vuex'
 export default {
   name:'searchList',
+  data(){
+    return{
+      searchData:{
+        searchDataForSend:{
+          subject:'',
+          word:'',
+        },
+        categoryId:'',
+        temp:0,
+      },
+      item1:'',
+      item2:'',
+      item3:'',
+    }
+  },
   methods:{
-    ...mapActions(['search'])
+    ...mapActions(['search']),
+    selectTemp(num){
+      if(num===1){
+        this.searchData.temp=1
+        this.item3="구매글"
+      }else{
+        this.searchData.temp=2
+        this.item3="자유게시글"
+      }
+      this.item1=''
+      this.item2=''
+    },
+    selectSubject(num){
+      if(num==0){
+      this.searchData.searchDataForSend.subject='title'
+      this.item1 = '제목'
+      }else if(num==1){
+        this.searchData.searchDataForSend.subject = 'writer'
+        this.item1 = '작성자'
+      }else{
+        this.searchData.searchDataForSend.subject = 'tag'
+        this.item1 = '태그'
+      }
+    },
+    selectCategory(num){
+      if(num==1){
+      this.searchData.categoryId=1
+      this.item2="배달"
+      }else if(num==2){
+        this.searchData.categoryId = 2
+        this.item2="최저주문"
+      }else if(num==3){
+        this.searchData.categoryId = 3
+        this.item2="공동구매"
+      }else if(num==101){
+        this.searchData.categoryId=101
+        this.item2 = '질문'
+      }else if(num==102){
+        this.searchData.categoryId=102
+        this.item2 = '후기'
+      }else if(num==103){
+        this.searchData.categoryId=103
+        this.item2 = '자유'
+      }
+    },
   },
   computed:{
     ...mapState(['articles'])
