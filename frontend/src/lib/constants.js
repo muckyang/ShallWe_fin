@@ -17,6 +17,7 @@ export default {
         POST: {
         },
         HOME:'home',
-    }
+    },
+    BACK_URL:sdfsdfsd
 }
 
