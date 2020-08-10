@@ -248,7 +248,7 @@ export default {
   /* font-weight: bold; */
 }
 .complete-form {
-  background-color: #ee6e9f;
+  background-color: #c42c66;
 }
 .temp-form:hover,
 .complete-form:hover {
