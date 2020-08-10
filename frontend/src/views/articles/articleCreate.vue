@@ -84,9 +84,12 @@
               v-on="inputHandlers"
               placeholder="엔터를 누르면 태그가 추가돼요! :)"
               class="form-control"
+              id="tag-input"
             ></b-form-input>
             <b-input-group-append>
-              <b-button @click="addTag()" variant="primary">Add</b-button>
+              <div class="tag-btn">
+                <b-button @click="addTag()" class="tag-btn" variant="dark">등록</b-button>
+              </div>
             </b-input-group-append>
           </b-input-group>
           <div class="d-inline-block" style="font-size: 1.5rem;">
@@ -251,7 +254,7 @@ export default {
   transition: 0.4s;
 }
 .temp-form {
-  background-color: rgb(177, 177, 177);
+  background-color: rgb(151, 151, 151);
 }
 .complete-form {
   background-color: #ee6e9f;
@@ -262,6 +265,23 @@ export default {
 }
 input:focus::placeholder {
   color: transparent;
+}
+.tag-btn {
+  border: none;
+  outline: none;
+  border-top-left-radius: 0%;
+  border-bottom-left-radius: 0%;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background-color: rgb(151, 151, 151);
+}
+#tag-input {
+  outline: none;
+}
+#tag-input:focus {
+  outline: none;
+  outline-style: none;
+  -webkit-tap-highlight-color: transparent;
 }
 /* .{
   content: '';
