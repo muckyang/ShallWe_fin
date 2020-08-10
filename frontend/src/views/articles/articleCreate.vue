@@ -9,7 +9,12 @@
         <!--선택 장소-->
         <div class="selected-place">
           <label for>어디서 만날까?</label>
-          <input type="text" v-model="articleData.address" />
+          <input
+            type="text"
+            v-model="articleData.address"
+            :placeholder="address"
+            style="font-family: FontAwesome;"
+          />
         </div>
         <!--제목-->
         <div class="title">
@@ -51,7 +56,7 @@
         <!--url-->
         <div class="url">
           <label for="url">URL</label>
-          <input type="url" id="url" v-model="articleData.urlLink" />
+          <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" />
         </div>
         <!--내용-->
         <div class="createContent">
@@ -123,7 +128,7 @@ export default {
       articleData: {
         categoryId: "카테고리",
         title: null,
-        address: "만남의 장소",
+        address: "",
         description: null,
         minPrice: null,
         myPrice: null,
@@ -137,6 +142,7 @@ export default {
       imageUrl: null, //다시 검토
       selectedTBG: "카테고리",
       coNum: "1",
+      address: " \uf060" + " 지도에서 만남의 장소를 설정하세요",
     };
   },
   methods: {
@@ -253,7 +259,9 @@ export default {
 .complete-form:hover {
   opacity: 1;
 }
-
+input:focus::placeholder {
+  color: transparent;
+}
 /* .{
   content: '';
   position: absolute;
