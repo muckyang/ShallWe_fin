@@ -200,7 +200,7 @@
         </button> -->
         <div class="kakao-map">
           
-          <kakaoMapForDetail/>
+          <kakaoMapForDetail :address="articleData.address"/>
         </div>
         
       <div class="members">
