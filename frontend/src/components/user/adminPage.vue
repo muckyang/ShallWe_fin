@@ -13,22 +13,52 @@
           <th scope="col">회원관리</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-for="user in users" :key="user.userId">
         <tr>
-          <th scope="row">1</th>
-          <td>이메일</td>
-          <td>이름</td>
-          <td>닉네임</td>
-          <td>지역</td>
+          <th scope="row">{{ user.userId }}</th>
+          <td>{{ user.email }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.nickname }}</td>
+          <td>{{ user.address }}</td>
           <td>
-            <!-- 만약 관리자 라면 -->
-            <!-- <p>관리자</p> -->
-            <select name="level">
-              <option value="1">Level 1</option>
+            <!-- 회원등급 Select -->
+            <p v-if="user.grade===0" name="level">
+              관리자
+            </p>
+            <select v-if="user.grade===1" name="level">
+              <option value="1" selected="selected">Level 1</option>
               <option value="2">Level 2</option>
               <option value="3">Level 3</option>
               <option value="4">Level 4</option>
               <option value="5">Level 5</option>
+            </select>
+            <select v-if="user.grade===2" name="level">
+              <option value="1">Level 1</option>
+              <option value="2" selected="selected">Level 2</option>
+              <option value="3">Level 3</option>
+              <option value="4">Level 4</option>
+              <option value="5">Level 5</option>
+            </select>
+            <select v-if="user.grade===3" name="level">
+              <option value="1">Level 1</option>
+              <option value="2">Level 2</option>
+              <option value="3" selected="selected">Level 3</option>
+              <option value="4">Level 4</option>
+              <option value="5">Level 5</option>
+            </select>
+            <select v-if="user.grade===4" name="level">
+              <option value="1">Level 1</option>
+              <option value="2">Level 2</option>
+              <option value="3">Level 3</option>
+              <option value="4" selected="selected">Level 4</option>
+              <option value="5">Level 5</option>
+            </select>
+            <select v-if="user.grade===5" name="level">
+              <option value="1">Level 1</option>
+              <option value="2">Level 2</option>
+              <option value="3">Level 3</option>
+              <option value="4">Level 4</option>
+              <option value="5" selected="selected">Level 5</option>
             </select>
           </td>
           <td class="d-flex justify-content-center">
@@ -63,7 +93,7 @@
     name: 'adminPage',
     data() {
       return {
-        
+
       }
     },
     methods: {

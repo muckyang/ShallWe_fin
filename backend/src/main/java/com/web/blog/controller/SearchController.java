@@ -79,9 +79,7 @@ public class SearchController {
     public List<User> userReadAll(@RequestBody TokenRequest req ){
         List<User> result = null;
         String token = req.getToken();
-        System.out.println(token);
         User jwtuser = jwtService.getUser(token);
-        System.out.println(jwtuser.toString());
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
 
         if(userOpt.isPresent() && userOpt.get().getGrade()==0){
