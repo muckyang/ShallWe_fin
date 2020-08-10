@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div id="map"></div>
+    <div>{{articleData.address}}</div> <!--삭제하면 update 실행  안된다.-->
   </div>
 </template>
 

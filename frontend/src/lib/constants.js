@@ -18,6 +18,5 @@ export default {
         },
         HOME:'home',
     },
-    BACK_URL:sdfsdfsd
 }
 
