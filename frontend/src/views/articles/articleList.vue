@@ -13,7 +13,6 @@
 
     <nav class="mt-4 mb-3 ml-3">
       <div class="nav nav-tabs navs" id="nav-tab" role="tablist">
-        <div class="main-tabs">
           <a
             @click="changeCategory(0)"
             class="nav-item nav-link active text-dark"
@@ -54,8 +53,7 @@
             aria-controls="nav-profile"
             aria-selected="false"
           >쉘위공구</a>
-        </div>
-        <router-link :to="{name:'articleCreate'}">
+        <router-link :to="{name:'articleCreate'}" class="ml-auto">
           <button class="write-btn">글쓰기</button>
         </router-link>
       </div>

@@ -1,32 +1,35 @@
 <template>
   <div>
     <nav class="mt-4 mb-3 ml-3">
-      <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a @click="changeCategory(100)" class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">전체보기</a>
-        <a @click="changeCategory(101)" class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">후기</a>
-        <a @click="changeCategory(102)" class="nav-item nav-link text-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">자유</a>
-        <a @click="changeCategory(103)" class="nav-item nav-link text-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">공지사항</a>
-        <router-link class="nav-item nav-link" :to="{name:'postCreate'}">글쓰기</router-link>
+      <div class="nav nav-tabs d-flex" id="nav-tab" role="tablist">
+        <a @click="changeCategory(100)" class="nav-item nav-link active text-dark" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">전체</a>
+        <a @click="changeCategory(101)" class="nav-item nav-link text-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">공지</a>
+        <a @click="changeCategory(102)" class="nav-item nav-link text-dark" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">후기</a>
+        <a @click="changeCategory(103)" class="nav-item nav-link text-dark" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">자유</a>
+        <router-link :to="{name:'postCreate'}" class="ml-auto">
+          <button class="post-write-btn">글쓰기</button>
+        </router-link>
       </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
         <div v-if="categoryNum === 100" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            전체
             <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">카테고리</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">writer</th>
-                    <th scope="col">Content</th>
+                  <th scope="col">카테고리</th>
+                  <th scope="col">제목</th>
+                  <th scope="col">글쓴이</th>
+                  <th scope="col">내용</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="article in articles" :key="article.articleId">
-                    <th scope="row">1</th>
+                    <th scope="row" v-if="article.categoryId === 101"><h5><b-badge  variant="warning">공지</b-badge></h5></th>
+                    <th scope="row" v-else-if="article.categoryId === 102"><h5><b-badge  variant="light">후기</b-badge></h5></th>
+                    <th scope="row" v-else-if="article.categoryId === 103"><h5><b-badge  variant="success">자유</b-badge></h5></th>
                     <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.title }}</router-link></td>
                     <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.writer }}</router-link></td>
-                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.content }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.description }}</router-link></td>
                 </tr>
             </tbody>
             </table>
@@ -35,18 +38,20 @@
             <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">카테고리</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">writer</th>
-                    <th scope="col">Content</th>
+                  <th scope="col">카테고리</th>
+                  <th scope="col">제목</th>
+                  <th scope="col">글쓴이</th>
+                  <th scope="col">내용</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="article in articles" :key="article.articleId">
-                    <th scope="row">1</th>
+                    <th scope="row" v-if="article.categoryId === 101"><h5><b-badge  variant="warning">공지</b-badge></h5></th>
+                    <th scope="row" v-else-if="article.categoryId === 102"><h5><b-badge  variant="light">후기</b-badge></h5></th>
+                    <th scope="row" v-else-if="article.categoryId === 103"><h5><b-badge  variant="success">자유</b-badge></h5></th>
                     <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.title }}</router-link></td>
                     <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.writer }}</router-link></td>
-                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.content }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.description }}</router-link></td>
                 </tr>
             </tbody>
             </table>
@@ -55,18 +60,20 @@
             <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">카테고리</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">writer</th>
-                    <th scope="col">Content</th>
+                  <th scope="col">카테고리</th>
+                  <th scope="col">제목</th>
+                  <th scope="col">글쓴이</th>
+                  <th scope="col">내용</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="article in articles" :key="article.articleId">
-                    <th scope="row">1</th>
+                    <th scope="row" v-if="article.categoryId === 101"><h5><b-badge  variant="warning">공지</b-badge></h5></th>
+                    <th scope="row" v-else-if="article.categoryId === 102"><h5><b-badge  variant="light">후기</b-badge></h5></th>
+                    <th scope="row" v-else-if="article.categoryId === 103"><h5><b-badge  variant="success">자유</b-badge></h5></th>
                     <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.title }}</router-link></td>
                     <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.writer }}</router-link></td>
-                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.content }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.description }}</router-link></td>
                 </tr>
             </tbody>
             </table>
@@ -75,18 +82,20 @@
             <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">카테고리</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">writer</th>
-                    <th scope="col">Content</th>
+                  <th scope="col">카테고리</th>
+                  <th scope="col">제목</th>
+                  <th scope="col">글쓴이</th>
+                  <th scope="col">내용</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="article in articles" :key="article.articleId">
-                    <th scope="row">1</th>
+                    <th scope="row" v-if="article.categoryId === 101"><h5><b-badge  variant="warning">공지</b-badge></h5></th>
+                    <th scope="row" v-else-if="article.categoryId === 102"><h5><b-badge  variant="light">후기</b-badge></h5></th>
+                    <th scope="row" v-else-if="article.categoryId === 103"><h5><b-badge  variant="success">자유</b-badge></h5></th>
                     <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.title }}</router-link></td>
                     <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.writer }}</router-link></td>
-                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.content }}</router-link></td>
+                    <td><router-link :to="{name:'postDetail',params:{ID:`${article.articleId}`}}">{{ article.description }}</router-link></td>
                 </tr>
             </tbody>
             </table>
@@ -124,5 +133,13 @@ export default {
 </script>
 
 <style>
-
+  .post-write-btn {
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    background-color: #ee6e9f;
+    padding: 5px 10px;
+    color: white;
+    font-weight: bold;
+  }
 </style>
