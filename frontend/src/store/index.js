@@ -187,14 +187,14 @@ export default new Vuex.Store({
     duCheck(context,nickname){
       axios.get(`${BACK_URL}/account/nicknamecheck/${nickname}`)
         .then((response)=>{
-          console.log(response)
+          alert(response.data)
         })
         .catch((error)=>{
-          console.log(error)
+          alert(error.data)
         })
     },
     signUp({ state,commit }, signUpData) {
-      console.log("ASDASDASD")
+      console.log(signUpData)
       if(state.isTerm){
       axios.post(`${BACK_URL}/account/signup`, signUpData)
         .then(() => {
@@ -234,10 +234,9 @@ export default new Vuex.Store({
         });
     },
     editUser({ state, commit }, editData) {
-      if (editData.editDataForSend.password === editData.password2) {
-        editData.editDataForSend.token = state.authToken;
+        editData.token = state.authToken;
         axios
-          .post(`${BACK_URL}/account/update`, editData.editDataForSend)
+          .post(`${BACK_URL}/account/update`, editData)
           .then(() => {
             alert("수정이 완료되었습니다. 다시 로그인해 주세요");
             commit("REMOVE_TOKEN");
@@ -245,9 +244,6 @@ export default new Vuex.Store({
           .catch((err) => {
             console.error(err);
           });
-      } else {
-        alert("비밀번호를 확인해 주세요");
-      }
     },
     deleteUser({ state, commit }) {
       const auth = { token: state.authToken };

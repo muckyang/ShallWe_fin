@@ -6,9 +6,8 @@
                 <hr class="line">
                 <div class="form-wrap">                                    
 
-                    <div class="input-wrap password-wrap">
+                    <!-- <div class="input-wrap password-wrap">
                         <div class="p-2">
-                            <!-- <i class="fas fa-key"></i> -->
                             <label for="password">비밀번호</label>
                         </div>
                         <input v-model="editData.editDataForSend.password"
@@ -18,13 +17,11 @@
                             name="password"
                             placeholder="비밀번호를 입력해주세요"/>
                         <span :class="{active : passwordType==='text'}">
-                                <!-- <i class="fas fa-eye"></i> -->
                             </span>
                     </div>
 
                     <div class="input-wrap password-wrap">
                         <div class="p-2">
-                            <!-- <i class="fas fa-key"></i> -->
                             <label for="password-confirm">비밀번호 확인</label>
                         </div>
                         <input v-model="editData.password2" 
@@ -34,13 +31,11 @@
                             type="password"
                             placeholder="비밀번호를 입력해주세요"/>
                         <span :class="{active : passwordConfirmType==='text'}">
-                                <!-- <i class="fas fa-eye"></i>  -->
                             </span>
                     </div>
 
                     <div class="input-wrap name-warp">
                         <div class="p-2">
-                            <!-- <i class="fas fa-user"></i> -->
                             <label for="name">이름</label>
                         </div>
                         <input v-model="editData.editDataForSend.name" 
@@ -49,14 +44,13 @@
                             name="name"
                             placeholder="이름을 입력해주세요"
                             type="text"/>
-                    </div>
+                    </div> -->
 
                     <div class="input-wrap">
                         <div class="p-2">
-                            <!-- <i class="fas fa-user"></i> -->
                             <label for="nickname">닉네임</label>
                         </div>
-                        <input v-model="editData.editDataForSend.nickname"
+                        <input v-model="editData.nickname"
                             id="nickname"
                             class="editInput"
                             name="nickname"
@@ -66,23 +60,22 @@
 
                     <div class="input-wrap address-warp">
                         <div class="p-2">
-                            <!-- <i class="fas fa-home"></i> -->
                             <label for="address">주소</label>
                         </div>
-                        <input v-model="editData.editDataForSend.address" 
+                        <input v-model="editData.address" 
                             id="address"
                             class="editInput"
                             name="address"
                             placeholder="주소를 입력해주세요"
                             type="text"/>
                     </div>
+                    <kakaoMap @setAddress="setAddress"/>
 
                     <div class="input-wrap birthday-warp">
                         <div class="p-2">
-                            <!-- <i class="fas fa-birthday-cake"></i> -->
                             <label for="birthday">생일</label>
                         </div>
-                        <input v-model="editData.editDataForSend.birthday" 
+                        <input v-model="editData.birthday" 
                             id="birthday"
                             class="editInput"
                             name="birthday"
@@ -104,29 +97,29 @@
 
 <script>
 const BACK_URL = 'http://127.0.0.1:8080'
+import kakaoMap from '@/components/articles/kakaoMap'
 import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
 
 export default {
     name:"editUser",
+    components: {
+        kakaoMap,
+    },
     data: function () {
         return {
             editData:{
-                editDataForSend:{
-                    name:'',
-                    address:'',
-                    nickname:'',
-                    password:'',
-                    birthday:'',
-                },
-                password2:'',
+                address:'',
+                nickname:'',
+                birthday:'',
             },
-            passwordType:"text",
-            passwordConfirmType:"text",
         }
     },
     methods:{
-        ...mapActions(['editUser','getUserData'])
+        ...mapActions(['editUser','getUserData']),
+        setAddress(address){
+            this.editData.address=address
+        },
     },
     created: function(){
         this.getUserData()

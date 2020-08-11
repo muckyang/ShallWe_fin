@@ -370,11 +370,14 @@ const BACK_URL = process.env.VUE_APP_BACK_URL
             }
         },
         methods: {
-            ...mapActions(["signUp","sendEmail"]),
+            ...mapActions(["signUp","sendEmail","duCheck"]),
             ...mapMutations(["termCheck"]),
             setAddress(address){
-                this.signUpData.signUpDataForSend.address=address
+                this.signUpData.address=address
             },
+        },
+        created:function(){
+            this.signUpData.email=this.$route.query.kemail
         },
     }
 
