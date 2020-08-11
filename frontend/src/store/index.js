@@ -276,6 +276,7 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/post/detail/${articleID}`, auth)
         .then((response) => {
+          console.log("ㄷㅇㅌㄷㅇㅌ", response);
           commit("GET_ARTICLE", response);
           commit("GET_COMMENTS", response.data.commentList);
         })
