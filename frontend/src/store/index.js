@@ -98,13 +98,6 @@ export default new Vuex.Store({
         state.isLoggedin = false;
       }
     },
-    sendCheck(state) {
-      state.isSended = true;
-    },
-    CheckFalse(state) {
-      state.isSended = false;
-      state.isTerm = false;
-    },
     termCheck(state) {
       if (state.isTerm) {
         state.isTerm = false;
@@ -167,42 +160,55 @@ export default new Vuex.Store({
 
   actions: {
     //사용자 인증
-    sendEmail({ state }, data) {
-      if (Object.values(data.signUpDataForSend).indexOf("") === -1) {
-        if (state.isTerm) {
-          if (data.signUpDataForSend.password === data.password2) {
-            alert("메일로 인증 코드가 발송되었습니다.");
-            this.commit("sendCheck");
-            axios
-              .post(`${BACK_URL}/account/sendmail`, data.signUpDataForSend)
-              .then((res) => {
-                // this.commit('sendCheck')
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          } else {
-            alert("비밀번호를 다시 설정해주세요");
-          }
-        } else {
-          alert("약관에 동의해주세요");
-        }
-      } else {
-        alert("빈 칸을 채워 주세요");
-      }
+    // sendEmail({ state }, data) {
+    //   if (Object.values(data.signUpDataForSend).indexOf("") === -1) {
+    //     if (state.isTerm) {
+    //       if (data.signUpDataForSend.password === data.password2) {
+    //         alert("메일로 인증 코드가 발송되었습니다.");
+    //         this.commit("sendCheck");
+    //         axios
+    //           .post(`${BACK_URL}/account/sendmail`, data.signUpDataForSend)
+    //           .then((res) => {
+    //             // this.commit('sendCheck')
+    //           })
+    //           .catch((err) => {
+    //             console.log(err);
+    //           });
+    //       } else {
+    //         alert("비밀번호를 다시 설정해주세요");
+    //       }
+    //     } else {
+    //       alert("약관에 동의해주세요");
+    //     }
+    //   } else {
+    //     alert("빈 칸을 채워 주세요");
+    //   }
+    // },
+    duCheck(context,nickname){
+      axios.get(`${BACK_URL}/account/nicknamecheck/${nickname}`)
+        .then((response)=>{
+          console.log(response)
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
     },
-    signUp({ commit }, signUpData) {
-      axios
-        .post(`${BACK_URL}/account/signup`, signUpData.signUpDataForSend)
+    signUp({ state,commit }, signUpData) {
+      console.log("ASDASDASD")
+      if(state.isTerm){
+      axios.post(`${BACK_URL}/account/signup`, signUpData)
         .then(() => {
           alert("회원가입이 완료되었습니다.");
-          this.commit("CheckFalse");
+          this.commit("termCheck");
           router.push("/");
         })
         .catch((err) => {
           console.log(err);
-          alert("인증 코드를 다시 확인해주세요");
+          alert("빈 칸을 채워 주세요");
         });
+      }else{
+        alert("약관에 동의해 주세요")
+      }
     },
     login({ commit }, loginData) {
       axios

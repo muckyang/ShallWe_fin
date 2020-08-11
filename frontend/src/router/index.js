@@ -13,6 +13,7 @@ import Profile from '../components/user/Profile.vue'
 import SignUpComplete from '../components/user/SignUpComplete.vue'
 import userList from '../components/user/userList.vue'
 import accuseForm from '../components/user/accuseForm.vue'
+import klogin from '@/components/user/klogin.vue'
 
 // 아티클
 import articleCreate from '../views/articles/articleCreate.vue'
