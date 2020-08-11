@@ -5,7 +5,6 @@
       <div class="top">
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
-
           <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
             <button type="button" class="article-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
@@ -23,6 +22,11 @@
             </div>
           </div>
           <br />
+        </div>
+        <div
+          :class="{ tagList : tagsLength(articleData.tags) , nomargin : !tagsLength(articleData.tags)  }"
+        >
+          <button class="tag" v-for="tag in articleData.tags" :key="tag.no">#{{tag}}</button>
         </div>
         <div class="in-the-top">
           <div class="writer">
@@ -164,18 +168,28 @@
                 class="fas fa-crown"
               ></i>
             </div>
-            <b-button
-              variant="light"
-              size="sm"
-              v-b-modal.update-modal
+            <div
+              class="article-drop dropdown dropleft"
               v-if="participant.userId === userData.userId"
-            >수정</b-button>
-            <b-button
-              variant="light"
-              size="sm"
-              v-if="participant.userId === userData.userId"
-              @click="cancel(participant.no)"
-            >삭제</b-button>
+            >
+              <button type="button" class="article-btn" data-toggle="dropdown">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+              <div class="dropdown-menu">
+                <b-button
+                  variant="light"
+                  size="sm"
+                  v-b-modal.update-modal
+                  v-if="participant.userId === userData.userId"
+                >수정</b-button>
+                <b-button
+                  variant="light"
+                  size="sm"
+                  v-if="participant.userId === userData.userId"
+                  @click="cancel(participant.no)"
+                >삭제</b-button>
+              </div>
+            </div>
           </div>
           <div
             v-if="articleData.userId !== participant.userId"
@@ -190,7 +204,7 @@
         </div>
       </div>
     </div>
-    {{articleData}}
+    <!-- {{articleData}} -->
     <!-- <membersList/> -->
     <commentList />
   </div>
@@ -231,6 +245,11 @@ export default {
   },
   methods: {
     ...mapActions(["getArticle", "getUserData"]),
+
+    tagsLength(tagList) {
+      if (tagList.length > 0) return true;
+      else false;
+    },
 
     cutDate(date) {
       let CD = date + "";
@@ -644,5 +663,21 @@ a {
 }
 .form-input {
   width: 150%;
+}
+.tagList {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 0.5% 0 1% 0;
+  /* border: 1px solid red; */
+}
+.nomargin {
+  margin: 0;
+}
+.tag {
+  margin-right: 1%;
+  border: none;
+  outline: none;
+  border-radius: 3px;
 }
 </style>

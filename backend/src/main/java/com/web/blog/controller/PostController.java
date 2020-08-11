@@ -244,7 +244,6 @@ public class PostController {
 
                 System.out.println(nickname);
             }
-
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
