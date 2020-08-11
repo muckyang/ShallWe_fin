@@ -63,14 +63,14 @@ export default new Vuex.Store({
     comments: [],
     users: [],
     accuseData: {
-      accuseId: '',
-      reporter: '',
-      defendant: '',
-      accuseKind: '',
-      accuseReason: '',
-      accuseUrl: '',
-      accuseConfirm: '',
-    }
+      accuseId: "",
+      reporter: "",
+      defendant: "",
+      accuseKind: "",
+      accuseReason: "",
+      accuseUrl: "",
+      accuseConfirm: "",
+    },
   },
 
   getters: {},
@@ -298,7 +298,7 @@ export default new Vuex.Store({
           articleData.articleData
         )
         .then(() => {
-          router.push("/article");
+          router.push("/posts");
         })
         .catch((err) => console.log(err));
     },
@@ -395,10 +395,7 @@ export default new Vuex.Store({
     // 신고양식
     createAccuse(context, accuseData) {
       axios
-        .post(
-          `${BACK_URL}/accuse/create`,
-          accuseData
-        )
+        .post(`${BACK_URL}/accuse/create`, accuseData)
         .then(() => {
           router.push("/");
         })
