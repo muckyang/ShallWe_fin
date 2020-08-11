@@ -51,7 +51,7 @@
     
      <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="4"
+            <b-col cols="12" sm="4"
             v-for="article in articles" 
             :key="article.articleId">
                 <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">

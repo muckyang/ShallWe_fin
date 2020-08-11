@@ -55,6 +55,7 @@ public class User {
 
     public void UserUpdate(SignupRequest req) {
         this.password = req.getPassword();
+        this.grade= req.getGrade();
         this.name = req.getName();
         this.nickname = req.getNickname();
         this.address= req.getAddress();

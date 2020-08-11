@@ -43,7 +43,7 @@
 		<!-- 첫번째 줄 -->
 		<b-container>
 			<b-row>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -62,7 +62,7 @@
 						</template>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -81,7 +81,7 @@
 						</template>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -106,7 +106,7 @@
 		<!-- 두번째 줄 -->
 		<b-container>
 			<b-row>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -125,7 +125,7 @@
 						</template>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -144,7 +144,7 @@
 						</template>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -176,7 +176,7 @@
 		<!-- 첫번째 줄 -->
 		<b-container>
 			<b-row>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -195,7 +195,7 @@
 						</template>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -214,7 +214,7 @@
 						</template>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -239,7 +239,7 @@
 		<!-- 두번째 줄 -->
 		<b-container>
 			<b-row>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -258,7 +258,7 @@
 						</template>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -277,7 +277,7 @@
 						</template>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="m-4" align="left" img-width="100%" 
 					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
 						<b-card-text>
@@ -309,17 +309,17 @@
 		<!-- 첫번째 줄 -->
 		<b-container>
 			<b-row>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="text-center mt-3">
 						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="text-center mt-3">
 						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="text-center mt-3">
 						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
 					</b-card>
@@ -330,17 +330,17 @@
 		<!-- 두번째 줄 -->
 		<b-container>
 			<b-row>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="text-center mt-3">
 						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="text-center mt-3">
 						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="text-center mt-3">
 						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
 					</b-card>
@@ -351,17 +351,17 @@
 		<!-- 세번째 줄 -->
 		<b-container>
 			<b-row>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="text-center mt-3">
 						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="text-center mt-3">
 						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
 					</b-card>
 				</b-col>
-				<b-col cols="4">
+				<b-col cols="12" sm="4">
 					<b-card class="text-center mt-3">
 						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
 					</b-card>

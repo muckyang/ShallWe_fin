@@ -1,6 +1,9 @@
 package com.web.blog.controller;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -9,7 +12,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
-import com.fasterxml.jackson.databind.JsonNode;
+
 import com.web.blog.dao.AuthDao;
 import com.web.blog.dao.PostDao;
 import com.web.blog.dao.CommentDao;
@@ -30,8 +33,9 @@ import com.web.blog.service.KakaoService;
 import com.web.blog.service.KakaoUserInfo;
 
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.servlet.view.RedirectView;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -83,32 +87,36 @@ public class AccountController {
 
     @RequestMapping("/account/kakaoLogin")
     @ApiOperation(value = "카카오 로그인") // SWAGGER UI에 보이는 이름
-    public Object kakaoLogin(@RequestParam("code") String code) {
-        JsonNode access_Token = kakao.getAccessToken(code);
-        System.out.println("controller access_token : " + access_Token);
+    public Object kakaoLogin(@RequestParam("code") String code)  throws URISyntaxException{
+
+        String access_Token = "";
+        try {
+            access_Token = kakao.getAccessToken(code);
+            System.out.println("controller access_token : " + access_Token);
+            System.out.println(kakao.getUserInfo(access_Token));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         System.out.println("카카오 로그인 체크 : " + code);
 
-        // JsonNode userInfo = kakaoUserInfo.getKakaoUserInfo(access_Token);
- 
-        // // Get id
-        // String id = userInfo.path("id").asText();
-        // String name = null;
-        // String email = null;
- 
-        // // 유저정보 카카오에서 가져오기 Get properties
-        // JsonNode properties = userInfo.path("properties");
-        // JsonNode kakao_account = userInfo.path("kakao_account");
- 
-        // name = properties.path("nickname").asText();
-        // email = kakao_account.path("email").asText();
- 
-        // System.out.println("id : " + id);
-        // System.out.println("name : " + name);
-        // System.out.println("email : " + email);
+        HashMap<String, Object> userInfo = null;
+        userInfo = kakao.getUserInfo(access_Token);
+
+        System.out.println("userInfo : " + userInfo);
+        // URI redirectUri = new URI("http://localhost:8081/article");
+        // HttpHeaders httpHeaders = new HttpHeaders();
+        // httpHeaders.setLocation(redirectUri);
+        // httpHeaders.add("access-token", access_Token);
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("http://www.naver.com");
+        redirectView.addStaticAttribute("access_token", access_Token);
+  
+        return redirectView;
 
 
-        return new ResponseEntity<>(code, HttpStatus.NOT_FOUND);
+        // return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
     }
 
     @GetMapping("/account/emailcheck/{email}")

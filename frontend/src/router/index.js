@@ -11,7 +11,7 @@ import Join from '../components/user/Join.vue'
 import editUser from '../components/user/editUser.vue'
 import Profile from '../components/user/Profile.vue'
 import SignUpComplete from '../components/user/SignUpComplete.vue'
-import adminPage from '../components/user/adminPage.vue'
+import userList from '../components/user/userList.vue'
 
 // 아티클
 import articleCreate from '../views/articles/articleCreate.vue'
@@ -163,9 +163,9 @@ Vue.use(VueRouter)
     },
     // 관리자 페이지
     {
-      path: '/user/admin',
-      name: adminPage,
-      component: adminPage
+      path: '/user/userlist',
+      name: userList,
+      component: userList
     },
   ]
 
