@@ -137,6 +137,7 @@ public class PostController {
                 System.out.println(post.getTitle() + " " + artiId);
                 participant.setTitle(def_mes);
                 participant.setPrice(myPrice);
+                participant.setWriter(userOpt.get().getNickname());
                 participant.setDescription(def_mes);
                 participantDao.save(participant);// 참가자 DB에 등록 완료
                 tagAdd(tags, artiId);
