@@ -110,7 +110,7 @@ public class AccountController {
         // httpHeaders.setLocation(redirectUri);
         // httpHeaders.add("access-token", access_Token);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://www.naver.com");
+        redirectView.setUrl("http://localhost:8081");
         redirectView.addStaticAttribute("access_token", access_Token);
   
         return redirectView;

@@ -247,7 +247,7 @@ export default {
     ...mapActions(['search','login', 'getUserData']),
     kakaoLogin(){
       console.log("ASDASDASDASDASDASDAS")
-      axios.get(`https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code`)
+      axios.get('https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code')
         .then((response)=>{
           console.log(response)
         })
