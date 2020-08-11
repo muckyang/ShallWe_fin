@@ -33,7 +33,10 @@
       </div>
     </div>
     <br>
-    <div>게시글이 존재하지 않습니다.</div>
+    <div>회원님의 동네에서 등록된 게시글이 존재하지 않습니다.</div>
+    <router-link :to="{name:'articleCreate'}" class="ml-auto">
+          <button class="write-btn">첫 글 쓰러 가기</button>
+    </router-link>
   </div>
 </template>
 

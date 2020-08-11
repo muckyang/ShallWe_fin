@@ -65,7 +65,7 @@
                     <div class="bottom-line"></div>
                   </div>
 
-                  <button class="kakao-btn">
+                  <button @click="kakaoLogin" class="kakao-btn">
                     <img src="../../assets/img/kakao_logo.jpg" class="kakao-img">
                     카톡 로그인</button>
                     <div class="blank"></div>
@@ -178,6 +178,7 @@ import {mapState, mapMutations, mapActions} from 'vuex'
 import router from '@/router'
 import axios from "axios"
 const BACK_URL = process.env.VUE_APP_BACK_URL
+const API_KEY = process.env.VUE_APP_KAKAO_API_KEY
 
 export default {
   name: "Header",
@@ -206,6 +207,16 @@ export default {
   methods: {
     ...mapMutations(['REMOVE_TOKEN','loginCheck']),
     ...mapActions(['search','login', 'getUserData']),
+    kakaoLogin(){
+      console.log("ASDASDASDASDASDASDAS")
+      axios.get(`https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code`)
+        .then((response)=>{
+          console.log(response)
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
+    }
 
 
     //검색
