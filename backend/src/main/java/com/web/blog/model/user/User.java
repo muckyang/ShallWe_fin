@@ -41,22 +41,9 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
-    public User(String email , String password, String name, String nickname, String address, LocalDate birthday) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.nickname = nickname;
-        this.address = address;
-        this.grade = 1;
-        this.userPoint = 1000;
-        this.birthday = birthday;
-    }
-
     public void UserUpdate(SignupRequest req) {
         this.password = req.getPassword();
         this.grade= req.getGrade();
-        this.name = req.getName();
         this.nickname = req.getNickname();
         this.address= req.getAddress();
         this.birthday = req.getBirthday();
