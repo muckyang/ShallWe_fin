@@ -12,6 +12,7 @@ import editUser from '../components/user/editUser.vue'
 import Profile from '../components/user/Profile.vue'
 import SignUpComplete from '../components/user/SignUpComplete.vue'
 import userList from '../components/user/userList.vue'
+import accuseForm from '../components/user/accuseForm.vue'
 
 // 아티클
 import articleCreate from '../views/articles/articleCreate.vue'
@@ -161,11 +162,18 @@ Vue.use(VueRouter)
       name: SignUpComplete,
       component: SignUpComplete
     },
-    // 관리자 페이지
+    
+    // 유저관리
     {
       path: '/user/userlist',
       name: userList,
       component: userList
+    },
+    // 신고양식
+    {
+      path: '/user/accuseform',
+      name: accuseForm,
+      component: accuseForm
     },
   ]
 
