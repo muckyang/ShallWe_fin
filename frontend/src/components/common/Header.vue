@@ -145,7 +145,7 @@
       <div v-if="isLoggedin && userData.grade===0" class="d-flex align-items-starts">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/user/admin" class="nav-link navbar1-item">관리자페이지</a>
+            <a href="/user/userlist" class="nav-link navbar1-item">관리자페이지</a>
           </li>
         </ul>
       </div>
