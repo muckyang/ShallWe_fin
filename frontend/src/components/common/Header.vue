@@ -88,10 +88,9 @@
                       <div class="bottom-line"></div>
                     </div>
 
-                    <button class="kakao-btn">
-                      <img src="../../assets/img/kakao_logo.jpg" class="kakao-img" />
-                      카톡 로그인
-                    </button>
+                  <button @click="kakaoLogin" class="kakao-btn">
+                    <img src="../../assets/img/kakao_logo.jpg" class="kakao-img">
+                    카톡 로그인</button>
                     <div class="blank"></div>
                     <button class="google-btn">
                       <img src="../../assets/img/google_logo4.png" class="google-img" />
@@ -213,10 +212,11 @@
 
 <script>
 import constants from "../../lib/constants";
-import { mapState, mapMutations, mapActions } from "vuex";
-import router from "@/router";
-import axios from "axios";
-const BACK_URL = process.env.VUE_APP_BACK_URL;
+import {mapState, mapMutations, mapActions} from 'vuex'
+import router from '@/router'
+import axios from "axios"
+const BACK_URL = process.env.VUE_APP_BACK_URL
+const API_KEY = process.env.VUE_APP_KAKAO_API_KEY
 
 export default {
   name: "Header",
@@ -243,8 +243,47 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["REMOVE_TOKEN", "loginCheck"]),
-    ...mapActions(["search", "login", "getUserData"]),
+    ...mapMutations(['REMOVE_TOKEN','loginCheck']),
+    ...mapActions(['search','login', 'getUserData']),
+    kakaoLogin(){
+      console.log("ASDASDASDASDASDASDAS")
+      axios.get(`https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code`)
+        .then((response)=>{
+          console.log(response)
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
+    }
+
+
+    //검색
+    // selectSubject(num){
+    //   if(num==0){
+    //   this.searchData.searchDataForSend.subject='title'
+    //   this.item1 = '제목'
+    //   }else if(num==1){
+    //     this.searchData.searchDataForSend.subject = 'writer'
+    //     this.item1 = '작성자'
+    //   }else{
+    //     this.searchData.searchDataForSend.subject = 'tag'
+    //     this.item1 = '태그'
+    //   }
+    // },
+    // selectCategory(num){
+    //   if(num==1){
+    //   this.searchData.categoryId=1
+    //   this.item2="배달"
+    //   }else if(num==2){
+    //     this.searchData.categoryId = 2
+    //     this.item2="최저주문"
+    //   }else{
+    //     this.searchData.categoryId = 3
+    //     this.item2="공동구매"
+    //   }
+    // },
+
+
   },
   computed: {
     ...mapState(["isLoggedin", "userData"]),
