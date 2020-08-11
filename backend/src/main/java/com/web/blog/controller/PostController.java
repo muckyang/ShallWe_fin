@@ -163,11 +163,6 @@ public class PostController {
                 post.setDescription(req.getDescription());
                 post.setImage(req.getImage());
                 post.setTemp(temp);
-
-               String ptag = "#";
-            
-
-                post.setTag(ptag.substring(0, ptag.length() - 1));
                 postDao.save(post);
             
                 return new ResponseEntity<>("자유게시물 등록", HttpStatus.OK);
