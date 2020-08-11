@@ -9,6 +9,6 @@ public interface AuthDao extends JpaRepository<Auth, String> {
 
     Optional<Auth> getAuthByEmail(String email);
     Optional<Auth> getAuthByEmailAndAuthNumber(String email,int auth);
-    // Auth getCommentByCommentId(int no);
+
 
 }

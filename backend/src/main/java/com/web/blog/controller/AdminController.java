@@ -54,7 +54,7 @@ public class AdminController {
             throws MessagingException, IOException {
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent()) {
             Accuse accuse = new Accuse(req.getReporter(), req.getDefendant(), req.getAccuseKind(),
                     req.getAccuseReason(), req.getAccuseUrl(), req.getAccuseConfirm());
@@ -75,7 +75,7 @@ public class AdminController {
         System.out.println("신고글 목록 출력!!");
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         // if (userOpt.isPresent() && userOpt.get().getNickname().equals("admin")) {
             if (userOpt.isPresent()) {
             List<Accuse> alist = accuseDao.findAll();

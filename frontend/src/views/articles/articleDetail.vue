@@ -151,7 +151,7 @@
           <i class="fas fa-map-marker-alt"></i> 지도 
     </button>-->
     <div class="kakao-map">
-      <kakaoMapForDetail :aaddress="articleData.address" />
+      <kakaoMapForDetail />
     </div>
     <div class="members">
       <div class="members-start">
@@ -517,6 +517,12 @@ a {
   height: 100%; */
   /* /* border-bottom: 1px solid #e9ecef; */
   /* border-top: 1px solid #e9ecef; */
+}
+@media screen and (min-width: 768px;) {
+  .middle-row {
+    display: flex;
+    flex-direction: column;
+  }
 }
 .detail-address {
   font-size: large;
