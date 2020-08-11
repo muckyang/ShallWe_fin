@@ -9,8 +9,7 @@ import axios from 'axios'
 export default {
     methods:{
         kakaoLogin(){
-            this.$cookies.set('kakao-token',this.$route.query.access_token)
-            this.$router.push('/')
+            this.$cookies.set('auth-token',this.$route.query.token)
         },
     },
     created:function(){

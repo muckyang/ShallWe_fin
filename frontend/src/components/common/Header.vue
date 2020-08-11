@@ -292,7 +292,9 @@ export default {
   },
   created: function () {
     this.loginCheck();
-    this.getUserData();
+    if(this.$cookies.get('auth-token')){
+      this.getUserData();
+    }
 
     console.log(this.userData);
   },

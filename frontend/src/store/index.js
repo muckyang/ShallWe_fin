@@ -194,6 +194,7 @@ export default new Vuex.Store({
         })
     },
     signUp({ state,commit }, signUpData) {
+      console.log(signUpData)
       if(state.isTerm){
       axios.post(`${BACK_URL}/account/signup`, signUpData)
         .then(() => {

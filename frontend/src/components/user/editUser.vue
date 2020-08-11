@@ -69,6 +69,7 @@
                             placeholder="주소를 입력해주세요"
                             type="text"/>
                     </div>
+                    <kakaoMap @setAddress="setAddress"/>
 
                     <div class="input-wrap birthday-warp">
                         <div class="p-2">
@@ -96,11 +97,15 @@
 
 <script>
 const BACK_URL = 'http://127.0.0.1:8080'
+import kakaoMap from '@/components/articles/kakaoMap'
 import axios from 'axios'
 import { mapState, mapActions } from 'vuex'
 
 export default {
     name:"editUser",
+    components: {
+        kakaoMap,
+    },
     data: function () {
         return {
             editData:{
@@ -111,7 +116,10 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['editUser','getUserData'])
+        ...mapActions(['editUser','getUserData']),
+        setAddress(address){
+            this.editData.address=address
+        },
     },
     created: function(){
         this.getUserData()
