@@ -92,6 +92,7 @@ public class PostController {
         }
         System.out.println(token);
         User jwtuser = jwtService.getUser(token);
+        System.out.println(jwtuser.toString());
         Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent()) {
             if (temp == 0) {// 임시저장
@@ -105,6 +106,7 @@ public class PostController {
 
                 return new ResponseEntity<>("임시저장 완료", HttpStatus.OK);
             } else if (temp == 1) {
+                System.out.println("???");
                 Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
                         userOpt.get().getNickname(), req.getAddress(), req.getDescription(), req.getMinPrice(),
                         req.getMyPrice(), req.getImage(), temp, endTime);
@@ -119,6 +121,7 @@ public class PostController {
 
                 }
 
+                System.out.println("??????");
                 post.setTag(ptag.substring(0, ptag.length() - 1));
                 postDao.save(post);
                 int artiId = post.getArticleId();

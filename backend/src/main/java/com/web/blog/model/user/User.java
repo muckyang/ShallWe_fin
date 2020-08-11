@@ -37,5 +37,9 @@ public class User {
     @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;
 
+    public User(String email, String nickname){
+        this.email= email;
+        this.nickname=nickname;
+    }
 
 }

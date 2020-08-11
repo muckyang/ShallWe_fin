@@ -96,15 +96,14 @@ public class AccountController {
 
         RedirectView redirectView = new RedirectView();
         String kemail = userInfo.get("email").toString();
-        
+
         Optional<User> user = userDao.findUserByEmail(kemail);
         System.out.println(user.toString());
         if (user.isPresent()) { // 이미 가입된 사용자
             System.out.println("이미 가입된 사용자입니다.");
-            User tuser = new User();
-            tuser.setEmail(user.get().getEmail());
-            tuser.setNickname(user.get().getNickname());
-            String token = jwtService.createLoginToken(user.get());
+            User tuser = new User(user.get().getEmail(),user.get().getNickname());
+
+            String token = jwtService.createLoginToken(tuser);
             redirectView.setUrl("http://localhost:8081/user/klogin");// 로그인 완료된 페이지
             redirectView.addStaticAttribute("token", token);
         } else {// 가입전 사용자
@@ -139,9 +138,8 @@ public class AccountController {
         user.setNickname(req.getNickname());
         userDao.save(user);
 
-        User tuser = new User();
-        tuser.setEmail(user.getEmail());
-        tuser.setNickname(user.getNickname());
+        User tuser = new User(user.getEmail(),user.getNickname());
+   
         String token = jwtService.createLoginToken(tuser);
         System.out.println("가입하기 성공!");
         return new ResponseEntity<>(token, HttpStatus.OK);
