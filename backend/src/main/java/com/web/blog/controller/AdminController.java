@@ -16,17 +16,28 @@ import com.web.blog.model.accuse.AccuseRequest;
 import com.web.blog.model.accuse.AccuseResponse;
 import com.web.blog.model.user.TokenRequest;
 import com.web.blog.model.user.User;
+import com.web.blog.model.user.UserResponse;
 import com.web.blog.service.JwtService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.ApiOperation;
 
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+@ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = UserResponse.class),
+        @ApiResponse(code = 403, message = "Forbidden", response = UserResponse.class),
+        @ApiResponse(code = 404, message = "Not Found", response = UserResponse.class),
+        @ApiResponse(code = 500, message = "Failure", response = UserResponse.class) })
+
+@CrossOrigin(origins = { "*" })
+@RestController
 public class AdminController {
     @Autowired
     AccuseDao accuseDao;
@@ -39,7 +50,7 @@ public class AdminController {
 
     @PostMapping("/accuse/create")
     @ApiOperation(value = "신고글 등록")
-    public Object create(@RequestBody AccuseRequest req, @PathVariable int temp)
+    public Object create(@RequestBody AccuseRequest req)
             throws MessagingException, IOException {
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
