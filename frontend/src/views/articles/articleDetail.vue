@@ -518,6 +518,12 @@ a {
   /* /* border-bottom: 1px solid #e9ecef; */
   /* border-top: 1px solid #e9ecef; */
 }
+@media screen and (min-width: 768px;) {
+  .middle-row {
+    display: flex;
+    flex-direction: column;
+  }
+}
 .detail-address {
   font-size: large;
   font-weight: bold;

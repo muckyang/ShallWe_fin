@@ -50,7 +50,9 @@
       type="submit"
       @click="createArticle({articleData,temp:2})"
       value="Submit"
-    >작성완료</button>
+    >
+      <i class="fas fa-check"></i> 완료
+    </button>
   </div>
 </template>
 
