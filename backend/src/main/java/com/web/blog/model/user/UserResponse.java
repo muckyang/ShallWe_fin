@@ -53,23 +53,6 @@ public class UserResponse {
     public List<Post> tempList;
     @ApiModelProperty(value = "grade", position = 17)
     public int grade;
-    public UserResponse(String password, String name, String nickname, String address, LocalDate birthday) {
-        this.password = password;
-        this.name = name;
-        this.nickname = nickname;
-        this.address = address;
-        this.birthday = birthday;
-    }
-
-    public UserResponse(int userId ,String password,String email,  String name, String nickname, String address, LocalDate birthday,
-    int userPoint) {
-        this.userId = userId;
-        this.password = password;
-        this.name = name;
-        this.nickname = nickname;
-        this.address = address;
-        this.userPoint = userPoint;
-        this.birthday = birthday;
-    }
+  
 
 }

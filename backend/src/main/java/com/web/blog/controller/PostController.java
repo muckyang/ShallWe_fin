@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,7 +92,7 @@ public class PostController {
         }
         System.out.println(token);
         User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent()) {
             if (temp == 0) {// 임시저장
 
@@ -182,7 +183,7 @@ public class PostController {
 
         }
     }
-
+    @Transactional(readOnly = true) 
     @PostMapping("/post/detail/{articleId}") // SWAGGER UI에 보이는 REQUEST명
     @ApiOperation(value = "게시물상세보기") // SWAGGER UI에 보이는 이름
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
@@ -203,7 +204,7 @@ public class PostController {
                 taglist.add(st.nextToken());
             }
 
-            Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+            Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
                     p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), taglist, p.getTemp(),
@@ -259,7 +260,7 @@ public class PostController {
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
         int userId;
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (p != null) {
             userId = userOpt.get().getUserId();
         } else {
