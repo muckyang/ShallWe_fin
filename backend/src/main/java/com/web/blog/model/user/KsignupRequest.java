@@ -1,5 +1,7 @@
 package com.web.blog.model.user;
 
+import java.time.LocalDate;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -15,4 +17,8 @@ public class KsignupRequest {
     @NotNull
     String nickname;
     String address;
+    String introduce;
+    LocalDate birthday;
+    String token;
+    String profileImage;
 }

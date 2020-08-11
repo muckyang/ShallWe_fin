@@ -27,25 +27,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     private String email;
-    private String password;
-    private String name;
     private String nickname;
     private String address;
+    private String profileImage;
+    private String introduce;
     private int grade;
     private int userPoint;
     private LocalDate birthday;
     @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-    public void UserUpdate(SignupRequest req) {
-        this.password = req.getPassword();
-        this.grade= req.getGrade();
-        this.nickname = req.getNickname();
-        this.address= req.getAddress();
-        this.birthday = req.getBirthday();
-    }
+
 }

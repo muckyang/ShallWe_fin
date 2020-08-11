@@ -57,7 +57,7 @@ public class CommentController {
 
         User jwtuser = jwtService.getUser(req.getToken());
 
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent()) {
             Comment comment = new Comment();
             comment.setArticleId(req.getArticleId());
