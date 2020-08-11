@@ -66,6 +66,8 @@
         role="tabpanel"
         aria-labelledby="nav-home-tab"
       >
+
+      <!-- {{articles}} -->
         <b-container class="bv-example-row">
           <b-row align-h="start">
             <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
@@ -252,17 +254,20 @@
         </b-container>
       </div>
     </div>
+    <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import InfiniteLoading from 'vue-infinite-loading'
 
 export default {
   name: "articleList",
   data() {
     return {
       categoryNum: 0,
+      page: 0,
       searchData: {
         searchDataForSend: {
           word: "",
@@ -272,18 +277,24 @@ export default {
       },
     };
   },
+  components: {
+    InfiniteLoading,
+  },
   methods: {
     ...mapActions(["getArticles", "search"]),
+    infiniteHandler(){
+      this.getArticles({ temp: 1, categoryId: this.categoryNum, page:this.page+1 });
+    },
     changeCategory(num) {
       this.categoryNum = num;
-      this.getArticles({ temp: 1, categoryId: this.categoryNum });
+      this.getArticles({ temp: 1, categoryId: this.categoryNum, page:0  });
     },
   },
   computed: {
     ...mapState(["articles"]),
   },
   created() {
-    this.getArticles({ temp: 1, categoryId: this.categoryNum });
+    this.getArticles({ temp: 1, categoryId: this.categoryNum, page:0 });
   },
 };
 </script>

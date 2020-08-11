@@ -159,19 +159,9 @@ public class PostController {
                 post.setDescription(req.getDescription());
                 post.setImage(req.getImage());
                 post.setTemp(temp);
+                post.setTag("#태그");
 
-                String[] tags = req.getTags();// 태그 내용
-                String ptag = "#";
-                for (int i = 0; i < tags.length; i++) {
-                    ptag += tags[i] + "#";
-
-                }
-
-                post.setTag(ptag.substring(0, ptag.length() - 1));
                 postDao.save(post);
-                int artiId = post.getArticleId();
-
-                tagAdd(tags, artiId);
 
                 return new ResponseEntity<>("자유게시물 등록", HttpStatus.OK);
             } else {

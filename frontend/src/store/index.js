@@ -134,8 +134,10 @@ export default new Vuex.Store({
 
     //게시글 관리
     GET_ARTICLES(state, articles) {
-      state.articles = articles;
+      state.articles.push(articles);
+      console.log(state.articles,'들어옴?')
     },
+
     GET_ARTICLE(state, response) {
       (state.articleData.articleId = response.data.articleId),
         (state.articleData.userId = response.data.userId),
@@ -262,8 +264,15 @@ export default new Vuex.Store({
     getArticles({ state, commit }, data) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}`, auth)
+        .post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}/${data.page}`, auth)
         .then((response) => {
+          console.log(response, '인피니트스크롤ㄹㄹㄹㄹ')
+          if (response.data.postList.length) {
+            commit("GET_ARTICLES", response.data.postList);
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
           commit("GET_ARTICLES", response.data.postList);
         })
         .catch((err) => {
