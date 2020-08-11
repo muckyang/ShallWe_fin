@@ -12,6 +12,7 @@ import editUser from '../components/user/editUser.vue'
 import Profile from '../components/user/Profile.vue'
 import SignUpComplete from '../components/user/SignUpComplete.vue'
 import userList from '../components/user/userList.vue'
+import accuseForm from '../components/user/accuseForm.vue'
 
 // 아티클
 import articleCreate from '../views/articles/articleCreate.vue'
@@ -71,6 +72,14 @@ Vue.use(VueRouter)
       name: constants.URL_TYPE.USER.EDIT,
       component: editUser
     },
+
+
+    {
+      path:'/user/klogin',
+      name: 'klogin',
+      component: klogin
+    },
+
    
     //게시글 CRUD
     {
@@ -161,11 +170,18 @@ Vue.use(VueRouter)
       name: SignUpComplete,
       component: SignUpComplete
     },
-    // 관리자 페이지
+    
+    // 유저관리
     {
       path: '/user/userlist',
       name: userList,
       component: userList
+    },
+    // 신고양식
+    {
+      path: '/user/accuseform',
+      name: accuseForm,
+      component: accuseForm
     },
   ]
 
@@ -177,7 +193,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   //로그인 하지 않아도 되는 페이지
-  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList']
+  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList', 'klogin']
   //로그인 하면 안되는 페이지
   const authPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN]
   

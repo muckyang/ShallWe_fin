@@ -191,7 +191,19 @@ public class SearchController {
         String subject = request.getSubject();
         String word = request.getWord();
         List<Post> plist = new LinkedList<>();
-        if (subject.equals("title")) {
+        if (subject.equals("headertitle")) {
+            word = "%" + word + "%";
+            System.out.println("헤더에서 구매, 자유게시판 title로 검색");
+
+            //이때는 temp값 구분없이 뽑아내야 함
+            plist=postDao.findPostByTitleLike(word);
+            PostListResponse result = new PostListResponse();
+            result.postList = getPostList(plist, temp);
+
+            System.out.println("헤더에서 구매, 자유게시판 title로 검색 확인");
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else if (subject.equals("title")) {
             word = "%" + word + "%";
             System.out.println("title로 검색");
 
