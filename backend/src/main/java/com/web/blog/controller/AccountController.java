@@ -88,7 +88,7 @@ public class AccountController {
     @RequestMapping("/account/kakaoLogin")
     @ApiOperation(value = "카카오 로그인") // SWAGGER UI에 보이는 이름
     public Object kakaoLogin(@RequestParam("code") String code)  throws URISyntaxException{
-
+        
         String access_Token = "";
         try {
             access_Token = kakao.getAccessToken(code);
@@ -110,7 +110,7 @@ public class AccountController {
         // httpHeaders.setLocation(redirectUri);
         // httpHeaders.add("access-token", access_Token);
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://localhost:8081");
+        redirectView.setUrl("http://localhost:8081/user/klogin");
         redirectView.addStaticAttribute("access_token", access_Token);
   
         return redirectView;
