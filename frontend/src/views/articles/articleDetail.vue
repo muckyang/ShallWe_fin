@@ -391,6 +391,10 @@ export default {
   width: 75%;
   margin: 3% auto;
 }
+.fa-crown {
+  color: rgb(245, 230, 24);
+  vertical-align: text-top;
+}
 .members-start {
   width: 100%;
   padding: 0 0 0.5% 0.5%;
