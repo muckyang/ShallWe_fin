@@ -261,15 +261,7 @@ export default {
   methods: {
     ...mapMutations(['REMOVE_TOKEN','loginCheck']),
     ...mapActions(['search','login', 'getUserData']),
-    kakaoLogin(){
-      axios.get(`${BACK_URL}/account/kakaoLogin`)
-        .then((response)=>{
-          console.log(response)
-        })
-        .catch((error)=>{
-          console.log(error)
-        })
-    }
+    
 
 
     //검색
@@ -305,9 +297,9 @@ export default {
   },
   created: function () {
     this.loginCheck();
-    this.getUserData();
-
-    console.log(this.userData);
+    if(this.$cookies.get('auth-token')){
+      this.getUserData();
+    }
   },
 };
 </script>

@@ -14,6 +14,7 @@ import SignUpComplete from '../components/user/SignUpComplete.vue'
 import userList from '../components/user/userList.vue'
 import accuseForm from '../components/user/accuseForm.vue'
 import accuseList from '../components/user/accuseList.vue'
+import klogin from '@/components/user/klogin.vue'
 
 // 아티클
 import articleCreate from '../views/articles/articleCreate.vue'
@@ -168,25 +169,25 @@ Vue.use(VueRouter)
     // 회원가입 완료
     {
       path: '/user/signupcomplete',
-      name: SignUpComplete,
+      name: 'SignUpComplete',
       component: SignUpComplete
     },
     
     // 유저관리
     {
       path: '/user/userlist',
-      name: userList,
+      name: 'userList',
       component: userList
     },
     // 신고양식
     {
       path: '/user/accuseform',
-      name: accuseForm,
+      name: 'accuseForm',
       component: accuseForm
     },
     {
       path: '/user/accuselist',
-      name: accuseList,
+      name: 'accuseList',
       component: accuseList
     },
   ]

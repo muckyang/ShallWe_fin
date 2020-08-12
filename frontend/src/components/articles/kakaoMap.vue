@@ -263,9 +263,6 @@ export default {
         el.removeChild(el.lastChild);
       }
     },
-    changeD(el) {
-      console.log(el, "ASDASDASDA");
-    },
   },
 };
 </script>
