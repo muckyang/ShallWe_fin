@@ -31,6 +31,8 @@ public interface PostDao extends JpaRepository<Post, String> {
     @Transactional(readOnly = true) 
     Optional<Post> findPostByArticleIdAndTempAndCategoryId(int articleId,int temp,int categoryId);
     @Transactional(readOnly = true) 
+    List<Post> findPostByTitleLike(String word);
+    @Transactional(readOnly = true) 
     List<Post> findPostByTempAndTitleLike(int temp , String word);
     @Transactional(readOnly = true) 
     List<Post> findPostByTempAndCategoryIdAndTitleLike(int temp ,int categoryId, String word);
@@ -68,4 +70,5 @@ public interface PostDao extends JpaRepository<Post, String> {
     @Transactional(readOnly = true) 
     List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2, String st3, String st4);
 
+    
 }

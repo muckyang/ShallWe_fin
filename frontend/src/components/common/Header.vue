@@ -88,9 +88,12 @@
                       <div class="bottom-line"></div>
                     </div>
 
-                  <button @click="kakaoLogin" class="kakao-btn">
-                    <img src="../../assets/img/kakao_logo.jpg" class="kakao-img">
-                    카톡 로그인</button>
+                  <button class="kakao-btn">
+                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code">
+                      <img src="../../assets/img/kakao_logo.jpg" class="kakao-img">
+                      카톡 로그인
+                    </a>
+                  </button>
                     <div class="blank"></div>
                     <button class="google-btn">
                       <img src="../../assets/img/google_logo4.png" class="google-img" />
@@ -245,7 +248,7 @@ export default {
       searchData: {
         searchDataForSend: {
           word: "",
-          subject: "address",
+          subject: "headerTitle",
         },
         categoryId: "기본값",
       },
@@ -259,8 +262,7 @@ export default {
     ...mapMutations(['REMOVE_TOKEN','loginCheck']),
     ...mapActions(['search','login', 'getUserData']),
     kakaoLogin(){
-      console.log("ASDASDASDASDASDASDAS")
-      axios.get('https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code')
+      axios.get(`${BACK_URL}/account/kakaoLogin`)
         .then((response)=>{
           console.log(response)
         })

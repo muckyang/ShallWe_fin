@@ -73,6 +73,14 @@ Vue.use(VueRouter)
       name: constants.URL_TYPE.USER.EDIT,
       component: editUser
     },
+
+
+    {
+      path:'/user/klogin',
+      name: 'klogin',
+      component: klogin
+    },
+
    
     //게시글 CRUD
     {
@@ -191,7 +199,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   //로그인 하지 않아도 되는 페이지
-  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList']
+  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList', 'klogin']
   //로그인 하면 안되는 페이지
   const authPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN]
   

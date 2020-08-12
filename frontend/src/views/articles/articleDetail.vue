@@ -5,7 +5,6 @@
       <div class="top">
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
-
           <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
             <button type="button" class="article-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
@@ -53,6 +52,11 @@
           <!-- 게시물 신고 -->
 
           <br />
+        </div>
+        <div
+          :class="{ tagList : tagsLength(articleData.tags) , nomargin : !tagsLength(articleData.tags)  }"
+        >
+          <button class="tag" v-for="tag in articleData.tags" :key="tag.no">#{{tag}}</button>
         </div>
         <div class="in-the-top">
           <div class="writer">
@@ -177,7 +181,7 @@
           <i class="fas fa-map-marker-alt"></i> 지도 
     </button>-->
     <div class="kakao-map">
-      <kakaoMapForDetail :aaddress="articleData.address" />
+      <kakaoMapForDetail />
     </div>
     <div class="members">
       <div class="members-start">
@@ -194,18 +198,28 @@
                 class="fas fa-crown"
               ></i>
             </div>
-            <b-button
-              variant="light"
-              size="sm"
-              v-b-modal.update-modal
+            <div
+              class="article-drop dropdown dropleft"
               v-if="participant.userId === userData.userId"
-            >수정</b-button>
-            <b-button
-              variant="light"
-              size="sm"
-              v-if="participant.userId === userData.userId"
-              @click="cancel(participant.no)"
-            >삭제</b-button>
+            >
+              <button type="button" class="article-btn" data-toggle="dropdown">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+              <div class="dropdown-menu">
+                <b-button
+                  variant="light"
+                  size="sm"
+                  v-b-modal.update-modal
+                  v-if="participant.userId === userData.userId"
+                >수정</b-button>
+                <b-button
+                  variant="light"
+                  size="sm"
+                  v-if="participant.userId === userData.userId"
+                  @click="cancel(participant.no)"
+                >삭제</b-button>
+              </div>
+            </div>
           </div>
           <div
             v-if="articleData.userId !== participant.userId"
@@ -220,7 +234,7 @@
         </div>
       </div>
     </div>
-    {{articleData}}
+    <!-- {{articleData}} -->
     <!-- <membersList/> -->
     <commentList />
   </div>
@@ -288,6 +302,11 @@ export default {
     // 해당 userData 연결
     linkUserData() {
       this.accuseArticleData.reporter = this.userData.nickname
+    },
+
+    tagsLength(tagList) {
+      if (tagList.length > 0) return true;
+      else false;
     },
 
     cutDate(date) {
@@ -557,6 +576,12 @@ a {
   /* /* border-bottom: 1px solid #e9ecef; */
   /* border-top: 1px solid #e9ecef; */
 }
+@media screen and (min-width: 768px;) {
+  .middle-row {
+    display: flex;
+    flex-direction: column;
+  }
+}
 .detail-address {
   font-size: large;
   font-weight: bold;
@@ -702,5 +727,21 @@ a {
 }
 .form-input {
   width: 150%;
+}
+.tagList {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 0.5% 0 1% 0;
+  /* border: 1px solid red; */
+}
+.nomargin {
+  margin: 0;
+}
+.tag {
+  margin-right: 1%;
+  border: none;
+  outline: none;
+  border-radius: 3px;
 }
 </style>
