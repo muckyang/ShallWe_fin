@@ -25,13 +25,18 @@ public class Accuse {
     private int accuseId;
     private String reporter;
     private String defendant;
+    private int accuseIndex;
+    private int accuseValue;
     private int accuseKind;
     private String accuseReason;
     private String accuseUrl;
     private int accuseConfirm;
-    public Accuse(String reporter, String defendant, int accuseKind, String accuseReason, String accuseUrl, int accuseConfirm) {
+
+    public Accuse(String reporter, String defendant, int accuseIndex, int accuseValue, int accuseKind, String accuseReason, String accuseUrl, int accuseConfirm) {
         this.reporter = reporter;
         this.defendant = defendant;
+        this.accuseIndex = accuseIndex;
+        this.accuseValue = accuseValue;
         this.accuseKind = accuseKind;
         this.accuseReason = accuseReason;
         this.accuseUrl = accuseUrl;

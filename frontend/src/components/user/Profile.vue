@@ -158,16 +158,13 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['getUserData','deleteUser','getArticles','deleteArticle']),
+        ...mapActions(['deleteUser','getArticles','deleteArticle']),
     },
     computed:{
         ...mapState(['userData','articles'])
     },
     created: function(){
-        this.getUserData()
         this.getArticles({temp:0,categoryId:0})
-        console.log(this.userData)
-        console.log("created")
     },
 }
 </script>

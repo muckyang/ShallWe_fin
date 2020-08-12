@@ -82,7 +82,7 @@ export default new Vuex.Store({
       state.authToken = token;
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
-      setTimeout(function(){alert("환영합니다.")}, 50)
+      setTimeout(function () { alert("환영합니다.") }, 50)
     },
     REMOVE_TOKEN(state) {
       state.authToken = null;
@@ -106,21 +106,7 @@ export default new Vuex.Store({
       }
     },
     GET_USERDATA(state, userData) {
-      state.userData.address = userData.address;
-      state.userData.email = userData.email;
-      state.userData.userPoint = userData.userPoint;
-      state.userData.nickname = userData.nickname;
-      state.userData.userId = userData.userId;
-      state.userData.birthday = userData.birthday;
-      state.userData.articleCount = userData.articleCount;
-      state.userData.reviewCount = userData.reviewCount;
-      state.userData.likeCount = userData.likeCount;
-      state.userData.tempCount = userData.tempCount;
-      state.userData.articleList = userData.articleList;
-      state.userData.reviewList = userData.reviewList;
-      state.userData.likeList = userData.likeList;
-      state.userData.tempList = userData.tempList;
-      state.userData.grade = userData.grade;
+      state.userData = userData
     },
 
     //게시글 관리
@@ -128,25 +114,7 @@ export default new Vuex.Store({
       state.articles = articles;
     },
     GET_ARTICLE(state, response) {
-      (state.articleData.articleId = response.data.articleId),
-        (state.articleData.userId = response.data.userId),
-        (state.articleData.categoryId = response.data.categoryId),
-        (state.articleData.title = response.data.title),
-        (state.articleData.writer = response.data.writer),
-        (state.articleData.address = response.data.address),
-        (state.articleData.description = response.data.description),
-        (state.articleData.minPrice = response.data.minPrice),
-        (state.articleData.sumPrice = response.data.sumPrice),
-        (state.articleData.likeNum = response.data.likeNum),
-        (state.articleData.commentNum = response.data.commentNum),
-        (state.articleData.urlLink = response.data.urlLink),
-        (state.articleData.image = response.data.image),
-        (state.articleData.temp = response.data.temp),
-        (state.articleData.endTime = response.data.endTime),
-        (state.articleData.createTime = response.data.createdTime);
-      state.articleData.timeAgo = response.data.timeAgo;
-      state.articleData.partList = response.data.partList;
-      state.articleData.tags = response.data.tags;
+      state.articleData = response.data
     },
     GET_COMMENTS(state, comments) {
       state.comments = comments;
@@ -226,6 +194,7 @@ export default new Vuex.Store({
         .post(`${BACK_URL}/account/read`, auth)
         .then((response) => {
           commit("GET_USERDATA", response.data);
+          console.log(response.data, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         })
         .catch((err) => {
           console.error(err);
@@ -389,6 +358,56 @@ export default new Vuex.Store({
         })
         .catch((err) => {
           console.error(err);
+        });
+    },
+
+    // 게시글 신고 접수
+    createArticleAccuse(context, accuseArticleData) {
+      axios
+        .post(
+          `${BACK_URL}/accuse/create`,
+          accuseArticleData.accuseArticleData
+        )
+        .then(() => {
+          router.push('/');
+        })
+        .catch((err) => console.log(err))
+    },
+    // 댓글 신고 접수
+    createCommentAccuse(context, accuseCommentData) {
+      axios
+        .post(
+          `${BACK_URL}/accuse/create`,
+          accuseCommentData.accuseCommentData
+        )
+        .then(() => {
+          router.push('/');
+        })
+        .catch((err) => console.log(err))
+    },
+    
+    // 관리자 페이지
+    getUsers({ state, commit }, users) {
+      const auth = { token: state.authToken };
+      axios
+        .post(`${BACK_URL}/account/readAll`, auth)
+        .then((res) => {
+          commit("GET_USERS", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    // 신고 리스트
+    getAccuses({ state, commit }, users) {
+      const auth = { token: state.authToken };
+      axios
+        .post(`${BACK_URL}/accuse/read`, auth)
+        .then((res) => {
+          commit("GET_ACCUSES", res.data.accuseList);
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
     // 신고양식
