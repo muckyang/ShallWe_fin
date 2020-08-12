@@ -29,9 +29,12 @@ public class User {
     private String email;
     private String nickname;
     private String address;
+    @Column(name ="profile_image")
     private String profileImage;
+    @Column(name = "introduce")
     private String introduce;
     private int grade;
+    private int status;
     private int userPoint;
     private LocalDate birthday;
     @Column(insertable = false, updatable = false)

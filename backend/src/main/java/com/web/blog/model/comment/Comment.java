@@ -28,6 +28,7 @@ public class Comment {
     private int commentId;
     private int articleId;
     private int userId;
+    private int status;
     private String writer;
     private String content;
     
