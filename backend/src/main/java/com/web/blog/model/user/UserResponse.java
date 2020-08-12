@@ -12,12 +12,8 @@ public class UserResponse {
 
     @ApiModelProperty(value = "userId", position = 1)
     public int userId;
-    @ApiModelProperty(value = "password", position = 2)
-    public String password;
     @ApiModelProperty(value = "email", position = 3)
     public String email;
-    @ApiModelProperty(value = "name", position = 4)
-    public String name;
     @ApiModelProperty(value = "nickname", position = 5)
     public String nickname;
     @ApiModelProperty(value = "address", position = 6)
@@ -26,10 +22,8 @@ public class UserResponse {
     public LocalDate birthday;
     @ApiModelProperty(value = "userPoint", position = 8)
     public int userPoint;
-
     @ApiModelProperty(value = "articleCount", position = 9)
     public int articleCount;
-
     @ApiModelProperty(value = "reviewCount", position = 10)
     public int reviewCount;
 
@@ -51,24 +45,10 @@ public class UserResponse {
 
     @ApiModelProperty(value = "tempList", position = 16)
     public List<Post> tempList;
-
-    public UserResponse(String password, String name, String nickname, String address, LocalDate birthday) {
-        this.password = password;
-        this.name = name;
-        this.nickname = nickname;
-        this.address = address;
-        this.birthday = birthday;
-    }
-
-    public UserResponse(int userId ,String password,String email,  String name, String nickname, String address, LocalDate birthday,
-    int userPoint) {
-        this.userId = userId;
-        this.password = password;
-        this.name = name;
-        this.nickname = nickname;
-        this.address = address;
-        this.userPoint = userPoint;
-        this.birthday = birthday;
-    }
+    @ApiModelProperty(value = "grade", position = 17)
+    public int grade;
+    @ApiModelProperty(value = "status", position = 18)
+    public int status;
+  
 
 }

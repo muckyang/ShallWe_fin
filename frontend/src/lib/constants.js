@@ -17,6 +17,6 @@ export default {
         POST: {
         },
         HOME:'home',
-    }
+    },
 }
 

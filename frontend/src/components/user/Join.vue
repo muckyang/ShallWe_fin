@@ -5,9 +5,10 @@
                 <h2 class="join">회원가입</h2>
                 <hr class="line">
                 <div class="form-wrap ">
-                    <div class="input-wrap">
+
+                    <!--기존 join form-->
+                    <!-- <div class="input-wrap">
                         <div class="p-2">
-                            <!-- <i class="fas fa-envelope"></i> -->
                             <label for="email">이메일</label>
                         </div>
                         <input v-model="signUpData.signUpDataForSend.email" 
@@ -17,10 +18,8 @@
                             placeholder=" 이메일을 입력해주세요"
                             type="text"/>
                     </div >
-
                     <div class="input-wrap password-wrap">
-                        <div class="p-2">
-                            <!-- <i class="fas fa-key"></i> -->
+                        <div class="p-2">\
                             <label for="password">비밀번호</label>
                         </div>
                         <input v-model="signUpData.signUpDataForSend.password"
@@ -30,13 +29,11 @@
                             type="password"
                             placeholder=" 비밀번호를 입력해주세요"/>
                         <span :class="{active : signUpData.passwordType==='text'}">
-                            <!-- <i class="fas fa-eye"></i> -->
                         </span>
                     </div>
 
                     <div class="input-wrap password-wrap">
                         <div class="p-2">
-                            <!-- <i class="fas fa-key"></i> -->
                             <label for="password-confirm">비밀번호 확인</label>
                         </div>
                         <input v-model="signUpData.password2" 
@@ -46,13 +43,11 @@
                             type="password"
                             placeholder=" 비밀번호를 한번 더 입력해주세요"/>
                         <span :class="{active : signUpData.passwordConfirmType==='text'}">
-                            <!-- <i class="fas fa-eye"></i>  -->
                         </span>
                     </div>
 
                     <div class="input-wrap name-warp">
                         <div class="p-2">
-                            <!-- <i class="fas fa-user"></i> -->
                             <label for="name">이름</label>
                         </div>
                         <input v-model="signUpData.signUpDataForSend.name" 
@@ -61,36 +56,37 @@
                             name="name"
                             placeholder=" 이름을 입력해주세요"
                             type="text"/>
-                    </div>
+                    </div> -->
 
                     <div class="input-wrap ">
                         <div class="p-2">
-                            <!-- <i class="fas fa-user"></i> -->
                             <label for="nickname">닉네임</label>
                         </div>
-                        <input v-model="signUpData.signUpDataForSend.nickname"
+                        <input v-model="signUpData.nickname"
                             id="nickname"
                             class="joinInput"
                             name="nickname"
                             placeholder=" 닉네임을 입력해주세요" type="text"/>
                     </div>
+                    <button @click="duCheck(signUpData.nickname)">중복확인</button>
 
                     <div class="input-wrap address-warp">
                         <div class="p-2">
-                            <!-- <i class="fas fa-home"></i> -->
                             <label for="address">주소</label>
                         </div>
-                        <input v-model="signUpData.signUpDataForSend.address" 
+                        <input v-model="signUpData.address" 
                             id="address"
                             class="joinInput"
                             name="address"
-                            placeholder=" 주소를 입력해주세요"
+                            placeholder="주소를 입력해주세요"
                             type="text"/>
                     </div>
+                    <kakaoMap :coNum="coNum" @setAddress="setAddress"/>
 
-                    <div class="input-wrap birthday-warp" id="EmailBtnTop">
+
+
+                    <!-- <div class="input-wrap birthday-warp" id="EmailBtnTop">
                         <div class="p-2">
-                            <!-- <i class="fas fa-birthday-cake"></i> -->
                             <label for="birthday">생일</label>
                         </div>
                         <input v-model="signUpData.signUpDataForSend.birthday" 
@@ -99,7 +95,7 @@
                             name="birthday"
                             placeholder=" YYYY-MM-DD"
                             type="text"/>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="seeModal">
@@ -118,7 +114,7 @@
                         </span> 
                         <input type="checkbox" name="termsBox" 
                             class="termsBox"
-                            v-model="isTerm" @click="termCheck">
+                            @click="termCheck">
                     </div>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -312,12 +308,11 @@
                                 본 약관은 2020년 8월 10일부터 적용합니다.
                             </div>
 
-
                         </div>
                         <div class="modal-footer"> 
                             <div class="agree">
                                 <label for="agreeType" class="agreeText">약관에 동의합니다.</label>
-                                <input type="checkbox" id="agreeType" v-model="isTerm" @click="termCheck">
+                                <input type="checkbox" id="agreeType" @click="termCheck">
                             </div>
                             <button type="button" class="btn btn-secondary agreeBtn" data-dismiss="modal">Close</button>
                         </div>
@@ -329,7 +324,7 @@
 
                 <hr class="line">
 
-                <button @click="sendEmail(signUpData)"
+                <!-- <button @click="sendEmail(signUpData)"
                 v-if="!isSended" class="cta">
                     <span class="click">Email 인증</span>
                     <svg class="Svg" width="13px" 
@@ -341,12 +336,9 @@
 
                 <input type="text" v-if="isSended" 
                 v-model="signUpData.signUpDataForSend.authNumber" 
-                placeholder="인증번호를 입력해주세요">  
-                
-                <p></p>
+                placeholder="인증번호를 입력해주세요">   -->
 
-                <button @click="signUp(signUpData)" 
-                v-if="isSended" class="cta">
+                <button @click="signUp(signUpData)" class="cta">
                     <span class="click">가입완료</span>
                 </button>
 
@@ -357,39 +349,36 @@
 
 
 <script>
+import kakaoMap from '@/components/articles/kakaoMap'
 import axios from "axios"
-import {mapActions, mapState, mapMutations} from 'vuex'
-const BACK_URL = "http://127.0.0.1:8080"
+import {mapActions, mapMutations} from 'vuex'
+const BACK_URL = process.env.VUE_APP_BACK_URL
 
     export default {
         name: "Signup",
         components: {
+            kakaoMap,
         },
         data: () => {
             return {
                 signUpData:{
-                    signUpDataForSend:{
-                        address:'',
-                        birthday:'',
-                        email: '',
-                        id: '',
-                        name:'', 
-                        nickname: '',
-                        password:'',
-                        authNumber:'',
-                    },
-                    password2:''       
-                },
-                isTerm: false,
+                    address:'',
+                    email: '',
+                    nickname: '',
+                },     
+                coNum:"2",
             }
         },
         methods: {
-            ...mapActions(["signUp","sendEmail"]),
-            ...mapMutations(["termCheck"])
+            ...mapActions(["signUp","sendEmail","duCheck"]),
+            ...mapMutations(["termCheck"]),
+            setAddress(address){
+                this.signUpData.address=address
+            },
         },
-        computed:{
-            ...mapState(["isSended"])
-        }
+        created:function(){
+            this.signUpData.email=this.$route.query.kemail
+        },
     }
 
 </script>

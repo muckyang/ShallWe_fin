@@ -11,13 +11,18 @@ import Join from '../components/user/Join.vue'
 import editUser from '../components/user/editUser.vue'
 import Profile from '../components/user/Profile.vue'
 import SignUpComplete from '../components/user/SignUpComplete.vue'
-import adminPage from '../components/user/adminPage.vue'
+import userList from '../components/user/userList.vue'
+import accuseForm from '../components/user/accuseForm.vue'
+import accuseList from '../components/user/accuseList.vue'
+import klogin from '@/components/user/klogin.vue'
+import adminLogin from '@/components/user/adminLogin.vue'
 
 // 아티클
 import articleCreate from '../views/articles/articleCreate.vue'
 import articleDetail from '../views/articles/articleDetail.vue'
 import articleUpdate from '../views/articles/articleUpdate.vue'
 import articleList from '../views/articles/articleList.vue'
+import localList from '@/views/articles/localList.vue'
 
 //자유게시판
 import postCreate from '../views/post/postCreate'
@@ -46,11 +51,11 @@ Vue.use(VueRouter)
       name:'HOME',
       component:Home,
     },   
-    // 로그인
+    // 관리자 로그인
     { 
-      path: '/user/login',
-      name: constants.URL_TYPE.USER.LOGIN,
-      component: Login
+      path: '/user/admin',
+      name: 'adminLogin',
+      component: adminLogin
     },
     //회원가입
     {
@@ -70,6 +75,14 @@ Vue.use(VueRouter)
       name: constants.URL_TYPE.USER.EDIT,
       component: editUser
     },
+
+
+    {
+      path:'/user/klogin',
+      name: 'klogin',
+      component: klogin
+    },
+
    
     //게시글 CRUD
     {
@@ -96,6 +109,11 @@ Vue.use(VueRouter)
       path: '/templist',
       name: 'tempList',
       component: tempList
+    },
+    {
+      path:'/localList',
+      name:'localList',
+      component:localList
     },
     //자유게시판CRUD
     {
@@ -152,14 +170,26 @@ Vue.use(VueRouter)
     // 회원가입 완료
     {
       path: '/user/signupcomplete',
-      name: SignUpComplete,
+      name: 'SignUpComplete',
       component: SignUpComplete
     },
-    // 관리자 페이지
+    
+    // 유저관리
     {
-      path: '/user/admin',
-      name: adminPage,
-      component: adminPage
+      path: '/user/userlist',
+      name: 'userList',
+      component: userList
+    },
+    // 신고양식
+    {
+      path: '/user/accuseform',
+      name: 'accuseForm',
+      component: accuseForm
+    },
+    {
+      path: '/user/accuselist',
+      name: 'accuseList',
+      component: accuseList
     },
   ]
 
@@ -171,13 +201,19 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   //로그인 하지 않아도 되는 페이지
-  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList']
+  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList', 'klogin','adminLogin']
   //로그인 하면 안되는 페이지
   const authPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN]
   
   const authRequired = !publicPages.includes(to.name)
   const unauthRequired = authPages.includes(to.name)
-  const isLoggedIn = Vue.$cookies.isKey('auth-token')
+  var isLoggedIn = false
+  if(Vue.$cookies.isKey('auth-token')){
+    isLoggedIn = true
+  }else if(Vue.$cookies.isKey('admin-token')){
+    isLoggedIn = true
+  }
+  
 
   //로그인 하면 안되는 페이지에 로그인 상태로 접근
   if(unauthRequired && isLoggedIn) {

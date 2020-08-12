@@ -73,16 +73,34 @@ public class SearchController {
     @Autowired
     private JwtService jwtService;
 
+    @PostMapping("/account/readAll")
+    @ApiOperation(value = "유저 전체 리스트")
+    public List<User> userReadAll(@RequestBody TokenRequest req) {
+        List<User> result = null;
+        String token = req.getToken();
+        User jwtuser = jwtService.getUser(token);
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
+
+        if (userOpt.isPresent() && userOpt.get().getGrade() == 0) {
+            result = userDao.findAll();
+        } else {
+            return null;
+        }
+        return result;
+
+    }
+
     @PostMapping("/post/read/{temp}/{categoryId}")
     @ApiOperation(value = "게시글 및 임시글 목록")
     public PostListResponse read(@RequestBody TokenRequest req, @PathVariable int temp, @PathVariable int categoryId)
             throws MessagingException, IOException {
         PostListResponse result = null;
+
         if (temp == 0) {
             System.out.println("임시글 목록 출력!!");
             String token = req.getToken();
             User jwtuser = jwtService.getUser(token);
-            Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+            Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
 
             String writer = userOpt.get().getNickname();
             List<Post> plist = postDao.findPostByTempAndWriter(temp, writer);
@@ -127,6 +145,38 @@ public class SearchController {
 
             System.out.println("자유글 목록 출력!!");
             return result;
+        } else if (temp == 3) {
+            System.out.println("내 주변 게시물 목록 출력!!");
+            String token = req.getToken();
+            User jwtuser = jwtService.getUser(token);
+            Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
+
+            String writer = userOpt.get().getNickname();
+            List<Post> plist = postDao.findPostByTempAndWriter(temp, writer);
+
+            String uAddress = userOpt.get().getAddress();
+            int count = 0;
+            List<String> addList = new ArrayList<>();
+
+            StringTokenizer st = new StringTokenizer(uAddress);
+            // 동까지 자르면 스탑해
+            while (st.hasMoreTokens()) {
+                if(count==3){
+                    break;
+                }
+                count++;
+                addList.add("%" + st.nextToken() + "%");
+            }
+
+            
+            plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLike(addList.get(0), addList.get(1), addList.get(2));
+            
+
+            result = new PostListResponse();
+            result.postList = getPostList(plist, temp);
+
+            System.out.println("내 주변 게시물 검색 확인");
+            return result;
         } else {
             return result;
         }
@@ -140,7 +190,19 @@ public class SearchController {
         String subject = request.getSubject();
         String word = request.getWord();
         List<Post> plist = new LinkedList<>();
-        if (subject.equals("title")) {
+        if (subject.equals("headertitle")) {
+            word = "%" + word + "%";
+            System.out.println("헤더에서 구매, 자유게시판 title로 검색");
+
+            //이때는 temp값 구분없이 뽑아내야 함
+            plist=postDao.findPostByTitleLike(word);
+            PostListResponse result = new PostListResponse();
+            result.postList = getPostList(plist, temp);
+
+            System.out.println("헤더에서 구매, 자유게시판 title로 검색 확인");
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else if (subject.equals("title")) {
             word = "%" + word + "%";
             System.out.println("title로 검색");
 

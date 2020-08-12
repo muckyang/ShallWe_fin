@@ -19,6 +19,7 @@ import com.web.blog.model.participant.Participant;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,8 +56,8 @@ public class ParticipantController {
     public Object create(@Valid @RequestBody ParticipantRequest request) throws MessagingException, IOException {
         System.out.println(request.getArticleId());
         String token = request.getToken();
-        User user = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(user.getEmail(), user.getPassword());
+        User jwtuser = jwtService.getUser(token);
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent()) {
             int articleId = request.getArticleId();
             Participant part = participantDao.getParticipantByUserIdAndArticleId(userOpt.get().getUserId(), articleId);
@@ -96,7 +97,8 @@ public class ParticipantController {
         }
 
     }
-
+    
+    @Transactional(readOnly = true) 
     @PostMapping("/participant/read/{articleId}")
     @ApiOperation(value = "참가자 목록")
     public Object read(@PathVariable int articleId) throws MessagingException, IOException {

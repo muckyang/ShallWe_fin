@@ -70,8 +70,8 @@ export default {
 <style>
 .totheTop{
   position: fixed;
-  bottom: 1rem;
-  right: 8.5rem;
+  bottom: 1%;
+  right: 8%;
   cursor: pointer;
   width: 35px;
   height: 35px;

@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -78,6 +80,19 @@ public class PostController {
     @Autowired
     private JwtService jwtService;
 
+    @Scheduled(cron = "*/30 * * * * *")
+    public void articleTimeOut() {
+        System.out.println("게시물 활성화 상태 변경 30초마다 실행중입니다.");
+        List<Post> plist = postDao.findAll();
+        for (Post p : plist) {
+            if (p.getStatus() == 1 && p.getTemp() == 1
+                    && datetimeTosec(p.getEndTime()) > datetimeTosec(LocalDateTime.now())) {
+                p.setStatus(2);// 만료
+                postDao.save(p);
+            }
+        }
+    }
+
     @PostMapping("/post/create/{temp}")
     @ApiOperation(value = "게시글 및 임시글 등록")
     public Object create(@Valid @RequestBody PostRequest req, @PathVariable int temp)
@@ -91,22 +106,51 @@ public class PostController {
         }
         System.out.println(token);
         User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        System.out.println(jwtuser.toString());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent()) {
             if (temp == 0) {// 임시저장
 
-                Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
-                        userOpt.get().getNickname(), req.getAddress(), req.getDescription(), req.getMinPrice(),
-                        req.getMyPrice(), req.getImage(), temp, endTime);
+                // Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(),
+                // req.getTitle(),
+                // userOpt.get().getNickname(), req.getAddress(), req.getDescription(),
+                // req.getMinPrice(),
+                // req.getMyPrice(), req.getImage(), temp, endTime);
+
+                Post post = new Post();
+                post.setCategoryId(req.getCategoryId());
+                post.setUserId(userOpt.get().getUserId());
+                post.setTitle(req.getTitle());
+                post.setWriter(userOpt.get().getNickname());
+                post.setAddress(req.getAddress());
+                post.setDescription(req.getDescription());
+                post.setMinPrice(req.getMinPrice());
+                post.setSumPrice(req.getMyPrice());
+                post.setImage(req.getImage());
+                post.setTemp(temp);
+                post.setEndTime(endTime);
+                post.setStatus(1);
+                post.setLikeNum(0);
+                post.setCommentNum(0);
                 // post.setUrlLink(req.getUrlLink());
                 postDao.save(post);
                 System.out.println("임시저장!!");
 
                 return new ResponseEntity<>("임시저장 완료", HttpStatus.OK);
             } else if (temp == 1) {
-                Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(), req.getTitle(),
-                        userOpt.get().getNickname(), req.getAddress(), req.getDescription(), req.getMinPrice(),
-                        req.getMyPrice(), req.getImage(), temp, endTime);
+                Post post = new Post();
+                post.setCategoryId(req.getCategoryId());
+                post.setUserId(userOpt.get().getUserId());
+                post.setTitle(req.getTitle());
+                post.setWriter(userOpt.get().getNickname());
+                post.setAddress(req.getAddress());
+                post.setDescription(req.getDescription());
+                post.setMinPrice(req.getMinPrice());
+                post.setSumPrice(req.getMyPrice());
+                post.setImage(req.getImage());
+                post.setTemp(temp);
+                post.setEndTime(endTime);
+                post.setStatus(1);
                 post.setLikeNum(0);
                 post.setCommentNum(0);
 
@@ -117,7 +161,6 @@ public class PostController {
                     ptag += tags[i] + "#";
 
                 }
-
                 post.setTag(ptag.substring(0, ptag.length() - 1));
                 postDao.save(post);
                 int artiId = post.getArticleId();
@@ -137,6 +180,7 @@ public class PostController {
                 System.out.println(post.getTitle() + " " + artiId);
                 participant.setTitle(def_mes);
                 participant.setPrice(myPrice);
+                participant.setWriter(userOpt.get().getNickname());
                 participant.setDescription(def_mes);
                 participantDao.save(participant);// 참가자 DB에 등록 완료
                 tagAdd(tags, artiId);
@@ -157,20 +201,9 @@ public class PostController {
                 post.setWriter(userOpt.get().getNickname());
                 post.setDescription(req.getDescription());
                 post.setImage(req.getImage());
+                post.setStatus(1);
                 post.setTemp(temp);
-
-                String[] tags = req.getTags();// 태그 내용
-                String ptag = "#";
-                for (int i = 0; i < tags.length; i++) {
-                    ptag += tags[i] + "#";
-
-                }
-
-                post.setTag(ptag.substring(0, ptag.length() - 1));
                 postDao.save(post);
-                int artiId = post.getArticleId();
-
-                tagAdd(tags, artiId);
 
                 return new ResponseEntity<>("자유게시물 등록", HttpStatus.OK);
             } else {
@@ -182,6 +215,7 @@ public class PostController {
         }
     }
 
+    @Transactional(readOnly = true)
     @PostMapping("/post/detail/{articleId}") // SWAGGER UI에 보이는 REQUEST명
     @ApiOperation(value = "게시물상세보기") // SWAGGER UI에 보이는 이름
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
@@ -202,12 +236,12 @@ public class PostController {
                 taglist.add(st.nextToken());
             }
 
-            Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+            Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
                     p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), taglist, p.getTemp(),
                     p.getEndTime(), BeforeCreateTime(p.getCreateTime()));
-
+            result.status = p.getStatus();
             // 이 게시물에 해당되는 태그는 다 보내기
             List<Tag> tlist = tagDao.findTagByArticleId(articleId);
             List<String> tags = new LinkedList<>();
@@ -237,14 +271,19 @@ public class PostController {
             for (int i = 0; i < clist.size(); i++) {
                 User user = userDao.getUserByUserId(clist.get(i).getUserId());
                 String nickname = user.getNickname();
+                CommentRes c = new CommentRes();
+                c.setCommentId(clist.get(i).getCommentId());
+                c.setArticleId(clist.get(i).getArticleId());
+                c.setUserId(clist.get(i).getUserId());
+                c.setContent(clist.get(i).getContent());
+                c.setNickname(nickname);
+                c.setTimeAgo(BeforeCreateTime(clist.get(i).getCreateTime()));
+                c.setCreateTime(clist.get(i).getCreateTime());
 
-                result.commentList.add(new CommentRes(clist.get(i).getCommentId(), clist.get(i).getArticleId(),
-                        clist.get(i).getUserId(), nickname, clist.get(i).getContent(),
-                        BeforeCreateTime(clist.get(i).getCreateTime()), clist.get(i).getCreateTime()));
+                result.commentList.add(c);
 
                 System.out.println(nickname);
             }
-
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -259,7 +298,7 @@ public class PostController {
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
         int userId;
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (p != null) {
             userId = userOpt.get().getUserId();
         } else {
@@ -307,6 +346,7 @@ public class PostController {
             post.setImage(req.getImage());
             post.setTemp(temp);
             post.setEndTime(endTime);
+
             postDao.save(post);
 
             int myPrice = req.getMyPrice();
@@ -483,5 +523,11 @@ public class PostController {
             tag.setArticleId(articleId);
             tagDao.save(tag);
         }
+    }
+
+    private long datetimeTosec(LocalDateTime ldt) {
+        long result = 0L;
+        result += (((((ldt.getYear()) * 365 + ldt.getDayOfYear()) * 24) + ldt.getHour() * 60) + ldt.getMinute() * 60);
+        return result;
     }
 }
