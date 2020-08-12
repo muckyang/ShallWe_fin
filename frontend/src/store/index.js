@@ -78,11 +78,11 @@ export default new Vuex.Store({
   mutations: {
     //사용자 관리
     SET_TOKEN(state, token) {
+      router.push("/");
       state.authToken = token;
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
-      router.push("/");
-      router.go();
+      setTimeout(function(){alert("환영합니다.")}, 50)
     },
     REMOVE_TOKEN(state) {
       state.authToken = null;
@@ -106,13 +106,11 @@ export default new Vuex.Store({
       }
     },
     GET_USERDATA(state, userData) {
-      state.userData.name = userData.name;
       state.userData.address = userData.address;
       state.userData.email = userData.email;
       state.userData.userPoint = userData.userPoint;
       state.userData.nickname = userData.nickname;
       state.userData.userId = userData.userId;
-      state.userData.password = userData.password;
       state.userData.birthday = userData.birthday;
       state.userData.articleCount = userData.articleCount;
       state.userData.reviewCount = userData.reviewCount;
@@ -145,7 +143,7 @@ export default new Vuex.Store({
         (state.articleData.image = response.data.image),
         (state.articleData.temp = response.data.temp),
         (state.articleData.endTime = response.data.endTime),
-        (state.articleData.createTime = response.data.createdTime); //안넘어옴
+        (state.articleData.createTime = response.data.createdTime);
       state.articleData.timeAgo = response.data.timeAgo;
       state.articleData.partList = response.data.partList;
       state.articleData.tags = response.data.tags;
@@ -184,43 +182,43 @@ export default new Vuex.Store({
     //     alert("빈 칸을 채워 주세요");
     //   }
     // },
-    duCheck(context,nickname){
+    duCheck(context, nickname) {
       axios.get(`${BACK_URL}/account/nicknamecheck/${nickname}`)
-        .then((response)=>{
+        .then((response) => {
           alert(response.data)
         })
-        .catch((error)=>{
+        .catch((error) => {
           alert(error.data)
         })
     },
-    signUp({ state,commit }, signUpData) {
-      console.log(signUpData)
-      if(state.isTerm){
-      axios.post(`${BACK_URL}/account/signup`, signUpData)
-        .then(() => {
-          alert("회원가입이 완료되었습니다.");
-          this.commit("termCheck");
-          router.push("/");
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("빈 칸을 채워 주세요");
-        });
-      }else{
+    signUp({ state, commit }, signUpData) {
+      if (state.isTerm) {
+        axios.post(`${BACK_URL}/account/signup`, signUpData)
+          .then(() => {
+            alert("회원가입이 완료되었습니다.");
+            commit("SET_TOKEN", response.data);
+            this.commit("termCheck");
+            router.push("/");
+          })
+          .catch((err) => {
+            console.log(err);
+            alert("빈 칸을 채워 주세요");
+          });
+      } else {
         alert("약관에 동의해 주세요")
       }
     },
-    login({ commit }, loginData) {
-      axios
-        .post(`${BACK_URL}/account/login`, loginData)
-        .then((response) => {
-          commit("SET_TOKEN", response.data);
-          alert("환영합니다.");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    // login({ commit }, loginData) {
+    //   axios
+    //     .post(`${BACK_URL}/account/login`, loginData)
+    //     .then((response) => {
+    //       commit("SET_TOKEN", response.data);
+    //       alert("환영합니다.");
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
     //profile
     getUserData({ state, commit }) {
       const auth = { token: state.authToken };
@@ -234,16 +232,16 @@ export default new Vuex.Store({
         });
     },
     editUser({ state, commit }, editData) {
-        editData.token = state.authToken;
-        axios
-          .post(`${BACK_URL}/account/update`, editData)
-          .then(() => {
-            alert("수정이 완료되었습니다. 다시 로그인해 주세요");
-            commit("REMOVE_TOKEN");
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+      editData.token = state.authToken;
+      axios
+        .post(`${BACK_URL}/account/update`, editData)
+        .then(() => {
+          alert("수정이 완료되었습니다. 다시 로그인해 주세요");
+          commit("REMOVE_TOKEN");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
     deleteUser({ state, commit }) {
       const auth = { token: state.authToken };
@@ -278,7 +276,6 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/post/detail/${articleID}`, auth)
         .then((response) => {
-          console.log("ㄷㅇㅌㄷㅇㅌ", response);
           commit("GET_ARTICLE", response);
           commit("GET_COMMENTS", response.data.commentList);
         })
