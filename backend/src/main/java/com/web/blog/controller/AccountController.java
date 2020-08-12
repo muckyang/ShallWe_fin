@@ -134,7 +134,7 @@ public class AccountController {
         user.setGrade(1);
         user.setUserPoint(1000);
         user.setAddress(req.getAddress());
-        // user.setTemp(1);// 디폴트 1로 설정
+        user.setStatus(1);// 디폴트 1로 설정
         user.setNickname(req.getNickname());
         userDao.save(user);
 
