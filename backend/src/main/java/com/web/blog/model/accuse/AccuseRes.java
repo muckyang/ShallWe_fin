@@ -14,6 +14,8 @@ public class AccuseRes {
     private int accuseId;
     private String reporter;
     private String defendant;
+    private int accuseIndex;
+    private int accuseValue;
     private int accuseKind;
     private String accuseReason;
     private String accuseUrl;
