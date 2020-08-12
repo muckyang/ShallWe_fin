@@ -27,6 +27,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     private String email;
+    private String password;
     private String nickname;
     private String address;
     @Column(name ="profile_image")

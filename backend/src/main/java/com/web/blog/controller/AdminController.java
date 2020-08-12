@@ -19,8 +19,10 @@ import com.web.blog.model.accuse.AccuseRequest;
 import com.web.blog.model.accuse.AccuseResponse;
 import com.web.blog.model.admin.Admin;
 import com.web.blog.model.admin.AdminLoginRequest;
+import com.web.blog.model.admin.AdminResponse;
 import com.web.blog.model.comment.Comment;
 import com.web.blog.model.post.Post;
+import com.web.blog.model.user.AdminLoginResponse;
 import com.web.blog.model.user.User;
 import com.web.blog.model.user.UserResponse;
 import com.web.blog.service.JwtService;
@@ -74,8 +76,17 @@ public class AdminController {
         if (adminOpt.isPresent()) {
             System.out.println("로그인 성공  : " + adminId);
             Admin admin = new Admin(adminId, password);
-            String token = jwtService.createAdminLoginToken(admin);
-            return new ResponseEntity<>(token, HttpStatus.OK);
+            String admintoken = jwtService.createAdminLoginToken(admin);
+            User usert = userDao.getUserByEmail(adminId);
+            
+            User user = new User();
+            user.setNickname(usert.getNickname());
+            user.setEmail(adminId);
+            String token = jwtService.createLoginToken(user);
+            AdminLoginResponse result = null;
+            result.setAdminToken(admintoken);
+            result.setAdminToken(token);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             System.out.println("로그인 실패");
             return new ResponseEntity<>("로그인 실패 ", HttpStatus.NOT_FOUND);

@@ -53,7 +53,6 @@ public class Post {
     private String urlLink;
     @Column(name = "image")
     private String image;
-     
     @Column(name = "status")
     private int status;
     @Column(name = "temp")
