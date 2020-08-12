@@ -18,6 +18,7 @@ import com.web.blog.model.accuse.AccuseRequest;
 import com.web.blog.model.accuse.AccuseResponse;
 import com.web.blog.model.comment.Comment;
 import com.web.blog.model.post.Post;
+import com.web.blog.model.user.TokenRequest;
 import com.web.blog.model.user.User;
 import com.web.blog.model.user.UserResponse;
 import com.web.blog.service.JwtService;
@@ -114,7 +115,7 @@ public class AdminController {
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
         Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
-        
+
         if (userOpt.isPresent() && userOpt.get().getGrade() == 0) {
 
             String nickname = req.getDefendant();
@@ -127,6 +128,8 @@ public class AdminController {
                     user.setUserPoint(user.getUserPoint() - 50);
                 } else if (req.getAccuseKind() == 3) { // 3. 광고 글입니다. -30
                     user.setUserPoint(user.getUserPoint() - 30);
+                } else if (req.getAccuseKind() == 4) { // 4. 기타 - 10
+                    user.setUserPoint(user.getUserPoint() - 10);
                 }
                 userDao.save(user);
                 System.out.println("점수(user point) 수정");
@@ -135,40 +138,54 @@ public class AdminController {
                 accuseDao.save(accuse);
                 System.out.println("신고 게시물 상태 수정");
                 // 게시물에 대한 신고를 확실하게 판단하여 완료하면
-                if(req.getAccuseIndex() == 1){
+                if (req.getAccuseIndex() == 1) {
                     Post post = postDao.getPostByArticleId(req.getAccuseValue());
                     post.setCategoryId(99); // 99로 빼준다.
                     postDao.save(post);
-                }else if(req.getAccuseIndex() == 2){
+                } else if (req.getAccuseIndex() == 2) {
                     Comment comment = commentDao.getCommentByCommentId(req.getAccuseValue()); // 댓글은 바로 삭제한다.
-                    commentDao.delete(comment);
+                    // comment.setStatus(1);
+                    commentDao.save(comment);
                 }
-                
-                
+
             }
             // 신고가 허위일 경우
-            else if(req.getAccuseConfirm() == 2){
+            else if (req.getAccuseConfirm() == 2) {
                 Accuse accuse = accuseDao.findAccuseByAccuseId(req.getAccuseId());
                 accuseDao.delete(accuse);
             }
-
+            // 유저를 비활성화할 경우
+            else if (req.getAccuseConfirm() == 3) {
+                // user.setStatus(1);
+                userDao.save(user);
+    
+                System.out.println("user 비활성화시켜버리기!!!");
+            }
             return new ResponseEntity<>("신고 사항을 접수하였습니다.", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("관리자가 아닙니다.", HttpStatus.BAD_REQUEST);
         }
     }
 
-    // @PostMapping("/accuse/deleteuser")
-    // @ApiOperation(value = "탈퇴시키기")
-    // public Object deleteuser(@Valid @RequestBody AccuseRequest request) {
-    //     String nickname = request.getDefendant();
-    //     Optional<User> userOpt = userDao.findUserByNickname(nickname);
-    //     User user = userOpt.get();
-    //     userDao.delete(user);
+    // @PostMapping("/account/disabled")
+    // @ApiOperation(value = "비활성화시키기")
+    // public Object disabled(@Valid @RequestBody AccuseRequest req) {
+    //     String token = req.getToken();
+    //     User jwtuser = jwtService.getUser(token);
+    //     Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
 
-    //     System.out.println("user 탈퇴시켜버리기!!!");
+    //     if (userOpt.isPresent() && userOpt.get().getGrade() == 0) {
+            // String nickname = req.getDefendant();
+            // User user = userDao.getUserByNickname(nickname);
+            // user.setStatus(1);
+            // userDao.save(user);
 
-    //     return new ResponseEntity<>("유저를 틸퇴시켰습니다.", HttpStatus.OK);
+            // System.out.println("user 비활성화시켜버리기!!!");
+
+            // return new ResponseEntity<>("유저를 비활성화했습니다.", HttpStatus.OK);
+    //     } else {
+    //         return new ResponseEntity<>("관리자가 아닙니다.", HttpStatus.BAD_REQUEST);
+    //     }
     // }
 
 }
