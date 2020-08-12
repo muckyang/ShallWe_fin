@@ -53,10 +53,11 @@ public class Post {
     private String urlLink;
     @Column(name = "image")
     private String image;
-    
+     
+    @Column(name = "status")
+    private int status;
     @Column(name = "temp")
     private int temp;
-    
     @Column(name = "end_time")
     private LocalDateTime endTime;
     // 생성시간은 자동생성
@@ -73,12 +74,9 @@ public class Post {
                 this.description = des;
                 this.minPrice = minPrice;
                 this.sumPrice = sumPrice;
-                
                 this.image = image;
                 this.temp = temp;
                 this.endTime = endTime;
-          
-
     }
 
 }

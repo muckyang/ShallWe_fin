@@ -161,6 +161,8 @@ public class AccountController {
             int userId = user.getUserId();
             UserResponse result = new UserResponse();
             result.userId = userOpt.get().getUserId();
+            result.address = userOpt.get().getAddress();
+            result.nickname = userOpt.get().getNickname();
             result.email = userOpt.get().getEmail();
             result.userPoint = userOpt.get().getUserPoint();
             result.grade = userOpt.get().getGrade();
