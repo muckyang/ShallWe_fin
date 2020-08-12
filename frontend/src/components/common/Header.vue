@@ -131,7 +131,7 @@
 
         <div class="wall" v-show="isLoggedin">|</div>
 
-        <li class="nav-item mr-2">
+        <li class="nav-item mr-1">
           <router-link
             v-if="isLoggedin"
             v-bind:to="{name:constants.URL_TYPE.USER.PROFILE}"
@@ -139,12 +139,25 @@
           >마이페이지</router-link>
         </li>
       </ul>
+      
       <div class="wall" v-show="isLoggedin">|</div>
-      <!-- 관리자페이지 -->
+
+      <!-- 유저관리 -->
+      <div v-if="isLoggedin && userData.grade===0" class="d-flex align-items-starts mr-1">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="/user/userlist" class="nav-link navbar1-item">유저관리</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="wall" v-show="isLoggedin">|</div>
+
+      <!-- 신고관리 -->
       <div v-if="isLoggedin && userData.grade===0" class="d-flex align-items-starts">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/user/userlist" class="nav-link navbar1-item">관리자페이지</a>
+            <a href="/user/accuselist" class="nav-link navbar1-item">신고관리</a>
           </li>
         </ul>
       </div>

@@ -62,15 +62,18 @@ export default new Vuex.Store({
     articles: [],
     comments: [],
     users: [],
+
     accuseData: {
-      accuseId: '',
       reporter: '',
       defendant: '',
-      accuseKind: '',
+      accuseIndex: '',
+      accuseValue: '',
+      accuseKind: 0,
       accuseReason: '',
       accuseUrl: '',
-      accuseConfirm: '',
-    }
+      accuseConfirm: 0,
+    },
+    accuses: [],
   },
 
   getters: {},
@@ -163,6 +166,9 @@ export default new Vuex.Store({
     GET_USERS(state, users) {
       state.users = users;
     },
+    GET_ACCUSES(state, accuses) {
+      state.accuses = accuses;
+    }
   },
 
   actions: {
@@ -368,6 +374,30 @@ export default new Vuex.Store({
       }
     },
 
+    // 게시글 신고 접수
+    createArticleAccuse(context, accuseArticleData) {
+      axios
+      .post(
+        `${BACK_URL}/accuse/create`,
+        accuseArticleData.accuseArticleData
+      )
+      .then(() => {
+        router.push('/');
+      })
+      .catch((err) => console.log(err))
+    },
+    // 댓글 신고 접수
+    createCommentAccuse(context, accuseCommentData) {
+      axios
+      .post(
+        `${BACK_URL}/accuse/create`,
+        accuseCommentData.accuseCommentData
+      )
+      .then(() => {
+        router.push('/');
+      })
+      .catch((err) => console.log(err))
+    },
     // 관리자 페이지
     getUsers({ state, commit }, users) {
       const auth = { token: state.authToken };
@@ -380,28 +410,35 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    updateGrade({ state }, updateGrade) {
-      changedObj.changedGrade.token = state.authToken;
+    // 신고 리스트
+    getAccuses({ state, commit }, users) {
+      const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/`, changedObj.changedGrade)
-        .then(() => {
-          router.push("/user/admin");
+        .post(`${BACK_URL}/accuse/read`, auth)
+        .then((res) => {
+          commit("GET_ACCUSES", res.data.accuseList);
         })
         .catch((err) => {
-          console.error(err);
+          console.log(err);
         });
     },
-    // 신고양식
-    createAccuse(context, accuseData) {
-      axios
-        .post(
-          `${BACK_URL}/accuse/create`,
-          accuseData
-        )
-        .then(() => {
-          router.push("/");
-        })
-        .catch((err) => console.log(err));
+
+
+    
+    //게시글 수정하기
+    updateAccuse({ state }, updateAccuse) {
+      updateAccuse.updateAccuseData.token = state.authToken;
+    axios
+      .post(
+        `${BACK_URL}/accuse/applyto/`,
+        updateAccuse.updateAccuseData
+      )
+      .then(() => {
+        router.push(`/user/accuselist`);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
     },
   },
   modules: {},
