@@ -13,30 +13,27 @@
 <script>
 
 import axios from 'axios'
+import { mapState } from 'vuex'
 const BACK_URL = process.env.VUE_APP_BACK_URL
 
 export default {
     name: "articleLike",
     props: {
-        article: Object,
         isLiked: Boolean,
-    },
-    data(){
-      return{
-        articleData:this.article,
-      }
     },
     methods: {
         like(){
-          const articleData=this.articleData
-          articleData.token=this.$cookies.get('auth-token')
-          axios.post(`${BACK_URL}/like/${this.articleData.articleId}`,articleData)
+          this.articleData.token=this.$cookies.get('auth-token')
+          axios.post(`${BACK_URL}/like/${this.articleData.articleId}`,this.articleData)
             .then(() => { 
               this.$emit('like-change')
             })
             .catch(err => console.log(err.response.data))
             },
-    }
+    },
+    computed: {
+      ...mapState(["articleData"]),
+    },
 }
 </script>
 
