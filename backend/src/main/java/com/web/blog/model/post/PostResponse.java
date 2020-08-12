@@ -79,6 +79,7 @@ public class PostResponse {
 
      @ApiModelProperty(value = "partList", position = 19)
      public List<Participant> partList;
-   
+     @ApiModelProperty(value = "status", position = 20)
+     public int status;
 
 }

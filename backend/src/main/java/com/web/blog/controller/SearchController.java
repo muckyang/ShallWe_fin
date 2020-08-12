@@ -25,7 +25,6 @@ import com.web.blog.model.tag.Tag;
 import com.web.blog.model.post.Post;
 import com.web.blog.model.user.TokenRequest;
 import com.web.blog.model.user.User;
-import com.web.blog.model.user.UserResponse;
 import com.web.blog.service.JwtService;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -80,7 +79,7 @@ public class SearchController {
         List<User> result = null;
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
 
         if (userOpt.isPresent() && userOpt.get().getGrade() == 0) {
             result = userDao.findAll();
@@ -101,7 +100,7 @@ public class SearchController {
             System.out.println("임시글 목록 출력!!");
             String token = req.getToken();
             User jwtuser = jwtService.getUser(token);
-            Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+            Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
 
             String writer = userOpt.get().getNickname();
             List<Post> plist = postDao.findPostByTempAndWriter(temp, writer);
@@ -150,7 +149,7 @@ public class SearchController {
             System.out.println("내 주변 게시물 목록 출력!!");
             String token = req.getToken();
             User jwtuser = jwtService.getUser(token);
-            Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+            Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
 
             String writer = userOpt.get().getNickname();
             List<Post> plist = postDao.findPostByTempAndWriter(temp, writer);

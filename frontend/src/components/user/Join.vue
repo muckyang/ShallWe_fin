@@ -376,6 +376,9 @@ const BACK_URL = process.env.VUE_APP_BACK_URL
                 this.signUpData.address=address
             },
         },
+        created:function(){
+            this.signUpData.email=this.$route.query.kemail
+        },
     }
 
 </script>

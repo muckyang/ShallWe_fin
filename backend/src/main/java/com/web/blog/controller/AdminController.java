@@ -64,8 +64,7 @@ public class AdminController {
 
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
-
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent()) {
             Accuse accuse = new Accuse(req.getReporter(), req.getDefendant(), req.getAccuseIndex(),
                     req.getAccuseValue(), req.getAccuseKind(), req.getAccuseReason(), req.getAccuseUrl(),
