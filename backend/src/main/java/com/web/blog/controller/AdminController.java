@@ -18,7 +18,6 @@ import com.web.blog.model.accuse.AccuseRequest;
 import com.web.blog.model.accuse.AccuseResponse;
 import com.web.blog.model.comment.Comment;
 import com.web.blog.model.post.Post;
-import com.web.blog.model.user.TokenRequest;
 import com.web.blog.model.user.User;
 import com.web.blog.model.user.UserResponse;
 import com.web.blog.service.JwtService;

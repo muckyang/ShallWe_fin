@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <h1>관리자페이지</h1>
+    <h1>회원관리</h1>
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -68,7 +68,7 @@
   import { mapState, mapActions } from 'vuex'
 
   export default {
-    name: 'adminPage',
+    name: 'userList',
     data() {
       return {
       }

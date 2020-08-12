@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <div>{{articleData.title}}</div>
-    <div>{{articleData.description}}</div>
-    <a href="/user/accuseform" class="btn btn-primary">{{articleData.writer}}</a>
-    <div>{{articleData.createTime}}</div>
-    <commentList />
-    <router-link :to="{name:'postUpdate', params: {ID:this.$route.params.ID}}">수정</router-link>
-    <button>삭제</button>
-  </div>
+    <div>
+        <div>{{articleData.title}}</div>
+        <div>{{articleData.description}}</div>
+        <div>{{articleData.writer}}</div>
+        <div>{{articleData.createTime}}</div>
+        <commentList/>
+        <router-link :to="{name:'postUpdate', params: {ID:this.$route.params.ID}}">수정</router-link>
+        <button>삭제</button>
+    </div>
 </template>
 
 <script>
