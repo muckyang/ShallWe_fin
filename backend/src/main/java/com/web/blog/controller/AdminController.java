@@ -9,6 +9,7 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import com.web.blog.dao.AccuseDao;
+import com.web.blog.dao.AdminDao;
 import com.web.blog.dao.CommentDao;
 import com.web.blog.dao.PostDao;
 import com.web.blog.dao.UserDao;
@@ -16,6 +17,8 @@ import com.web.blog.model.accuse.Accuse;
 import com.web.blog.model.accuse.AccuseListResponse;
 import com.web.blog.model.accuse.AccuseRequest;
 import com.web.blog.model.accuse.AccuseResponse;
+import com.web.blog.model.admin.Admin;
+import com.web.blog.model.admin.AdminLoginRequest;
 import com.web.blog.model.comment.Comment;
 import com.web.blog.model.post.Post;
 import com.web.blog.model.user.User;
@@ -56,7 +59,30 @@ public class AdminController {
     CommentDao commentDao;
 
     @Autowired
+    AdminDao adminDao;
+    @Autowired
     private JwtService jwtService;
+
+    @PostMapping("/admin/login") // SWAGGER UI에 보이는 REQUEST명
+    @ApiOperation(value = "관리자 로그인") // SWAGGER UI에 보이는 이름
+    public Object login(@RequestBody AdminLoginRequest req) {
+
+        String adminId = req.getAdminId();
+        String password = req.getPassword();
+        Optional<Admin> adminOpt = adminDao.findAdminByAdminIdAndPassword(adminId, password);
+
+        if (adminOpt.isPresent()) {
+            System.out.println("로그인 성공  : " + adminId);
+            Admin admin = new Admin(adminId, password);
+            String token = jwtService.createAdminLoginToken(admin);
+            return new ResponseEntity<>(token, HttpStatus.OK);
+        } else {
+            System.out.println("로그인 실패");
+            return new ResponseEntity<>("로그인 실패 ", HttpStatus.NOT_FOUND);
+        }
+
+    }
+
 
     @PostMapping("/accuse/create")
     @ApiOperation(value = "신고글 등록")
@@ -85,9 +111,9 @@ public class AdminController {
     @ApiOperation(value = "신고글 목록")
     public Object read(@RequestBody AccuseRequest req) throws MessagingException, IOException {
         String token = req.getToken();
-        User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
-        if (userOpt.isPresent() && userOpt.get().getGrade() == 0) {
+        Admin jwtadmin = jwtService.getAdmin(token);
+        Optional<Admin> adminOpt = adminDao.findAdminByAdminIdAndPassword(jwtadmin.getAdminId(), jwtadmin.getPassword());
+        if (adminOpt.isPresent()) {
             System.out.println("신고글 목록 출력!!");
 
             List<Accuse> alist = accuseDao.findAccuseByAccuseConfirm(0);
@@ -111,10 +137,10 @@ public class AdminController {
     @ApiOperation(value = "신고 적용하기")
     public Object applyto(@Valid @RequestBody AccuseRequest req) {
         String token = req.getToken();
-        User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
+        Admin jwtadmin = jwtService.getAdmin(token);
+        Optional<Admin> adminOpt = adminDao.findAdminByAdminIdAndPassword(jwtadmin.getAdminId(), jwtadmin.getPassword());
 
-        if (userOpt.isPresent() && userOpt.get().getGrade() == 0) {
+        if (adminOpt.isPresent()) {
 
             String nickname = req.getDefendant();
             User user = userDao.getUserByNickname(nickname);
