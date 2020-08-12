@@ -4,16 +4,14 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 const BACK_URL=process.env.VUE_APP_BACK_URL
-import axios from 'axios'
 export default {
     methods:{
-        kakaoLogin(){
-            this.$cookies.set('auth-token',this.$route.query.token)
-        },
+        ...mapMutations(["SET_TOKEN"]),
     },
     created:function(){
-        this.kakaoLogin()
+        this.SET_TOKEN(this.$route.query.token)
     }
 }
 </script>
