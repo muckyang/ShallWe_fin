@@ -17,7 +17,7 @@ public class CommentRes {
     private int articleId;
     private int userId;
     private int status;
-    private String writer;
+    private String nickname;
     private String content;
     private String timeAgo;
     private LocalDateTime createTime;

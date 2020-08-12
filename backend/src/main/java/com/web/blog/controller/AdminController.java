@@ -86,7 +86,7 @@ public class AdminController {
     public Object read(@RequestBody AccuseRequest req) throws MessagingException, IOException {
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent() && userOpt.get().getGrade() == 0) {
             System.out.println("신고글 목록 출력!!");
 
@@ -112,7 +112,7 @@ public class AdminController {
     public Object applyto(@Valid @RequestBody AccuseRequest req) {
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
 
         if (userOpt.isPresent() && userOpt.get().getGrade() == 0) {
 

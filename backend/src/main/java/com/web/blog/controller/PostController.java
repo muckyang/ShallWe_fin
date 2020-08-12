@@ -47,7 +47,6 @@ import io.swagger.annotations.ApiOperation;
 
 import com.web.blog.model.comment.Comment;
 import com.web.blog.model.comment.CommentRes;
-import com.web.blog.model.comment.CommentResponse;
 
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = PostResponse.class),
         @ApiResponse(code = 403, message = "Forbidden", response = PostResponse.class),
@@ -277,7 +276,7 @@ public class PostController {
                 c.setArticleId(clist.get(i).getArticleId());
                 c.setUserId(clist.get(i).getUserId());
                 c.setContent(clist.get(i).getContent());
-                c.setWriter(nickname);
+                c.setNickname(nickname);
                 c.setTimeAgo(BeforeCreateTime(clist.get(i).getCreateTime()));
                 c.setCreateTime(clist.get(i).getCreateTime());
 
