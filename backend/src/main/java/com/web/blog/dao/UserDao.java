@@ -12,7 +12,7 @@ public interface UserDao extends JpaRepository<User, String> {
     User getUserByUserId(int userId);
     User getUserByEmail(String email);
     User getUserByNickname(String nickname);
-    @Transactional(readOnly = true) 
+
     Optional<User> findUserByNickname(String nickname);
     Optional<User> findUserByEmail(String email);
 }
