@@ -13,6 +13,7 @@ export default new Vuex.Store({
   state: {
     //사용자 인증
     authToken: cookies.get("auth-token"),
+    adminToken: cookies.get("admin-token"),
     isLoggedin: false,
     userData: {
       name: "",
@@ -81,6 +82,13 @@ export default new Vuex.Store({
       router.push("/");
       state.authToken = token;
       cookies.set("auth-token", token, 0);
+      state.isLoggedin = true;
+      setTimeout(function () { alert("환영합니다.") }, 50)
+    },
+    SET_ADMIN_TOKEN(state,token){
+      router.push("/");
+      state.authToken = token;
+      cookies.set("admin-token", token, 0);
       state.isLoggedin = true;
       setTimeout(function () { alert("환영합니다.") }, 50)
     },
@@ -177,16 +185,28 @@ export default new Vuex.Store({
       }
     },
     // login({ commit }, loginData) {
-    //   axios
-    //     .post(`${BACK_URL}/account/login`, loginData)
-    //     .then((response) => {
-    //       commit("SET_TOKEN", response.data);
-    //       alert("환영합니다.");
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
+      // axios
+      //   .post(`${BACK_URL}/account/login`, loginData)
+      //   .then((response) => {
+      //     commit("SET_TOKEN", response.data);
+      //     alert("환영합니다.");
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
     // },
+    adminLogin({ commit }, loginData){
+      console.log(loginData)
+      axios
+      .post(`${BACK_URL}/admin/login`, loginData)
+      .then((response) => {
+        commit("SET_ADMIN_TOKEN", response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+
     //profile
     getUserData({ state, commit }) {
       const auth = { token: state.authToken };
@@ -194,7 +214,6 @@ export default new Vuex.Store({
         .post(`${BACK_URL}/account/read`, auth)
         .then((response) => {
           commit("GET_USERDATA", response.data);
-          console.log(response.data, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         })
         .catch((err) => {
           console.error(err);
@@ -241,7 +260,7 @@ export default new Vuex.Store({
     },
     //단일 게시글 조회
     getArticle({ state, commit }, articleID) {
-      const auth = { token: state.authToken };
+      const auth = { token: state.adminToken ,status : 1};
       axios
         .post(`${BACK_URL}/post/detail/${articleID}`, auth)
         .then((response) => {

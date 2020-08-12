@@ -88,12 +88,14 @@
                       <div class="bottom-line"></div>
                     </div>
 
-                  <button class="kakao-btn">
-                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code">
-                      <img src="../../assets/img/kakao_logo.jpg" class="kakao-img">
-                      카톡 로그인
-                    </a>
-                  </button>
+                    <button class="kakao-btn">
+                      <a
+                        href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code"
+                      >
+                        <img src="../../assets/img/kakao_logo.jpg" class="kakao-img" />
+                        카톡 로그인
+                      </a>
+                    </button>
                     <div class="blank"></div>
                     <button class="google-btn">
                       <img src="../../assets/img/google_logo4.png" class="google-img" />
@@ -142,7 +144,7 @@
           >마이페이지</router-link>
         </li>
       </ul>
-      
+
       <div class="wall" v-show="isLoggedin">|</div>
 
       <!-- 유저관리 -->
@@ -228,11 +230,11 @@
 
 <script>
 import constants from "../../lib/constants";
-import {mapState, mapMutations, mapActions} from 'vuex'
-import router from '@/router'
-import axios from "axios"
-const BACK_URL = process.env.VUE_APP_BACK_URL
-const API_KEY = process.env.VUE_APP_KAKAO_API_KEY
+import { mapState, mapMutations, mapActions } from "vuex";
+import router from "@/router";
+import axios from "axios";
+const BACK_URL = process.env.VUE_APP_BACK_URL;
+const API_KEY = process.env.VUE_APP_KAKAO_API_KEY;
 
 export default {
   name: "Header",
@@ -259,10 +261,8 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['REMOVE_TOKEN','loginCheck']),
-    ...mapActions(['search','login', 'getUserData']),
-    
-
+    ...mapMutations(["REMOVE_TOKEN", "loginCheck"]),
+    ...mapActions(["search", "login", "getUserData"]),
 
     //검색
     // selectSubject(num){
@@ -289,15 +289,13 @@ export default {
     //     this.item2="공동구매"
     //   }
     // },
-
-
   },
   computed: {
     ...mapState(["isLoggedin", "userData"]),
   },
   created: function () {
     this.loginCheck();
-    if(this.$cookies.get('auth-token')){
+    if (this.$cookies.get("auth-token")) {
       this.getUserData();
     }
 

@@ -19,7 +19,6 @@ import com.web.blog.model.accuse.AccuseRequest;
 import com.web.blog.model.accuse.AccuseResponse;
 import com.web.blog.model.admin.Admin;
 import com.web.blog.model.admin.AdminLoginRequest;
-import com.web.blog.model.admin.AdminResponse;
 import com.web.blog.model.comment.Comment;
 import com.web.blog.model.post.Post;
 import com.web.blog.model.user.AdminLoginResponse;
@@ -71,19 +70,21 @@ public class AdminController {
 
         String adminId = req.getAdminId();
         String password = req.getPassword();
-        Optional<Admin> adminOpt = adminDao.findAdminByAdminIdAndPassword(adminId, password);
-
+        System.out.println(adminId  + " " + password);
+        Optional<Admin> adminOpt = adminDao.getAdminByAdminIdAndPassword(adminId, password);
+        System.out.println(adminOpt.get().toString());
         if (adminOpt.isPresent()) {
             System.out.println("로그인 성공  : " + adminId);
             Admin admin = new Admin(adminId, password);
             String admintoken = jwtService.createAdminLoginToken(admin);
+
             User usert = userDao.getUserByEmail(adminId);
             
             User user = new User();
             user.setNickname(usert.getNickname());
             user.setEmail(adminId);
             String token = jwtService.createLoginToken(user);
-            AdminLoginResponse result = null;
+            AdminLoginResponse result = new AdminLoginResponse();
             result.setAdminToken(admintoken);
             result.setAdminToken(token);
             return new ResponseEntity<>(result, HttpStatus.OK);

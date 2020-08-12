@@ -104,7 +104,7 @@
             <div class="detail-endTime">마감 시간: {{cutDate(articleData.endTime)}}까지</div>
           </div>
           <div class="detail-btns">
-            <articleLike @like-change="likeChange" :isLiked="isLiked" :article="articleData" />
+            <articleLike @like-change="likeChange" :isLiked="isLiked" />
 
             <button @click="shareContent" class="detail-share">
               <a href="javascript:;" class="kakao-share" @click="shareContent" id="kakao-link">
@@ -576,7 +576,7 @@ a {
   /* /* border-bottom: 1px solid #e9ecef; */
   /* border-top: 1px solid #e9ecef; */
 }
-@media screen and (min-width: 768px;) {
+@media screen and (min-width: 768px) {
   .middle-row {
     display: flex;
     flex-direction: column;
