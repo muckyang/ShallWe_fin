@@ -88,8 +88,6 @@ public class PostController {
         for (Post p : plist) {
             if (p.getStatus() == 1 || p.getStatus() == 2) {
                 if (p.getTemp() == 1 && datetimeTosec(p.getEndTime()) < datetimeTosec(LocalDateTime.now())) {
-                    System.out.println("만료시간 : "+ datetimeTosec(p.getEndTime()) );
-                    System.out.println("현재시간 : "+ datetimeTosec(LocalDateTime.now()));
                     p.setStatus(5);// 만료
                     postDao.save(p);
                 }
@@ -205,6 +203,10 @@ public class PostController {
                 post.setImage(req.getImage());
                 post.setStatus(1);
                 post.setTemp(temp);
+             
+                String ptag = "#자유게시물";
+              
+                post.setTag(ptag.substring(0, ptag.length() - 1));
 
                 postDao.save(post);
 
@@ -561,7 +563,7 @@ public class PostController {
 
     private long datetimeTosec(LocalDateTime ldt) {
         long result = 0L;
-        result += ((((((ldt.getYear()) * 365 + ldt.getDayOfYear()) * 24) + ldt.getHour() * 60) + ldt.getMinute()) * 60);
+        result += ((((((((ldt.getYear()-2000) * 365) + ldt.getDayOfYear()) * 24) + ldt.getHour()) * 60) + ldt.getMinute())* 60);
         return result;
     }
 }

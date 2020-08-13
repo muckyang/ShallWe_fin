@@ -123,9 +123,15 @@ public class SearchController {
             List<Post> plist;
             System.out.println("게시물 목록 출력!!");
             long before = System.currentTimeMillis();
-            if (categoryId == 0)// 전체 게시물 출력
+            if (categoryId == 0){// 전체 게시물 출력
                 plist = postDao.findPostByTemp(temp);
-            else
+                List<Post> plist2 = new LinkedList<>();
+                for(int i = 0 ; i < plist.size(); i ++){
+                    if(plist.get(i).getCategoryId() == 102)
+                        plist2.add(plist.get(i));
+                }
+                plist = plist2;
+            }else
                 plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
 
             result = new PostListResponse();
@@ -167,7 +173,6 @@ public class SearchController {
                 count++;
                 addList.add("%" + st.nextToken() + "%");
             }
-
             
             plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLike(addList.get(0), addList.get(1), addList.get(2));
             
@@ -309,6 +314,10 @@ public class SearchController {
 
         for (int i = 0; i < plist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
             Post p = plist.get(i);
+
+            if(p.getCategoryId() ==102){
+                continue;
+            }
             List<String> taglist = new LinkedList<>();
             String tag = p.getTag();
             if (tag != null) {
