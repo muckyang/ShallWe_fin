@@ -1,13 +1,16 @@
 <template>
-    <div>
-        <div>{{articleData.title}}</div>
-        <div>{{articleData.description}}</div>
-        <div>{{articleData.writer}}</div>
-        <div>{{articleData.createTime}}</div>
-        <commentList/>
-        <router-link :to="{name:'postUpdate', params: {ID:this.$route.params.ID}}">수정</router-link>
-        <button>삭제</button>
-    </div>
+  <div>
+    <div>{{ articleData.title }}</div>
+    <div>{{ articleData.description }}</div>
+    <div>{{ articleData.writer }}</div>
+    <div>{{ articleData.createTime }}</div>
+    <commentList />
+    <router-link
+      :to="{ name: 'postUpdate', params: { ID: this.$route.params.ID } }"
+      >수정</router-link
+    >
+    <button>삭제</button>
+  </div>
 </template>
 
 <script>
@@ -51,12 +54,11 @@ export default {
     },
   },
 
-  created: function () {
+  created: function() {
     this.getArticle(this.$route.params.ID);
     this.getUserData();
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

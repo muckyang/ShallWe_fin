@@ -32,7 +32,7 @@
           aria-controls="nav-contact"
           aria-selected="false"
         >자유</a>
-        <router-link :to="{name:'postCreate'}" class="ml-auto">
+        <router-link :to="{ name: 'postCreate' }" class="ml-auto">
           <button class="post-write-btn">글쓰기</button>
         </router-link>
       </div>
@@ -48,10 +48,10 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">카테고리</th>
+              <th scope="col"></th>
               <th scope="col">제목</th>
-              <th scope="col">글쓴이</th>
-              <th scope="col">내용</th>
+              <th scope="col">작성자</th>
+              <th scope="col">작성일</th>
             </tr>
           </thead>
           <tbody>
@@ -73,19 +73,21 @@
               </th>
               <td>
                 <router-link
-                  :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"
+                  :to="{
+                    name: 'postDetail',
+                    params: { ID: `${article.articleId}` },
+                  }"
                 >{{ article.title }}</router-link>
               </td>
               <td>
                 <router-link
-                  :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"
+                  :to="{
+                    name: 'postDetail',
+                    params: { ID: `${article.articleId}` },
+                  }"
                 >{{ article.writer }}</router-link>
               </td>
-              <td>
-                <router-link
-                  :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"
-                >{{ article.description }}</router-link>
-              </td>
+              <td>{{ cutDate(article.createTime) }}</td>
             </tr>
           </tbody>
         </table>
@@ -100,10 +102,10 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">카테고리</th>
+              <th scope="col"></th>
               <th scope="col">제목</th>
-              <th scope="col">글쓴이</th>
-              <th scope="col">내용</th>
+              <th scope="col">작성자</th>
+              <th scope="col">작성일</th>
             </tr>
           </thead>
           <tbody>
@@ -125,19 +127,21 @@
               </th>
               <td>
                 <router-link
-                  :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"
+                  :to="{
+                    name: 'postDetail',
+                    params: { ID: `${article.articleId}` },
+                  }"
                 >{{ article.title }}</router-link>
               </td>
               <td>
                 <router-link
-                  :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"
+                  :to="{
+                    name: 'postDetail',
+                    params: { ID: `${article.articleId}` },
+                  }"
                 >{{ article.writer }}</router-link>
               </td>
-              <td>
-                <router-link
-                  :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"
-                >{{ article.description }}</router-link>
-              </td>
+              <td>{{ article.createTime }}</td>
             </tr>
           </tbody>
         </table>
@@ -152,10 +156,10 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">카테고리</th>
+              <th scope="col"></th>
               <th scope="col">제목</th>
-              <th scope="col">글쓴이</th>
-              <th scope="col">내용</th>
+              <th scope="col">작성자</th>
+              <th scope="col">작성일</th>
             </tr>
           </thead>
           <tbody>
@@ -177,19 +181,21 @@
               </th>
               <td>
                 <router-link
-                  :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"
+                  :to="{
+                    name: 'postDetail',
+                    params: { ID: `${article.articleId}` },
+                  }"
                 >{{ article.title }}</router-link>
               </td>
               <td>
                 <router-link
-                  :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"
+                  :to="{
+                    name: 'postDetail',
+                    params: { ID: `${article.articleId}` },
+                  }"
                 >{{ article.writer }}</router-link>
               </td>
-              <td>
-                <router-link
-                  :to="{name:'postDetail',params:{ID:`${article.articleId}`}}"
-                >{{ article.description }}</router-link>
-              </td>
+              <td>{{ article.createTime }}</td>
             </tr>
           </tbody>
         </table>
@@ -213,6 +219,14 @@ export default {
     changeCategory(num) {
       this.categoryNum = num;
       this.getArticles({ temp: 2, categoryId: this.categoryNum });
+    },
+    cutDate(date) {
+      let CD = date + "";
+      const year = CD.substring(0, 4) + ".";
+      const month = CD.substring(5, 7) + ".";
+      const day = CD.substring(8, 10) + ".";
+      const res = year + month + day;
+      return res;
     },
   },
   computed: {

@@ -12,7 +12,6 @@ import editUser from "../components/user/editUser.vue";
 import Profile from "../components/user/Profile.vue";
 import SignUpComplete from "../components/user/SignUpComplete.vue";
 import userList from "../components/user/userList.vue";
-import accuseForm from "../components/user/accuseForm.vue";
 import accuseList from "../components/user/accuseList.vue";
 import klogin from "@/components/user/klogin.vue";
 import adminLogin from "@/components/user/adminLogin.vue";
@@ -185,12 +184,6 @@ const routes = [
     name: "userList",
     component: userList,
   },
-  // 신고양식
-  {
-    path: "/user/accuseform",
-    name: "accuseForm",
-    component: accuseForm,
-  },
   {
     path: "/user/accuselist",
     name: "accuseList",
@@ -214,6 +207,7 @@ router.beforeEach((to, from, next) => {
     "postList",
     "klogin",
     "adminLogin",
+    "searchList",
   ];
   //로그인 하면 안되는 페이지
   const authPages = [
