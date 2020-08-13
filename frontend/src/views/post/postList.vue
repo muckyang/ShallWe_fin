@@ -141,7 +141,7 @@
                   }"
                 >{{ article.writer }}</router-link>
               </td>
-              <td>{{ article.createTime }}</td>
+              <td>{{ cutDate(article.createTime) }}</td>
             </tr>
           </tbody>
         </table>
@@ -195,7 +195,7 @@
                   }"
                 >{{ article.writer }}</router-link>
               </td>
-              <td>{{ article.createTime }}</td>
+              <td>{{ cutDate(article.createTime) }}</td>
             </tr>
           </tbody>
         </table>
@@ -233,7 +233,9 @@ export default {
     ...mapState(["articles"]),
   },
   created() {
+    console.log("ㅇㅇㅇ");
     this.getArticles({ temp: 2, categoryId: this.categoryNum });
+    console.log(this.articles);
   },
 };
 </script>
