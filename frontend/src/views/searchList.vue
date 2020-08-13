@@ -22,7 +22,7 @@
         <a class="dropdown-item" href="#" @click="selectCategory(3)">공동구매</a>
       </div>
       <div v-if="searchData.temp===2" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#" @click="selectCategory(101)">질문</a>
+        <a class="dropdown-item" href="#" @click="selectCategory(101)">공지</a>
         <a class="dropdown-item" href="#" @click="selectCategory(102)">후기</a>
         <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
       </div>
@@ -36,17 +36,20 @@
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="#" @click="selectSubject(0)">제목</a>
         <a class="dropdown-item" href="#" @click="selectSubject(1)">작성자</a>
-        <a v-if="searchData.temp===1" class="dropdown-item" href="#" @click="selectSubject(2)">태그</a>
+        <a v-if="searchData.temp===1" class="dropdown-item" href="#" @click="selectSubject(2)">주소</a>
       </div>
     </div>
     
-    <input class="searchInput" type="search" 
+    <input class="searchInput" type="search"
     style="font-family: FontAwesome;" 
-    placeholder="Search"  
+    placeholder="Search"
+    v-model="searchData.searchDataForSend.word"  
+    @keypress.enter="detailSearch(searchData)"
     >
     <button class="searchBtn 
     my-2 my-sm-0" 
-    type="submit">
+    type="submit"
+    @click="detailSearch(searchData)">
     <i class="fas fa-search"></i></button>
     
      <b-container class="bv-example-row">
@@ -100,7 +103,7 @@ export default {
     }
   },
   methods:{
-    ...mapActions(['search']),
+    ...mapActions(['detailSearch']),
     selectTemp(num){
       if(num===1){
         this.searchData.temp=1
@@ -120,8 +123,8 @@ export default {
         this.searchData.searchDataForSend.subject = 'writer'
         this.item1 = '작성자'
       }else{
-        this.searchData.searchDataForSend.subject = 'tag'
-        this.item1 = '태그'
+        this.searchData.searchDataForSend.subject = 'address'
+        this.item1 = '주소'
       }
     },
     selectCategory(num){
@@ -136,7 +139,7 @@ export default {
         this.item2="공동구매"
       }else if(num==101){
         this.searchData.categoryId=101
-        this.item2 = '질문'
+        this.item2 = '공지'
       }else if(num==102){
         this.searchData.categoryId=102
         this.item2 = '후기'

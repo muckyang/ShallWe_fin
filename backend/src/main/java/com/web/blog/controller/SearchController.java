@@ -264,7 +264,7 @@ public class SearchController {
                 addList.add("%" + st.nextToken() + "%");
             }
 
-            if (categoryId == 0)
+            if (categoryId == 0){
                 if (addList.size() == 1) {
                     plist = postDao.findPostByAddressLike(addList.get(0));
                 } else if (addList.size() == 2) {
@@ -277,7 +277,8 @@ public class SearchController {
                             addList.get(1), addList.get(2), addList.get(3));
                 }
 
-                else {
+                
+            }else {
                     if (addList.size() == 1) {
                         plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0));
                     } else if (addList.size() == 2) {
