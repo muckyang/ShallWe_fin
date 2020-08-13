@@ -79,6 +79,7 @@ public class ParticipantController {
             participant.setArticleId(request.getArticleId());
             participant.setTitle(title);
             participant.setPrice(price);
+            participant.setStatus(0); //상태값 0으로 지정 
             participant.setWriter(userOpt.get().getNickname());
             participant.setDescription(description);
             participantDao.save(participant);// 참가자 DB에 등록 완료

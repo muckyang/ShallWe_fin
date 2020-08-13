@@ -134,7 +134,7 @@ public class PostController {
                 post.setStatus(1);
                 post.setLikeNum(0);
                 post.setCommentNum(0);
-                // post.setUrlLink(req.getUrlLink());
+                post.setUrlLink(req.getUrlLink());
                 postDao.save(post);
                 System.out.println("임시저장!!");
 
@@ -153,6 +153,7 @@ public class PostController {
                 post.setTemp(temp);
                 post.setEndTime(endTime);
                 post.setStatus(1);
+                post.setUrlLink(req.getUrlLink());
                 post.setLikeNum(0);
                 post.setCommentNum(0);
 
@@ -183,13 +184,10 @@ public class PostController {
                 participant.setTitle(def_mes);
                 participant.setPrice(myPrice);
                 participant.setWriter(userOpt.get().getNickname());
+                participant.setStatus(1);// 게시자 본인은 활성화 상태 
                 participant.setDescription(def_mes);
                 participantDao.save(participant);// 참가자 DB에 등록 완료
                 tagAdd(tags, artiId);
-                // // 게시물 sum_price에 더하기
-                // post = postDao.getPostByArticleId(artiId);// 해당 구매게시물을 얻어옴
-                // post.setSumPrice(myPrice);
-                // postDao.save(post);// 다시 DB에 넣어줌
 
                 System.out.println("참가자 등록!!");
 
@@ -280,6 +278,7 @@ public class PostController {
                 c.setUserId(clist.get(i).getUserId());
                 c.setContent(clist.get(i).getContent());
                 c.setNickname(nickname);
+                c.setStatus(clist.get(i).getStatus());
                 c.setTimeAgo(BeforeCreateTime(clist.get(i).getCreateTime()));
                 c.setCreateTime(clist.get(i).getCreateTime());
 
@@ -327,6 +326,7 @@ public class PostController {
             post.setDescription(req.getDescription());
             post.setMinPrice(req.getMinPrice());
             post.setUrlLink(req.getUrlLink());
+            post.setStatus(1);
             post.setImage(req.getImage());
             post.setTemp(temp);
             post.setEndTime(endTime);
