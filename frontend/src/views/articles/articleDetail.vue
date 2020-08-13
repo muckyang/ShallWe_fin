@@ -18,7 +18,7 @@
                 params: {ID:this.$route.params.ID}}"
                 v-if="articleData.status===1"
               >
-              <a class="dropdown-item articleUpdate">수정</a>
+                <a class="dropdown-item articleUpdate">수정</a>
               </router-link>
               <a class="dropdown-item">삭제</a>
               <!--다시 보기!!!!!!!1 -->
@@ -108,7 +108,9 @@
                 v-if="articleData.minPrice<=articleData.sumPrice"
                 @click="confirmPurchase"
               >
-                <div v-if="articleData.status===3"><i class="fas fa-user-plus"></i>확정</div>
+                <div v-if="articleData.status===3">
+                  <i class="fas fa-user-plus"></i>확정
+                </div>
               </b-button>
             </div>
             <b-button
@@ -205,16 +207,8 @@
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <b-button
-                    variant="light"
-                    size="sm"
-                    v-b-modal.update-modal
-                  >수정</b-button>
-                  <b-button
-                    variant="light"
-                    size="sm"
-                    @click="cancel(participant.no)"
-                  >삭제</b-button>
+                  <b-button variant="light" size="sm" v-b-modal.update-modal>수정</b-button>
+                  <b-button variant="light" size="sm" @click="cancel(participant.no)">삭제</b-button>
                 </div>
               </div>
 
@@ -232,12 +226,7 @@
                       size="sm"
                       @click="acceptParticpation(participant.writer)"
                     >수락</b-button>
-                    <b-button
-                      variant="light"
-                      size="sm"
-                      v-if="!isDenied"
-                      @click="denyConfirm"
-                    >거절</b-button>
+                    <b-button variant="light" size="sm" v-if="!isDenied" @click="denyConfirm">거절</b-button>
                     <b-button
                       variant="light"
                       size="sm"
@@ -247,7 +236,6 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
           <div
@@ -304,7 +292,7 @@ export default {
         accuseConfirm: 0,
         token: this.$cookies.get("auth-token"),
       },
-      isDenied:false
+      isDenied: false,
     };
   },
   computed: {
@@ -312,36 +300,43 @@ export default {
   },
   methods: {
     ...mapActions(["getArticle", "getUserData", "createArticleAccuse"]),
-    denyConfirm(){
-      this.isDenied=true
+    denyConfirm() {
+      this.isDenied = true;
     },
-    acceptParticpation(participant){
-      axios.post(`${BACK_URL}/participant/accept/${this.articleData.articleId}/${participant}`)
-        .then((response)=>{
-          alert(response.data)
+    acceptParticpation(participant) {
+      axios
+        .post(
+          `${BACK_URL}/participant/accept/${this.articleData.articleId}/${participant}`
+        )
+        .then((response) => {
+          alert(response.data);
         })
-        .catch((error)=>{
-          console.log(error)
-        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    denyParticpation(participant){
-      axios.post(`${BACK_URL}/participant/denied/${this.articleData.articleId}/${participant}`)
-        .then((response)=>{
-          alert(response.data)
-          this.isDenied=false
+    denyParticpation(participant) {
+      axios
+        .post(
+          `${BACK_URL}/participant/denied/${this.articleData.articleId}/${participant}`
+        )
+        .then((response) => {
+          alert(response.data);
+          this.isDenied = false;
         })
-        .catch((error)=>{
-          console.log(error)
-        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    confirmPurchase(){
-      axios.get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
-        .then((response)=>{
-          alert(response.data)
+    confirmPurchase() {
+      axios
+        .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
+        .then((response) => {
+          alert(response.data);
         })
-        .catch((error)=>{
-          console.log(error)
-        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
 
     // 신고 유형 변경

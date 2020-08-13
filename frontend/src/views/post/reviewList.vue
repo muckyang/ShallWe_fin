@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     getReviews() {
-      console.log("asdfa");
       const auth = this.token;
       axios
         .post(`${BACK_URL}/post/read/2/102`, { auth })
