@@ -125,12 +125,7 @@ public class SearchController {
             long before = System.currentTimeMillis();
             if (categoryId == 0){// 전체 게시물 출력
                 plist = postDao.findPostByTemp(temp);
-                List<Post> plist2 = new LinkedList<>();
-                for(int i = 0 ; i < plist.size(); i ++){
-                    if(plist.get(i).getCategoryId() == 102)
-                        plist2.add(plist.get(i));
-                }
-                plist = plist2;
+             
             }else
                 plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
 
@@ -141,8 +136,15 @@ public class SearchController {
             return result;
         } else if (temp == 2) { // 자유게시판
             List<Post> plist;
-            if (categoryId == 100)// 전체 게시물 출력
+            if (categoryId == 100){// 전체 게시물 출력
                 plist = postDao.findPostByTemp(temp);
+                List<Post> plist2 = new LinkedList<>();
+                for(int i = 0 ; i < plist.size(); i ++){
+                    if(plist.get(i).getCategoryId() == 102)
+                        plist2.add(plist.get(i));
+                }
+                plist = plist2;
+            }
             else
                 plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
 

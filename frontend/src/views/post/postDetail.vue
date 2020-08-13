@@ -5,10 +5,7 @@
     <div>{{ articleData.writer }}</div>
     <div>{{ articleData.createTime }}</div>
     <commentList />
-    <router-link
-      :to="{ name: 'postUpdate', params: { ID: this.$route.params.ID } }"
-      >수정</router-link
-    >
+    <router-link :to="{ name: 'postUpdate', params: { ID: this.$route.params.ID } }">수정</router-link>
     <button>삭제</button>
   </div>
 </template>
@@ -54,8 +51,10 @@ export default {
     },
   },
 
-  created: function() {
+  created: function () {
+    console.log(this.$route.params.ID);
     this.getArticle(this.$route.params.ID);
+
     this.getUserData();
   },
 };

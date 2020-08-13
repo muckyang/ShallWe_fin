@@ -273,8 +273,6 @@ export default {
     if (this.$cookies.get("auth-token")) {
       this.getUserData();
     }
-
-    console.log(this.userData);
   },
 };
 </script>

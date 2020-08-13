@@ -5,6 +5,8 @@
       <div class="top">
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
+
+          <!--수정,삭제,신고 버튼-->
           <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
             <button type="button" class="article-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
@@ -14,8 +16,9 @@
                 class="articleUpdate"
                 :to="{name:'articleUpdate',
                 params: {ID:this.$route.params.ID}}"
+                v-if="articleData.status===1"
               >
-                <a class="dropdown-item articleUpdate">수정</a>
+              <a class="dropdown-item articleUpdate">수정</a>
               </router-link>
               <a class="dropdown-item">삭제</a>
               <!--다시 보기!!!!!!!1 -->
@@ -74,10 +77,7 @@
         <img class="MyImage" :src="articleData.image" alt="..." />
         <div class="articleInfo">
           <div class="detail-info">
-            <div class="detail-address">
-              만남의 장소: {{articleData.address}}
-
-            </div>
+            <div class="detail-address">만남의 장소: {{articleData.address}}</div>
             <div class="detail-price">
               <div class="min-price">최소 주문 금액: {{articleData.minPrice}}원</div>
               <div class="min-price">모인 금액: {{articleData.sumPrice}}원</div>
@@ -99,8 +99,26 @@
               class="detail-join"
               v-if="articleData.userId != userData.userId"
             >
-              <i class="fas fa-user-plus"></i> 참여
+              <i v-if="articleData.status<4" class="fas fa-user-plus"></i> 참여
             </b-button>
+            <b-button
+              id="show-btn"
+              class="detail-join"
+              v-if="articleData.minPrice<=articleData.sumPrice"
+              @click="confirmPurchase"
+            >
+              <div v-if="articleData.status===3"><i class="fas fa-user-plus"></i>확정</div>
+            </b-button>
+            <b-button
+              id="show-btn"
+              class="detail-join"
+              v-if="articleData.status>=4"
+              @click="confirmPurchase"
+            >
+              <i class="fas fa-user-plus"></i>후기 작성
+            </b-button>
+
+            <!--참가 modal-->
             <b-modal
               id="join-modal"
               size="xl"
@@ -158,6 +176,8 @@
     <div class="kakao-map">
       <kakaoMapForDetail />
     </div>
+
+    <!--참가자 리스트-->
     <div class="members">
       <div class="members-start">
         <i class="fas fa-users"></i>
@@ -173,27 +193,57 @@
                 class="fas fa-crown"
               ></i>
             </div>
-            <div
-              class="article-drop dropdown dropleft"
-              v-if="participant.userId === userData.userId"
-            >
-              <button type="button" class="article-btn" data-toggle="dropdown">
-                <i class="fas fa-ellipsis-v"></i>
-              </button>
-              <div class="dropdown-menu">
-                <b-button
-                  variant="light"
-                  size="sm"
-                  v-b-modal.update-modal
-                  v-if="participant.userId === userData.userId"
-                >수정</b-button>
-                <b-button
-                  variant="light"
-                  size="sm"
-                  v-if="participant.userId === userData.userId"
-                  @click="cancel(participant.no)"
-                >삭제</b-button>
+
+            <div v-if="participant.status===0">
+              <div
+                class="article-drop dropdown dropleft"
+                v-if="participant.userId === userData.userId"
+              >
+                <button type="button" class="article-btn" data-toggle="dropdown">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <b-button
+                    variant="light"
+                    size="sm"
+                    v-b-modal.update-modal
+                  >수정</b-button>
+                  <b-button
+                    variant="light"
+                    size="sm"
+                    @click="cancel(participant.no)"
+                  >삭제</b-button>
+                </div>
               </div>
+
+              <div
+                class="article-drop dropdown dropleft"
+                v-if="articleData.writer === userData.nickname"
+              >
+                <button type="button" class="article-btn" data-toggle="dropdown">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <b-button
+                    variant="light"
+                    size="sm"
+                    @click="acceptParticpation(participant.writer)"
+                  >수락</b-button>
+                  <b-button
+                    variant="light"
+                    size="sm"
+                    v-if="!isDenied"
+                    @click="denyConfirm"
+                  >거절</b-button>
+                  <b-button
+                    variant="light"
+                    size="sm"
+                    v-if="isDenied"
+                    @click="denyParticpation(participant.writer)"
+                  >거절 확정</b-button>
+                </div>
+              </div>
+
             </div>
           </div>
           <div
@@ -250,6 +300,7 @@ export default {
         accuseConfirm: 0,
         token: this.$cookies.get("auth-token"),
       },
+      isDenied:false
     };
   },
   computed: {
@@ -257,6 +308,37 @@ export default {
   },
   methods: {
     ...mapActions(["getArticle", "getUserData", "createArticleAccuse"]),
+    denyConfirm(){
+      this.isDenied=true
+    },
+    acceptParticpation(participant){
+      axios.post(`${BACK_URL}/participant/accept/${this.articleData.articleId}/${participant}`)
+        .then((response)=>{
+          alert(response.data)
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
+    },
+    denyParticpation(participant){
+      axios.post(`${BACK_URL}/participant/denied/${this.articleData.articleId}/${participant}`)
+        .then((response)=>{
+          alert(response.data)
+          this.isDenied=false
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
+    },
+    confirmPurchase(){
+      axios.get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
+        .then((response)=>{
+          alert(response.data)
+        })
+        .catch((error)=>{
+          console.log(error)
+        })
+    },
 
     // 신고 유형 변경
     changeAccuseKind(kind) {
@@ -398,6 +480,8 @@ export default {
   },
 };
 </script>
+
+
 
 <style>
 .kakao-map {
