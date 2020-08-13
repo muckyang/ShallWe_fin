@@ -343,7 +343,6 @@ export default new Vuex.Store({
     },
     //전체 게시글 검색
     search({ commit }, searchData) {
-      console.log("ASDASDASDASDASDASD")
       cookies.set("searchData", searchData, 0);
       searchData.categoryId = 0;
       axios
@@ -364,29 +363,30 @@ export default new Vuex.Store({
       if (
         searchData.searchDataForSend.word &&
         searchData.searchDataForSend.subject &&
-        searchData.categoryId
+        searchData.categoryId&&
+        searchData.temp
       ) {
-        searchData.categoryId = 0;
+        console.log(searchData)
         axios
           .post(
-            `${BACK_URL}/post/search/1/${searchData.categoryId}`,
+            `${BACK_URL}/post/search/${searchData.temp}/${searchData.categoryId}`,
             searchData.searchDataForSend
           )
           .then((res) => {
+            console.log(res.data)
             commit("GET_ARTICLES", res.data.postList);
-            router.push({ name: "searchList" });
-            searchData.categoryId = "기본값";
           })
           .catch((err) => {
             console.log(err);
-            searchData.categoryId = "기본값";
           });
-      } else if (!searchData.searchDataForSend.subject) {
-        alert("분류를 입력하세요!");
+      } else if (!searchData.temp) {
+        alert("게시글 종류를 선택해 주세요!");
       } else if (!searchData.categoryId) {
-        alert("카테고리를 선택하세요!");
+        alert("카테고리를 선택해 주세요!");
+      } else if (!searchData.searchDataForSend.subject) {
+        alert("분류를 선택해 주세요!");
       } else if (!searchData.searchDataForSend.word) {
-        alert("검색어를 입력해주세요!");
+        alert("검색어를 입력해 주세요!");
       }
     },
 

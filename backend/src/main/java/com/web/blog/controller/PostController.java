@@ -86,10 +86,11 @@ public class PostController {
         System.out.println("게시물 활성화 상태 변경 30초마다 실행중입니다.");
         List<Post> plist = postDao.findAll();
         for (Post p : plist) {
-            if (p.getStatus() == 1 && p.getTemp() == 1
-                    && datetimeTosec(p.getEndTime()) < datetimeTosec(LocalDateTime.now())) {
-                p.setStatus(2);// 만료
-                postDao.save(p);
+            if (p.getStatus() == 1 || p.getStatus() == 2) {
+                if (p.getTemp() == 1 && datetimeTosec(p.getEndTime()) < datetimeTosec(LocalDateTime.now())) {
+                    p.setStatus(5);// 만료
+                    postDao.save(p);
+                }
             }
         }
     }
@@ -202,6 +203,11 @@ public class PostController {
                 post.setImage(req.getImage());
                 post.setStatus(1);
                 post.setTemp(temp);
+             
+                String ptag = "#자유게시물";
+              
+                post.setTag(ptag.substring(0, ptag.length() - 1));
+
                 postDao.save(post);
 
                 return new ResponseEntity<>("자유게시물 등록", HttpStatus.OK);
@@ -336,50 +342,54 @@ public class PostController {
         } else if (temp == 1) {
 
             Post post = postDao.getPostByArticleId(req.getArticleId());
+            if (post.getStatus() == 1) { // 게시물이 거래대기중인 상태만
+                post.setCategoryId(req.getCategoryId());
+                post.setTitle(req.getTitle());
+                post.setAddress(req.getAddress());
+                post.setMinPrice(req.getMinPrice());
+                post.setDescription(req.getDescription());
+                post.setUrlLink(req.getUrlLink());
+                post.setImage(req.getImage());
+                post.setTemp(temp);
+                post.setEndTime(endTime);
 
-            post.setCategoryId(req.getCategoryId());
-            post.setTitle(req.getTitle());
-            post.setAddress(req.getAddress());
-            post.setMinPrice(req.getMinPrice());
-            post.setDescription(req.getDescription());
-            post.setUrlLink(req.getUrlLink());
-            post.setImage(req.getImage());
-            post.setTemp(temp);
-            post.setEndTime(endTime);
+                postDao.save(post);
 
-            postDao.save(post);
+                int myPrice = req.getMyPrice();
+                if (myPrice < 0) {
+                    String message = "0원보다 값이 작습니다.";
+                    return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+                }
 
-            int myPrice = req.getMyPrice();
-            if (myPrice < 0) {
-                String message = "0원보다 값이 작습니다.";
-                return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+                Participant part = participantDao.getParticipantByUserIdAndArticleId(userId, req.getArticleId());
+                if (part == null) {// 존재하지않는 참가자입니다.
+                    return new ResponseEntity<>("존재하지 않는 참가자 입니다.", HttpStatus.BAD_REQUEST);
+                }
+
+                int old_price = part.getPrice();// 원래 참가자의 가격정보
+
+                part.setArticleId(req.getArticleId());
+                part.setPrice(myPrice);
+                participantDao.save(part);// 참가자 DB에 등록 완료
+
+                // 게시물 sum_price에 더하기
+                post = postDao.getPostByArticleId(req.getArticleId());// 해당 구매게시물을 얻어옴
+                int sumPrice = post.getSumPrice();// sumPrice를 얻어옴
+                sumPrice = sumPrice + (myPrice - old_price);// 참가자의 가격을 더해줌
+                post.setSumPrice(sumPrice);
+                postDao.save(post);// 다시 DB에 넣어줌
+
+                tagDelete(req.getArticleId());
+                // 태그 수정
+                String[] tags = req.getTags();// 태그 내용
+                tagAdd(tags, req.getArticleId());
+
+                System.out.println(post.getArticleId() + "번째 게시물 수정 완료 ");
+                return new ResponseEntity<>("게시물 수정 완료 ", HttpStatus.OK);
+            } else {
+                System.out.println("수정이 불가능한 게시물입니다.");
+                return new ResponseEntity<>("수정이 불가능한 게시물 입니다.", HttpStatus.OK);
             }
-
-            Participant part = participantDao.getParticipantByUserIdAndArticleId(userId, req.getArticleId());
-            if (part == null) {// 존재하지않는 참가자입니다.
-                return new ResponseEntity<>("존재하지 않는 참가자 입니다.", HttpStatus.BAD_REQUEST);
-            }
-
-            int old_price = part.getPrice();// 원래 참가자의 가격정보
-
-            part.setArticleId(req.getArticleId());
-            part.setPrice(myPrice);
-            participantDao.save(part);// 참가자 DB에 등록 완료
-
-            // 게시물 sum_price에 더하기
-            post = postDao.getPostByArticleId(req.getArticleId());// 해당 구매게시물을 얻어옴
-            int sumPrice = post.getSumPrice();// sumPrice를 얻어옴
-            sumPrice = sumPrice + (myPrice - old_price);// 참가자의 가격을 더해줌
-            post.setSumPrice(sumPrice);
-            postDao.save(post);// 다시 DB에 넣어줌
-
-            tagDelete(req.getArticleId());
-            // 태그 수정
-            String[] tags = req.getTags();// 태그 내용
-            tagAdd(tags, req.getArticleId());
-
-            System.out.println(post.getArticleId() + "번째 게시물 수정 완료 ");
-            return new ResponseEntity<>("게시물 수정 완료 ", HttpStatus.OK);
         } else if (temp == 2) { // 자유게시판
 
             Post post = postDao.getPostByArticleId(req.getArticleId());
@@ -403,6 +413,32 @@ public class PostController {
         } else {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/post/complete/{articleId}")
+    @ApiOperation(value = "거래완료")
+    public Object complete(@Valid @PathVariable int articleId) {
+        Post post = postDao.findPostByArticleId(articleId);
+        post.setStatus(4); // 거래완료로 변경
+        List<Participant> partlist = participantDao.findParticipantByArticleId(articleId);
+        // 서브쿼리 필요함 ..
+        for (Participant part : partlist) {
+            if (part.getStatus() == 1) {
+                User user = userDao.getUserByUserId(part.getUserId());
+                if (part.getUserId() == post.getUserId()) {
+                    user.setUserPoint(user.getUserPoint() + 50);
+                } else {
+                    user.setUserPoint(user.getUserPoint() + 30);
+                }
+            } else if (part.getStatus() == 0) {
+                part.setStatus(2);// 참가수락하지 않은 참가자는 거부로 변경
+                participantDao.save(part);
+            }
+        }
+        postDao.save(post);
+
+        System.out.println("거래완료");
+        return new ResponseEntity<>("자유글 수정 완료 ", HttpStatus.OK);
     }
 
     @GetMapping("/post/delete/{articleId}")
@@ -527,7 +563,7 @@ public class PostController {
 
     private long datetimeTosec(LocalDateTime ldt) {
         long result = 0L;
-        result += (((((ldt.getYear()) * 365 + ldt.getDayOfYear()) * 24) + ldt.getHour() * 60) + ldt.getMinute() * 60);
+        result += ((((((((ldt.getYear()-2000) * 365) + ldt.getDayOfYear()) * 24) + ldt.getHour()) * 60) + ldt.getMinute())* 60);
         return result;
     }
 }
