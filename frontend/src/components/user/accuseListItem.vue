@@ -5,8 +5,16 @@
         <b-card-title># {{ accuse.accuseId }}. "{{ accuse.reporter }}" 님의 신고 내용</b-card-title>
         <b-card-sub-title>피신고자: {{ accuse.defendant }}</b-card-sub-title>
 
-        <b-card-text v-if="accuse.accuseIndex === 1"><span class="badge badge-pill badge-light">게시물 신고</span> {{ accuse.accuseKind }}</b-card-text>
-        <b-card-text v-if="accuse.accuseIndex === 2"><span class="badge badge-pill badge-dark">댓글 신고</span> {{ accuse.accuseKind }}</b-card-text>
+        <b-card-text v-if="accuse.accuseIndex === 1"><span class="badge badge-pill badge-light mr-2">게시물 신고</span>
+          <span v-if="accuse.accuseKind == 1">욕설</span>
+          <span v-if="accuse.accuseKind == 2">노쇼</span>
+          <span v-if="accuse.accuseKind == 3">광고</span>
+        </b-card-text>
+        <b-card-text v-if="accuse.accuseIndex === 2"><span class="badge badge-pill badge-dark mr-2">댓글 신고</span>
+          <span v-if="accuse.accuseKind == 1">욕설</span>
+          <span v-if="accuse.accuseKind == 2">노쇼</span>
+          <span v-if="accuse.accuseKind == 3">광고</span>
+        </b-card-text>
 
         <b-card-text style="border: solid 0.5px gray; width: 70%; margin: auto;">{{ accuse.accuseReason }}</b-card-text>
         <button class="btn btn-info btn-sm mt-3"><a :href="accuse.accuseUrl" class="text-decoration-none text-white">신고상세</a></button>
