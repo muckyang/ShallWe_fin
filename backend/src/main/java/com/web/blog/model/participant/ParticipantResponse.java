@@ -19,5 +19,7 @@ public class ParticipantResponse {
     private String description;
     @ApiModelProperty(value = "writer", position = 6)
     private String writer;
+    @ApiModelProperty(value = "status", position = 7)
+    private int status;
 
 }
