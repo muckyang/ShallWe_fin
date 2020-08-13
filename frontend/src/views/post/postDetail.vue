@@ -79,6 +79,7 @@
       <div class="detail-content" id="item-1">{{ articleData.description }}</div>
     </div>
     <commentList />
+    <hr />
   </div>
 </template>
 
@@ -148,6 +149,22 @@ export default {
       const day = CD.substring(8, 10) + ".";
       const res = year + month + day;
       return res;
+    },
+    // 신고 유형 변경
+    changeAccuseKind(kind) {
+      this.accuseArticleData.accuseKind = kind;
+      this.linkArticleData();
+      this.linkUserData();
+    },
+    // 해당 articleData 연결
+    linkArticleData() {
+      this.accuseArticleData.accuseIndex = 1;
+      this.accuseArticleData.accuseValue = this.articleData.articleId;
+      this.accuseArticleData.defendant = this.articleData.writer;
+    },
+    // 해당 userData 연결
+    linkUserData() {
+      this.accuseArticleData.reporter = this.userData.nickname;
     },
   },
 
