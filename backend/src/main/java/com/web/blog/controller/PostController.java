@@ -87,8 +87,7 @@ public class PostController {
         System.out.println("게시물 활성화 상태 변경 30초마다 실행중입니다.");
         List<Post> plist = postDao.findAll();
         for (Post p : plist) {
-            if (p.getStatus() == 1 && p.getTemp() == 1
-                    && datetimeTosec(p.getEndTime()) > datetimeTosec(LocalDateTime.now())) {
+            if (p.getStatus() == 1 && p.getTemp() == 1  && datetimeTosec(p.getEndTime()) < datetimeTosec(LocalDateTime.now())) {
                 p.setStatus(2);// 만료
                 postDao.save(p);
             }
