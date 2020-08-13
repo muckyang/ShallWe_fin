@@ -38,7 +38,6 @@ export default new Vuex.Store({
       tempList: [],
       grade: "",
     },
-
     articleData: {
       articleId: "",
       userId: "",
@@ -60,20 +59,20 @@ export default new Vuex.Store({
       partList: [],
       tags: [],
     },
-
-    //게시글
     articles: [],
     comments: [],
     users: [],
     accuseData: {
-      accuseId: "",
-      reporter: "",
-      defendant: "",
-      accuseKind: "",
-      accuseReason: "",
-      accuseUrl: "",
-      accuseConfirm: "",
+      reporter: '',
+      defendant: '',
+      accuseIndex: '',
+      accuseValue: '',
+      accuseKind: 0,
+      accuseReason: '',
+      accuseUrl: '',
+      accuseConfirm: 0,
     },
+    accuses: [],
   },
 
   getters: {},
@@ -124,8 +123,6 @@ export default new Vuex.Store({
     GET_USERDATA(state, userData) {
       state.userData = userData;
     },
-
-    //게시글 관리
     GET_ARTICLES(state, articles) {
       state.articles = articles;
     },
@@ -137,6 +134,9 @@ export default new Vuex.Store({
     },
     GET_USERS(state, users) {
       state.users = users;
+    },
+    GET_ACCUSES(state, accuses) {
+      state.accuses = accuses;
     },
   },
 
@@ -433,8 +433,6 @@ export default new Vuex.Store({
         })
         .catch((err) => console.log(err));
     },
-
-    // 관리자 페이지
     getUsers({ state, commit }, users) {
       const auth = { token: state.authToken };
       axios
@@ -446,11 +444,32 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    // 신고 리스트
-    getAccuses({ state, commit }, users) {
-      const auth = { token: state.authToken };
+    createArticleAccuse(context, accuseArticleData) {
       axios
-        .post(`${BACK_URL}/accuse/read`, auth)
+      .post(
+        `${BACK_URL}/accuse/create`,
+        accuseArticleData.accuseArticleData
+      )
+      .then(() => {
+        router.push('/');
+      })
+      .catch((err) => console.log(err))
+    },
+    createCommentAccuse(context, accuseCommentData) {
+      axios
+      .post(
+        `${BACK_URL}/accuse/create`,
+        accuseCommentData.accuseCommentData
+      )
+      .then(() => {
+        router.push('/');
+      })
+      .catch((err) => console.log(err))
+    },
+    getAccuses({ state, commit }) {
+      const admin = { token: state.adminToken };
+      axios
+        .post(`${BACK_URL}/accuse/read`, admin)
         .then((res) => {
           commit("GET_ACCUSES", res.data.accuseList);
         })
@@ -458,14 +477,16 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    // 신고양식
-    createAccuse(context, accuseData) {
+    decideAccuse({ state }, decisionData ) {
+      const admin = { token: state.adminToken };
       axios
-        .post(`${BACK_URL}/accuse/create`, accuseData)
+        .post(`${BACK_URL}/accuse/applyto`, decisionData)
         .then(() => {
-          router.push("/");
+          router.push('/user/accuselist');
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   modules: {},
