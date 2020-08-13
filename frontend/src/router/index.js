@@ -12,7 +12,6 @@ import editUser from '../components/user/editUser.vue'
 import Profile from '../components/user/Profile.vue'
 import SignUpComplete from '../components/user/SignUpComplete.vue'
 import userList from '../components/user/userList.vue'
-import accuseForm from '../components/user/accuseForm.vue'
 import accuseList from '../components/user/accuseList.vue'
 import klogin from '@/components/user/klogin.vue'
 import adminLogin from '@/components/user/adminLogin.vue'
@@ -180,12 +179,6 @@ Vue.use(VueRouter)
       name: 'userList',
       component: userList
     },
-    // 신고양식
-    {
-      path: '/user/accuseform',
-      name: 'accuseForm',
-      component: accuseForm
-    },
     {
       path: '/user/accuselist',
       name: 'accuseList',
@@ -201,7 +194,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   //로그인 하지 않아도 되는 페이지
-  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList', 'klogin','adminLogin']
+  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList', 'klogin','adminLogin', 'searchList']
   //로그인 하면 안되는 페이지
   const authPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN]
   
