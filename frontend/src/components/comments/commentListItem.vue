@@ -3,8 +3,11 @@
     <div class="d-flex">
       <div class="comment-box">
         <div class="comment-user">
-          {{comment.nickname}}
-          <div class="comment-drop dropdown dropleft" v-if="comment.userId === userData.userId">
+          {{ comment.nickname }}
+          <div
+            class="comment-drop dropdown dropleft"
+            v-if="comment.userId === userData.userId"
+          >
             <button type="button" class="comment-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
             </button>
@@ -16,7 +19,9 @@
 
           <!-- 댓글 신고 -->
           <div v-else>
-            <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm">신고</b-button>
+            <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm"
+              >신고</b-button
+            >
 
             <b-modal id="modal-1" title="신고 접수">
               <h6>신고 사유</h6>
@@ -28,24 +33,42 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                >선택</button>
+                >
+                  선택
+                </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">노쇼</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고</a>
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)"
+                    >욕설</a
+                  >
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)"
+                    >노쇼</a
+                  >
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)"
+                    >광고</a
+                  >
                 </div>
               </div>
               <h6>신고할 댓글의 게시물 URL</h6>
-              <b-form-input id="type-url" type="url" v-model="accuseCommentData.accuseUrl"></b-form-input>
+              <b-form-input
+                id="type-url"
+                type="url"
+                v-model="accuseCommentData.accuseUrl"
+              ></b-form-input>
               <h6>사유 상세</h6>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="accuseCommentData.accuseReason"></b-form-textarea>
-              <button @click="createCommentAccuse({accuseCommentData})">신고접수</button>
+              <b-form-textarea
+                id="textarea-rows"
+                rows="8"
+                v-model="accuseCommentData.accuseReason"
+              ></b-form-textarea>
+              <button @click="createCommentAccuse({ accuseCommentData })">
+                신고접수
+              </button>
             </b-modal>
           </div>
           <!-- 댓글 신고 -->
         </div>
-        <div class="comment-content">{{comment.content}}</div>
-        <div class="comment-create-time">{{cutDate(comment.createTime)}}</div>
+        <div class="comment-content">{{ comment.content }}</div>
+        <div class="comment-create-time">{{ cutDate(comment.createTime) }}</div>
       </div>
     </div>
 
@@ -56,8 +79,22 @@
         <input class="comment-input" type="text" v-model="comment.content" />
       </div>
       <div class="comment-update-submit">
-        <button type="button" v-if="flag" class="comment-update-btn" @click="updateCancel">취소</button>
-        <button type="button" v-if="flag" class="comment-update-btn" @click="updateComment">수정</button>
+        <button
+          type="button"
+          v-if="flag"
+          class="comment-update-btn"
+          @click="updateCancel"
+        >
+          취소
+        </button>
+        <button
+          type="button"
+          v-if="flag"
+          class="comment-update-btn"
+          @click="updateComment"
+        >
+          수정
+        </button>
       </div>
     </div>
   </div>
@@ -108,8 +145,10 @@ export default {
       let CD = date + "";
       const year = CD.substring(0, 4) + ".";
       const month = CD.substring(5, 7) + ".";
-      const day = CD.substring(8, 10) + ".";
-      const res = year + month + day;
+      const day = CD.substring(8, 10) + ". ";
+      const hour = CD.substring(11, 13) + ":";
+      const minute = CD.substring(14, 16) + "";
+      const res = year + month + day + hour + minute;
       return res;
     },
     // 신고 유형 변경

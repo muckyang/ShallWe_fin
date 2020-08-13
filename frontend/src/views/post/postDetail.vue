@@ -9,16 +9,21 @@
           <div class="detail-title">{{ articleData.title }}</div>
 
           <!--수정,삭제,신고 버튼-->
-          <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
+          <div
+            class="article-drop dropdown dropleft"
+            v-if="articleData.userId === userData.userId"
+          >
             <button type="button" class="article-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
             </button>
             <div class="dropdown-menu">
               <router-link
                 class="postUpdate"
-                :to="{name:'postUpdate',
-                params: {ID:this.$route.params.ID}}"
-                v-if="articleData.status===1"
+                :to="{
+                  name: 'postUpdate',
+                  params: { ID: this.$route.params.ID },
+                }"
+                v-if="articleData.status === 1"
               >
                 <a class="dropdown-item articleUpdate">수정</a>
               </router-link>
@@ -29,7 +34,9 @@
 
           <!-- 게시물 신고 -->
           <div v-else>
-            <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm">신고</b-button>
+            <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm"
+              >신고</b-button
+            >
 
             <b-modal id="modal-1" title="신고 접수">
               <h6>신고 사유</h6>
@@ -41,18 +48,36 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                >선택</button>
+                >
+                  선택
+                </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">노쇼</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고</a>
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)"
+                    >욕설</a
+                  >
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)"
+                    >노쇼</a
+                  >
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)"
+                    >광고</a
+                  >
                 </div>
               </div>
               <h6>신고할 게시물 URL</h6>
-              <b-form-input id="type-url" type="url" v-model="accuseArticleData.accuseUrl"></b-form-input>
+              <b-form-input
+                id="type-url"
+                type="url"
+                v-model="accuseArticleData.accuseUrl"
+              ></b-form-input>
               <h6>사유 상세</h6>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="accuseArticleData.accuseReason"></b-form-textarea>
-              <button @click="createArticleAccuse({accuseArticleData})">신고접수</button>
+              <b-form-textarea
+                id="textarea-rows"
+                rows="8"
+                v-model="accuseArticleData.accuseReason"
+              ></b-form-textarea>
+              <button @click="createArticleAccuse({ accuseArticleData })">
+                신고접수
+              </button>
             </b-modal>
           </div>
           <!-- 게시물 신고 -->
@@ -76,7 +101,9 @@
       </div>
 
       <!--내용, 댓글-->
-      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
+      <div class="detail-content" id="item-1">
+        {{ articleData.description }}
+      </div>
     </div>
     <commentList />
     <hr />
@@ -146,8 +173,10 @@ export default {
       let CD = date + "";
       const year = CD.substring(0, 4) + ".";
       const month = CD.substring(5, 7) + ".";
-      const day = CD.substring(8, 10) + ".";
-      const res = year + month + day;
+      const day = CD.substring(8, 10) + ". ";
+      const hour = CD.substring(11, 13) + ".";
+      const minute = CD.substring(14, 16) + ".";
+      const res = year + month + day + hour + minute;
       return res;
     },
     // 신고 유형 변경
@@ -168,7 +197,7 @@ export default {
     },
   },
 
-  created: function () {
+  created: function() {
     this.getArticle(this.$route.params.ID);
     // this.getImg();
     this.getUserData();
