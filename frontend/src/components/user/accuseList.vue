@@ -1,56 +1,35 @@
 <template>
   <div class="mt-5">
     <h1>신고 관리</h1>
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">신고자</th>
-          <th scope="col">피신고자</th>
-          <th scope="col">신고종류</th>
-          <th scope="col">신고유형</th>
-          <th scope="col">신고이유</th>
-          <th scope="col">신고처리</th>
-        </tr>
-      </thead>
-      <tbody v-for="accuse in accuses" :key="accuse.accuseId">
-        <tr>
-          <th scope="row">{{ accuse.accuseId }}</th>
-          <td>{{ accuse.reporter }}</td>
-          <td>{{ accuse.defendant }}</td>
-          <td>{{ accuse.accuseIndex }}</td>
-          <td>{{ accuse.accuseKind }}</td>
-          <td>{{ accuse.accuseReason }}</td>
-          <td>
-            <button class="btn btn-info btn-sm"><a :href="accuse.accuseUrl" class="text-decoration-none text-white">신고상세</a></button>
-            <button>신고접수</button>
-            <button>허위신고</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <ul class="list-group">
+      <li class="list-group-item"><accuseListItem v-for="accuse in accuses" :key="accuse.accuseId" :accuse="accuse" /></li>
+    </ul>
   </div>
 </template>
 
 <script>
+  const BACK_URL = process.env.VUE_APP_BACK_URL;
   import { mapState, mapActions } from 'vuex'
+  import axios from "axios";
+  import accuseListItem from '@/components/user/accuseListItem'
 
   export default {
     name: 'accuseList',
+    components:{
+      accuseListItem,
+  },
     data() {
       return {
-        updateAccuseData: {},
       }
     },
     methods: {
-      ...mapActions([ 'getAccuses', 'updateAccuse' ]),
-
-    },
-    computed: {
-      ...mapState([ 'accuses' ]),
+      ...mapActions([ 'getAccuses' ]),
     },
     created() {
       this.getAccuses()
+    },
+    computed: {
+      ...mapState([ 'accuses' ]),
     },
   }
 </script>

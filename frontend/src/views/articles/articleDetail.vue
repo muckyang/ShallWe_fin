@@ -101,14 +101,16 @@
             >
               <i v-if="articleData.status<4" class="fas fa-user-plus"></i> 참여
             </b-button>
-            <b-button
-              id="show-btn"
-              class="detail-join"
-              v-if="articleData.minPrice<=articleData.sumPrice"
-              @click="confirmPurchase"
-            >
-              <div v-if="articleData.status===3"><i class="fas fa-user-plus"></i>확정</div>
-            </b-button>
+            <div v-if="articleData.writer===userData.nickname">
+              <b-button
+                id="show-btn"
+                class="detail-join"
+                v-if="articleData.minPrice<=articleData.sumPrice"
+                @click="confirmPurchase"
+              >
+                <div v-if="articleData.status===3"><i class="fas fa-user-plus"></i>확정</div>
+              </b-button>
+            </div>
             <b-button
               id="show-btn"
               class="detail-join"
@@ -220,27 +222,29 @@
                 class="article-drop dropdown dropleft"
                 v-if="articleData.writer === userData.nickname"
               >
-                <button type="button" class="article-btn" data-toggle="dropdown">
-                  <i class="fas fa-ellipsis-v"></i>
-                </button>
-                <div class="dropdown-menu">
-                  <b-button
-                    variant="light"
-                    size="sm"
-                    @click="acceptParticpation(participant.writer)"
-                  >수락</b-button>
-                  <b-button
-                    variant="light"
-                    size="sm"
-                    v-if="!isDenied"
-                    @click="denyConfirm"
-                  >거절</b-button>
-                  <b-button
-                    variant="light"
-                    size="sm"
-                    v-if="isDenied"
-                    @click="denyParticpation(participant.writer)"
-                  >거절 확정</b-button>
+                <div v-if="participant.status===0">
+                  <button type="button" class="article-btn" data-toggle="dropdown">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <b-button
+                      variant="light"
+                      size="sm"
+                      @click="acceptParticpation(participant.writer)"
+                    >수락</b-button>
+                    <b-button
+                      variant="light"
+                      size="sm"
+                      v-if="!isDenied"
+                      @click="denyConfirm"
+                    >거절</b-button>
+                    <b-button
+                      variant="light"
+                      size="sm"
+                      v-if="isDenied"
+                      @click="denyParticpation(participant.writer)"
+                    >거절 확정</b-button>
+                  </div>
                 </div>
               </div>
 
