@@ -303,12 +303,17 @@ export default new Vuex.Store({
           articleData.articleData
         )
         .then(() => {
-          router.push("/posts");
+          if (articleData.temp === 1 || articleData.temp === 0) {
+            router.push("/article");
+          } else {
+            router.push("/posts");
+          }
         })
         .catch((err) => console.log(err));
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
+      console.log("들어옴?");
       if (updateData.articleUpdateData.endTime) {
         if (updateData.articleUpdateData.endTime.length < 8) {
           updateData.articleUpdateData.endTime =
