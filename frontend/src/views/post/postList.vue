@@ -233,7 +233,6 @@ export default {
     ...mapState(["articles"]),
   },
   created() {
-    console.log("ㅇㅇㅇ");
     this.getArticles({ temp: 2, categoryId: this.categoryNum });
     console.log(this.articles);
   },
