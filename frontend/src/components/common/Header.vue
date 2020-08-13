@@ -202,11 +202,11 @@
           </li>
 
           <li class="nav-item pb-0">
-            <router-link to="/reviews" class="nav-link mainMenu pb-0" id="community">후기 게시판</router-link>
+            <router-link to="/reviews" class="nav-link mainMenu pb-0" id="community">후기</router-link>
           </li>
 
           <li class="nav-item pb-0">
-            <router-link to="/posts" class="nav-link mainMenu pb-0" id="community">자유 게시판</router-link>
+            <router-link to="/posts" class="nav-link mainMenu pb-0" id="community">커뮤니티</router-link>
           </li>
 
           <li class="nav-item pb-0">
