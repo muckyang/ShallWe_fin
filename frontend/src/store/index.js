@@ -90,6 +90,10 @@ export default new Vuex.Store({
       cookies.set("admin-token", token, 0);
     },
     REMOVE_TOKEN(state) {
+      if(state.adminToken){
+        cookies.remove("admin-token")
+        state.adminToken=null
+      }
       state.authToken = null;
       cookies.remove("auth-token");
       state.isLoggedin = false;
@@ -325,6 +329,25 @@ export default new Vuex.Store({
     },
     //게시글 검색
     search({ commit }, searchData) {
+      cookies.set("searchData", searchData, 0);
+
+        searchData.categoryId = 0;
+        axios
+          .post(
+            `${BACK_URL}/post/search/1/${searchData.categoryId}`,
+            searchData.searchDataForSend
+          )
+          .then((res) => {
+            commit("GET_ARTICLES", res.data.postList);
+            router.push({ name: "searchList" });
+            searchData.categoryId = "기본값";
+          })
+          .catch((err) => {
+            console.log(err);
+            searchData.categoryId = "기본값";
+          });
+    },
+    detailSearch({ commit }, searchData) {
       cookies.set("searchData", searchData, 0);
       if (
         searchData.searchDataForSend.word &&
