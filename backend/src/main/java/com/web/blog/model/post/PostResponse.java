@@ -50,6 +50,7 @@ public class PostResponse {
      public String title;
      @ApiModelProperty(value = "address", position = 5)
      public String address;
+
     
      @ApiModelProperty(value = "writer", position = 6)
      public String writer;
@@ -85,4 +86,6 @@ public class PostResponse {
      @ApiModelProperty(value = "createTime", position = 21)
      public LocalDateTime createTime;
 
+     @ApiModelProperty(value = "description", position = 22)
+     public String description;
 }
