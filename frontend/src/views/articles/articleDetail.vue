@@ -74,10 +74,7 @@
         <img class="MyImage" :src="articleData.image" alt="..." />
         <div class="articleInfo">
           <div class="detail-info">
-            <div class="detail-address">
-              만남의 장소: {{articleData.address}}
-
-            </div>
+            <div class="detail-address">만남의 장소: {{articleData.address}}</div>
             <div class="detail-price">
               <div class="min-price">최소 주문 금액: {{articleData.minPrice}}원</div>
               <div class="min-price">모인 금액: {{articleData.sumPrice}}원</div>

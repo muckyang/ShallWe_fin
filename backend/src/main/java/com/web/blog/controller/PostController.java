@@ -226,7 +226,7 @@ public class PostController {
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
         // 토큰 받아오면 그 토큰으로 유효성 검사 후 uid 받아와서 좋아요 한지 여부 확인
 
-        System.out.println("상세보기 들어옴 " + request.toString());
+        // System.out.println("상세보기 들어옴 " + request.toString());
         Post p = postDao.findPostByArticleId(articleId);
 
         if (p != null) {
