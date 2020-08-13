@@ -245,14 +245,11 @@ export default {
       email: " \uf0e0" + "  이메일",
       pw: " \uf084" + "  비밀번호",
       constants,
-      item1: "",
-      item2: "",
       searchData: {
         searchDataForSend: {
           word: "",
           subject: "headerTitle",
         },
-        categoryId: "기본값",
       },
       loginData: {
         email: "",
@@ -263,32 +260,6 @@ export default {
   methods: {
     ...mapMutations(["REMOVE_TOKEN", "loginCheck"]),
     ...mapActions(["search", "login", "getUserData"]),
-
-    //검색
-    // selectSubject(num){
-    //   if(num==0){
-    //   this.searchData.searchDataForSend.subject='title'
-    //   this.item1 = '제목'
-    //   }else if(num==1){
-    //     this.searchData.searchDataForSend.subject = 'writer'
-    //     this.item1 = '작성자'
-    //   }else{
-    //     this.searchData.searchDataForSend.subject = 'tag'
-    //     this.item1 = '태그'
-    //   }
-    // },
-    // selectCategory(num){
-    //   if(num==1){
-    //   this.searchData.categoryId=1
-    //   this.item2="배달"
-    //   }else if(num==2){
-    //     this.searchData.categoryId = 2
-    //     this.item2="최저주문"
-    //   }else{
-    //     this.searchData.categoryId = 3
-    //     this.item2="공동구매"
-    //   }
-    // },
   },
   computed: {
     ...mapState(["isLoggedin", "userData"]),
