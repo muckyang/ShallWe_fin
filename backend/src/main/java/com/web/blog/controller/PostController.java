@@ -80,6 +80,8 @@ public class PostController {
     @Autowired
     private JwtService jwtService;
 
+
+    //게시물 만료시간 지나면 자동 비활성화
     @Scheduled(cron = "*/30 * * * * *")
     public void articleTimeOut() {
         System.out.println("게시물 활성화 상태 변경 30초마다 실행중입니다.");
@@ -132,7 +134,7 @@ public class PostController {
                 post.setStatus(1);
                 post.setLikeNum(0);
                 post.setCommentNum(0);
-                // post.setUrlLink(req.getUrlLink());
+                post.setUrlLink(req.getUrlLink());
                 postDao.save(post);
                 System.out.println("임시저장!!");
 
@@ -151,6 +153,7 @@ public class PostController {
                 post.setTemp(temp);
                 post.setEndTime(endTime);
                 post.setStatus(1);
+                post.setUrlLink(req.getUrlLink());
                 post.setLikeNum(0);
                 post.setCommentNum(0);
 
@@ -181,13 +184,10 @@ public class PostController {
                 participant.setTitle(def_mes);
                 participant.setPrice(myPrice);
                 participant.setWriter(userOpt.get().getNickname());
+                participant.setStatus(1);// 게시자 본인은 활성화 상태 
                 participant.setDescription(def_mes);
                 participantDao.save(participant);// 참가자 DB에 등록 완료
                 tagAdd(tags, artiId);
-                // // 게시물 sum_price에 더하기
-                // post = postDao.getPostByArticleId(artiId);// 해당 구매게시물을 얻어옴
-                // post.setSumPrice(myPrice);
-                // postDao.save(post);// 다시 DB에 넣어줌
 
                 System.out.println("참가자 등록!!");
 
@@ -221,13 +221,14 @@ public class PostController {
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
         // 토큰 받아오면 그 토큰으로 유효성 검사 후 uid 받아와서 좋아요 한지 여부 확인
 
-        System.out.println("상세보기 들어옴 " + articleId);
+        System.out.println("상세보기 들어옴 " + request.toString());
         Post p = postDao.findPostByArticleId(articleId);
+
 
         if (p != null) {
             String token = request.getToken();
             User jwtuser = jwtService.getUser(token);
-
+            System.out.println(jwtuser.toString());
             String tag = p.getTag();
             StringTokenizer st = new StringTokenizer(tag, "#");
 
@@ -277,6 +278,7 @@ public class PostController {
                 c.setUserId(clist.get(i).getUserId());
                 c.setContent(clist.get(i).getContent());
                 c.setNickname(nickname);
+                c.setStatus(clist.get(i).getStatus());
                 c.setTimeAgo(BeforeCreateTime(clist.get(i).getCreateTime()));
                 c.setCreateTime(clist.get(i).getCreateTime());
 
@@ -324,6 +326,7 @@ public class PostController {
             post.setDescription(req.getDescription());
             post.setMinPrice(req.getMinPrice());
             post.setUrlLink(req.getUrlLink());
+            post.setStatus(1);
             post.setImage(req.getImage());
             post.setTemp(temp);
             post.setEndTime(endTime);

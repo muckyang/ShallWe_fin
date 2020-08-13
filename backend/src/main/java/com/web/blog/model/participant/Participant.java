@@ -25,6 +25,7 @@ public class Participant {
     private String title;
     private int price;
     private String writer;
+    private int status;
     private String description;
 
 }
