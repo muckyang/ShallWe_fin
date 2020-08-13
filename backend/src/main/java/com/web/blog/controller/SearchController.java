@@ -115,7 +115,7 @@ public class SearchController {
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                         p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
                         p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), empty, temp, p.getEndTime(),
-                        BeforeCreateTime(p.getCreateTime())));
+                        BeforeCreateTime(p.getCreateTime()), p.getCreateTime()));
 
             }
             return result;
@@ -264,7 +264,7 @@ public class SearchController {
                 addList.add("%" + st.nextToken() + "%");
             }
 
-            if (categoryId == 0)
+            if (categoryId == 0){
                 if (addList.size() == 1) {
                     plist = postDao.findPostByAddressLike(addList.get(0));
                 } else if (addList.size() == 2) {
@@ -277,7 +277,8 @@ public class SearchController {
                             addList.get(1), addList.get(2), addList.get(3));
                 }
 
-                else {
+                
+            }else {
                     if (addList.size() == 1) {
                         plist = postDao.findPostByTempAndCategoryIdAndAddressLike(temp, categoryId, addList.get(0));
                     } else if (addList.size() == 2) {
@@ -320,7 +321,7 @@ public class SearchController {
             result.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
                     p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), taglist, temp, p.getEndTime(),
-                    BeforeCreateTime(p.getCreateTime())));
+                    BeforeCreateTime(p.getCreateTime()),p.getCreateTime()));
 
         }
 
