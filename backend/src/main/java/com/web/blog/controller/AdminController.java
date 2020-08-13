@@ -165,9 +165,10 @@ public class AdminController {
                     user.setUserPoint(user.getUserPoint() - 50);
                 } else if (req.getAccuseKind() == 3) { // 3. 광고 글입니다. -30
                     user.setUserPoint(user.getUserPoint() - 30);
-                } else if (req.getAccuseKind() == 4) { // 4. 기타 - 10
-                    user.setUserPoint(user.getUserPoint() - 10);
-                }
+                } 
+                // else if (req.getAccuseKind() == 4) { // 4. 기타 - 10
+                //     user.setUserPoint(user.getUserPoint() - 10);
+                // }
                 userDao.save(user);
                 System.out.println("점수(user point) 수정");
                 Accuse accuse = accuseDao.findAccuseByAccuseId(req.getAccuseId());
@@ -175,13 +176,13 @@ public class AdminController {
                 accuseDao.save(accuse);
                 System.out.println("신고 게시물 상태 수정");
                 // 게시물에 대한 신고를 확실하게 판단하여 완료하면
-                if (req.getAccuseIndex() == 1) {
+                if (req.getAccuseIndex() == 1 || req.getAccuseIndex() == 3 || req.getAccuseIndex() == 5) {
                     Post post = postDao.getPostByArticleId(req.getAccuseValue());
-                    post.setCategoryId(99); // 99로 빼준다.
+                    post.setStatus(0); // 비활성화 게시물로 만들어주기
                     postDao.save(post);
-                } else if (req.getAccuseIndex() == 2) {
-                    Comment comment = commentDao.getCommentByCommentId(req.getAccuseValue()); // 댓글은 바로 삭제한다.
-                    // comment.setStatus(1);
+                } else if (req.getAccuseIndex() == 2 || req.getAccuseIndex() == 4 || req.getAccuseIndex() == 6) {
+                    Comment comment = commentDao.getCommentByCommentId(req.getAccuseValue());
+                    comment.setStatus(0); // 비활성화 댓글로 만들어주기
                     commentDao.save(comment);
                 }
 
