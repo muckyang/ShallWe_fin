@@ -252,17 +252,27 @@
         </b-container>
       </div>
     </div>
+    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
+      <div slot="no-more" style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;">더이상 게시물이 존재하지 않습니다!</div>
+    </infinite-loading>
   </div>
 </template>
 
 <script>
+const BACK_URL = process.env.VUE_APP_BACK_URL;
 import { mapState, mapActions } from "vuex";
+import InfiniteLoading from 'vue-infinite-loading'
+import cookies from "vue-cookies";
+import axios from 'axios'
 
 export default {
   name: "articleList",
   data() {
     return {
       categoryNum: 0,
+      page: 0,
+      onlyOne:true,
+      articles: [],
       searchData: {
         searchDataForSend: {
           word: "",
@@ -270,21 +280,46 @@ export default {
         },
         categoryId: "기본값",
       },
+      infiniteId: +new Date(),
     };
+  },
+  components: {
+    InfiniteLoading,
   },
   methods: {
     ...mapActions(["getArticles", "search"]),
+    infiniteHandler($state) {
+      const auth =  { token: cookies.get("auth-token") };
+      axios.post(`${BACK_URL}/post/read/1/${this.categoryNum}/${this.page}`, auth)
+        .then(res => {
+          setTimeout(() => {
+            if (res.data.postList.length) {       
+              this.articles = this.articles.concat(res.data.postList);
+              this.page += 1
+              $state.loaded();
+            } else {
+              $state.complete();
+            }
+          }, 1000)
+        }) .catch(err => {
+          console.log(err);
+        })
+    },
     changeCategory(num) {
       this.categoryNum = num;
-      this.getArticles({ temp: 1, categoryId: this.categoryNum });
+      this.page = 0
+      this.articles = []
+      this.onlyOne = true
+      this.infiniteId += 1;
+      // this.getArticles({ temp: 1, categoryId: this.categoryNum });
     },
   },
-  computed: {
-    ...mapState(["articles"]),
-  },
-  created() {
-    this.getArticles({ temp: 1, categoryId: this.categoryNum });
-  },
+  // computed: {
+  //   ...mapState(["articles"]),
+  // },
+  // created() {
+  //   this.getArticles({ temp: 1, categoryId: this.categoryNum });
+  // },
 };
 </script>
 

@@ -20,6 +20,7 @@ public interface PostDao extends JpaRepository<Post, String> {
     List<Post> getPostByUserId(int userId);
     List<Post> getPostByUserIdAndTemp(int userId,int temp);
     List<Post> getPostByUserIdAndCategoryId(int userId,int categoryId);
+    List<Post> getPostByTempAndCategoryIdNot(int userId,int categoryId);
 
     List<Post> findPostByTempAndWriter(int temp, String writer);
 
