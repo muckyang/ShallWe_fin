@@ -240,7 +240,7 @@ public class PostController {
             PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
                     p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), taglist, p.getTemp(),
-                    p.getEndTime(), BeforeCreateTime(p.getCreateTime()));
+                    p.getEndTime(), BeforeCreateTime(p.getCreateTime()), p.getCreateTime());
             result.status = p.getStatus();
             // 이 게시물에 해당되는 태그는 다 보내기
             List<Tag> tlist = tagDao.findTagByArticleId(articleId);

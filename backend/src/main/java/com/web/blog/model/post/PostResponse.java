@@ -2,6 +2,7 @@ package com.web.blog.model.post;
 
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class PostResponse {
      }
      public PostResponse(int articleId,int categoryId,int userId,String title,String address,
      int minPrice,int sumPrice,int likeNum, int commentNum, String description, String writer, String urlLink,String image,
-     List<String> tags,   int temp,LocalDateTime endTime, String timeAgo){
+     List<String> tags,   int temp,LocalDateTime endTime, String timeAgo, LocalDateTime createTime){
           super();
           this.articleId = articleId;
           this.categoryId = categoryId;
@@ -36,6 +37,7 @@ public class PostResponse {
           this.temp = temp;
           this.endTime = endTime;
           this.timeAgo = timeAgo;
+          this.createTime = createTime;
      }
      // post
      @ApiModelProperty(value = "articleId", position = 1)
@@ -81,5 +83,7 @@ public class PostResponse {
      public List<Participant> partList;
      @ApiModelProperty(value = "status", position = 20)
      public int status;
+     @ApiModelProperty(value = "createTime", position = 21)
+     public LocalDateTime createTime;
 
 }
