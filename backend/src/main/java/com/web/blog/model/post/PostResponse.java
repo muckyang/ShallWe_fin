@@ -50,8 +50,7 @@ public class PostResponse {
      public String title;
      @ApiModelProperty(value = "address", position = 5)
      public String address;
-     @ApiModelProperty(value = "description", position = 5)
-     public String description;
+    
      @ApiModelProperty(value = "writer", position = 6)
      public String writer;
      @ApiModelProperty(value = "temp", position = 7)
