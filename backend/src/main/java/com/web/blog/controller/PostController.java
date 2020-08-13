@@ -80,6 +80,8 @@ public class PostController {
     @Autowired
     private JwtService jwtService;
 
+
+    //게시물 만료시간 지나면 자동 비활성화
     @Scheduled(cron = "*/30 * * * * *")
     public void articleTimeOut() {
         System.out.println("게시물 활성화 상태 변경 30초마다 실행중입니다.");
@@ -221,13 +223,14 @@ public class PostController {
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
         // 토큰 받아오면 그 토큰으로 유효성 검사 후 uid 받아와서 좋아요 한지 여부 확인
 
-        System.out.println("상세보기 들어옴 " + articleId);
+        System.out.println("상세보기 들어옴 " + request.toString());
         Post p = postDao.findPostByArticleId(articleId);
+
 
         if (p != null) {
             String token = request.getToken();
             User jwtuser = jwtService.getUser(token);
-
+            System.out.println(jwtuser.toString());
             String tag = p.getTag();
             StringTokenizer st = new StringTokenizer(tag, "#");
 
