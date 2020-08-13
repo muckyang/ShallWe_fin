@@ -86,11 +86,8 @@ export default new Vuex.Store({
       setTimeout(function () { alert("환영합니다.") }, 50)
     },
     SET_ADMIN_TOKEN(state,token){
-      router.push("/");
-      state.authToken = token;
+      state.adminToken = token;
       cookies.set("admin-token", token, 0);
-      state.isLoggedin = true;
-      setTimeout(function () { alert("환영합니다.") }, 50)
     },
     REMOVE_TOKEN(state) {
       state.authToken = null;
@@ -200,7 +197,9 @@ export default new Vuex.Store({
       axios
       .post(`${BACK_URL}/admin/login`, loginData)
       .then((response) => {
-        commit("SET_ADMIN_TOKEN", response.data);
+        console.log(response.data)
+        commit("SET_ADMIN_TOKEN", response.data.adminToken);
+        commit('SET_TOKEN',response.data.token)
       })
       .catch((err) => {
         console.log(err);
@@ -260,7 +259,7 @@ export default new Vuex.Store({
     },
     //단일 게시글 조회
     getArticle({ state, commit }, articleID) {
-      const auth = { token: state.adminToken ,status : 1};
+      const auth = { token: state.authToken};
       axios
         .post(`${BACK_URL}/post/detail/${articleID}`, auth)
         .then((response) => {
