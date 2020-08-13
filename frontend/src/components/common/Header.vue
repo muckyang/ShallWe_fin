@@ -202,6 +202,10 @@
           </li>
 
           <li class="nav-item pb-0">
+            <router-link to="/reviews" class="nav-link mainMenu pb-0" id="community">후기 게시판</router-link>
+          </li>
+
+          <li class="nav-item pb-0">
             <router-link to="/posts" class="nav-link mainMenu pb-0" id="community">자유 게시판</router-link>
           </li>
 
@@ -269,6 +273,8 @@ export default {
     if (this.$cookies.get("auth-token")) {
       this.getUserData();
     }
+
+    console.log(this.userData);
   },
 };
 </script>
