@@ -234,7 +234,6 @@ export default {
   },
   created() {
     this.getArticles({ temp: 2, categoryId: this.categoryNum });
-    console.log(this.articles, "자유게시판 리스트");
   },
 };
 </script>
