@@ -86,7 +86,8 @@ public class AdminController {
             String token = jwtService.createLoginToken(user);
             AdminLoginResponse result = new AdminLoginResponse();
             result.setAdminToken(admintoken);
-            result.setAdminToken(token);
+            result.setToken(token);
+ 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             System.out.println("로그인 실패");
