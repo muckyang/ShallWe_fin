@@ -6,15 +6,15 @@ import constants from "../lib/constants";
 import Home from "../views/Home.vue";
 
 // 유저
-import Login from '../components/user/Login.vue'
-import Join from '../components/user/Join.vue'
-import editUser from '../components/user/editUser.vue'
-import Profile from '../components/user/Profile.vue'
-import SignUpComplete from '../components/user/SignUpComplete.vue'
-import userList from '../components/user/userList.vue'
-import accuseList from '../components/user/accuseList.vue'
-import klogin from '@/components/user/klogin.vue'
-import adminLogin from '@/components/user/adminLogin.vue'
+import Login from "../components/user/Login.vue";
+import Join from "../components/user/Join.vue";
+import editUser from "../components/user/editUser.vue";
+import Profile from "../components/user/Profile.vue";
+import SignUpComplete from "../components/user/SignUpComplete.vue";
+import userList from "../components/user/userList.vue";
+import accuseList from "../components/user/accuseList.vue";
+import klogin from "@/components/user/klogin.vue";
+import adminLogin from "@/components/user/adminLogin.vue";
 
 // 아티클
 import articleCreate from "../views/articles/articleCreate.vue";
@@ -41,152 +41,155 @@ import err404 from "../views/errors/err404.vue";
 import err500 from "../views/errors/err500.vue";
 
 //검색
-import searchList from '../views/searchList.vue';
+import searchList from "../views/searchList.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-  const routes = [
-    //Home
-    {
-      path:'/',
-      name:'HOME',
-      component:Home,
-    },   
-    // 관리자 로그인
-    { 
-      path: '/user/admin',
-      name: 'adminLogin',
-      component: adminLogin
-    },
-    //회원가입
-    {
-      path: '/user/join',
-      name: constants.URL_TYPE.USER.JOIN,
-      component: Join
-    },
-    //회원 정보 조회
-    {
-      path:'/user/profile',
-      name: constants.URL_TYPE.USER.PROFILE,
-      component: Profile
-    },
-    //회원 정보 수정
-    {
-      path:'/user/edit',
-      name: constants.URL_TYPE.USER.EDIT,
-      component: editUser
-    },
+const routes = [
+  //Home
+  {
+    path: "/",
+    name: "HOME",
+    component: Home,
+  },
+  // 관리자 로그인
+  {
+    path: "/user/admin",
+    name: "adminLogin",
+    component: adminLogin,
+  },
+  //회원가입
+  {
+    path: "/user/join",
+    name: constants.URL_TYPE.USER.JOIN,
+    component: Join,
+  },
+  //회원 정보 조회
+  {
+    path: "/user/profile",
+    name: constants.URL_TYPE.USER.PROFILE,
+    component: Profile,
+  },
+  //회원 정보 수정
+  {
+    path: "/user/edit",
+    name: constants.URL_TYPE.USER.EDIT,
+    component: editUser,
+  },
 
+  {
+    path: "/user/klogin",
+    name: "klogin",
+    component: klogin,
+  },
 
-    {
-      path:'/user/klogin',
-      name: 'klogin',
-      component: klogin
-    },
+  //게시글 CRUD
+  {
+    path: "/create",
+    name: "articleCreate",
+    component: articleCreate,
+  },
+  {
+    path: "/detail/:ID",
+    name: "articleDetail",
+    component: articleDetail,
+  },
+  {
+    path: "/update/:ID",
+    name: "articleUpdate",
+    component: articleUpdate,
+  },
+  {
+    path: "/article",
+    name: "articleList",
+    component: articleList,
+  },
+  {
+    path: "/templist",
+    name: "tempList",
+    component: tempList,
+  },
+  {
+    path: "/localList",
+    name: "localList",
+    component: localList,
+  },
+  //자유게시판CRUD
+  {
+    path: "/pcreate",
+    name: "postCreate",
+    component: postCreate,
+  },
+  {
+    path: "/pupdate",
+    name: "postDetail",
+    component: postDetail,
+  },
+  {
+    path: "/pupdate",
+    name: "postUpdate",
+    component: postUpdate,
+  },
+  {
+    path: "/posts",
+    name: "postList",
+    component: postList,
+  },
+  {
+    path: "/reviews",
+    name: "reviewList",
+    component: reviewList,
+  },
+  //검색
+  {
+    path: "/searchlist",
+    name: "searchList",
+    component: searchList,
+  },
+  // 에러
+  {
+    path: "*",
+    redirect: "/400",
+  },
+  {
+    path: "/400",
+    component: err400,
+  },
+  {
+    path: "*",
+    redirect: "/404",
+  },
+  {
+    path: "/404",
+    component: err404,
+  },
+  {
+    path: "*",
+    redirect: "/500",
+  },
+  {
+    path: "/500",
+    component: err500,
+  },
+  // 회원가입 완료
+  {
+    path: "/user/signupcomplete",
+    name: "SignUpComplete",
+    component: SignUpComplete,
+  },
 
-   
-    //게시글 CRUD
-    {
-      path: '/create',
-      name: 'articleCreate',
-      component: articleCreate
-    },
-    {
-      path: '/detail/:ID',
-      name: 'articleDetail',
-      component: articleDetail
-    },
-    {
-      path: '/update/:ID',
-      name: 'articleUpdate',
-      component: articleUpdate
-    },
-    {
-      path: '/article',
-      name: 'articleList',
-      component: articleList
-    },
-    {
-      path: '/templist',
-      name: 'tempList',
-      component: tempList
-    },
-    {
-      path:'/localList',
-      name:'localList',
-      component:localList
-    },
-    //자유게시판CRUD
-    {
-      path: '/pcreate',
-      name: 'postCreate',
-      component: postCreate
-    },
-    {
-      path: '/pupdate',
-      name: 'postDetail',
-      component: postDetail
-    },
-    {
-      path: '/pupdate',
-      name: 'postUpdate',
-      component: postUpdate
-    },
-    {
-      path: '/posts',
-      name: 'postList',
-      component: postList
-    },
-    //검색
-    {
-      path:'/searchlist',
-      name:'searchList',
-      component: searchList
-    },
-    // 에러
-    {
-      path: '*',
-      redirect: '/400',
-    },
-    {
-      path: '/400',
-      component: err400
-    },
-    {
-      path: '*',
-      redirect: '/404',
-    },
-    {
-      path: '/404',
-      component: err404
-    },
-    {
-      path: '*',
-      redirect: '/500',
-    },
-    {
-      path: '/500',
-      component: err500
-    },
-    // 회원가입 완료
-    {
-      path: '/user/signupcomplete',
-      name: 'SignUpComplete',
-      component: SignUpComplete
-    },
-    
-    // 유저관리
-    {
-      path: '/user/userlist',
-      name: 'userList',
-      component: userList
-    },
-    {
-      path: '/user/accuselist',
-      name: 'accuseList',
-      component: accuseList
-    },
-  ]
+  // 유저관리
+  {
+    path: "/user/userlist",
+    name: "userList",
+    component: userList,
+  },
+  {
+    path: "/user/accuselist",
+    name: "accuseList",
+    component: accuseList,
+  },
+];
 
 const router = new VueRouter({
   mode: "history",
@@ -196,7 +199,16 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   //로그인 하지 않아도 되는 페이지
-  const publicPages = [constants.URL_TYPE.USER.LOGIN, constants.URL_TYPE.USER.JOIN, 'HOME', 'articleList','postList', 'klogin','adminLogin', 'searchList']
+  const publicPages = [
+    constants.URL_TYPE.USER.LOGIN,
+    constants.URL_TYPE.USER.JOIN,
+    "HOME",
+    "articleList",
+    "postList",
+    "klogin",
+    "adminLogin",
+    "searchList",
+  ];
   //로그인 하면 안되는 페이지
   const authPages = [
     constants.URL_TYPE.USER.LOGIN,
