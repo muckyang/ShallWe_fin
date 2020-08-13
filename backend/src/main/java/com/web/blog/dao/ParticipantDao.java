@@ -14,7 +14,7 @@ public interface ParticipantDao extends JpaRepository<Participant, String> {
     List<Participant> getParticipantByUserId(int userId);
 
     Participant getParticipantByUserIdAndArticleId(int userId, int articleId);
-
+    Participant findParticipantByArticleIdAndUserId(int articleId,int userId);
     List<Participant> findParticipantByArticleId(int articleId);
     List<Participant> getParticipantByArticleId(int articleId);
 }
