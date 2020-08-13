@@ -26,12 +26,17 @@
           <div v-else>
             <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm">신고</b-button>
 
-             <b-modal id="modal-1" title="신고 접수">
+            <b-modal id="modal-1" title="신고 접수">
               <h6>신고 사유</h6>
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  선택
-                </button>
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >선택</button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설</a>
                   <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">노쇼</a>
@@ -41,12 +46,8 @@
               <h6>신고할 게시물 URL</h6>
               <b-form-input id="type-url" type="url" v-model="accuseArticleData.accuseUrl"></b-form-input>
               <h6>사유 상세</h6>
-                <b-form-textarea
-                  id="textarea-rows"
-                  rows="8"
-                  v-model="accuseArticleData.accuseReason"
-                ></b-form-textarea>
-                <button @click="createArticleAccuse({accuseArticleData})">신고접수</button>
+              <b-form-textarea id="textarea-rows" rows="8" v-model="accuseArticleData.accuseReason"></b-form-textarea>
+              <button @click="createArticleAccuse({accuseArticleData})">신고접수</button>
             </b-modal>
           </div>
           <!-- 게시물 신고 -->
@@ -173,9 +174,7 @@
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div class="detail-content" id="item-1">
-        <p>{{ articleData.description }}</p>
-      </div>
+      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
     </div>
     <!-- <button type="button" class="map-btn mt-3">
           <i class="fas fa-map-marker-alt"></i> 지도 
@@ -269,13 +268,13 @@ export default {
       },
       participants: {},
       accuseArticleData: {
-        reporter: '',
-        defendant: '',
-        accuseIndex: '',
-        accuseValue: '',
+        reporter: "",
+        defendant: "",
+        accuseIndex: "",
+        accuseValue: "",
         accuseKind: 0,
-        accuseReason: '',
-        accuseUrl: '',
+        accuseReason: "",
+        accuseUrl: "",
         accuseConfirm: 0,
         token: this.$cookies.get("auth-token"),
       },
@@ -289,19 +288,19 @@ export default {
 
     // 신고 유형 변경
     changeAccuseKind(kind) {
-      this.accuseArticleData.accuseKind = kind
+      this.accuseArticleData.accuseKind = kind;
       this.linkArticleData();
       this.linkUserData();
     },
     // 해당 articleData 연결
     linkArticleData() {
-      this.accuseArticleData.accuseIndex = 1
-      this.accuseArticleData.accuseValue = this.articleData.articleId
-      this.accuseArticleData.defendant = this.articleData.writer
+      this.accuseArticleData.accuseIndex = 1;
+      this.accuseArticleData.accuseValue = this.articleData.articleId;
+      this.accuseArticleData.defendant = this.articleData.writer;
     },
     // 해당 userData 연결
     linkUserData() {
-      this.accuseArticleData.reporter = this.userData.nickname
+      this.accuseArticleData.reporter = this.userData.nickname;
     },
 
     tagsLength(tagList) {
@@ -480,7 +479,7 @@ export default {
   border-bottom: 0.5px solid rgb(218, 215, 215);
   margin: 0 0 2% 0;
 }
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
   b-modal:before {
     display: inline-block;
     vertical-align: middle;
@@ -565,7 +564,7 @@ a {
 }
 .articleInfo {
   text-align: left;
-  padding: 15px 35px 15px 40px;
+  padding: 15px 35px 35px 40px;
   width: 65%;
   margin: 0 auto;
   display: flex;
@@ -576,10 +575,21 @@ a {
   /* /* border-bottom: 1px solid #e9ecef; */
   /* border-top: 1px solid #e9ecef; */
 }
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
   .middle-row {
     display: flex;
     flex-direction: column;
+    text-align: left;
+  }
+  .articleInfo {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  .detail-content {
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
 }
 .detail-address {
