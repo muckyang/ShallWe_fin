@@ -115,7 +115,7 @@ public class SearchController {
                 result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                         p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
                         p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), empty, temp, p.getEndTime(),
-                        BeforeCreateTime(p.getCreateTime())));
+                        BeforeCreateTime(p.getCreateTime()), p.getCreateTime()));
 
             }
             return result;
@@ -320,7 +320,7 @@ public class SearchController {
             result.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
                     p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
                     p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), taglist, temp, p.getEndTime(),
-                    BeforeCreateTime(p.getCreateTime())));
+                    BeforeCreateTime(p.getCreateTime()),p.getCreateTime()));
 
         }
 
