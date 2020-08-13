@@ -150,7 +150,7 @@ export default {
     ...mapState(['articles'])
   },
   created:function(){
-    this.search(this.$cookies.get('searchData'))
+    // this.search(this.$cookies.get('searchData'))
   }
 }
 </script>

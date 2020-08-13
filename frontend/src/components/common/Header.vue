@@ -217,7 +217,7 @@
           style="font-family: FontAwesome;"
           placeholder="Search"
           v-model="searchData.searchDataForSend.word"
-          @keypress.enter="search"
+          @keypress.enter="search(searchData)"
         />
         <button class="searchBtn my-2 my-sm-0" type="submit" @click="search(searchData)">
           <i class="fas fa-search"></i>
@@ -248,7 +248,7 @@ export default {
       searchData: {
         searchDataForSend: {
           word: "",
-          subject: "headerTitle",
+          subject: "headertitle",
         },
       },
       loginData: {
