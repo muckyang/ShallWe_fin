@@ -1,18 +1,17 @@
 <template>
   <div>
-    <tr>
-      <th scope="row">{{ accuse.accuseId }}</th>
-      <td>{{ accuse.reporter }}</td>
-      <td>{{ accuse.defendant }}</td>
-      <td>{{ accuse.accuseIndex }}</td>
-      <td>{{ accuse.accuseKind }}</td>
-      <td>{{ accuse.accuseReason }}</td>
-      <td>
+    <div>
+      <b-card>
+        <b-card-title># {{ accuse.accuseId }}. "{{ accuse.reporter }}" 님의 신고 내용</b-card-title>
+        <b-card-sub->피신고자: {{ accuse.defendant }}</b-card-sub->
+        <b-card-text>신고 유형: [{{ accuse.accuseIndex }}] {{ accuse.accuseKind }}</b-card-text>
+        <b-card-text>{{ accuse.accuseReason }}</b-card-text>
+
         <button class="btn btn-info btn-sm"><a :href="accuse.accuseUrl" class="text-decoration-none text-white">신고상세</a></button>
         <button class="btn btn-danger btn-sm" @click="yesAccuse()">신고접수</button>
         <button class="btn btn-secondary btn-sm" @click="noAccuse()">허위신고</button>
-      </td>
-    </tr>
+      </b-card>
+    </div>
   </div>
 </template>
 
