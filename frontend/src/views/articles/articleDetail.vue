@@ -76,27 +76,7 @@
           <div class="detail-info">
             <div class="detail-address">
               만남의 장소: {{articleData.address}}
-              <!-- <button type="button" class="map-btn" data-toggle="modal" data-target="#exampleModal">
-                <i class="fas fa-map-marker-alt"></i>
-              </button>
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">만남의 장소</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <kakaoMapForDetail/>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                    
-                    </div>
-                  </div>
-                </div>
-              </div>-->
+
             </div>
             <div class="detail-price">
               <div class="min-price">최소 주문 금액: {{articleData.minPrice}}원</div>
@@ -168,7 +148,6 @@
                 </b-form-group>
               </form>
             </b-modal>
-            <!--임시 modal-->
           </div>
         </div>
       </div>
@@ -176,9 +155,6 @@
       <!--하단 부분. 내용,(지도) -->
       <div class="detail-content" id="item-1">{{ articleData.description }}</div>
     </div>
-    <!-- <button type="button" class="map-btn mt-3">
-          <i class="fas fa-map-marker-alt"></i> 지도 
-    </button>-->
     <div class="kakao-map">
       <kakaoMapForDetail />
     </div>
@@ -229,12 +205,9 @@
             v-if="articleData.userId !== participant.userId"
             class="member-content"
           >요구사항: {{participant.description}}</div>
-          <!-- <div class="member-create-time">{{participant.createTime}}</div> -->
         </div>
       </div>
     </div>
-    <!-- {{articleData}} -->
-    <!-- <membersList/> -->
     <commentList />
   </div>
 </template>
@@ -246,7 +219,6 @@ import { mapState, mapActions } from "vuex";
 import commentList from "@/components/comments/commentList";
 import articleLike from "@/components/articles/articleLike";
 import kakaoMapForDetail from "@/components/articles/kakaoMapForDetail";
-// import membersList from '@/components/articles/membersList'
 
 export default {
   name: "articleDetail",
@@ -430,7 +402,6 @@ export default {
 <style>
 .kakao-map {
   display: flex;
-  /* border: 0.5px solid grey; */
   width: 100%;
   margin: 3% 0 0 0;
   padding: auto;
@@ -464,7 +435,6 @@ export default {
   justify-content: space-between;
 }
 .members {
-  /* border: 1px solid red; */
   width: 75%;
   margin: 3% auto;
 }
@@ -498,10 +468,6 @@ b-modal.form-input {
   margin: 0;
   padding: 0;
 }
-/* .modal-content.modalsize {
-  height: auto;
-  min-width: 10%;
-} */
 .detail {
   border: 1px solid rgb(224, 221, 221);
   border-radius: 1.5%;
@@ -517,7 +483,6 @@ b-modal.form-input {
   color: white;
   padding: 8px;
   border-radius: 5px;
-  /* margin-bottom: */
 }
 a {
   justify-content: bottom;
@@ -529,7 +494,6 @@ a {
   margin-bottom: 2%;
   margin-top: 2%;
   text-align: left;
-  /* grid-column: 1/15; */
 }
 .top-row {
   display: flex;
@@ -538,9 +502,7 @@ a {
 .detail-title {
   font-size: x-large;
   font-weight: bold;
-  /* display: inline; */
   width: 90%;
-  /* justify-content: space-between; */
 }
 .create-time {
   font-size: small;
@@ -560,7 +522,6 @@ a {
 }
 .middle-row {
   display: flex;
-  /* border: 1px solid blue; */
 }
 .articleInfo {
   text-align: left;
@@ -570,10 +531,6 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* position: relative;
-  height: 100%; */
-  /* /* border-bottom: 1px solid #e9ecef; */
-  /* border-top: 1px solid #e9ecef; */
 }
 @media screen and (max-width: 768px) {
   .middle-row {
@@ -620,7 +577,6 @@ a {
   color: white;
 }
 .detail-content {
-  /* border: 1px solid blue; */
   margin: 30px 0;
   padding: 0 15px;
   text-align: left;
@@ -701,12 +657,6 @@ a {
   border: none;
   outline: none;
 }
-/* .article-drop:hover .article-btn {
-    background-color: transparent;
-    color: rgb(145, 141, 141);
-    border: none;
-    outline: none;
-} */
 .router-link-active {
   color: white;
 }
@@ -743,7 +693,6 @@ a {
   flex-direction: row;
   justify-content: flex-start;
   margin: 0.5% 0 1% 0;
-  /* border: 1px solid red; */
 }
 .nomargin {
   margin: 0;
