@@ -101,14 +101,16 @@
             >
               <i v-if="articleData.status<4" class="fas fa-user-plus"></i> 참여
             </b-button>
-            <b-button
-              id="show-btn"
-              class="detail-join"
-              v-if="articleData.minPrice<=articleData.sumPrice"
-              @click="confirmPurchase"
-            >
-              <div v-if="articleData.status===3"><i class="fas fa-user-plus"></i>확정</div>
-            </b-button>
+            <div v-if="articleData.writer===userData.nickname">
+              <b-button
+                id="show-btn"
+                class="detail-join"
+                v-if="articleData.minPrice<=articleData.sumPrice"
+                @click="confirmPurchase"
+              >
+                <div v-if="articleData.status===3"><i class="fas fa-user-plus"></i>확정</div>
+              </b-button>
+            </div>
             <b-button
               id="show-btn"
               class="detail-join"
