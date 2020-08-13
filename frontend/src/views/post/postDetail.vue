@@ -69,10 +69,10 @@
         </div>
       </div>
       <hr class="top-line" />
-
+      <!-- {{isImage}}{{noImage}} -->
       <!--이미지-->
-      <div class="middle-row">
-        <img class="postImage" :src="articleData.image" alt="..." />
+      <div v-if="articleData.image" class="middle-row">
+        <img class="post-img" :src="articleData.image" alt="..." />
       </div>
 
       <!--내용, 댓글-->
@@ -99,6 +99,19 @@ export default {
   data() {
     return {
       isLiked: false,
+      accuseArticleData: {
+        reporter: "",
+        defendant: "",
+        accuseIndex: "",
+        accuseValue: "",
+        accuseKind: 0,
+        accuseReason: "",
+        accuseUrl: "",
+        accuseConfirm: 0,
+        token: this.$cookies.get("auth-token"),
+      },
+      isImage: false,
+      noImage: false,
     };
   },
 
@@ -107,7 +120,14 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getArticle", "getUserData"]),
+    ...mapActions(["getArticle", "getUserData", "createArticleAccuse"]),
+    getImg() {
+      if (this.articleData.image) {
+        this.isImage = true;
+      } else {
+        this.noImage = true;
+      }
+    },
     likeCheck() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios
@@ -133,15 +153,20 @@ export default {
 
   created: function () {
     this.getArticle(this.$route.params.ID);
+    // this.getImg();
     this.getUserData();
+    this.likeCheck();
   },
 };
 </script>
 
 <style>
-.postImage {
-  width: 90%;
-  height: 300px;
+.post-img {
+  width: 100%;
+  height: 450px;
   margin: 10px;
+}
+.no-middle {
+  display: none;
 }
 </style>
