@@ -80,14 +80,14 @@ public class PostController {
     @Autowired
     private JwtService jwtService;
 
-
-    //게시물 만료시간 지나면 자동 비활성화
+    // 게시물 만료시간 지나면 자동 비활성화
     @Scheduled(cron = "*/30 * * * * *")
     public void articleTimeOut() {
         System.out.println("게시물 활성화 상태 변경 30초마다 실행중입니다.");
         List<Post> plist = postDao.findAll();
         for (Post p : plist) {
-            if (p.getStatus() == 1 && p.getTemp() == 1  && datetimeTosec(p.getEndTime()) < datetimeTosec(LocalDateTime.now())) {
+            if (p.getStatus() == 1 && p.getTemp() == 1
+                    && datetimeTosec(p.getEndTime()) < datetimeTosec(LocalDateTime.now())) {
                 p.setStatus(2);// 만료
                 postDao.save(p);
             }
@@ -183,7 +183,7 @@ public class PostController {
                 participant.setTitle(def_mes);
                 participant.setPrice(myPrice);
                 participant.setWriter(userOpt.get().getNickname());
-                participant.setStatus(1);// 게시자 본인은 활성화 상태 
+                participant.setStatus(1);// 게시자 본인은 활성화 상태
                 participant.setDescription(def_mes);
                 participantDao.save(participant);// 참가자 DB에 등록 완료
                 tagAdd(tags, artiId);
@@ -220,9 +220,8 @@ public class PostController {
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
         // 토큰 받아오면 그 토큰으로 유효성 검사 후 uid 받아와서 좋아요 한지 여부 확인
 
-        System.out.println("상세보기 들어옴 " + request.toString());
+        // System.out.println("상세보기 들어옴 " + request.toString());
         Post p = postDao.findPostByArticleId(articleId);
-
 
         if (p != null) {
             String token = request.getToken();

@@ -121,7 +121,7 @@ const routes = [
     component: postCreate,
   },
   {
-    path: "/pupdate",
+    path: "/pdetail/:ID",
     name: "postDetail",
     component: postDetail,
   },
