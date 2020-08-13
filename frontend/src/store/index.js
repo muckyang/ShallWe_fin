@@ -167,7 +167,7 @@ export default new Vuex.Store({
     signUp({ state, commit }, signUpData) {
       if (state.isTerm) {
         axios.post(`${BACK_URL}/account/signup`, signUpData)
-          .then(() => {
+          .then((response) => {
             alert("회원가입이 완료되었습니다.");
             commit("SET_TOKEN", response.data);
             this.commit("termCheck");
