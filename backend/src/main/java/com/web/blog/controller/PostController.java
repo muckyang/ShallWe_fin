@@ -326,7 +326,6 @@ public class PostController {
             post.setDescription(req.getDescription());
             post.setMinPrice(req.getMinPrice());
             post.setUrlLink(req.getUrlLink());
-            post.setStatus(1);
             post.setImage(req.getImage());
             post.setTemp(temp);
             post.setEndTime(endTime);
