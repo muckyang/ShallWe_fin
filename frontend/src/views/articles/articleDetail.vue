@@ -174,9 +174,7 @@
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div class="detail-content" id="item-1">
-        <p>{{ articleData.description }}</p>
-      </div>
+      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
     </div>
     <!-- <button type="button" class="map-btn mt-3">
           <i class="fas fa-map-marker-alt"></i> 지도 
@@ -566,7 +564,7 @@ a {
 }
 .articleInfo {
   text-align: left;
-  padding: 15px 35px 15px 40px;
+  padding: 15px 35px 35px 40px;
   width: 65%;
   margin: 0 auto;
   display: flex;
@@ -581,6 +579,17 @@ a {
   .middle-row {
     display: flex;
     flex-direction: column;
+    text-align: left;
+  }
+  .articleInfo {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  .detail-content {
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
 }
 .detail-address {
