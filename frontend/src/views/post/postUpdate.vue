@@ -31,13 +31,17 @@
     <button
       class="btn btn-secondary"
       type="submit"
-      @click="updateArticle({articleUpdateData,temp:2})"
-    >수정</button>
+      @click="updateArticle({ articleUpdateData, temp: 2 })"
+    >
+      수정
+    </button>
     <button
       class="ml-1 btn btn-danger"
       type="submit"
-      @click="deleteArticle({id:articleUpdateData.articleId,temp:2})"
-    >삭제</button>
+      @click="deleteArticle({ id: articleUpdateData.articleId, temp: 2 })"
+    >
+      삭제
+    </button>
   </div>
 </template>
 
@@ -56,14 +60,15 @@ export default {
   methods: {
     ...mapActions(["getArticle", "deleteArticle", "updateArticle"]),
   },
-  created: function () {
+  created: function() {
     this.getArticle(this.$route.params.ID);
+    console.log(this.articleUpdateData);
     this.articleUpdateData = this.articleData;
+    console.log(this.articleUpdateData);
   },
   computed: {
     ...mapState(["articleData"]),
   },
 };
 </script>
-<style>
-</style>
+<style></style>

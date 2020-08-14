@@ -37,7 +37,6 @@ export default {
         .post(`${BACK_URL}/post/read/2/102`, { auth })
         .then((response) => {
           this.reviews = response.data.postList;
-          console.log(this.reviews);
         })
         .catch((err) => {
           console.error(err);
