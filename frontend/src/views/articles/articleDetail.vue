@@ -86,7 +86,7 @@
             nomargin: !tagsLength(articleData.tags),
           }"
         >
-          <button class="tag" v-for="tag in articleData.tags" :key="tag.no">#{{ tag }}</button>
+          <button class="tag" v-for="tag in articleData.tags" :key="tag.no" @click="searchDetail(searchData)">#{{ tag }}</button>
         </div>
         <div class="in-the-top">
           <div class="writer">
@@ -330,6 +330,14 @@ export default {
       },
       isDenied: false,
       joinFlag:true,
+      searchData:{
+        searchDataForSend:{
+          subject:'',
+          word:'',
+        },
+        categoryId:'',
+        temp:0,
+      },
     };
   },
   computed: {
