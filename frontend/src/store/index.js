@@ -356,16 +356,12 @@ export default new Vuex.Store({
         });
     },
     //게시글 삭제하기
-    deleteArticle({ state, dispatch }, article) {
+    deleteArticle({ state, dispatch }, articleId) {
+      console.log(articleId)
       const auth = { token: state.authToken };
       axios
-        .get(`${BACK_URL}/post/delete/${article.id}`, auth)
+        .get(`${BACK_URL}/post/delete/${articleId}`)
         .then(() => {
-          if (article.temp === 1) {
-            router.push("/article");
-          } else {
-            dispatch("getArticles", { temp: 0, categoryId: 0 });
-          }
         })
         .catch((err) => {
           console.log(err);
