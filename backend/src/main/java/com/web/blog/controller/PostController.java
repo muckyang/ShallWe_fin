@@ -488,54 +488,38 @@ public class PostController {
     public Object delete(@Valid @PathVariable int articleId) {
 
         Post post = postDao.getPostByArticleId(articleId);
-        // Optional<Post> postOpt = postDao.findPostByArticleId(articleId);
-        // Post post = postOpt.get();
-        // String token = req.getToken();
-        // User jwtuser = jwtService.getUser(token);
-        // int userId;
+        if (post.getStatus() != 0 && post.getStatus() > 1) {
+            // 참여자 삭제
+            List<Participant> partList = participantDao.getParticipantByArticleId(articleId);
+            int pasize = partList.size();
+            for (int i = 0; i < pasize; i++) {
+                Participant p = partList.get(i);
+                participantDao.delete(p);
+            }
+            // 댓글 삭제
+            List<Comment> commentList = commentDao.getCommentByArticleId(articleId);
+            int csize = commentList.size();
+            for (int i = 0; i < csize; i++) {
+                Comment c = commentList.get(i);
+                commentDao.delete(c);
+            }
+            /// 좋아요 삭제
+            List<Like> likeList = likeDao.getLikeByArticleId(articleId);
+            int lsize = likeList.size();
+            for (int i = 0; i < lsize; i++) {
+                Like l = likeList.get(i);
+                likeDao.delete(l);
+            }
+            // 태그 삭제
+            tagDelete(articleId);
+            postDao.delete(post);
+            System.out.println("삭제하기!! ");
+            PostResponse result = new PostResponse();
 
-        // Optional<User> userOpt =
-        // userDao.findUserByEmailAndPassword(jwtuser.getEmail(),
-        // jwtuser.getPassword());
-        // if (userOpt.isPresent()) {
-        // userId = userOpt.get().getUserId();
-        // } else {
-        // return new ResponseEntity<>("로그인 상태를 확인하세요(token값 유효하지 않음)",
-        // HttpStatus.BAD_REQUEST);
-        // }
-
-        // if(userOpt.get().getUserId() != post.getUserId()){
-        // return new ResponseEntity<>("로그인한 회원과 게시자가 일치하지 않습니다.",
-        // HttpStatus.NOT_FOUND);
-        // }
-        // 참여자 삭제
-        List<Participant> partList = participantDao.getParticipantByArticleId(articleId);
-        int pasize = partList.size();
-        for (int i = 0; i < pasize; i++) {
-            Participant p = partList.get(i);
-            participantDao.delete(p);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("삭제할 수 없는 상태의 게시물입니다.", HttpStatus.OK);
         }
-        // 댓글 삭제
-        List<Comment> commentList = commentDao.getCommentByArticleId(articleId);
-        int csize = commentList.size();
-        for (int i = 0; i < csize; i++) {
-            Comment c = commentList.get(i);
-            commentDao.delete(c);
-        }
-        /// 좋아요 삭제
-        List<Like> likeList = likeDao.getLikeByArticleId(articleId);
-        int lsize = likeList.size();
-        for (int i = 0; i < lsize; i++) {
-            Like l = likeList.get(i);
-            likeDao.delete(l);
-        }
-        // 태그 삭제
-        tagDelete(articleId);
-        postDao.delete(post);
-        System.out.println("삭제하기!! ");
-        PostResponse result = new PostResponse();
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     private static String BeforeCreateTime(LocalDateTime createTime) {
