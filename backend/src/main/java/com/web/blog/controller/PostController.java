@@ -287,9 +287,16 @@ public class PostController {
                 c.setCommentId(clist.get(i).getCommentId());
                 c.setArticleId(clist.get(i).getArticleId());
                 c.setUserId(clist.get(i).getUserId());
-                c.setContent(clist.get(i).getContent());
-                c.setNickname(nickname);
+
+            
                 c.setStatus(clist.get(i).getStatus());
+                if (clist.get(i).getStatus() == 0) {
+                    c.setNickname("신고된 댓글");
+                    c.setContent("신고된 댓글 입니다.");
+                } else {
+                    c.setNickname(nickname);
+                    c.setContent(clist.get(i).getContent());
+                }
                 c.setTimeAgo(BeforeCreateTime(clist.get(i).getCreateTime()));
                 c.setCreateTime(clist.get(i).getCreateTime());
 
