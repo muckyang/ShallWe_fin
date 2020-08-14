@@ -7,72 +7,74 @@
           <div class="detail-title">{{ articleData.title }}</div>
 
           <!--게시글 수정,삭제,신고 버튼-->
-          <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
-            <button type="button" class="article-btn" data-toggle="dropdown">
-              <i class="fas fa-ellipsis-v"></i>
-            </button>
-            <div class="dropdown-menu">
-              <router-link
-                class="articleUpdate"
-                :to="{
-                  name: 'articleUpdate',
-                  params: { ID: this.$route.params.ID },
-                }"
-              >
-                <a class="dropdown-item articleUpdate">수정</a>
-              </router-link>
-              <a class="dropdown-item">삭제</a>
-              <!--다시 보기!!!!!!!1 -->
-            </div>
-          </div>
-
-          <!-- 게시물 신고 -->
-          <div v-else>
-            <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm"
-              >신고</b-button
-            >
-
-            <b-modal id="modal-1" title="신고 접수">
-              <h6>신고 사유</h6>
-              <div class="dropdown">
-                <button
-                  class="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  선택
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)"
-                    >욕설</a
-                  >
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)"
-                    >노쇼</a
-                  >
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)"
-                    >광고</a
-                  >
-                </div>
-              </div>
-              <h6>신고할 게시물 URL</h6>
-              <b-form-input
-                id="type-url"
-                type="url"
-                v-model="accuseArticleData.accuseUrl"
-              ></b-form-input>
-              <h6>사유 상세</h6>
-              <b-form-textarea
-                id="textarea-rows"
-                rows="8"
-                v-model="accuseArticleData.accuseReason"
-              ></b-form-textarea>
-              <button @click="createArticleAccuse({ accuseArticleData })">
-                신고접수
+          <div v-if="articleData.partList.length===1">
+            <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
+              <button type="button" class="article-btn" data-toggle="dropdown">
+                <i class="fas fa-ellipsis-v"></i>
               </button>
-            </b-modal>
+              <div class="dropdown-menu">
+                <router-link
+                  class="articleUpdate"
+                  :to="{
+                    name: 'articleUpdate',
+                    params: { ID: this.$route.params.ID },
+                  }"
+                >
+                  <a class="dropdown-item articleUpdate">수정</a>
+                </router-link>
+                <a class="dropdown-item">삭제</a>
+                <!--다시 보기!!!!!!!1 -->
+              </div>
+            </div>
+
+            <!-- 게시물 신고 -->
+            <div v-else>
+              <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm"
+                >신고</b-button
+              >
+
+              <b-modal id="modal-1" title="신고 접수">
+                <h6>신고 사유</h6>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    선택
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(1)"
+                      >욕설</a
+                    >
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(2)"
+                      >노쇼</a
+                    >
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(3)"
+                      >광고</a
+                    >
+                  </div>
+                </div>
+                <h6>신고할 게시물 URL</h6>
+                <b-form-input
+                  id="type-url"
+                  type="url"
+                  v-model="accuseArticleData.accuseUrl"
+                ></b-form-input>
+                <h6>사유 상세</h6>
+                <b-form-textarea
+                  id="textarea-rows"
+                  rows="8"
+                  v-model="accuseArticleData.accuseReason"
+                ></b-form-textarea>
+                <button @click="createArticleAccuse({ accuseArticleData })">
+                  신고접수
+                </button>
+              </b-modal>
+            </div>
           </div>
           <!-- 게시물 신고 -->
 
@@ -136,35 +138,39 @@
                 공유
               </a>
             </button>
-            <b-button
-              id="show-btn"
-              v-b-modal.join-modal
-              class="detail-join"
-              v-if="articleData.userId != userData.userId"
-            >
-              <i v-if="articleData.status < 4" class="fas fa-user-plus"></i>
-              참여
-            </b-button>
+            <div v-if="articleData.status < 4">
+              <b-button
+                id="show-btn"
+                v-b-modal.join-modal
+                class="detail-join"
+                v-if="joinFlag"
+              >
+                <i class="fas fa-user-plus"></i>
+                참여
+              </b-button>
+            </div>
             <div v-if="articleData.writer === userData.nickname">
+              <div v-if="articleData.status === 3">
               <b-button
                 id="show-btn"
                 class="detail-join"
                 v-if="articleData.minPrice <= articleData.sumPrice"
                 @click="confirmPurchase"
               >
-                <div v-if="articleData.status === 3">
                   <i class="fas fa-user-plus"></i>확정
-                </div>
               </b-button>
             </div>
-            <b-button
-              id="show-btn"
-              class="detail-join"
-              v-if="articleData.status >= 4"
-              @click="confirmPurchase"
-            >
-              <i class="fas fa-user-plus"></i>후기 작성
-            </b-button>
+            </div>
+            <div v-if="userData.nickname in articleData.partList">
+              <b-button
+                id="show-btn"
+                class="detail-join"
+                v-if="articleData.status >= 4"
+                @click="confirmPurchase"
+              >
+                <i class="fas fa-user-plus"></i>후기 작성
+              </b-button>
+            </div>
 
             <!--참가 modal-->
             <b-modal
@@ -345,7 +351,7 @@
                       variant="light"
                       size="sm"
                       v-if="isDenied"
-                      @click="denyParticpation(participant.writer)"
+                      @click="denyParticpation(participant)"
                       >거절 확정</b-button
                     >
                   </div>
@@ -366,6 +372,9 @@
           >
             요구사항: {{ participant.description }}
           </div>
+          <div v-if="participant.status===0">처리상태:수락 대기</div>
+          <div v-if="participant.status===1">처리상태:수락</div>
+          <div v-if="participant.status===2">처리상태:거절</div>
         </div>
       </div>
     </div>
@@ -399,7 +408,6 @@ export default {
         description: "",
         token: this.$cookies.get("auth-token"),
       },
-      participants: {},
       accuseArticleData: {
         reporter: "",
         defendant: "",
@@ -412,6 +420,7 @@ export default {
         token: this.$cookies.get("auth-token"),
       },
       isDenied: false,
+      joinFlag:true,
     };
   },
   computed: {
@@ -429,6 +438,7 @@ export default {
         )
         .then((response) => {
           alert(response.data);
+          this.getArticle()
         })
         .catch((error) => {
           console.log(error);
@@ -437,11 +447,12 @@ export default {
     denyParticpation(participant) {
       axios
         .post(
-          `${BACK_URL}/participant/denied/${this.articleData.articleId}/${participant}`
+          `${BACK_URL}/participant/denied/${this.articleData.articleId}/${participant.writer}`
         )
         .then((response) => {
           alert(response.data);
           this.isDenied = false;
+          participant.status=2
         })
         .catch((error) => {
           console.log(error);
@@ -451,7 +462,7 @@ export default {
       axios
         .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
         .then((response) => {
-          alert(response.data);
+          alert("구매가 확정되었습니다.");
         })
         .catch((error) => {
           console.log(error);
@@ -595,7 +606,19 @@ export default {
     this.getArticle(this.$route.params.ID);
     this.getUserData();
     this.likeCheck();
+    this.joinFlag=true
   },
+  updated(){
+    const tempList=[]
+    for (const p of this.articleData.partList) {
+      tempList.push(p.writer)
+    }
+    if(tempList.includes(this.userData.nickname)){
+      this.joinFlag=false
+    }else{
+      this.joinFlag=true
+    }
+  }
 };
 </script>
 
