@@ -53,6 +53,9 @@ export default {
       articleUpdateData: {},
     };
   },
+  computed: {
+    ...mapState(["articleData"]),
+  },
   methods: {
     ...mapActions(["getArticle", "deleteArticle", "updateArticle"]),
     imageChange(e) {
@@ -74,10 +77,6 @@ export default {
   created: function () {
     this.getArticle(this.$route.params.ID);
     this.articleUpdateData = this.articleData;
-    console.log(this.articleUpdateData, "twtwtw");
-  },
-  computed: {
-    ...mapState(["articleData"]),
   },
 };
 </script>

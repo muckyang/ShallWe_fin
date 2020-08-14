@@ -1,43 +1,54 @@
 <template>
   <div class="container">
     <div class="review-container">
-      <div class="review-info">
-        <div class="review-title">{{review.title}}</div>
-        <div class="review-writer">{{review.writer}}</div>
-        <div class="review-time">{{review.timeAgo}}</div>
-        <div class="comment-drop dropdown dropleft" v-if="review.userId === userData.userId">
-          <button type="button" class="comment-btn" data-toggle="dropdown">
-            <i class="fas fa-ellipsis-v"></i>
-          </button>
-          <div class="dropdown-menu">
-            <router-link
-              class="reviewUpdate"
-              :to="{
-                  name: 'reviewUpdate',
-                  params: { ID: this.review.articleId},
-                }"
-            >
-              <a class="dropdown-item">수정</a>
-            </router-link>
-            <a class="dropdown-item">삭제</a>
+      <div class="section">
+        <div class="review-info">
+          <div class="review-title">{{review.title}}</div>
+          <div class="review-writer">{{review.writer}}</div>
+          <div class="review-time">{{review.timeAgo}}</div>
+          <div class="comment-drop dropdown dropleft" v-if="review.userId === userData.userId">
+            <button type="button" class="comment-btn" data-toggle="dropdown">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <div class="dropdown-menu">
+              <router-link
+                class="reviewUpdate"
+                :to="{
+                    name: 'reviewUpdate',
+                    params: { ID: this.review.articleId},
+                  }"
+              >
+                <a class="dropdown-item">수정</a>
+              </router-link>
+              <a class="dropdown-item">삭제</a>
+            </div>
+          </div>
+        </div>
+        <div class="review-like-comment">
+          <div class="review-like">
+            <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
+            {{review.likeNum}}
+          </div>
+          <div class="review-comment">
+            <i class="far fa-comment-dots"></i>
+            {{review.commentNum}}
           </div>
         </div>
       </div>
-      <div class="review-like-comment">
-        <div class="review-like">
-          <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
-          {{review.likeNum}}
-        </div>
-        <div class="review-comment">
-          <i class="far fa-comment-dots"></i>
-          {{review.commentNum}}
+      <!--화살표 클릭하면 보일 내용들. 내용,이미지-->
+      <div class="section collapsible">
+        <div class="after-event">
+          <div class="review-img">
+            <img class="review-img" :src="review.image" alt="..." />
+          </div>
+          <div class="review-content">{{review.description}}</div>
         </div>
       </div>
       <div class="arrow">
-        <i class="fas fa-angle-double-down"></i>
+        <button class="review-btn" @click="seeInfo">
+          <i class="fas fa-angle-double-down"></i>
+        </button>
       </div>
-      <!-- <img class="review-img" :src="review.image" alt="..." />
-      {{review.description}}-->
     </div>
   </div>
 </template>
@@ -81,9 +92,15 @@ export default {
     likeChange() {
       this.likeCheck();
     },
-  },
-  created: function () {
-    this.likeCheck();
+    seeInfo() {
+      console.log("선택!");
+      document
+        .querySelector(".section.collapsible")
+        .classList.toggle("collapsed");
+    },
+    created: function () {
+      this.likeCheck();
+    },
   },
 };
 </script>
@@ -128,5 +145,26 @@ export default {
 .review-comment {
   display: flex;
   margin: 0 8px;
+}
+.section {
+  overflow: hidden;
+  transition: max-height 0.5s ease-out;
+  height: auto;
+  max-height: 600px;
+}
+.section.collapsed {
+  max-height: 0;
+}
+/* .after-event {
+  max-height: 0;
+} */
+.review-btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+.review-btn:focus {
+  border: none;
+  outline: none;
 }
 </style>
