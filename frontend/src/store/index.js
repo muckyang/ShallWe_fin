@@ -313,6 +313,7 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
+      console.log("들어옴?");
       if (updateData.articleUpdateData.endTime) {
         if (updateData.articleUpdateData.endTime.length < 8) {
           updateData.articleUpdateData.endTime =
@@ -457,10 +458,9 @@ export default new Vuex.Store({
     },
     createArticleAccuse(context, accuseArticleData) {
       axios
-        .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
+        .post(`${BACK_URL}/accuse/create`, accuseArticleData)
         .then(() => {
-          console.log(accuseArticleData, "하");
-          router.push("/posts");
+          router.push("/");
         })
         .catch((err) => console.log(err));
     },
@@ -469,6 +469,7 @@ export default new Vuex.Store({
         .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
         .then(() => {
           router.push("/");
+          console.log(accuseCommentData, 'AAA')
         })
         .catch((err) => console.log(err));
     },

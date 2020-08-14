@@ -320,7 +320,7 @@ export default {
       accuseArticleData: {
         reporter: "",
         defendant: "",
-        accuseIndex: "",
+        accuseIndex: 1,
         accuseValue: "",
         accuseKind: 0,
         accuseReason: "",
