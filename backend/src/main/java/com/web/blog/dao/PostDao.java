@@ -20,45 +20,44 @@ public interface PostDao extends JpaRepository<Post, String> {
     List<Post> getPostByUserId(int userId);
     List<Post> getPostByUserIdAndTemp(int userId,int temp);
     List<Post> getPostByUserIdAndCategoryId(int userId,int categoryId);
-    List<Post> getPostByTempAndCategoryIdNot(int userId,int categoryId);
+    List<Post> getPostByTempAndCategoryIdNotOrderByCategoryIdAscCreateTimeDesc(int userId,int categoryId);
 
-    List<Post> findPostByTempAndWriter(int temp, String writer);
+    List<Post> findPostByTempAndWriterOrderByCreateTimeDesc(int temp, String writer);
 
 
-    Optional<Post> findPostByArticleIdAndTemp(int articleId,int temp);
+    Optional<Post> findPostByArticleIdAndTempOrderByCreateTimeDesc(int articleId,int temp);
 
-    Optional<Post> findPostByArticleIdAndTempAndCategoryId(int articleId,int temp,int categoryId);
+    Optional<Post> findPostByArticleIdAndTempAndCategoryIdOrderByCreateTimeDesc(int articleId,int temp,int categoryId);
 
-    List<Post> findPostByTitleLike(String word);
+    List<Post> findPostByTitleLikeOrderByCreateTimeDesc(String word);
 
-    List<Post> findPostByTempAndTitleLike(int temp , String word);
+    List<Post> findPostByTempAndTitleLikeOrderByCreateTimeDesc(int temp , String word);
 
-    List<Post> findPostByTempAndCategoryIdAndTitleLike(int temp ,int categoryId, String word);
-   List<Post> findPostByTempAndWriterLike(int writer , String word);
+    List<Post> findPostByTempAndCategoryIdAndTitleLikeOrderByCreateTimeDesc(int temp ,int categoryId, String word);
+   List<Post> findPostByTempAndWriterLikeOrderByCreateTimeDesc(int writer , String word);
 
-    List<Post> findPostByTempAndCategoryIdAndWriterLike(int temp ,int categoryId, String word);
+    List<Post> findPostByTempAndCategoryIdAndWriterLikeOrderByCreateTimeDesc(int temp ,int categoryId, String word);
 
     // 리스트 출력 
 
-    List<Post> findPostByTemp(int temp);
+    List<Post> findPostByTempOrderByCreateTimeDesc(int temp);
 
-    List<Post> findPostByTempAndCategoryId(int temp,int categoryId);
+    List<Post> findPostByTempAndCategoryIdOrderByCreateTimeDesc(int temp,int categoryId);
 
 
     List<Post> findPostByUserId(int userId);
 
     // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때 (전체)
 
-    List<Post> findPostByAddressLike(String st1);
-    List<Post> findPostByAddressLikeAndAddressLike(String st1, String st2);
-    List<Post> findPostByAddressLikeAndAddressLikeAndAddressLike(String st1, String st2, String st3);
-    List<Post> findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(String st1, String st2, String st3, String st4);
+    List<Post> findPostByAddressLikeOrderByCreateTimeDesc(String st1);
+    List<Post> findPostByAddressLikeAndAddressLikeOrderByCreateTimeDesc(String st1, String st2);
+    List<Post> findPostByAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(String st1, String st2, String st3);
+    List<Post> findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(String st1, String st2, String st3, String st4);
     // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때 (카테고리별)
 
-    List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1);
-    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2);
-    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2, String st3);
-    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2, String st3, String st4);
+    List<Post> findPostByTempAndCategoryIdAndAddressLikeOrderByCreateTimeDesc(int temp, int categoryId, String st1);
+    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int temp, int categoryId, String st1, String st2);
+    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int temp, int categoryId, String st1, String st2, String st3);
+    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int temp, int categoryId, String st1, String st2, String st3, String st4);
 
-    
 }
