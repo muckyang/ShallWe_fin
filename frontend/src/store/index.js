@@ -396,9 +396,6 @@ export default new Vuex.Store({
         searchData.categoryId &&
         searchData.temp
       ) {
-        if(searchData.categoryId='temp'){
-          searchData.categoryId=0
-        }
         console.log(searchData);
         axios
           .post(
