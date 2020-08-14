@@ -145,7 +145,11 @@ export default {
             infowindow.close();
           });
           kakao.maps.event.addListener(marker, "click", () => {
-            this.$emit("setAddress", ditemEl.querySelector(".jibun").innerText);
+            try{
+              this.$emit("setAddress", ditemEl.querySelector(".jibun").innerText);
+            }catch{
+              this.$emit("setAddress",ditemEl.querySelector(".info").getElementsByTagName('span')[0].innerText)
+            }
           });
           itemEl.onmouseover = function () {
             infowindow.setContent(content);
@@ -155,7 +159,11 @@ export default {
             infowindow.close();
           };
           itemEl.onclick = () => {
-            this.$emit("setAddress", ditemEl.querySelector(".jibun").innerText);
+            try{
+              this.$emit("setAddress", ditemEl.querySelector(".jibun").innerText);
+            }catch{
+              this.$emit("setAddress",ditemEl.querySelector(".info").getElementsByTagName('span')[0].innerText)
+            }
           };
         })(marker, places[i].place_name);
 
