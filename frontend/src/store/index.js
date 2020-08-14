@@ -331,7 +331,6 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
-      console.log(updateData);
       if (updateData.articleUpdateData.endTime) {
         if (updateData.articleUpdateData.endTime.length < 8) {
           updateData.articleUpdateData.endTime =
@@ -347,7 +346,7 @@ export default new Vuex.Store({
         .then(() => {
           if (updateData.temp === 2) {
             if (updateData.articleUpdateData.categoryId === 102) {
-              router.push(`reviews`);
+              router.push(`/reviews`);
             } else {
               router.push(`/pdetail/${updateData.articleUpdateData.articleId}`);
             }
