@@ -235,7 +235,8 @@ public class PostController {
     @ApiOperation(value = "게시물상세보기") // SWAGGER UI에 보이는 이름
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
         // 토큰 받아오면 그 토큰으로 유효성 검사 후 uid 받아와서 좋아요 한지 여부 확인
-
+        long before = System.currentTimeMillis();
+      
         // System.out.println("상세보기 들어옴 " + request.toString());
         Post p = postDao.findPostByArticleId(articleId);
 
@@ -332,6 +333,8 @@ public class PostController {
 
                 System.out.println(nickname);
             }
+            System.out.println("리턴!!" + (System.currentTimeMillis() - before) + "초 ");
+
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -472,6 +475,19 @@ public class PostController {
                 } else {
                     user.setUserPoint(user.getUserPoint() + 30);
                 }
+                int up = user.getUserPoint();
+                if(up <= 1000){
+                    user.setGrade(1);
+                }else if(up <= 1500){ 
+                    user.setGrade(2);
+                }else if(up <= 2500){ 
+                    user.setGrade(3);
+                }else if(up <= 4000){ 
+                    user.setGrade(4);
+                }else { 
+                    user.setGrade(5);
+                }
+                userDao.save(user);
             } else if (part.getStatus() == 0) {
                 part.setStatus(2);// 참가수락하지 않은 참가자는 거부로 변경
                 participantDao.save(part);
