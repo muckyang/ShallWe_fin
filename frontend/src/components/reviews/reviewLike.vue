@@ -19,23 +19,18 @@ export default {
   name: "reviewLike",
   props: {
     isLiked: Boolean,
+    review: Object,
   },
   methods: {
     like() {
-      const auth = this.$cookies.get("auth-token");
+      this.review.token = this.$cookies.get("auth-token");
       axios
-        .post(
-          `${BACK_URL}/like/${this.articleData.articleId}`,
-          this.articleData
-        )
+        .post(`${BACK_URL}/like/${this.review.articleId}`, this.review)
         .then(() => {
           this.$emit("like-change");
         })
-        .catch((err) => console.log(err.response.data));
+        .catch((err) => console.log(err));
     },
-  },
-  computed: {
-    ...mapState(["articleData"]),
   },
 };
 </script>
@@ -45,5 +40,9 @@ export default {
   border: none;
   outline: none;
   background-color: transparent;
+}
+.review-like:focus {
+  border: none;
+  outline: none;
 }
 </style>

@@ -38,6 +38,9 @@ export default {
     InfiniteLoading,
     reviewDetail,
   },
+  computed: {
+    ...mapState(["userData"]),
+  },
   methods: {
     // getReviews() {
     //   const auth ={ token: cookies.get("auth-token") };
@@ -50,7 +53,7 @@ export default {
     //         console.error(err);
     //     });
     // },
-    ...mapActions(["search"]),
+    ...mapActions(["search", "getUserData"]),
     infiniteHandler($state) {
       const auth = { token: cookies.get("auth-token") };
       axios
@@ -71,10 +74,9 @@ export default {
         });
     },
   },
-  // computed: {},
-  // created() {
-  //   this.getReviews();
-  // },
+  created() {
+    this.getUserData();
+  },
 };
 </script>
 

@@ -1,15 +1,31 @@
 <template>
   <div class="container">
-    <!-- {{review}} -->
     <div class="review-container">
       <div class="review-info">
         <div class="review-title">{{review.title}}</div>
         <div class="review-writer">{{review.writer}}</div>
         <div class="review-time">{{review.timeAgo}}</div>
+        <div class="comment-drop dropdown dropleft" v-if="review.userId === userData.userId">
+          <button type="button" class="comment-btn" data-toggle="dropdown">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <div class="dropdown-menu">
+            <router-link
+              class="reviewUpdate"
+              :to="{
+                  name: 'postUpdate',
+                  params: { ID: this.review.articleId},
+                }"
+            >
+              <a class="dropdown-item">수정</a>
+            </router-link>
+            <a class="dropdown-item">삭제</a>
+          </div>
+        </div>
       </div>
       <div class="review-like-comment">
         <div class="review-like">
-          <reviewLike @like-change="likeChange" :isLiked="isLiked" />
+          <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
           {{review.likeNum}}
         </div>
         <div class="review-comment">
@@ -45,6 +61,7 @@ export default {
   data() {
     return {
       isLiked: false,
+      likeFlag: false,
     };
   },
   computed: {
@@ -62,14 +79,10 @@ export default {
         .catch((err) => console.log(err));
     },
     likeChange() {
-      this.getArticle(this.review.articleId);
       this.likeCheck();
     },
   },
   created: function () {
-    this.getArticle(this.review.articleId);
-    console.log(this.articleData, "ㅎㅇ");
-    this.getUserData();
     this.likeCheck();
   },
 };
