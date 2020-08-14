@@ -164,7 +164,7 @@ export default {
         ...mapState(['userData','articles'])
     },
     created: function(){
-        this.getArticles({temp:0,categoryId:0})
+        // this.getArticles({temp:0,categoryId:0})
     },
 }
 </script>
