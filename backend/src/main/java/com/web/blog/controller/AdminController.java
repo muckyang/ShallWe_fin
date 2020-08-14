@@ -170,6 +170,18 @@ public class AdminController {
                 // else if (req.getAccuseKind() == 4) { // 4. 기타 - 10
                 //     user.setUserPoint(user.getUserPoint() - 10);
                 // }
+                int up = userD.getUserPoint();
+                if(up <= 1000){
+                    userD.setGrade(1);
+                }else if(up <= 1500){ 
+                    userD.setGrade(2);
+                }else if(up <= 2500){ 
+                    userD.setGrade(3);
+                }else if(up <= 4000){ 
+                    userD.setGrade(4);
+                }else { 
+                    userD.setGrade(5);
+                }
                 userDao.save(userD);
                 System.out.println("점수(user point) 수정");
                 Accuse accuse = accuseDao.findAccuseByAccuseId(req.getAccuseId());
