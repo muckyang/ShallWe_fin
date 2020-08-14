@@ -557,9 +557,6 @@ export default {
     this.getUserData();
     this.likeCheck();
   },
-  updated(){
-    
-  }
 };
 </script>
 
