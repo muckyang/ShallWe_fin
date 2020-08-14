@@ -13,7 +13,7 @@
             <router-link
               class="reviewUpdate"
               :to="{
-                  name: 'postUpdate',
+                  name: 'reviewUpdate',
                   params: { ID: this.review.articleId},
                 }"
             >

@@ -31,7 +31,9 @@ import postUpdate from "../views/post/postUpdate";
 import postList from "../views/post/postList";
 
 //후기게시판
-import reviewList from "../views/post/reviewList";
+import reviewCreate from "../views/reviews/reviewCreate";
+import reviewUpdate from "../views/reviews/reviewUpdate";
+import reviewList from "../views/reviews/reviewList";
 
 //임시저장
 import tempList from "../views/articles/tempList.vue";
@@ -140,6 +142,17 @@ const routes = [
     path: "/posts",
     name: "postList",
     component: postList,
+  },
+  //후기게시판 CRUD
+  {
+    path: "/rcreate",
+    name: "reviewCreate",
+    component: reviewCreate,
+  },
+  {
+    path: "/rupdate/:ID",
+    name: "reviewUpdate",
+    component: reviewUpdate,
   },
   {
     path: "/reviews",

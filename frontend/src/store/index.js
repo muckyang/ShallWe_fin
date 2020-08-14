@@ -84,7 +84,7 @@ export default new Vuex.Store({
       state.authToken = token;
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
-      setTimeout(function() {
+      setTimeout(function () {
         alert("환영합니다.");
       }, 50);
     },
@@ -241,16 +241,16 @@ export default new Vuex.Store({
     },
 
     // 이한솔 시작
-    getUserDatailData({ state, commit }, userNickname ) {
+    getUserDatailData({ state, commit }, userNickname) {
       const auth = { token: state.authToken };
       axios
         .post(`${BACK_URL}/account/read/${userNickname}`, auth)
-        .then(( res ) => {
+        .then((res) => {
           commit("GET_USER", res);
         })
-        .catch(( err ) => {
+        .catch((err) => {
           console.error(err);
-        })
+        });
     },
     // 이한솔 끝
 
@@ -331,7 +331,7 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
-      console.log("들어옴?");
+      console.log(updateData);
       if (updateData.articleUpdateData.endTime) {
         if (updateData.articleUpdateData.endTime.length < 8) {
           updateData.articleUpdateData.endTime =
@@ -346,7 +346,11 @@ export default new Vuex.Store({
         )
         .then(() => {
           if (updateData.temp === 2) {
-            router.push(`/pdetail/${updateData.articleUpdateData.articleId}`);
+            if (updateData.articleUpdateData.categoryId === 102) {
+              router.push(`reviews`);
+            } else {
+              router.push(`/pdetail/${updateData.articleUpdateData.articleId}`);
+            }
           } else {
             router.push(`/detail/${updateData.articleUpdateData.articleId}`);
           }
@@ -357,12 +361,11 @@ export default new Vuex.Store({
     },
     //게시글 삭제하기
     deleteArticle({ state, dispatch }, articleId) {
-      console.log(articleId)
+      console.log(articleId);
       const auth = { token: state.authToken };
       axios
         .get(`${BACK_URL}/post/delete/${articleId}`)
-        .then(() => {
-        })
+        .then(() => {})
         .catch((err) => {
           console.log(err);
         });
@@ -386,8 +389,8 @@ export default new Vuex.Store({
     },
     detailSearch({ commit }, searchData) {
       cookies.set("searchData", searchData, 0);
-      if(searchData.categoryId===0){
-        searchData.categoryId='temp'
+      if (searchData.categoryId === 0) {
+        searchData.categoryId = "temp";
       }
       if (
         searchData.searchDataForSend.word &&
@@ -395,8 +398,8 @@ export default new Vuex.Store({
         searchData.categoryId &&
         searchData.temp
       ) {
-        if(searchData.categoryId==='temp'){
-          searchData.categoryId=0
+        if (searchData.categoryId === "temp") {
+          searchData.categoryId = 0;
         }
         console.log(searchData);
         axios
@@ -489,7 +492,7 @@ export default new Vuex.Store({
         .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
         .then(() => {
           router.push("/");
-          console.log(accuseCommentData, 'AAA')
+          console.log(accuseCommentData, "AAA");
         })
         .catch((err) => console.log(err));
     },

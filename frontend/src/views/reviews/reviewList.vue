@@ -21,7 +21,7 @@ import { mapState, mapActions } from "vuex";
 import InfiniteLoading from "vue-infinite-loading";
 import cookies from "vue-cookies";
 import axios from "axios";
-import reviewDetail from "@/views/post/reviewDetail";
+import reviewDetail from "./reviewDetail"; //무적권 상대주소
 
 export default {
   name: "reviewList",
