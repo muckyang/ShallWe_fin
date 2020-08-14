@@ -63,13 +63,13 @@ export default new Vuex.Store({
     comments: [],
     users: [],
     accuseData: {
-      reporter: '',
-      defendant: '',
-      accuseIndex: '',
-      accuseValue: '',
+      reporter: "",
+      defendant: "",
+      accuseIndex: "",
+      accuseValue: "",
       accuseKind: 0,
-      accuseReason: '',
-      accuseUrl: '',
+      accuseReason: "",
+      accuseUrl: "",
       accuseConfirm: 0,
     },
     accuses: [],
@@ -303,15 +303,22 @@ export default new Vuex.Store({
           articleData.articleData
         )
         .then(() => {
-          router.push("/posts");
+          if (articleData.temp === 1 || articleData.temp === 0) {
+            router.push("/article");
+          } else {
+            router.push("/posts");
+          }
         })
         .catch((err) => console.log(err));
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
-      if (updateData.articleUpdateData.endTime.length < 8) {
-        updateData.articleUpdateData.endTime =
-          updateData.articleUpdateData.endTime + ":00";
+      console.log("들어옴?");
+      if (updateData.articleUpdateData.endTime) {
+        if (updateData.articleUpdateData.endTime.length < 8) {
+          updateData.articleUpdateData.endTime =
+            updateData.articleUpdateData.endTime + ":00";
+        }
       }
       updateData.articleUpdateData.token = state.authToken;
       axios
@@ -320,7 +327,11 @@ export default new Vuex.Store({
           updateData.articleUpdateData
         )
         .then(() => {
-          router.push(`/detail/${updateData.articleUpdateData.articleId}`);
+          if (updateData.temp === 2) {
+            router.push(`/pdetail/${updateData.articleUpdateData.articleId}`);
+          } else {
+            router.push(`/detail/${updateData.articleUpdateData.articleId}`);
+          }
         })
         .catch((err) => {
           console.error(err);
@@ -416,23 +427,24 @@ export default new Vuex.Store({
     },
 
     // 게시글 신고 접수
-    createArticleAccuse(context, accuseArticleData) {
-      axios
-        .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
-        .then(() => {
-          router.push("/");
-        })
-        .catch((err) => console.log(err));
-    },
-    // 댓글 신고 접수
-    createCommentAccuse(context, accuseCommentData) {
-      axios
-        .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
-        .then(() => {
-          router.push("/");
-        })
-        .catch((err) => console.log(err));
-    },
+    // createArticleAccuse(context, accuseArticleData) {
+    //   axios
+    //     .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
+    //     .then(() => {
+    //       console.log(accuseArticleData, "하하하");
+    //       router.push("/posts");
+    //     })
+    //     .catch((err) => console.log(err));
+    // },
+    // // 댓글 신고 접수
+    // createCommentAccuse(context, accuseCommentData) {
+    //   axios
+    //     .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
+    //     .then(() => {
+    //       router.push("/");
+    //     })
+    //     .catch((err) => console.log(err));
+    // },
     getUsers({ state, commit }, users) {
       const auth = { token: state.authToken };
       axios
@@ -446,25 +458,20 @@ export default new Vuex.Store({
     },
     createArticleAccuse(context, accuseArticleData) {
       axios
-      .post(
-        `${BACK_URL}/accuse/create`,
-        accuseArticleData.accuseArticleData
-      )
-      .then(() => {
-        router.push('/');
-      })
-      .catch((err) => console.log(err))
+        .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
+        .then(() => {
+          console.log(accuseArticleData, "하");
+          router.push("/posts");
+        })
+        .catch((err) => console.log(err));
     },
     createCommentAccuse(context, accuseCommentData) {
       axios
-      .post(
-        `${BACK_URL}/accuse/create`,
-        accuseCommentData.accuseCommentData
-      )
-      .then(() => {
-        router.push('/');
-      })
-      .catch((err) => console.log(err))
+        .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
+        .then(() => {
+          router.push("/");
+        })
+        .catch((err) => console.log(err));
     },
     getAccuses({ state, commit }) {
       const admin = { token: state.adminToken };
@@ -477,12 +484,12 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    decideAccuse({ state }, decisionData ) {
+    decideAccuse({ state }, decisionData) {
       const admin = { token: state.adminToken };
       axios
         .post(`${BACK_URL}/accuse/applyto`, decisionData)
         .then(() => {
-          router.push('/user/accuselist');
+          router.push("/user/accuselist");
         })
         .catch((err) => {
           console.log(err);

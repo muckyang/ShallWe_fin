@@ -1,92 +1,126 @@
 <template>
   <div>
     <div class="tab-content" id="nav-tabContent" v-if="articles">
-      <div v-if="categoryNum === 0" class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      <div
+        v-if="categoryNum === 0"
+        class="tab-pane fade show active"
+        id="nav-home"
+        role="tabpanel"
+        aria-labelledby="nav-home-tab"
+      >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="4"
-            v-for="article in articles" 
-            :key="article.articleId">
-                <router-link :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}" class="text-decoration-none text-dark">
-                  <b-card class="article-card m-4 _card card__one" align="left" img-width="100%" 
-                img-height="60%" :img-src="article.image"
-                img-alt="Image" img-top footer-bg-variant="#ee6e9f" footer-class="card-end" >
-                    <b-card-text>
-                      <h5 class="article-title">{{ article.title }}</h5>
-                      <small class="article-address" style="font-size: 13.5px;">{{ article.address }}</small><br>
-                      <small class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</small>
-                    </b-card-text>
-                    <template v-slot:footer>
-                      <div class="d-flex justify-content-between">
-                          <small>
-                            <b-icon-heart></b-icon-heart> {{article.likeNum}}개
-                            <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> {{article.commentNum}}개
-                          </small>
-                          <small class="text-muted">{{ article.timeAgo }}</small>
-                      </div>
-                    </template>
+            <b-col
+              cols="12"
+              sm="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
+              <router-link
+                :to="{
+                  name: 'articleDetail',
+                  params: { ID: `${article.articleId}` },
+                }"
+                class="text-decoration-none text-dark"
+              >
+                <b-card
+                  class="article-card m-4 _card card__one"
+                  align="left"
+                  img-width="100%"
+                  img-height="60%"
+                  :img-src="article.image"
+                  img-alt="Image"
+                  img-top
+                  footer-bg-variant="#ee6e9f"
+                  footer-class="card-end"
+                >
+                  <b-card-text>
+                    <h5 class="article-title">{{ article.title }}</h5>
+                    <h6 class="article-address">
+                      {{ article.address }}
+                    </h6>
+                    <br />
+                    <h6 class="article-price">
+                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
+                    </h6>
+                  </b-card-text>
+                  <template v-slot:footer>
+                    <div class="d-flex justify-content-between">
+                      <small>
+                        <b-icon-heart></b-icon-heart> {{ article.likeNum }}개
+                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
+                        {{ article.commentNum }}개
+                      </small>
+                      <small class="text-muted">{{ article.timeAgo }}</small>
+                    </div>
+                  </template>
                 </b-card>
               </router-link>
             </b-col>
           </b-row>
-        </b-container>        
+        </b-container>
       </div>
     </div>
-    <br>
+    <br />
     <div>회원님의 동네에서 등록된 게시글이 존재하지 않습니다.</div>
-    <router-link :to="{name:'articleCreate'}" class="ml-auto">
-          <button class="write-btn">첫 글 쓰러 가기</button>
+    <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
+      <button class="write-btn">첫 글 쓰러 가기</button>
     </router-link>
   </div>
 </template>
 
 <script>
-import {mapState,mapActions} from 'vuex'
+import { mapState, mapActions } from "vuex";
 
 export default {
-  name: 'articleList',
-  data(){
+  name: "articleList",
+  data() {
     return {
       categoryNum: 0,
-    }
+    };
   },
   methods: {
-    ...mapActions(['getArticles','search']),
+    ...mapActions(["getArticles", "search"]),
   },
-  computed:{
-    ...mapState(['articles'])
+  computed: {
+    ...mapState(["articles"]),
   },
-  created () {
-    this.getArticles({temp:3,categoryId:this.categoryNum})
+  created() {
+    this.getArticles({ temp: 3, categoryId: this.categoryNum });
   },
-}
+};
 </script>
 
 <style>
-.article-title{
+/* .article-title {
   font-size: 17px;
   font-weight: 600;
   letter-spacing: -0.6px;
   color: #212529;
+  margin-bottom: 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-bottom: 10px;
   line-height: 1.2;
-}
-.article-address{
-  margin-bottom: 10px;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-  line-height:1.2;
+}*/
+/* .article-address {
   font-size: 13.5px;
-}
+  margin-bottom: 7px;
+  margin-top: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+} */
 .article-card {
   height: 400px;
 }
 .article-price {
   font-size: 13.5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 </style>
 
@@ -112,7 +146,7 @@ $x-large: 1200px;
   }
 }
 .card__one {
-  transition: transform .3s;
+  transition: transform 0.3s;
 
   &::after {
     position: absolute;
@@ -120,9 +154,10 @@ $x-large: 1200px;
     left: 0;
     width: 100%;
     height: 100%;
-    transition: opacity 2s cubic-bezier(.165, .84, .44, 1);
-    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .15);
-    content: '';
+    transition: opacity 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.15);
+    content: "";
     opacity: 0;
     z-index: -1;
   }
