@@ -58,6 +58,11 @@
           <label for="url">URL</label>
           <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" />
         </div>
+        <!--오픈톡방url-->
+        <div class="url">
+          <label for="url">오픈 카카오톡 URL</label>
+          <input type="url" id="url" v-model="articleData.openLink" placeholder=" url을 입력하세요" />
+        </div>
         <!--내용-->
         <div class="createContent">
           <label for="textarea-rows">내용</label>
@@ -136,6 +141,7 @@ export default {
         minPrice: null,
         myPrice: null,
         urlLink: null,
+        openLink:null,
         endDate: null,
         endTime: null,
         image: "",
