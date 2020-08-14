@@ -390,12 +390,18 @@ export default new Vuex.Store({
     },
     detailSearch({ commit }, searchData) {
       cookies.set("searchData", searchData, 0);
+      if(searchData.categoryId===0){
+        searchData.categoryId='temp'
+      }
       if (
         searchData.searchDataForSend.word &&
         searchData.searchDataForSend.subject &&
         searchData.categoryId &&
         searchData.temp
       ) {
+        if(searchData.categoryId==='temp'){
+          searchData.categoryId=0
+        }
         console.log(searchData);
         axios
           .post(
@@ -403,8 +409,8 @@ export default new Vuex.Store({
             searchData.searchDataForSend
           )
           .then((res) => {
-            console.log(res.data);
             commit("GET_ARTICLES", res.data.postList);
+            router.push("/searchlist");
           })
           .catch((err) => {
             console.log(err);

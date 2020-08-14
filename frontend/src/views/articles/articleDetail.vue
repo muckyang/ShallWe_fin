@@ -335,7 +335,7 @@ export default {
           subject:'tag',
           word:'',
         },
-        categoryId:'temp',
+        categoryId:0,
         temp:1,
       },
     };
