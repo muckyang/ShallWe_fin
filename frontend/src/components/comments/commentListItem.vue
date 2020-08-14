@@ -151,10 +151,14 @@ export default {
       const res = year + month + day + hour + minute;
       return res;
     },
+    linkCommentData() {
+      this.accuseCommentData.accuseValue = this.comment.commentId
+    },
     // 신고 유형 변경
     changeAccuseKind(kind) {
       this.accuseCommentData.accuseKind = kind;
       this.linkUserData();
+      this.linkCommentData();
     },
     // 해당 userData 연결
     linkUserData() {

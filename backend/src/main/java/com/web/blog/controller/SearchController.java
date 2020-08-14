@@ -111,12 +111,38 @@ public class SearchController {
             for (int i = 0; i < plist.size(); i++) {
                 Post p = plist.get(i);
 
-                List<String> empty = new LinkedList<>();
+                String tag = p.getTag();
+                StringTokenizer st = new StringTokenizer(tag, "#");
 
-                result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                        p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
-                        p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), empty, temp, p.getEndTime(),
-                        BeforeCreateTime(p.getCreateTime()), p.getCreateTime()));
+                List<String> taglist = new LinkedList<>();
+                while (!st.hasMoreTokens()) {
+                    taglist.add(st.nextToken());
+                }
+
+        
+                PostResponse presp = new PostResponse();
+
+                presp.articleId = p.getArticleId();
+                presp.categoryId = p.getCategoryId();
+                presp.userId = p.getUserId();
+                presp.title = p.getTitle();
+                presp.address = p.getAddress();
+                presp.minPrice = p.getMinPrice();
+                presp.sumPrice = p.getSumPrice();
+                presp.likeNum = p.getLikeNum();
+                presp.commentNum = p.getCommentNum();
+                presp.description = p.getDescription();
+                presp.writer = p.getWriter();
+                presp.urlLink = p.getUrlLink();
+                presp.openLink = p.getOpenLink();
+                presp.image = p.getImage();
+                presp.tags = taglist;
+                presp.temp = p.getTemp();
+                presp.endTime = p.getEndTime();
+                presp.timeAgo = BeforeCreateTime(p.getCreateTime());
+                presp.createTime = p.getCreateTime();
+
+                result.postList.add(presp);
 
             }
             return result;
@@ -395,11 +421,30 @@ public class SearchController {
                 }
             }
 
-            result.add(new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                    p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
-                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), taglist, temp, p.getEndTime(),
-                    BeforeCreateTime(p.getCreateTime()), p.getCreateTime()));
+  
+            PostResponse presp = new PostResponse();
 
+            presp.articleId = p.getArticleId();
+            presp.categoryId = p.getCategoryId();
+            presp.userId = p.getUserId();
+            presp.title = p.getTitle();
+            presp.address = p.getAddress();
+            presp.minPrice = p.getMinPrice();
+            presp.sumPrice = p.getSumPrice();
+            presp.likeNum = p.getLikeNum();
+            presp.commentNum = p.getCommentNum();
+            presp.description = p.getDescription();
+            presp.writer = p.getWriter();
+            presp.urlLink = p.getUrlLink();
+            presp.openLink = p.getOpenLink();
+            presp.image = p.getImage();
+            presp.tags = taglist;
+            presp.temp = p.getTemp();
+            presp.endTime = p.getEndTime();
+            presp.timeAgo = BeforeCreateTime(p.getCreateTime());
+            presp.createTime = p.getCreateTime();
+
+            result.add(presp);
         }
 
         return result;

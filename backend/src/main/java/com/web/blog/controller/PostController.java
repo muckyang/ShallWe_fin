@@ -129,6 +129,8 @@ public class PostController {
                 post.setMinPrice(req.getMinPrice());
                 post.setSumPrice(req.getMyPrice());
                 post.setImage(req.getImage());
+                post.setUrlLink(req.getUrlLink());
+                post.setOpenLink(req.getOpenLink());
                 post.setTemp(temp);
                 post.setEndTime(endTime);
                 post.setStatus(1);
@@ -149,11 +151,12 @@ public class PostController {
                 post.setDescription(req.getDescription());
                 post.setMinPrice(req.getMinPrice());
                 post.setSumPrice(req.getMyPrice());
+                post.setUrlLink(req.getUrlLink());
+                post.setOpenLink(req.getOpenLink());
                 post.setImage(req.getImage());
                 post.setTemp(temp);
                 post.setEndTime(endTime);
                 post.setStatus(1);
-                post.setUrlLink(req.getUrlLink());
                 post.setLikeNum(0);
                 post.setCommentNum(0);
 
@@ -249,10 +252,36 @@ public class PostController {
             }
 
             Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
-            PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(), p.getUserId(), p.getTitle(),
-                    p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(), p.getCommentNum(),
-                    p.getDescription(), p.getWriter(), p.getUrlLink(), p.getImage(), taglist, p.getTemp(),
-                    p.getEndTime(), BeforeCreateTime(p.getCreateTime()), p.getCreateTime());
+
+            PostResponse result = new PostResponse();
+            // PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(),
+            // p.getUserId(), p.getTitle(),
+            // p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(),
+            // p.getCommentNum(),
+            // p.getDescription(), p.getWriter(), p.getUrlLink(),p.getOpenLink(),
+            // p.getImage(), taglist, p.getTemp(),
+            // p.getEndTime(), BeforeCreateTime(p.getCreateTime()), p.getCreateTime());
+
+            result.articleId = p.getArticleId();
+            result.categoryId = p.getCategoryId();
+            result.userId = p.getUserId();
+            result.title = p.getTitle();
+            result.address = p.getAddress();
+            result.minPrice = p.getMinPrice();
+            result.sumPrice = p.getSumPrice();
+            result.likeNum = p.getLikeNum();
+            result.commentNum = p.getCommentNum();
+            result.description = p.getDescription();
+            result.writer = p.getWriter();
+            result.urlLink = p.getUrlLink();
+            result.openLink = p.getOpenLink();
+            result.image = p.getImage();
+            result.tags = taglist;
+            result.temp = p.getTemp();
+            result.endTime = p.getEndTime();
+            result.timeAgo = BeforeCreateTime(p.getCreateTime());
+            result.createTime = p.getCreateTime();
+
             result.status = p.getStatus();
             // 이 게시물에 해당되는 태그는 다 보내기
             List<Tag> tlist = tagDao.findTagByArticleId(articleId);
@@ -288,7 +317,6 @@ public class PostController {
                 c.setArticleId(clist.get(i).getArticleId());
                 c.setUserId(clist.get(i).getUserId());
 
-            
                 c.setStatus(clist.get(i).getStatus());
                 if (clist.get(i).getStatus() == 0) {
                     c.setNickname("신고된 댓글");
