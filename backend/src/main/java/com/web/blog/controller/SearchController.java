@@ -212,7 +212,6 @@ public class SearchController {
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
                             System.out.println(list.get(i).getArticleId());
-
                         }
                     }
                 }
@@ -257,6 +256,7 @@ public class SearchController {
             System.out.println("내 주변 게시물 검색 확인");
             return result;
         } else {
+            System.out.println("qwewqeqw");
             return result;
         }
     }
@@ -385,9 +385,6 @@ public class SearchController {
         for (int i = 0; i < plist.size(); i++) { // 각 게시물 마다 좋아요 수 가져오기
             Post p = plist.get(i);
 
-            if (p.getCategoryId() == 102) {
-                continue;
-            }
             List<String> taglist = new LinkedList<>();
             String tag = p.getTag();
             if (tag != null) {
