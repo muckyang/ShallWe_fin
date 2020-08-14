@@ -213,7 +213,7 @@ public class AdminController {
         if (adminOpt.isPresent()) {
             String nickname = req.getNickname();
             User user = userDao.getUserByNickname(nickname);
-            user.setStatus(1);
+            user.setStatus(0);
             userDao.save(user);
 
             System.out.println("user 비활성화시켜버리기!!!");
