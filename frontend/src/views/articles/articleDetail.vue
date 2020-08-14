@@ -6,7 +6,7 @@
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
 
-          <!--수정,삭제,신고 버튼-->
+          <!--게시글 수정,삭제,신고 버튼-->
           <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
             <button type="button" class="article-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
