@@ -27,14 +27,15 @@ public class PostRequest {
     @ApiModelProperty(required = true)
     @NotNull
     String description;
-    String urlLink;
+    String urlLink;  
+      String openLink;
     String image;
     String token;
     int likeNum;
     int commentNum;
     String tag;
 
-    // TODO tag
+
     String[] tags;
     int temp;
  
