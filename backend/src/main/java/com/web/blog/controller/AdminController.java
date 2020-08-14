@@ -203,7 +203,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/account/disabled")
+    @PostMapping("/accuse/disabled")
     @ApiOperation(value = "비활성화시키기")
     public Object disabled(@Valid @RequestBody AccuseRequest req) {
         String token = req.getToken();

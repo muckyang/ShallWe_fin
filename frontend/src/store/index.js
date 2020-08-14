@@ -313,7 +313,6 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
-      console.log("들어옴?");
       if (updateData.articleUpdateData.endTime) {
         if (updateData.articleUpdateData.endTime.length < 8) {
           updateData.articleUpdateData.endTime =

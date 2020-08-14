@@ -86,9 +86,7 @@
             nomargin: !tagsLength(articleData.tags),
           }"
         >
-          <button class="tag" v-for="tag in articleData.tags" :key="tag.no">
-            #{{ tag }}
-          </button>
+          <button class="tag" v-for="tag in articleData.tags" :key="tag.no">#{{ tag }}</button>
         </div>
         <div class="in-the-top">
           <div class="writer">
@@ -105,36 +103,19 @@
         <img class="MyImage" :src="articleData.image" alt="..." />
         <div class="articleInfo">
           <div class="detail-info">
-            <div class="detail-address">
-              만남의 장소: {{ articleData.address }}
-            </div>
+            <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
             <div class="detail-price">
-              <div class="min-price">
-                최소 주문 금액: {{ articleData.minPrice }}원
-              </div>
-              <div class="min-price">
-                모인 금액: {{ articleData.sumPrice }}원
-              </div>
+              <div class="min-price">최소 주문 금액: {{ articleData.minPrice }}원</div>
+              <div class="min-price">모인 금액: {{ articleData.sumPrice }}원</div>
             </div>
-            <div class="detail-endTime">
-              마감 시간: {{ cutDate(articleData.endTime) }}까지
-            </div>
+            <div class="detail-endTime">마감 시간: {{ cutDate(articleData.endTime) }}까지</div>
           </div>
           <div class="detail-btns">
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
 
             <button @click="shareContent" class="detail-share">
-              <a
-                href="javascript:;"
-                class="kakao-share"
-                @click="shareContent"
-                id="kakao-link"
-              >
-                <img
-                  src="../../assets/img/kakao_btn.png"
-                  class="kakao"
-                  alt="삭제"
-                />
+              <a href="javascript:;" class="kakao-share" @click="shareContent" id="kakao-link">
+                <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제" />
                 공유
               </a>
             </button>
@@ -181,84 +162,42 @@
               class="form-input"
               @ok="sendJoinData"
             >
-              <form
-                ref="form"
-                class="form-input"
-                @submit.stop.prevent="handleSubmit"
-              >
+              <form ref="form" class="form-input" @submit.stop.prevent="handleSubmit">
                 <b-form-group label="제목" label-for="title-input">
-                  <b-form-input
-                    id="title-input"
-                    v-model="joinData.title"
-                    class="form-input"
-                  ></b-form-input>
+                  <b-form-input id="title-input" v-model="joinData.title" class="form-input"></b-form-input>
                 </b-form-group>
 
                 <b-form-group label="url" label-for="url-input">
-                  <b-form-input
-                    id="url-input"
-                    v-model="joinData.url"
-                    class="form-input"
-                  ></b-form-input>
+                  <b-form-input id="url-input" v-model="joinData.url" class="form-input"></b-form-input>
                 </b-form-group>
 
-                <b-form-group
-                  label="가격(숫자만 입력하세요.)"
-                  label-for="price-input"
-                >
-                  <b-form-input
-                    id="price-input"
-                    v-model="joinData.price"
-                    class="form-input"
-                  ></b-form-input>
+                <b-form-group label="가격(숫자만 입력하세요.)" label-for="price-input">
+                  <b-form-input id="price-input" v-model="joinData.price" class="form-input"></b-form-input>
                 </b-form-group>
 
                 <b-form-group label="요구사항" label-for="order-input">
-                  <b-form-input
-                    id="order-input"
-                    v-model="joinData.description"
-                    class="form-input"
-                  ></b-form-input>
+                  <b-form-input id="order-input" v-model="joinData.description" class="form-input"></b-form-input>
                 </b-form-group>
               </form>
             </b-modal>
 
             <!--임시modal-->
-            <b-modal
-              id="update-modal"
-              size="xl"
-              ref="modal"
-              title="수정하기"
-              @ok="updateJoinData"
-            >
+            <b-modal id="update-modal" size="xl" ref="modal" title="수정하기" @ok="updateJoinData">
               <form ref="form" @submit.stop.prevent="handleSubmit">
                 <b-form-group label="제목" label-for="title-input">
-                  <b-form-input
-                    id="title-input"
-                    v-model="joinData.title"
-                  ></b-form-input>
+                  <b-form-input id="title-input" v-model="joinData.title"></b-form-input>
                 </b-form-group>
 
                 <b-form-group label="url" label-for="url-input">
-                  <b-form-input
-                    id="url-input"
-                    v-model="joinData.url"
-                  ></b-form-input>
+                  <b-form-input id="url-input" v-model="joinData.url"></b-form-input>
                 </b-form-group>
 
                 <b-form-group label="가격" label-for="price-input">
-                  <b-form-input
-                    id="price-input"
-                    v-model="joinData.price"
-                  ></b-form-input
-                  >원
+                  <b-form-input id="price-input" v-model="joinData.price"></b-form-input>원
                 </b-form-group>
 
                 <b-form-group label="요구사항" label-for="order-input">
-                  <b-form-input
-                    id="order-input"
-                    v-model="joinData.description"
-                  ></b-form-input>
+                  <b-form-input id="order-input" v-model="joinData.description"></b-form-input>
                 </b-form-group>
               </form>
             </b-modal>
@@ -267,9 +206,7 @@
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div class="detail-content" id="item-1">
-        {{ articleData.description }}
-      </div>
+      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
     </div>
     <div class="kakao-map">
       <kakaoMapForDetail />
@@ -282,11 +219,7 @@
         참여 멤버 (총 {{ articleData.partList.length }}명)
       </div>
       <div class>
-        <div
-          class="member-list"
-          v-for="participant in articleData.partList"
-          :key="participant.no"
-        >
+        <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
           <div class="member">
             <div class="member-writer">
               {{ participant.writer }}
@@ -301,23 +234,12 @@
                 class="article-drop dropdown dropleft"
                 v-if="participant.userId === userData.userId"
               >
-                <button
-                  type="button"
-                  class="article-btn"
-                  data-toggle="dropdown"
-                >
+                <button type="button" class="article-btn" data-toggle="dropdown">
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <b-button variant="light" size="sm" v-b-modal.update-modal
-                    >수정</b-button
-                  >
-                  <b-button
-                    variant="light"
-                    size="sm"
-                    @click="cancel(participant.no)"
-                    >삭제</b-button
-                  >
+                  <b-button variant="light" size="sm" v-b-modal.update-modal>수정</b-button>
+                  <b-button variant="light" size="sm" @click="cancel(participant.no)">삭제</b-button>
                 </div>
               </div>
 
@@ -326,11 +248,7 @@
                 v-if="articleData.writer === userData.nickname"
               >
                 <div v-if="participant.status === 0">
-                  <button
-                    type="button"
-                    class="article-btn"
-                    data-toggle="dropdown"
-                  >
+                  <button type="button" class="article-btn" data-toggle="dropdown">
                     <i class="fas fa-ellipsis-v"></i>
                   </button>
                   <div class="dropdown-menu">
@@ -338,15 +256,8 @@
                       variant="light"
                       size="sm"
                       @click="acceptParticpation(participant.writer)"
-                      >수락</b-button
-                    >
-                    <b-button
-                      variant="light"
-                      size="sm"
-                      v-if="!isDenied"
-                      @click="denyConfirm"
-                      >거절</b-button
-                    >
+                    >수락</b-button>
+                    <b-button variant="light" size="sm" v-if="!isDenied" @click="denyConfirm">거절</b-button>
                     <b-button
                       variant="light"
                       size="sm"
@@ -362,9 +273,7 @@
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-title"
-          >
-            제목: {{ participant.title }}
-          </div>
+          >제목: {{ participant.title }}</div>
           <div class="member-price">가격: {{ participant.price }}</div>
           <div
             v-if="articleData.userId !== participant.userId"
@@ -580,10 +489,10 @@ export default {
             },
           },
         ],
-        success: function(response) {
+        success: function (response) {
           console.log(response);
         },
-        fail: function(error) {
+        fail: function (error) {
           console.log(error);
         },
       });
@@ -602,7 +511,7 @@ export default {
       this.likeCheck();
     },
   },
-  created: function() {
+  created: function () {
     this.getArticle(this.$route.params.ID);
     this.getUserData();
     this.likeCheck();

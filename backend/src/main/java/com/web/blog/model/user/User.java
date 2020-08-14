@@ -26,17 +26,25 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
+    @Column(name = "nickname")
     private String nickname;
+    @Column(name = "address")
     private String address;
     @Column(name ="profile_image")
     private String profileImage;
     @Column(name = "introduce")
     private String introduce;
+    @Column(name = "grade")
     private int grade;
+    @Column(name = "status")
     private int status;
+    @Column(name = "user_point")
     private int userPoint;
+    @Column(name = "birthday")
     private LocalDate birthday;
     @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;

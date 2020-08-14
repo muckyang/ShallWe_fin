@@ -24,7 +24,7 @@
         </div>
         <div class="form-group mb-5 w-75 mx-auto">
           <p class="align-self-center m-1 mt-3 text-left">Image</p>
-          <input type="file" class="form-control form-control-lg" />
+          <input type="file" class="form-control form-control-lg" @change="imageChange" />
         </div>
       </div>
     </div>
@@ -32,16 +32,12 @@
       class="btn btn-secondary"
       type="submit"
       @click="updateArticle({ articleUpdateData, temp: 2 })"
-    >
-      수정
-    </button>
+    >수정</button>
     <button
       class="ml-1 btn btn-danger"
       type="submit"
       @click="deleteArticle({ id: articleUpdateData.articleId, temp: 2 })"
-    >
-      삭제
-    </button>
+    >삭제</button>
   </div>
 </template>
 
@@ -59,12 +55,25 @@ export default {
   },
   methods: {
     ...mapActions(["getArticle", "deleteArticle", "updateArticle"]),
+    imageChange(e) {
+      const selectedImage = e.target.files[0];
+      this.createBase64Image(selectedImage);
+    },
+    createBase64Image(fileObject) {
+      this.articleUpdateData.image = new Image();
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.articleUpdateData.image = e.target.result;
+      };
+      reader.readAsDataURL(fileObject);
+    },
+    imageUpload() {
+      this.$refs.imageInput.click();
+    },
   },
-  created: function() {
+  created: function () {
     this.getArticle(this.$route.params.ID);
-    console.log(this.articleUpdateData);
     this.articleUpdateData = this.articleData;
-    console.log(this.articleUpdateData);
   },
   computed: {
     ...mapState(["articleData"]),
