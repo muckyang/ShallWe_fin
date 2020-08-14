@@ -24,7 +24,7 @@
               >
                 <a class="dropdown-item articleUpdate">수정</a>
               </router-link>
-              <a class="dropdown-item">삭제</a>
+              <a class="dropdown-item" @click="deleteArticle(articleData.articleId)">삭제</a>
               <!--다시 보기!!!!!!!1 -->
             </div>
           </div>
@@ -123,7 +123,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["getArticle", "getUserData", "createArticleAccuse"]),
+    ...mapActions(["getArticle", "getUserData", "createArticleAccuse","deleteArticle"]),
     getImg() {
       if (this.articleData.image) {
         this.isImage = true;
