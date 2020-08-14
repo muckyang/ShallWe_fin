@@ -19,12 +19,13 @@
           <th scope="row">{{ user.userId }}</th>
           <td>{{ user.email }}</td>
           <td>{{ user.name }}</td>
-          <td>{{ user.nickname }}</td>
+          <router-link :to="{name: 'userDetail', params: { ID: `${user.nickname}` }}"
+          ><td>{{ user.nickname }}</td></router-link>
           <td>{{ user.address }}</td>
           <td>{{ user.grade }}</td>
           <td>{{ user.userPoint }}</td>
           <td class="d-flex justify-content-center">
-            <button class="btn btn-danger btn-sm" @click="deleteUser">회원삭제</button>
+            <button class="btn btn-info btn-sm">회원정보</button>
           </td>
         </tr>
       </tbody>
