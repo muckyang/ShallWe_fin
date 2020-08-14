@@ -22,7 +22,8 @@
                 >
                   <a class="dropdown-item articleUpdate">수정</a>
                 </router-link>
-                <a class="dropdown-item">삭제</a>
+                <a class="dropdown-item" @click="deleteArticle(articleData.articleId)">삭제</a>
+
                 <!--다시 보기!!!!!!!1 -->
               </div>
             </div>
@@ -370,7 +371,7 @@ export default {
 
   },
   methods: {
-    ...mapActions(["getArticle", "getUserData", "createArticleAccuse","detailSearch"]),
+    ...mapActions(["getArticle", "getUserData", "createArticleAccuse","detailSearch","deleteArticle"]),
     denyConfirm() {
       this.isDenied = true;
     },
