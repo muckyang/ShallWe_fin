@@ -79,16 +79,17 @@ public class ParticipantController {
             participant.setArticleId(request.getArticleId());
             participant.setTitle(title);
             participant.setPrice(price);
+            participant.setStatus(0); // 상태값 0으로 지정
             participant.setWriter(userOpt.get().getNickname());
             participant.setDescription(description);
             participantDao.save(participant);// 참가자 DB에 등록 완료
 
             // 게시물 sum_price에 더하기
-            Post post = postDao.getPostByArticleId(request.getArticleId());// 해당 구매게시물을 얻어옴
-            int sumPrice = post.getSumPrice();// sumPrice를 얻어옴
-            sumPrice = sumPrice + price;// 참가자의 가격을 더해줌
-            post.setSumPrice(sumPrice);
-            postDao.save(post);// 다시 DB에 넣어줌
+            // Post post = postDao.getPostByArticleId(request.getArticleId());// 해당 구매게시물을 얻어옴
+            // int sumPrice = post.getSumPrice();// sumPrice를 얻어옴
+            // sumPrice = sumPrice + price;// 참가자의 가격을 더해줌
+            // post.setSumPrice(sumPrice);
+            // postDao.save(post);// 다시 DB에 넣어줌
 
             return new ResponseEntity<>("참가자 등록", HttpStatus.OK);
         } else {
@@ -97,8 +98,60 @@ public class ParticipantController {
         }
 
     }
+
+    @PostMapping("/participant/accept/{articleId}/{nickname}")
+    @ApiOperation(value = "참가 수락")
+    public Object accept(@PathVariable int articleId, @PathVariable String nickname)
+            throws MessagingException, IOException {
+        System.out.println("참가자 수락!!");
+
+        Post post = postDao.getPostByArticleId(articleId);
+        if (post.getStatus() == 1 || post.getStatus() == 2 || post.getStatus() == 3) {
+            
+            User user = userDao.getUserByNickname(nickname);
+            Participant part = participantDao.findParticipantByArticleIdAndUserId(articleId, user.getUserId());
+            part.setStatus(1);
+            participantDao.save(part);
+           
+            // 수락시 sumPrice 변경되도록!
+            post.setSumPrice(post.getSumPrice() + part.getPrice());
+            if (post.getMinPrice() <= post.getSumPrice()) {
+                post.setStatus(3); // 금액 채워지도록 변경 
+            }
+            if(post.getStatus() == 1 ){//첫 참가자 였다면, 
+                post.setStatus(2);
+            }
+
+            postDao.save(post);
+            return new ResponseEntity<>("참가 수락처리 되었습니다. ", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("이미 마감된 게시물 입니다.", HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("/participant/denied/{articleId}/{nickname}")
+    @ApiOperation(value = "참가 거부")
+    public Object denied(@PathVariable int articleId, @PathVariable String nickname)
+            throws MessagingException, IOException {
+        System.out.println("참가 거부");
+
+        Post post = postDao.getPostByArticleId(articleId);
+        if (post.getStatus() == 1 || post.getStatus() == 2 || post.getStatus() == 3) {
+            User user = userDao.getUserByNickname(nickname);
+            Participant part = participantDao.findParticipantByArticleIdAndUserId(articleId, user.getUserId());
+            part.setStatus(2);
+            participantDao.save(part);
+
+            return new ResponseEntity<>("참가 거부처리 되었습니다. ", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("이미 마감된 게시물 입니다.", HttpStatus.OK);
+        }
+    }
+
     
-    @Transactional(readOnly = true) 
+
+
+    @Transactional(readOnly = true)
     @PostMapping("/participant/read/{articleId}")
     @ApiOperation(value = "참가자 목록")
     public Object read(@PathVariable int articleId) throws MessagingException, IOException {

@@ -13,21 +13,15 @@ export default {
   computed: {
     ...mapState(["articleData"]),
   },
-  mounted() {
+  updated() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
-
-      // setTimeout(function() {
-      //     map.relayout();
-      //     map.setCenter(new kakao.maps.LatLng(lat, lng));
-      //     // map.setLevel(2); 필요하면 레벨조정
-      // }, 1000);
     } else {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8500f9b4c8e3ef8075b8eeefaaae025f&libraries=services";
+        'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8500f9b4c8e3ef8075b8eeefaaae025f&libraries=services';
       document.head.appendChild(script);
     }
   },
@@ -67,9 +61,6 @@ export default {
         }
       });
     },
-  },
-  updated: function () {
-    this.initMap();
   },
 };
 </script>

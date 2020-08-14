@@ -1,17 +1,20 @@
 <template>
   <div>
     <!-- Navbar1 -->
-    <nav class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar">
+    <nav
+      class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar"
+    >
       <ul class="navbar-nav d-flex flex-row">
         <!-- 로그인 X -->
         <li class="nav-item mr-1">
           <a
             v-if="!isLoggedin"
-            v-bind:to="{name:constants.URL_TYPE.USER.LOGIN}"
+            v-bind:to="{ name: constants.URL_TYPE.USER.LOGIN }"
             class="nav-link navbar1-item loginBtn"
             data-toggle="modal"
             data-target="#Login"
-          >로그인</a>
+            >로그인</a
+          >
         </li>
 
         <div class="wall" v-show="!isLoggedin">|</div>
@@ -32,7 +35,12 @@
               <div class="modal-body">
                 <div class="login-header">
                   <div>
-                    <a type="button" class="close-btn" data-dismiss="modal" aria-label="Close">
+                    <a
+                      type="button"
+                      class="close-btn"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
                       <span class="close" aria-hidden="true">&times;</span>
                     </a>
                   </div>
@@ -41,7 +49,9 @@
                     style="color: #ee6e9f; font-family: 'Lobster', cursive; 
                 font-size: 35px"
                     id="exampleModalLabel"
-                  >Shall we?</h5>
+                  >
+                    Shall we?
+                  </h5>
                 </div>
                 <div class="login-input">
                   <form>
@@ -80,7 +90,9 @@
                       class="submit-btn"
                       @click="login(loginData)"
                       data-dismiss="modal"
-                    >로그인</button>
+                    >
+                      로그인
+                    </button>
 
                     <div class="row-items d-flex justify-content-center">
                       <div class="bottom-line"></div>
@@ -92,13 +104,19 @@
                       <a
                         href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://i3b203.p.ssafy.io:8080/account/kakaoLogin&response_type=code"
                       >
-                        <img src="../../assets/img/kakao_logo.jpg" class="kakao-img" />
+                        <img
+                          src="../../assets/img/kakao_logo.jpg"
+                          class="kakao-img"
+                        />
                         카톡 로그인
                       </a>
                     </button>
                     <div class="blank"></div>
                     <button class="google-btn">
-                      <img src="../../assets/img/google_logo4.png" class="google-img" />
+                      <img
+                        src="../../assets/img/google_logo4.png"
+                        class="google-img"
+                      />
                       구글 로그인
                     </button>
                   </div>
@@ -110,10 +128,11 @@
                     <div class="blank"></div>
                     <div class="click">
                       <router-link
-                        v-bind:to="{name:constants.URL_TYPE.USER.JOIN}"
+                        v-bind:to="{ name: constants.URL_TYPE.USER.JOIN }"
                         class="goJoin"
                         data-dismiss="modal"
-                      >가입하기</router-link>
+                        >가입하기</router-link
+                      >
                     </div>
                   </div>
                 </div>
@@ -125,13 +144,20 @@
         <li class="nav-item mr-2">
           <router-link
             v-if="!isLoggedin"
-            v-bind:to="{name:constants.URL_TYPE.USER.JOIN}"
+            v-bind:to="{ name: constants.URL_TYPE.USER.JOIN }"
             class="nav-link navbar1-item"
-          >회원가입</router-link>
+            >회원가입</router-link
+          >
         </li>
         <!-- 로그인 O -->
         <li class="nav-item mr-1">
-          <a href="#" v-if="isLoggedin" @click="REMOVE_TOKEN" class="nav-link navbar1-item">로그아웃</a>
+          <a
+            href="#"
+            v-if="isLoggedin"
+            @click="REMOVE_TOKEN"
+            class="nav-link navbar1-item"
+            >로그아웃</a
+          >
         </li>
 
         <div class="wall" v-show="isLoggedin">|</div>
@@ -139,16 +165,20 @@
         <li class="nav-item mr-1">
           <router-link
             v-if="isLoggedin"
-            v-bind:to="{name:constants.URL_TYPE.USER.PROFILE}"
+            v-bind:to="{ name: constants.URL_TYPE.USER.PROFILE }"
             class="nav-link navbar1-item"
-          >마이페이지</router-link>
+            >마이페이지</router-link
+          >
         </li>
       </ul>
 
-      <div class="wall" v-show="isLoggedin">|</div>
+      <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
 
       <!-- 유저관리 -->
-      <div v-if="isLoggedin && userData.grade===0" class="d-flex align-items-starts mr-1">
+      <div
+        v-if="isLoggedin && userData.grade === 0"
+        class="d-flex align-items-starts mr-1"
+      >
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="/user/userlist" class="nav-link navbar1-item">유저관리</a>
@@ -156,25 +186,33 @@
         </ul>
       </div>
 
-      <div class="wall" v-show="isLoggedin">|</div>
+      <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
 
       <!-- 신고관리 -->
-      <div v-if="isLoggedin && userData.grade===0" class="d-flex align-items-starts">
+      <div
+        v-if="isLoggedin && userData.grade === 0"
+        class="d-flex align-items-starts"
+      >
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/user/accuselist" class="nav-link navbar1-item">신고관리</a>
+            <a href="/user/accuselist" class="nav-link navbar1-item"
+              >신고관리</a
+            >
           </li>
         </ul>
       </div>
     </nav>
     <!-- Navbar2 -->
-    <nav class="navbar navbar-light d-flex justify-content-center my-navbar p-1">
+    <nav
+      class="navbar navbar-light d-flex justify-content-center my-navbar p-1"
+    >
       <a
         class="navbar-brand mt-3"
         href="/"
         style="color: #ee6e9f; font-family: 'Lobster', cursive; 
       font-size: 35px"
-      >Shall we?</a>
+        >Shall we?</a
+      >
     </nav>
     <!-- Navbar3 -->
     <nav class="navbar navbar-expand-lg navbar-light p-0">
@@ -194,19 +232,45 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item pb-0">
-            <router-link to="#" class="nav-link mainMenu pb-0" id="aboutUs">쉘위 소개</router-link>
+            <router-link to="#" class="nav-link mainMenu pb-0" id="aboutUs"
+              >쉘위 소개</router-link
+            >
           </li>
 
           <li class="nav-item pb-0">
-            <router-link to="/article" class="nav-link mainMenu pb-0" id="article">게시글</router-link>
+            <router-link
+              to="/article"
+              class="nav-link mainMenu pb-0"
+              id="article"
+              >게시글</router-link
+            >
           </li>
 
           <li class="nav-item pb-0">
-            <router-link to="/posts" class="nav-link mainMenu pb-0" id="community">자유 게시판</router-link>
+            <router-link
+              to="/reviews"
+              class="nav-link mainMenu pb-0"
+              id="community"
+              >후기</router-link
+            >
           </li>
 
           <li class="nav-item pb-0">
-            <router-link to="/localList" class="nav-link mainMenu pb-0" id="community">우리 동네</router-link>
+            <router-link
+              to="/posts"
+              class="nav-link mainMenu pb-0"
+              id="community"
+              >커뮤니티</router-link
+            >
+          </li>
+
+          <li class="nav-item pb-0">
+            <router-link
+              to="/localList"
+              class="nav-link mainMenu pb-0"
+              id="community"
+              >우리 동네</router-link
+            >
           </li>
         </ul>
 
@@ -217,9 +281,13 @@
           style="font-family: FontAwesome;"
           placeholder="Search"
           v-model="searchData.searchDataForSend.word"
-          @keypress.enter="search"
+          @keypress.enter="search(searchData)"
         />
-        <button class="searchBtn my-2 my-sm-0" type="submit" @click="search(searchData)">
+        <button
+          class="searchBtn my-2 my-sm-0"
+          type="submit"
+          @click="search(searchData)"
+        >
           <i class="fas fa-search"></i>
         </button>
         <!-- </div> -->
@@ -240,19 +308,16 @@ export default {
   name: "Header",
   components: {},
   props: ["isHeader"],
-  data: function () {
+  data: function() {
     return {
       email: " \uf0e0" + "  이메일",
       pw: " \uf084" + "  비밀번호",
       constants,
-      item1: "",
-      item2: "",
       searchData: {
         searchDataForSend: {
           word: "",
-          subject: "headerTitle",
+          subject: "headertitle",
         },
-        categoryId: "기본값",
       },
       loginData: {
         email: "",
@@ -263,43 +328,15 @@ export default {
   methods: {
     ...mapMutations(["REMOVE_TOKEN", "loginCheck"]),
     ...mapActions(["search", "login", "getUserData"]),
-
-    //검색
-    // selectSubject(num){
-    //   if(num==0){
-    //   this.searchData.searchDataForSend.subject='title'
-    //   this.item1 = '제목'
-    //   }else if(num==1){
-    //     this.searchData.searchDataForSend.subject = 'writer'
-    //     this.item1 = '작성자'
-    //   }else{
-    //     this.searchData.searchDataForSend.subject = 'tag'
-    //     this.item1 = '태그'
-    //   }
-    // },
-    // selectCategory(num){
-    //   if(num==1){
-    //   this.searchData.categoryId=1
-    //   this.item2="배달"
-    //   }else if(num==2){
-    //     this.searchData.categoryId = 2
-    //     this.item2="최저주문"
-    //   }else{
-    //     this.searchData.categoryId = 3
-    //     this.item2="공동구매"
-    //   }
-    // },
   },
   computed: {
     ...mapState(["isLoggedin", "userData"]),
   },
-  created: function () {
+  created: function() {
     this.loginCheck();
     if (this.$cookies.get("auth-token")) {
       this.getUserData();
     }
-
-    console.log(this.userData);
   },
 };
 </script>

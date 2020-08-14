@@ -26,6 +26,7 @@ public class Admin {
     private int no;
     @Column(name = "admin_id")
     private String adminId;
+    @Column(name = "password")
     private String password;
 
     public Admin(String adminId, String password){

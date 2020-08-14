@@ -20,4 +20,5 @@ public class AccuseRequest {
     String accuseUrl;
     int accuseConfirm;
     String token;
+    String nickname;
 }

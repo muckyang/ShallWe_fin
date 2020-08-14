@@ -51,6 +51,8 @@ public class Post {
     private String tag;
     @Column(name = "url_link")
     private String urlLink;
+    @Column(name = "open_link")
+    private String openLink;
     @Column(name = "image")
     private String image;
     @Column(name = "status")

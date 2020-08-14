@@ -53,6 +53,9 @@ export default {
       articleUpdateData: {},
     };
   },
+  computed: {
+    ...mapState(["articleData"]),
+  },
   methods: {
     ...mapActions(["getArticle", "deleteArticle", "updateArticle"]),
     imageChange(e) {
@@ -75,9 +78,8 @@ export default {
     this.getArticle(this.$route.params.ID);
     this.articleUpdateData = this.articleData;
   },
-  computed: {
-    ...mapState(["articleData"]),
-  },
 };
 </script>
-<style></style>
+
+<style>
+</style>

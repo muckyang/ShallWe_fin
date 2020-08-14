@@ -5,58 +5,89 @@
       <div class="top">
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
-          <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
-            <button type="button" class="article-btn" data-toggle="dropdown">
-              <i class="fas fa-ellipsis-v"></i>
-            </button>
-            <div class="dropdown-menu">
-              <router-link
-                class="articleUpdate"
-                :to="{name:'articleUpdate',
-                params: {ID:this.$route.params.ID}}"
-              >
-                <a class="dropdown-item articleUpdate">수정</a>
-              </router-link>
-              <a class="dropdown-item">삭제</a>
-              <!--다시 보기!!!!!!!1 -->
-            </div>
-          </div>
 
-          <!-- 게시물 신고 -->
-          <div v-else>
-            <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm">신고</b-button>
+          <!--게시글 수정,삭제,신고 버튼-->
+          <div v-if="articleData.partList.length===1">
+            <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
+              <button type="button" class="article-btn" data-toggle="dropdown">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+              <div class="dropdown-menu">
+                <router-link
+                  class="articleUpdate"
+                  :to="{
+                    name: 'articleUpdate',
+                    params: { ID: this.$route.params.ID },
+                  }"
+                >
+                  <a class="dropdown-item articleUpdate">수정</a>
+                </router-link>
+                <a class="dropdown-item" @click="deleteArticle(articleData.articleId)">삭제</a>
 
-             <b-modal id="modal-1" title="신고 접수">
-              <h6>신고 사유</h6>
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  선택
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">노쇼</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고</a>
-                </div>
+                <!--다시 보기!!!!!!!1 -->
               </div>
-              <h6>신고할 게시물 URL</h6>
-              <b-form-input id="type-url" type="url" v-model="accuseArticleData.accuseUrl"></b-form-input>
-              <h6>사유 상세</h6>
+            </div>
+
+            <!-- 게시물 신고 -->
+            <div v-else>
+              <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm"
+                >신고</b-button
+              >
+
+              <b-modal id="modal-1" title="신고 접수">
+                <h6>신고 사유</h6>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    선택
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(1)"
+                      >욕설</a
+                    >
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(2)"
+                      >노쇼</a
+                    >
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(3)"
+                      >광고</a
+                    >
+                  </div>
+                </div>
+                <h6>신고할 게시물 URL</h6>
+                <b-form-input
+                  id="type-url"
+                  type="url"
+                  v-model="accuseArticleData.accuseUrl"
+                ></b-form-input>
+                <h6>사유 상세</h6>
                 <b-form-textarea
                   id="textarea-rows"
                   rows="8"
                   v-model="accuseArticleData.accuseReason"
                 ></b-form-textarea>
-                <button @click="createArticleAccuse({accuseArticleData})">신고접수</button>
-            </b-modal>
+                <button @click="createArticleAccuse({ accuseArticleData })">
+                  신고접수
+                </button>
+              </b-modal>
+            </div>
           </div>
           <!-- 게시물 신고 -->
 
           <br />
         </div>
         <div
-          :class="{ tagList : tagsLength(articleData.tags) , nomargin : !tagsLength(articleData.tags)  }"
+          :class="{
+            tagList: tagsLength(articleData.tags),
+            nomargin: !tagsLength(articleData.tags),
+          }"
         >
-          <button class="tag" v-for="tag in articleData.tags" :key="tag.no">#{{tag}}</button>
+          <button class="tag" v-for="tag in articleData.tags" :key="tag.no" @click="putWord(tag)">#{{ tag }}</button>
         </div>
         <div class="in-the-top">
           <div class="writer">
@@ -73,35 +104,13 @@
         <img class="MyImage" :src="articleData.image" alt="..." />
         <div class="articleInfo">
           <div class="detail-info">
-            <div class="detail-address">
-              만남의 장소: {{articleData.address}}
-              <!-- <button type="button" class="map-btn" data-toggle="modal" data-target="#exampleModal">
-                <i class="fas fa-map-marker-alt"></i>
-              </button>
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">만남의 장소</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <kakaoMapForDetail/>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>                    
-                    </div>
-                  </div>
-                </div>
-              </div>-->
-            </div>
+            <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
             <div class="detail-price">
-              <div class="min-price">최소 주문 금액: {{articleData.minPrice}}원</div>
-              <div class="min-price">모인 금액: {{articleData.sumPrice}}원</div>
+              <div class="min-price">최소 주문 금액: {{ articleData.minPrice }}원</div>
+              <div class="min-price">모인 금액: {{ articleData.sumPrice }}원</div>
             </div>
-            <div class="detail-endTime">마감 시간: {{cutDate(articleData.endTime)}}까지</div>
+            <div class="detail-endTime">마감 시간: {{ cutDate(articleData.endTime) }}까지</div>
+            <div v-if="checkedStatus">오픈 채팅방 url: {{articleData.openLink}}</div>
           </div>
           <div class="detail-btns">
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
@@ -112,14 +121,41 @@
                 공유
               </a>
             </button>
-            <b-button
-              id="show-btn"
-              v-b-modal.join-modal
-              class="detail-join"
-              v-if="articleData.userId != userData.userId"
-            >
-              <i class="fas fa-user-plus"></i> 참여
-            </b-button>
+            <div v-if="articleData.status < 4">
+              <b-button
+                id="show-btn"
+                v-b-modal.join-modal
+                class="detail-join"
+                v-if="joinFlag"
+              >
+                <i class="fas fa-user-plus"></i>
+                참여
+              </b-button>
+            </div>
+            <div v-if="articleData.writer === userData.nickname">
+              <div v-if="articleData.status === 3">
+              <b-button
+                id="show-btn"
+                class="detail-join"
+                v-if="articleData.minPrice <= articleData.sumPrice"
+                @click="confirmPurchase"
+              >
+                  <i class="fas fa-user-plus"></i>확정
+              </b-button>
+            </div>
+            </div>
+            <div v-if="checkedStatus">
+              <b-button
+                id="show-btn"
+                class="detail-join"
+                v-if="articleData.status >= 4"
+                @click="confirmPurchase"
+              >
+                <i class="fas fa-user-plus"></i>후기 작성
+              </b-button>
+            </div>
+
+            <!--참가 modal-->
             <b-modal
               id="join-modal"
               size="xl"
@@ -167,75 +203,92 @@
                 </b-form-group>
               </form>
             </b-modal>
-            <!--임시 modal-->
           </div>
         </div>
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div class="detail-content" id="item-1">
-        <p>{{ articleData.description }}</p>
-      </div>
+      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
     </div>
-    <!-- <button type="button" class="map-btn mt-3">
-          <i class="fas fa-map-marker-alt"></i> 지도 
-    </button>-->
     <div class="kakao-map">
       <kakaoMapForDetail />
     </div>
+
+    <!--참가자 리스트-->
     <div class="members">
       <div class="members-start">
         <i class="fas fa-users"></i>
-        참여 멤버 (총 {{articleData.partList.length}}명)
+        참여 멤버 (총 {{ articleData.partList.length }}명)
       </div>
       <div class>
         <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
           <div class="member">
             <div class="member-writer">
-              {{participant.writer}}
+              {{ participant.writer }}
               <i
                 v-if="articleData.userId === participant.userId"
                 class="fas fa-crown"
               ></i>
             </div>
-            <div
-              class="article-drop dropdown dropleft"
-              v-if="participant.userId === userData.userId"
-            >
-              <button type="button" class="article-btn" data-toggle="dropdown">
-                <i class="fas fa-ellipsis-v"></i>
-              </button>
-              <div class="dropdown-menu">
-                <b-button
-                  variant="light"
-                  size="sm"
-                  v-b-modal.update-modal
-                  v-if="participant.userId === userData.userId"
-                >수정</b-button>
-                <b-button
-                  variant="light"
-                  size="sm"
-                  v-if="participant.userId === userData.userId"
-                  @click="cancel(participant.no)"
-                >삭제</b-button>
+
+            <div v-if="participant.status === 0">
+              <div
+                class="article-drop dropdown dropleft"
+                v-if="participant.userId === userData.userId"
+              >
+                <button type="button" class="article-btn" data-toggle="dropdown">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu">
+                  <b-button variant="light" size="sm" v-b-modal.update-modal>수정</b-button>
+                  <b-button variant="light" size="sm" @click="cancel(participant.no)">삭제</b-button>
+                </div>
+              </div>
+
+              <div
+                class="article-drop dropdown dropleft"
+                v-if="articleData.writer === userData.nickname"
+              >
+                <div v-if="participant.status === 0">
+                  <button type="button" class="article-btn" data-toggle="dropdown">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu">
+                    <b-button
+                      variant="light"
+                      size="sm"
+                      @click="acceptParticpation(participant.writer)"
+                    >수락</b-button>
+                    <b-button variant="light" size="sm" v-if="!isDenied" @click="denyConfirm">거절</b-button>
+                    <b-button
+                      variant="light"
+                      size="sm"
+                      v-if="isDenied"
+                      @click="denyParticpation(participant)"
+                      >거절 확정</b-button
+                    >
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-title"
-          >제목: {{participant.title}}</div>
-          <div class="member-price">가격: {{participant.price}}</div>
+          >제목: {{ participant.title }}</div>
+          <div class="member-price">가격: {{ participant.price }}</div>
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-content"
-          >요구사항: {{participant.description}}</div>
-          <!-- <div class="member-create-time">{{participant.createTime}}</div> -->
+          >
+            요구사항: {{ participant.description }}
+          </div>
+          <div v-if="participant.status===0">처리상태:수락 대기</div>
+          <div v-if="participant.status===1">처리상태:수락</div>
+          <div v-if="participant.status===2">처리상태:거절</div>
         </div>
       </div>
     </div>
-    <!-- {{articleData}} -->
-    <!-- <membersList/> -->
     <commentList />
   </div>
 </template>
@@ -247,7 +300,6 @@ import { mapState, mapActions } from "vuex";
 import commentList from "@/components/comments/commentList";
 import articleLike from "@/components/articles/articleLike";
 import kakaoMapForDetail from "@/components/articles/kakaoMapForDetail";
-// import membersList from '@/components/articles/membersList'
 
 export default {
   name: "articleDetail",
@@ -267,41 +319,120 @@ export default {
         description: "",
         token: this.$cookies.get("auth-token"),
       },
-      participants: {},
       accuseArticleData: {
-        reporter: '',
-        defendant: '',
-        accuseIndex: '',
-        accuseValue: '',
+        reporter: "",
+        defendant: "",
+        accuseIndex: 1,
+        accuseValue: "",
         accuseKind: 0,
-        accuseReason: '',
-        accuseUrl: '',
+        accuseReason: "",
+        accuseUrl: "",
         accuseConfirm: 0,
         token: this.$cookies.get("auth-token"),
+      },
+      isDenied: false,
+      searchData:{
+        searchDataForSend:{
+          subject:'tag',
+          word:'',
+        },
+        categoryId:0,
+        temp:1,
       },
     };
   },
   computed: {
     ...mapState(["articleData", "userData"]),
+    joinFlag(){
+      const tempList=[]
+      for (const p of this.articleData.partList) {
+        tempList.push(p.writer)
+      }
+      if(tempList.includes(this.userData.nickname)){
+        return false
+      }else{
+        return true
+      }
+    },
+    checkedStatus(){
+      const tempList=[]
+      for(const p of this.articleData.partList){
+        if(p.status===1 || p.status==0){
+          tempList.push(p.writer)
+        }
+      }
+      if(tempList.includes(this.userData.nickname)){
+        return true
+      }else{
+        return false
+      }
+    }
+
+
   },
   methods: {
-    ...mapActions(["getArticle", "getUserData", "createArticleAccuse"]),
+    ...mapActions(["getArticle", "getUserData", "createArticleAccuse","detailSearch","deleteArticle"]),
+    denyConfirm() {
+      this.isDenied = true;
+    },
+    acceptParticpation(participant) {
+      axios
+        .post(
+          `${BACK_URL}/participant/accept/${this.articleData.articleId}/${participant}`
+        )
+        .then((response) => {
+          alert(response.data);
+          this.getArticle()
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    denyParticpation(participant) {
+      axios
+        .post(
+          `${BACK_URL}/participant/denied/${this.articleData.articleId}/${participant.writer}`
+        )
+        .then((response) => {
+          alert(response.data);
+          this.isDenied = false;
+          participant.status=2
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    confirmPurchase() {
+      axios
+        .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
+        .then((response) => {
+          alert("구매가 확정되었습니다.");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    putWord(tag){
+      console.log(this.searchData.searchDataForSend.word)
+      this.searchData.searchDataForSend.word=tag
+      this.detailSearch(this.searchData)
+    },
 
     // 신고 유형 변경
     changeAccuseKind(kind) {
-      this.accuseArticleData.accuseKind = kind
+      this.accuseArticleData.accuseKind = kind;
       this.linkArticleData();
       this.linkUserData();
     },
     // 해당 articleData 연결
     linkArticleData() {
-      this.accuseArticleData.accuseIndex = 1
-      this.accuseArticleData.accuseValue = this.articleData.articleId
-      this.accuseArticleData.defendant = this.articleData.writer
+      this.accuseArticleData.accuseIndex = 1;
+      this.accuseArticleData.accuseValue = this.articleData.articleId;
+      this.accuseArticleData.defendant = this.articleData.writer;
     },
     // 해당 userData 연결
     linkUserData() {
-      this.accuseArticleData.reporter = this.userData.nickname
+      this.accuseArticleData.reporter = this.userData.nickname;
     },
 
     tagsLength(tagList) {
@@ -419,6 +550,7 @@ export default {
       this.getArticle(this.$route.params.ID);
       this.likeCheck();
     },
+
   },
   created: function () {
     this.getArticle(this.$route.params.ID);
@@ -431,7 +563,6 @@ export default {
 <style>
 .kakao-map {
   display: flex;
-  /* border: 0.5px solid grey; */
   width: 100%;
   margin: 3% 0 0 0;
   padding: auto;
@@ -465,7 +596,6 @@ export default {
   justify-content: space-between;
 }
 .members {
-  /* border: 1px solid red; */
   width: 75%;
   margin: 3% auto;
 }
@@ -480,7 +610,7 @@ export default {
   border-bottom: 0.5px solid rgb(218, 215, 215);
   margin: 0 0 2% 0;
 }
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
   b-modal:before {
     display: inline-block;
     vertical-align: middle;
@@ -499,10 +629,6 @@ b-modal.form-input {
   margin: 0;
   padding: 0;
 }
-/* .modal-content.modalsize {
-  height: auto;
-  min-width: 10%;
-} */
 .detail {
   border: 1px solid rgb(224, 221, 221);
   border-radius: 1.5%;
@@ -518,7 +644,6 @@ b-modal.form-input {
   color: white;
   padding: 8px;
   border-radius: 5px;
-  /* margin-bottom: */
 }
 a {
   justify-content: bottom;
@@ -530,7 +655,6 @@ a {
   margin-bottom: 2%;
   margin-top: 2%;
   text-align: left;
-  /* grid-column: 1/15; */
 }
 .top-row {
   display: flex;
@@ -539,9 +663,7 @@ a {
 .detail-title {
   font-size: x-large;
   font-weight: bold;
-  /* display: inline; */
   width: 90%;
-  /* justify-content: space-between; */
 }
 .create-time {
   font-size: small;
@@ -561,25 +683,31 @@ a {
 }
 .middle-row {
   display: flex;
-  /* border: 1px solid blue; */
 }
 .articleInfo {
   text-align: left;
-  padding: 15px 35px 15px 40px;
+  padding: 15px 35px 35px 40px;
   width: 65%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* position: relative;
-  height: 100%; */
-  /* /* border-bottom: 1px solid #e9ecef; */
-  /* border-top: 1px solid #e9ecef; */
 }
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
   .middle-row {
     display: flex;
     flex-direction: column;
+    text-align: left;
+  }
+  .articleInfo {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+  .detail-content {
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
 }
 .detail-address {
@@ -610,7 +738,6 @@ a {
   color: white;
 }
 .detail-content {
-  /* border: 1px solid blue; */
   margin: 30px 0;
   padding: 0 15px;
   text-align: left;
@@ -691,12 +818,6 @@ a {
   border: none;
   outline: none;
 }
-/* .article-drop:hover .article-btn {
-    background-color: transparent;
-    color: rgb(145, 141, 141);
-    border: none;
-    outline: none;
-} */
 .router-link-active {
   color: white;
 }
@@ -733,7 +854,6 @@ a {
   flex-direction: row;
   justify-content: flex-start;
   margin: 0.5% 0 1% 0;
-  /* border: 1px solid red; */
 }
 .nomargin {
   margin: 0;

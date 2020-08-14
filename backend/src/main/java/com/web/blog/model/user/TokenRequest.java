@@ -9,5 +9,6 @@ import javax.validation.Valid;
 public class TokenRequest {
  
     String token;
+    String status;
 
 }

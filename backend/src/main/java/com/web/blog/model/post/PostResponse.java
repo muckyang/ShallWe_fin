@@ -1,7 +1,5 @@
 package com.web.blog.model.post;
 
-
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,8 +14,8 @@ public class PostResponse {
           
      }
      public PostResponse(int articleId,int categoryId,int userId,String title,String address,
-     int minPrice,int sumPrice,int likeNum, int commentNum, String description, String writer, String urlLink,String image,
-     List<String> tags,   int temp,LocalDateTime endTime, String timeAgo){
+     int minPrice,int sumPrice,int likeNum, int commentNum, String description, String writer, String urlLink,String openLink , String image,
+     List<String> tags,   int temp,LocalDateTime endTime, String timeAgo, LocalDateTime createTime){
           super();
           this.articleId = articleId;
           this.categoryId = categoryId;
@@ -31,11 +29,13 @@ public class PostResponse {
           this.description = description;
           this.writer = writer;
           this.urlLink = urlLink;
+          this.openLink = openLink;
           this.image = image;
           this.tags = tags;
           this.temp = temp;
           this.endTime = endTime;
           this.timeAgo = timeAgo;
+          this.createTime = createTime;
      }
      // post
      @ApiModelProperty(value = "articleId", position = 1)
@@ -48,8 +48,8 @@ public class PostResponse {
      public String title;
      @ApiModelProperty(value = "address", position = 5)
      public String address;
-     @ApiModelProperty(value = "description", position = 5)
-     public String description;
+
+    
      @ApiModelProperty(value = "writer", position = 6)
      public String writer;
      @ApiModelProperty(value = "temp", position = 7)
@@ -81,5 +81,11 @@ public class PostResponse {
      public List<Participant> partList;
      @ApiModelProperty(value = "status", position = 20)
      public int status;
+     @ApiModelProperty(value = "createTime", position = 21)
+     public LocalDateTime createTime;
 
+     @ApiModelProperty(value = "description", position = 22)
+     public String description;
+     @ApiModelProperty(value = "openLink", position = 23)
+     public String openLink;
 }

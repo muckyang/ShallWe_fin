@@ -13,47 +13,51 @@
 
     <nav class="mt-4 mb-3 ml-3">
       <div class="nav nav-tabs navs" id="nav-tab" role="tablist">
-          <a
-            @click="changeCategory(0)"
-            class="nav-item nav-link active text-dark"
-            id="nav-home-tab"
-            data-toggle="tab"
-            href="#nav-home"
-            role="tab"
-            aria-controls="nav-home"
-            aria-selected="true"
-          >전체보기</a>
-          <a
-            @click="changeCategory(1)"
-            class="nav-item nav-link text-dark"
-            id="nav-profile-tab"
-            data-toggle="tab"
-            href="#nav-profile"
-            role="tab"
-            aria-controls="nav-profile"
-            aria-selected="false"
-          >쉘위배달</a>
-          <a
-            @click="changeCategory(2)"
-            class="nav-item nav-link text-dark"
-            id="nav-contact-tab"
-            data-toggle="tab"
-            href="#nav-contact"
-            role="tab"
-            aria-controls="nav-contact"
-            aria-selected="false"
-          >쉘위택배</a>
-          <a
-            @click="changeCategory(3)"
-            class="nav-item nav-link text-dark"
-            id="nav-profile-tab"
-            data-toggle="tab"
-            href="#nav-profile"
-            role="tab"
-            aria-controls="nav-profile"
-            aria-selected="false"
-          >쉘위공구</a>
-        <router-link :to="{name:'articleCreate'}" class="ml-auto">
+        <a
+          @click="changeCategory(0)"
+          class="nav-item nav-link active text-dark"
+          id="nav-home-tab"
+          data-toggle="tab"
+          href="#nav-home"
+          role="tab"
+          aria-controls="nav-home"
+          aria-selected="true"
+          >전체보기</a
+        >
+        <a
+          @click="changeCategory(1)"
+          class="nav-item nav-link text-dark"
+          id="nav-profile-tab"
+          data-toggle="tab"
+          href="#nav-profile"
+          role="tab"
+          aria-controls="nav-profile"
+          aria-selected="false"
+          >쉘위배달</a
+        >
+        <a
+          @click="changeCategory(2)"
+          class="nav-item nav-link text-dark"
+          id="nav-contact-tab"
+          data-toggle="tab"
+          href="#nav-contact"
+          role="tab"
+          aria-controls="nav-contact"
+          aria-selected="false"
+          >쉘위택배</a
+        >
+        <a
+          @click="changeCategory(3)"
+          class="nav-item nav-link text-dark"
+          id="nav-profile-tab"
+          data-toggle="tab"
+          href="#nav-profile"
+          role="tab"
+          aria-controls="nav-profile"
+          aria-selected="false"
+          >쉘위공구</a
+        >
+        <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
           <button class="write-btn">글쓰기</button>
         </router-link>
       </div>
@@ -68,9 +72,18 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
-                :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}"
+                :to="{
+                  name: 'articleDetail',
+                  params: { ID: `${article.articleId}` },
+                }"
                 class="text-decoration-none text-dark"
               >
                 <b-card
@@ -86,17 +99,18 @@
                 >
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
-                    <small class="article-address" style="font-size: 13.5px;">{{ article.address }}</small>
-                    <br />
-                    <small class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</small>
+                    <h6 class="article-address">{{ article.address }}</h6>
+                    <h6 class="article-price">
+                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
+                    </h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
                       <small>
                         <b-icon-heart></b-icon-heart>
-                        {{article.likeNum}}개
+                        {{ article.likeNum }}개
                         <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{article.commentNum}}개
+                        {{ article.commentNum }}개
                       </small>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
@@ -116,9 +130,18 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
-                :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}"
+                :to="{
+                  name: 'articleDetail',
+                  params: { ID: `${article.articleId}` },
+                }"
                 class="text-decoration-none text-dark"
               >
                 <b-card
@@ -134,17 +157,20 @@
                 >
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
-                    <small class="article-address" style="font-size: 13.5px;">{{ article.address }}</small>
-                    <br />
-                    <small class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</small>
+                    <h6 class="article-address" style="font-size: 13.5px;">
+                      {{ article.address }}
+                    </h6>
+                    <h6 class="article-price">
+                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
+                    </h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
                       <small>
                         <b-icon-heart></b-icon-heart>
-                        {{article.likeNum}}개
+                        {{ article.likeNum }}개
                         <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{article.commentNum}}개
+                        {{ article.commentNum }}개
                       </small>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
@@ -164,9 +190,18 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
-                :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}"
+                :to="{
+                  name: 'articleDetail',
+                  params: { ID: `${article.articleId}` },
+                }"
                 class="text-decoration-none text-dark"
               >
                 <b-card
@@ -182,17 +217,20 @@
                 >
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
-                    <small class="article-address" style="font-size: 13.5px;">{{ article.address }}</small>
-                    <br />
-                    <small class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</small>
+                    <h6 class="article-address" style="font-size: 13.5px;">
+                      {{ article.address }}
+                    </h6>
+                    <h6 class="article-price">
+                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
+                    </h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
                       <small>
                         <b-icon-heart></b-icon-heart>
-                        {{article.likeNum}}개
+                        {{ article.likeNum }}개
                         <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{article.commentNum}}개
+                        {{ article.commentNum }}개
                       </small>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
@@ -212,9 +250,18 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
-                :to="{name:'articleDetail',params:{ID:`${article.articleId}`}}"
+                :to="{
+                  name: 'articleDetail',
+                  params: { ID: `${article.articleId}` },
+                }"
                 class="text-decoration-none text-dark"
               >
                 <b-card
@@ -230,17 +277,18 @@
                 >
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
-                    <small class="article-address" style="font-size: 13.5px;">{{ article.address }}</small>
-                    <br />
-                    <small class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</small>
+                    <h6 class="article-address">{{ article.address }}</h6>
+                    <h6 class="article-price">
+                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
+                    </h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
                       <small>
                         <b-icon-heart></b-icon-heart>
-                        {{article.likeNum}}개
+                        {{ article.likeNum }}개
                         <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{article.commentNum}}개
+                        {{ article.commentNum }}개
                       </small>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
@@ -252,17 +300,36 @@
         </b-container>
       </div>
     </div>
+    <infinite-loading
+      @infinite="infiniteHandler"
+      :identifier="infiniteId"
+      spinner="waveDots"
+    >
+      <div
+        slot="no-more"
+        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
+      >
+        더이상 게시물이 존재하지 않습니다!
+      </div>
+    </infinite-loading>
   </div>
 </template>
 
 <script>
+const BACK_URL = process.env.VUE_APP_BACK_URL;
 import { mapState, mapActions } from "vuex";
+import InfiniteLoading from "vue-infinite-loading";
+import cookies from "vue-cookies";
+import axios from "axios";
 
 export default {
   name: "articleList",
   data() {
     return {
       categoryNum: 0,
+      page: 0,
+      onlyOne: true,
+      articles: [],
       searchData: {
         searchDataForSend: {
           word: "",
@@ -270,21 +337,48 @@ export default {
         },
         categoryId: "기본값",
       },
+      infiniteId: +new Date(),
     };
+  },
+  components: {
+    InfiniteLoading,
   },
   methods: {
     ...mapActions(["getArticles", "search"]),
+    infiniteHandler($state) {
+      const auth = { token: cookies.get("auth-token") };
+      axios
+        .post(`${BACK_URL}/post/read/1/${this.categoryNum}/${this.page}`, auth)
+        .then((res) => {
+          setTimeout(() => {
+            if (res.data.postList.length) {
+              this.articles = this.articles.concat(res.data.postList);
+              this.page += 1;
+              $state.loaded();
+            } else {
+              $state.complete();
+            }
+          }, 1000);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     changeCategory(num) {
       this.categoryNum = num;
-      this.getArticles({ temp: 1, categoryId: this.categoryNum });
+      this.page = 0;
+      this.articles = [];
+      this.onlyOne = true;
+      this.infiniteId += 1;
+      // this.getArticles({ temp: 1, categoryId: this.categoryNum });
     },
   },
-  computed: {
-    ...mapState(["articles"]),
-  },
-  created() {
-    this.getArticles({ temp: 1, categoryId: this.categoryNum });
-  },
+  // computed: {
+  //   ...mapState(["articles"]),
+  // },
+  // created() {
+  //   this.getArticles({ temp: 1, categoryId: this.categoryNum });
+  // },
 };
 </script>
 
@@ -294,25 +388,30 @@ export default {
   font-weight: 600;
   letter-spacing: -0.6px;
   color: #212529;
+  margin-bottom: 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-bottom: 10px;
   line-height: 1.2;
 }
 .article-address {
-  margin-bottom: 10px;
+  font-size: 13.5px;
+  margin-bottom: 7px;
+  margin-top: 15px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   line-height: 1.2;
-  font-size: 13.5px;
 }
 .article-card {
   height: 400px;
 }
 .article-price {
   font-size: 13.5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 </style>
 
