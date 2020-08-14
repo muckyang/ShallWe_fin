@@ -333,11 +333,12 @@ public class SearchController {
 
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else if (subject.equals("tag")) {
+
             List<Tag> taglist = tagDao.findTagByName(word);// 해당 태그의 tagId가져옴
             PostListResponse result = new PostListResponse();
             for (int i = 0; i < taglist.size(); i++) {
                 int aId = taglist.get(i).getArticleId();
-                Optional<Post> article = postDao.findPostByArticleIdAndTempAndCategoryIdOrderByCreateTimeDesc(aId, temp, categoryId);
+                Optional<Post> article = postDao.findPostByArticleIdAndTempOrderByCreateTimeDesc(aId, temp);
                 plist.add(article.get());
                 // result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(),
                 // p.getUserId(), p.getTitle(),
