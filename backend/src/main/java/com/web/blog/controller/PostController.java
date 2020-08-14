@@ -504,7 +504,7 @@ public class PostController {
     public Object delete(@Valid @PathVariable int articleId) {
 
         Post post = postDao.getPostByArticleId(articleId);
-        if (post.getStatus() != 0 && post.getStatus() > 1) {
+        if (post.getStatus() == 1) {
             // 참여자 삭제
             List<Participant> partList = participantDao.getParticipantByArticleId(articleId);
             int pasize = partList.size();
