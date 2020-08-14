@@ -102,7 +102,7 @@
 
                     <button class="kakao-btn">
                       <a
-                        href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code"
+                        href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://i3b203.p.ssafy.io:8080/account/kakaoLogin&response_type=code"
                       >
                         <img
                           src="../../assets/img/kakao_logo.jpg"
