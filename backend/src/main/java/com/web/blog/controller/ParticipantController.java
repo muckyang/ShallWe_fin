@@ -106,7 +106,7 @@ public class ParticipantController {
         System.out.println("참가자 수락!!");
 
         Post post = postDao.getPostByArticleId(articleId);
-        if (post.getStatus() == 1 || post.getStatus() == 2) {
+        if (post.getStatus() == 1 || post.getStatus() == 2 || post.getStatus() == 3) {
             
             User user = userDao.getUserByNickname(nickname);
             Participant part = participantDao.findParticipantByArticleIdAndUserId(articleId, user.getUserId());
@@ -136,7 +136,7 @@ public class ParticipantController {
         System.out.println("참가 거부");
 
         Post post = postDao.getPostByArticleId(articleId);
-        if (post.getStatus() == 1 || post.getStatus() == 2) {
+        if (post.getStatus() == 1 || post.getStatus() == 2 || post.getStatus() == 3) {
             User user = userDao.getUserByNickname(nickname);
             Participant part = participantDao.findParticipantByArticleIdAndUserId(articleId, user.getUserId());
             part.setStatus(2);
