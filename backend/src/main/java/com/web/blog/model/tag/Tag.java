@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +20,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Table(name = "tag") // 이어줄 테이블명 지정
 public class Tag {
     @Id
+    @Column(name = "tag_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int tagId;
+    @Column(name = "name")
     String name;
+    @Column(name = "article_id")
     int articleId;
 }
