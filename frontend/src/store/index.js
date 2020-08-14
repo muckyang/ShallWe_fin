@@ -135,6 +135,9 @@ export default new Vuex.Store({
     GET_USERS(state, users) {
       state.users = users;
     },
+    GET_USER(state, res) {
+      state.userData = res.data;
+    },
     GET_ACCUSES(state, accuses) {
       state.accuses = accuses;
     },
@@ -236,6 +239,21 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
+
+    // 이한솔 시작
+    getUserDatailData({ state, commit }, userNickname ) {
+      const auth = { token: state.authToken };
+      axios
+        .post(`${BACK_URL}/account/read/${userNickname}`, auth)
+        .then(( res ) => {
+          commit("GET_USER", res);
+        })
+        .catch(( err ) => {
+          console.error(err);
+        })
+    },
+    // 이한솔 끝
+
     editUser({ state, commit }, editData) {
       editData.token = state.authToken;
       axios

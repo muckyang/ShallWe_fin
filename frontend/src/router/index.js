@@ -15,6 +15,7 @@ import userList from "../components/user/userList.vue";
 import accuseList from "../components/user/accuseList.vue";
 import klogin from "@/components/user/klogin.vue";
 import adminLogin from "@/components/user/adminLogin.vue";
+import userDetail from "@/components/user/userDetail.vue";
 
 // 아티클
 import articleCreate from "../views/articles/articleCreate.vue";
@@ -69,6 +70,11 @@ const routes = [
     path: "/user/profile",
     name: constants.URL_TYPE.USER.PROFILE,
     component: Profile,
+  },
+  {
+    path: "/user/profile/:ID",
+    name: "userDetail",
+    component: userDetail,
   },
   //회원 정보 수정
   {
