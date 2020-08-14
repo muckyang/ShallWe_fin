@@ -39,25 +39,28 @@ public interface PostDao extends JpaRepository<Post, String> {
     List<Post> findPostByTempAndCategoryIdAndWriterLikeOrderByCreateTimeDesc(int temp ,int categoryId, String word);
 
     // 리스트 출력 
-
     List<Post> findPostByTempOrderByCreateTimeDesc(int temp);
-
+    
     List<Post> findPostByTempAndCategoryIdOrderByCreateTimeDesc(int temp,int categoryId);
-
-
+    
+    
     List<Post> findPostByUserId(int userId);
-
+    
     // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때 (전체)
-
+    
     List<Post> findPostByAddressLikeOrderByCreateTimeDesc(String st1);
     List<Post> findPostByAddressLikeAndAddressLikeOrderByCreateTimeDesc(String st1, String st2);
     List<Post> findPostByAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(String st1, String st2, String st3);
     List<Post> findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(String st1, String st2, String st3, String st4);
     // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때 (카테고리별)
-
+    
     List<Post> findPostByTempAndCategoryIdAndAddressLikeOrderByCreateTimeDesc(int temp, int categoryId, String st1);
     List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int temp, int categoryId, String st1, String st2);
     List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int temp, int categoryId, String st1, String st2, String st3);
     List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int temp, int categoryId, String st1, String st2, String st3, String st4);
-
+    
+    // 메인
+    // List<Post> findPostByTempOrderByCreateTimeDesc(int temp);
+    List<Post> findPostByTempOrderByEndTimeAsc(int temp);
+    List<Post> findPostByTempAndCategoryIdOrderByLikeNumDesc(int temp, int categoryId);;
 }
