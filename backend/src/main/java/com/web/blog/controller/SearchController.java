@@ -256,9 +256,6 @@ public class SearchController {
             User jwtuser = jwtService.getUser(token);
             Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
 
-            String writer = userOpt.get().getNickname();
-            List<Post> plist = postDao.findPostByTempAndWriterOrderByCreateTimeDesc(temp, writer);
-
             String uAddress = userOpt.get().getAddress();
             int count = 0;
             List<String> addList = new ArrayList<>();
@@ -273,10 +270,35 @@ public class SearchController {
                 addList.add("%" + st.nextToken() + "%");
             }
 
-            plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(addList.get(0), addList.get(1),
+            scrollsize = 6;
+            int start = (pageNum * scrollsize);
+            int end = start + scrollsize;
+            List<Post> locallist;
+            List<Post> list = new ArrayList<>();
+            List<Post> plist = new ArrayList<>();
+            locallist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(addList.get(0), addList.get(1),
                     addList.get(2));
 
-            //TODO 인피니티스크롤링
+            for (int i = 0; i < locallist.size(); i++) {//우리동네에 맞는 지역리스트를 뽑아와서
+                if(locallist.get(i).getTemp()==1&&(locallist.get(i).getStatus()==1||locallist.get(i).getStatus()==2))//일반게시글이면서 status가 1또는2인것만
+                    list.add(locallist.get(i));
+            } 
+            
+            if (list.size() >= start) {
+                int newend = list.size() - start;
+                if (newend / scrollsize > 0) {// 적어도 6개는 있음
+                    for (int i = start; i < end; i++) {
+                        plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
+                        System.out.println(list.get(i).getArticleId());
+                    }
+                } else {// 몫 없이 나머지만 있음
+                    for (int i = start; i < start + newend; i++) {
+                        plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
+                        System.out.println(list.get(i).getArticleId());
+                    }
+                }
+            }
+           
             result = new PostListResponse();
             result.postList = getPostList(plist, temp);
 
