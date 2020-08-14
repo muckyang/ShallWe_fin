@@ -86,7 +86,7 @@
             nomargin: !tagsLength(articleData.tags),
           }"
         >
-          <button class="tag" v-for="tag in articleData.tags" :key="tag.no" @click="searchDetail(searchData)">#{{ tag }}</button>
+          <button class="tag" v-for="tag in articleData.tags" :key="tag.no" @click="putWord(tag)">#{{ tag }}</button>
         </div>
         <div class="in-the-top">
           <div class="writer">
@@ -109,6 +109,7 @@
               <div class="min-price">모인 금액: {{ articleData.sumPrice }}원</div>
             </div>
             <div class="detail-endTime">마감 시간: {{ cutDate(articleData.endTime) }}까지</div>
+            <div v-if="checkedStatus">오픈 채팅방 url: {{articleData.openLink}}</div>
           </div>
           <div class="detail-btns">
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
@@ -142,7 +143,7 @@
               </b-button>
             </div>
             </div>
-            <div v-if="userData.nickname in articleData.partList">
+            <div v-if="checkedStatus">
               <b-button
                 id="show-btn"
                 class="detail-join"
@@ -329,22 +330,47 @@ export default {
         token: this.$cookies.get("auth-token"),
       },
       isDenied: false,
-      joinFlag:true,
       searchData:{
         searchDataForSend:{
-          subject:'',
+          subject:'tag',
           word:'',
         },
-        categoryId:'',
-        temp:0,
+        categoryId:'temp',
+        temp:1,
       },
     };
   },
   computed: {
     ...mapState(["articleData", "userData"]),
+    joinFlag(){
+      const tempList=[]
+      for (const p of this.articleData.partList) {
+        tempList.push(p.writer)
+      }
+      if(tempList.includes(this.userData.nickname)){
+        return false
+      }else{
+        return true
+      }
+    },
+    checkedStatus(){
+      const tempList=[]
+      for(const p of this.articleData.partList){
+        if(p.status===1 || p.status==0){
+          tempList.push(p.writer)
+        }
+      }
+      if(tempList.includes(this.userData.nickname)){
+        return true
+      }else{
+        return false
+      }
+    }
+
+
   },
   methods: {
-    ...mapActions(["getArticle", "getUserData", "createArticleAccuse"]),
+    ...mapActions(["getArticle", "getUserData", "createArticleAccuse","detailSearch"]),
     denyConfirm() {
       this.isDenied = true;
     },
@@ -384,6 +410,11 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    putWord(tag){
+      console.log(this.searchData.searchDataForSend.word)
+      this.searchData.searchDataForSend.word=tag
+      this.detailSearch(this.searchData)
     },
 
     // 신고 유형 변경
@@ -518,23 +549,15 @@ export default {
       this.getArticle(this.$route.params.ID);
       this.likeCheck();
     },
+
   },
   created: function () {
     this.getArticle(this.$route.params.ID);
     this.getUserData();
     this.likeCheck();
-    this.joinFlag=true
   },
   updated(){
-    const tempList=[]
-    for (const p of this.articleData.partList) {
-      tempList.push(p.writer)
-    }
-    if(tempList.includes(this.userData.nickname)){
-      this.joinFlag=false
-    }else{
-      this.joinFlag=true
-    }
+    
   }
 };
 </script>
