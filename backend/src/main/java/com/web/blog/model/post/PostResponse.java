@@ -88,4 +88,6 @@ public class PostResponse {
 
      @ApiModelProperty(value = "description", position = 22)
      public String description;
+     @ApiModelProperty(value = "openLink", position = 10)
+     public String openLink;
 }

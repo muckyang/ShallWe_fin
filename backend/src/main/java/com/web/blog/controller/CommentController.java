@@ -62,6 +62,7 @@ public class CommentController {
             Comment comment = new Comment();
             comment.setArticleId(req.getArticleId());
             comment.setContent(req.getContent());
+            comment.setStatus(1);
             comment.setWriter(userOpt.get().getNickname());
             comment.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
             commentDao.save(comment);
