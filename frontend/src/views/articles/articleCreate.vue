@@ -48,11 +48,21 @@
           <input type="time" id="form-endTime" v-model="articleData.endTime" />
         </div>
         <!--이미지-->
-        <div class="imageInsert">
+        <!-- <div class="imageInsert">
           <label for>사진 첨부</label>
-          <input type="file" @change="imageChange" />
+          <input type="file" @change="imageChange" /> -->
           <!-- <b-form-file @change="imageChange" plain></b-form-file> -->
+        <!-- </div> -->
+
+        <!-- 파일 업로드 Start -->
+        <div class="imageInsert">
+          <input type="file" id="file" name="file" ref="file" />
+          <button v-on:click="fileUpload" >fileUpload</button>
+          <img v-bind:src="'/file/image.png'" width="200"/>
+          <img v-bind:src="path" width="200"/>
         </div>
+        <!-- 파일 업로드 End -->
+
         <!--url-->
         <div class="url">
           <label for="url">URL</label>
@@ -152,10 +162,36 @@ export default {
       selectedTBG: "카테고리",
       coNum: "1",
       address: " \uf060" + " 지도에서 만남의 장소를 설정하세요",
+      file: '',
+      path: '',
+      uid: '',
+      please: '',
     };
   },
   methods: {
     ...mapActions(["createArticle", "tempSaveArticle"]),
+    fileUpload: function () {
+    var formData = new FormData();
+    this.file = this.$refs.file.files[0];
+    formData.append("file", this.file);
+    formData.append("uid", 10);
+    axios.post(`${BACK_URL}/file`
+        ,formData
+        , {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+      .then((response) => {
+        console.log(response.data, typeof(response.data), 'BBBBBBBBBBBB')
+        alert("업로드 완료!\n" + response.data);
+        this.articleData.image = "C:\\imageTest\\" + response.data
+        console.log(this.articleData.image, 'AAAAAAAA');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
     selectCategory(num) {
       this.articleData.categoryId = num;
       if (num === 1) {
