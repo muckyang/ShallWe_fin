@@ -36,18 +36,30 @@
         </div>
       </div>
       <!--화살표 클릭하면 보일 내용들. 내용,이미지-->
-      <div class="section collapsible">
+      <!-- <div class="section collapsible">
         <div class="after-event">
           <div class="review-img">
             <img class="review-img" :src="review.image" alt="..." />
           </div>
           <div class="review-content">{{review.description}}</div>
         </div>
+      </div>-->
+      <div class="collapse multi-collapse" :id="'review'+review.articleId">
+        <div v-if="review.image" class="review-img">
+          <img class="review-img" :src="review.image" alt="..." />
+        </div>
+        <div class="review-content">{{review.description}}</div>
       </div>
       <div class="arrow">
-        <button class="review-btn" @click="seeInfo">
+        <a
+          data-toggle="collapse"
+          :href="'#'+toggleId(review.articleId)"
+          role="button"
+          aria-expanded="false"
+          aria-controls="review11"
+        >
           <i class="fas fa-angle-double-down"></i>
-        </button>
+        </a>
       </div>
     </div>
   </div>
@@ -97,6 +109,10 @@ export default {
       document
         .querySelector(".section.collapsible")
         .classList.toggle("collapsed");
+    },
+    toggleId(num) {
+      const result = "review" + num;
+      return result;
     },
     created: function () {
       this.likeCheck();
