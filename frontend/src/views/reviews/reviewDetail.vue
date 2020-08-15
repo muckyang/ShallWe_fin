@@ -20,20 +20,22 @@
       </div>
       <div class="review-top">
         <div class="review-info">
-          <div class="review-title">{{review.title}}</div>
           <div class="review-writer">{{review.writer}}</div>
           <div class="review-time">{{review.timeAgo}}</div>
         </div>
-        <div class="review-like-comment">
-          <div class="like-container">
-            <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
-            {{review.likeNum}}
-          </div>
-          <div class="review-comment">
-            <div class="comment-icon">
-              <i class="far fa-comment-dots"></i>
+        <div class="review-middle">
+          <div class="review-title">{{review.title}}</div>
+          <div class="review-like-comment">
+            <div class="like-container">
+              <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
+              {{review.likeNum}}
             </div>
-            {{review.commentNum}}
+            <div class="review-comment">
+              <div class="comment-icon">
+                <i class="far fa-comment-dots"></i>
+              </div>
+              {{review.commentNum}}
+            </div>
           </div>
         </div>
       </div>
@@ -140,6 +142,9 @@ export default {
 .review-time {
   opacity: 0.7;
 }
+.review-writer {
+  opacity: 0.8;
+}
 .review-title,
 .review-writer,
 .review-time {
@@ -149,10 +154,14 @@ export default {
   text-overflow: ellipsis;
   line-height: 1.2;
 }
+.review-middle {
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+  padding: 5px;
+}
 .review-like-comment {
   display: flex;
-  justify-content: flex-end;
-  vertical-align: middle;
 }
 .like-container,
 .review-comment {
@@ -165,9 +174,9 @@ export default {
   margin: 0 3px;
 }
 .review-bottom {
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 .review-img {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 </style>
