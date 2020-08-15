@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="review-container">
-      <div class="section">
+      <div class="review-top">
         <div class="review-info">
           <div class="review-title">{{review.title}}</div>
           <div class="review-writer">{{review.writer}}</div>
@@ -36,17 +36,9 @@
         </div>
       </div>
       <!--화살표 클릭하면 보일 내용들. 내용,이미지-->
-      <!-- <div class="section collapsible">
-        <div class="after-event">
-          <div class="review-img">
-            <img class="review-img" :src="review.image" alt="..." />
-          </div>
-          <div class="review-content">{{review.description}}</div>
-        </div>
-      </div>-->
-      <div class="collapse multi-collapse" :id="'review'+review.articleId">
-        <div v-if="review.image" class="review-img">
-          <img class="review-img" :src="review.image" alt="..." />
+      <div class="collapse multi-collapse review-bottom" :id="'review'+review.articleId">
+        <div v-if="review.image">
+          <b-img :src="review.image" fluid alt="Responsive image" class="review-img"></b-img>
         </div>
         <div class="review-content">{{review.description}}</div>
       </div>
@@ -85,6 +77,7 @@ export default {
     return {
       isLiked: false,
       likeFlag: false,
+      mainProps: { width: 450, height: 450 },
     };
   },
   computed: {
@@ -103,12 +96,6 @@ export default {
     },
     likeChange() {
       this.likeCheck();
-    },
-    seeInfo() {
-      console.log("선택!");
-      document
-        .querySelector(".section.collapsible")
-        .classList.toggle("collapsed");
     },
     toggleId(num) {
       const result = "review" + num;
@@ -137,7 +124,6 @@ export default {
 .review-info {
   display: flex;
   justify-content: space-between;
-  /* border: 1px solid red; */
   padding: 10px;
 }
 .review-title {
@@ -162,25 +148,10 @@ export default {
   display: flex;
   margin: 0 8px;
 }
-.section {
-  overflow: hidden;
-  transition: max-height 0.5s ease-out;
-  height: auto;
-  max-height: 600px;
+.review-bottom {
+  border: 1px solid red;
 }
-.section.collapsed {
-  max-height: 0;
-}
-/* .after-event {
-  max-height: 0;
-} */
-.review-btn {
-  border: none;
-  outline: none;
-  background-color: transparent;
-}
-.review-btn:focus {
-  border: none;
-  outline: none;
+.review-img {
+  border: 1px solid blue;
 }
 </style>
