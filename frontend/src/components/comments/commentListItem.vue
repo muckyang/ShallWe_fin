@@ -115,7 +115,7 @@ export default {
       return res;
     },
     linkCommentData() {
-      this.accuseCommentData.accuseValue = this.comment.commentId
+      this.accuseCommentData.accuseValue = this.comment.commentId;
     },
     // 신고 유형 변경
     changeAccuseKind(kind) {
@@ -147,20 +147,13 @@ export default {
         .post(BACK_URL + "/comment/update", this.comment)
         .then((response) => {
           this.flag = false;
-          //~~~~~~~~~~~~~~~~~~~~~~~~~중요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-          // this.commentData=response.data
-          //다시 댓글을 전부 다시 받는 것이 아니라 수정 후 응답으로 수정된 댓글만 다시 받아온다.
-          //~~~~~~~~~~~~~~~~~~~~~~~~~중요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         })
         .catch((err) => {
           console.error(err);
         });
     },
     updateCancel() {
-      console.log(this.canceldata);
-      console.log(this.comment, "바뀐 댓글데이타");
       this.comment = this.canceldata;
-      console.log(this.comment, "취소 후");
       this.watchFlag = true;
       this.flag = false;
     },
@@ -170,9 +163,6 @@ export default {
       this.$emit("re-render");
     },
   },
-  // created(){
-  //     console.log(this.comment)
-  // }
 };
 </script>
 
