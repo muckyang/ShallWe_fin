@@ -64,6 +64,7 @@ export default {
         axios
           .post(`${BACK_URL}/comment/create`, this.commentData)
           .then(() => {
+            console.log('댓글 등록 완료')
             this.commentData.content = "";
             this.getArticle(this.reviewId); //다시 보기
           })
