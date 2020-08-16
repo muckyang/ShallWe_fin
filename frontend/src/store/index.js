@@ -84,7 +84,7 @@ export default new Vuex.Store({
       state.authToken = token;
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
-      setTimeout(function () {
+      setTimeout(function() {
         alert("환영합니다.");
       }, 50);
     },
@@ -324,7 +324,11 @@ export default new Vuex.Store({
           if (articleData.temp === 1 || articleData.temp === 0) {
             router.push("/article");
           } else {
-            router.push("/posts");
+            if (articleData.articleData.categoryId === 102) {
+              router.push("/reviews");
+            } else {
+              router.push("/posts");
+            }
           }
         })
         .catch((err) => console.log(err));

@@ -3,7 +3,9 @@
     <div class="review-list-top">
       <div class="review-length">{{reviews.length}}개의 후기가 있습니다.</div>
       <div class="review-create">
-        <button class="review-create-btn">후기 등록</button>
+        <router-link :to="{ name: 'reviewCreate' }" class="ml-auto">
+          <button class="review-create-btn">후기 등록</button>
+        </router-link>
       </div>
     </div>
     <reviewDetail
