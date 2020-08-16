@@ -40,11 +40,12 @@
         </div>
       </div>
       <!--화살표 클릭하면 보일 내용들. 내용,이미지-->
-      <div class="collapse multi-collapse review-bottom" :id="'review'+review.articleId">
+      <div class="collapse multi-collapse review-bottom mt-3" :id="'review'+review.articleId">
         <div v-if="review.image">
           <b-img :src="review.image" fluid alt="Responsive image" class="review-img"></b-img>
         </div>
         <div class="review-content">{{review.description}}</div>
+        <reviewCommentList :reviewId="review.articleId" />
       </div>
       <div class="arrow">
         <a
@@ -65,13 +66,13 @@
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 import axios from "axios";
 import { mapState, mapActions } from "vuex";
-import commentList from "@/components/comments/commentList";
+import reviewCommentList from "@/components/reviews/reviewCommentList";
 import reviewLike from "@/components/reviews/reviewLike";
 
 export default {
   name: "reviewDetail",
   components: {
-    commentList,
+    reviewCommentList,
     reviewLike,
   },
   props: {
@@ -133,11 +134,12 @@ export default {
 .review-info {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 15px 20px 7px 20px;
 }
 .review-title {
   font-weight: bold;
   font-size: 20px;
+  margin-left: 5.5px;
 }
 .review-time {
   opacity: 0.7;
@@ -158,7 +160,7 @@ export default {
   display: flex;
   justify-content: space-between;
   vertical-align: middle;
-  padding: 5px;
+  padding: 0px 15px;
 }
 .review-like-comment {
   display: flex;
@@ -178,5 +180,11 @@ export default {
 }
 .review-img {
   /* border: 1px solid blue; */
+}
+.arrow {
+  opacity: 0.6;
+}
+.review-content {
+  margin: 10px 0 20px 0;
 }
 </style>
