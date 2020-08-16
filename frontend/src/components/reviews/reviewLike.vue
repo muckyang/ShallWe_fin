@@ -4,7 +4,7 @@
       <i class="far fa-heart"></i>
     </button>
 
-    <button v-if="isLiked" @click="like" class="review-like" style="color:#ee6e9f;">
+    <button v-if="isLiked" @click="like" class="like-icon" style="color:#ee6e9f;">
       <i class="fas fa-heart"></i>
     </button>
   </div>
