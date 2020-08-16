@@ -1,8 +1,8 @@
 <template>
-  <div class="review-comment-box mt-5">
+  <div class="review-comment-box">
     <div class="review-comment-start">
       <i class="far fa-comment-dots"></i>
-      댓글 {{comments.length}} {{reviewId}}
+      댓글 {{comments.length}}
     </div>
 
     <!--댓글 보여주는 공간-->
@@ -94,7 +94,7 @@ export default {
 .review-comment-box {
   /* border: 1px solid red; */
   width: 100%;
-  margin: auto;
+  margin: 0 auto;
 }
 .review-comment-start {
   width: 95%;

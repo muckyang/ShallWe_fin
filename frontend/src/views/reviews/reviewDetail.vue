@@ -46,11 +46,15 @@
       </div>
       <!--화살표 클릭하면 보일 내용들. 내용,이미지-->
       <div class="collapse multi-collapse review-bottom mt-3" :id="'review'+review.articleId">
-        <div class="review-content">{{review.description}}</div>
-        <div v-if="review.image" :class="{'review-img-box':review.image}">
-          <b-img :src="review.image" fluid alt="Responsive image" class="review-img"></b-img>
+        <div class="review-point d-flex">
+          <div v-if="review.image" :class="{'review-img-box':review.image}">
+            <b-img :src="review.image" fluid alt="Responsive image" class="review-img"></b-img>
+          </div>
+          <div class="review-content">
+            <div class="review-description">{{review.description}}</div>
+            <reviewCommentList :reviewId="review.articleId" />
+          </div>
         </div>
-        <reviewCommentList :reviewId="review.articleId" />
       </div>
       <div class="arrow">
         <a
@@ -190,7 +194,8 @@ export default {
 }
 .review-img-box {
   text-align: left;
-  padding: 0px 25px;
+  padding: 0px 0px 0 20px;
+  width: 57%;
 }
 .review-img {
   /* border: 1px solid blue; */
@@ -198,9 +203,16 @@ export default {
 .arrow {
   opacity: 0.6;
 }
+.review-description {
+  padding: 0 12px;
+}
 .review-content {
-  margin: 10px 0 10px 0;
+  /* margin: 10px 0 10px 0; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   text-align: left;
-  padding: 0px 25px;
+  width: 42%;
+  /* padding: 0px 25px; */
 }
 </style>
