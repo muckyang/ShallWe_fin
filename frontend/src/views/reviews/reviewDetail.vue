@@ -50,8 +50,10 @@
           <div v-if="review.image" :class="{'review-img-box':review.image}">
             <b-img :src="review.image" fluid alt="Responsive image" class="review-img"></b-img>
           </div>
-          <div class="review-content">
-            <div class="review-description">{{review.description}}</div>
+          <div :class="{'review-content':review.image, 'review-content-ver':review.image==null}">
+            <div
+              :class="{'review-description':review.image, 'review-description-ver':review.image==null}"
+            >{{review.description}}</div>
             <reviewCommentList :reviewId="review.articleId" />
           </div>
         </div>
@@ -206,6 +208,10 @@ export default {
 .review-description {
   padding: 0 12px;
 }
+.review-description-ver {
+  padding: 0 26px;
+  margin: 10px 0 50px 0;
+}
 .review-content {
   /* margin: 10px 0 10px 0; */
   display: flex;
@@ -214,5 +220,13 @@ export default {
   text-align: left;
   width: 42%;
   /* padding: 0px 25px; */
+}
+.review-content-ver {
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  width: 100%;
 }
 </style>
