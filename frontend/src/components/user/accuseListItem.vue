@@ -2,7 +2,7 @@
   <div>
     <b-media tag="li" class="text-left">
       <template v-slot:aside>
-        <b-img blank blank-color="#abc" width="64" alt="placeholder"></b-img>
+        <!-- <b-img blank blank-color="#abc" width="64" alt="placeholder"></b-img> -->
       </template>
       <div class="d-flex justify-content-between">
         <h5 class="mt-0 mb-1"># {{ accuse.accuseId }}. "{{ accuse.reporter }}" 님의 신고 내용</h5>
