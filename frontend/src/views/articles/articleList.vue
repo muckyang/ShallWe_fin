@@ -22,8 +22,7 @@
           role="tab"
           aria-controls="nav-home"
           aria-selected="true"
-          >전체보기</a
-        >
+        >전체</a>
         <a
           @click="changeCategory(1)"
           class="nav-item nav-link text-dark"
@@ -33,8 +32,7 @@
           role="tab"
           aria-controls="nav-profile"
           aria-selected="false"
-          >쉘위배달</a
-        >
+        >쉘위배달</a>
         <a
           @click="changeCategory(2)"
           class="nav-item nav-link text-dark"
@@ -44,8 +42,7 @@
           role="tab"
           aria-controls="nav-contact"
           aria-selected="false"
-          >쉘위택배</a
-        >
+        >쉘위택배</a>
         <a
           @click="changeCategory(3)"
           class="nav-item nav-link text-dark"
@@ -55,8 +52,7 @@
           role="tab"
           aria-controls="nav-profile"
           aria-selected="false"
-          >쉘위공구</a
-        >
+        >쉘위공구</a>
         <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
           <button class="write-btn">글쓰기</button>
         </router-link>
@@ -72,13 +68,7 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col
-              cols="12"
-              sm="6"
-              lg="4"
-              v-for="article in articles"
-              :key="article.articleId"
-            >
+            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -100,9 +90,7 @@
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
                     <h6 class="article-address">{{ article.address }}</h6>
-                    <h6 class="article-price">
-                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
-                    </h6>
+                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
@@ -130,13 +118,7 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col
-              cols="12"
-              sm="6"
-              lg="4"
-              v-for="article in articles"
-              :key="article.articleId"
-            >
+            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -157,12 +139,8 @@
                 >
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address" style="font-size: 13.5px;">
-                      {{ article.address }}
-                    </h6>
-                    <h6 class="article-price">
-                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
-                    </h6>
+                    <h6 class="article-address" style="font-size: 13.5px;">{{ article.address }}</h6>
+                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
@@ -190,13 +168,7 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col
-              cols="12"
-              sm="6"
-              lg="4"
-              v-for="article in articles"
-              :key="article.articleId"
-            >
+            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -217,12 +189,8 @@
                 >
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address" style="font-size: 13.5px;">
-                      {{ article.address }}
-                    </h6>
-                    <h6 class="article-price">
-                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
-                    </h6>
+                    <h6 class="article-address" style="font-size: 13.5px;">{{ article.address }}</h6>
+                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
@@ -250,13 +218,7 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col
-              cols="12"
-              sm="6"
-              lg="4"
-              v-for="article in articles"
-              :key="article.articleId"
-            >
+            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -278,9 +240,7 @@
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
                     <h6 class="article-address">{{ article.address }}</h6>
-                    <h6 class="article-price">
-                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
-                    </h6>
+                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
@@ -300,17 +260,11 @@
         </b-container>
       </div>
     </div>
-    <infinite-loading
-      @infinite="infiniteHandler"
-      :identifier="infiniteId"
-      spinner="waveDots"
-    >
+    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
       <div
         slot="no-more"
         style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >
-        더이상 게시물이 존재하지 않습니다!
-      </div>
+      >더이상 게시물이 존재하지 않습니다!</div>
     </infinite-loading>
   </div>
 </template>
