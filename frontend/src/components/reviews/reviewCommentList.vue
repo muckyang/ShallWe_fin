@@ -2,7 +2,7 @@
   <div class="review-comment-box mt-5">
     <div class="review-comment-start">
       <i class="far fa-comment-dots"></i>
-      댓글 {{comments.length}}
+      댓글 {{comments.length}} {{reviewId}}
     </div>
 
     <!--댓글 보여주는 공간-->
@@ -83,6 +83,9 @@ export default {
     //       console.error(err)
     //     })
     // },
+  },
+  created() {
+    this.getArticle(this.reviewId);
   },
 };
 </script>
