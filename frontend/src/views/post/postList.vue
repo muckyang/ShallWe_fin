@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <nav class="mt-4 mb-3 ml-3">
+  <div class="article-list-box mt-5 mx-auto">
+    <nav class="mt-4 mb-3 mx-1">
       <div class="nav nav-tabs d-flex" id="nav-tab" role="tablist">
         <a
           @click="changeCategory(100)"
