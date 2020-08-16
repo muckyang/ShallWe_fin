@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="article-list-box mt-5 mx-auto">
     <!-- <input class="searchInput" type="search" 
     v-model="searchData.searchDataForSend.word"
     @keypress.enter="search(searchData)"
@@ -11,7 +11,7 @@
     type="submit" @click="search(searchData)">
     <i class="fas fa-search"></i></button>-->
 
-    <nav class="mt-4 mb-3 ml-3">
+    <nav class="mt-4 mb-3 mx-1">
       <div class="nav nav-tabs navs" id="nav-tab" role="tablist">
         <a
           @click="changeCategory(0)"
@@ -337,6 +337,9 @@ export default {
 </script>
 
 <style>
+.article-list-box {
+  width: 95%;
+}
 .article-title {
   font-size: 17px;
   font-weight: 600;
