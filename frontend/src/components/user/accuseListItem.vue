@@ -1,11 +1,20 @@
 <template>
   <div>
     <b-media tag="li" class="text-left">
-      <template v-slot:aside>
-        <!-- <b-img blank blank-color="#abc" width="64" alt="placeholder"></b-img> -->
-      </template>
+
       <div class="d-flex justify-content-between">
-        <h5 class="mt-0 mb-1"># {{ accuse.accuseId }}. "{{ accuse.reporter }}" 님의 신고 내용</h5>
+        <small v-if="accuse.accuseIndex === 1">
+          <span class="badge badge-pill badge-dark mr-2">게시물 신고</span>
+          <span v-if="accuse.accuseKind == 1">욕설</span>
+          <span v-if="accuse.accuseKind == 2">노쇼</span>
+          <span v-if="accuse.accuseKind == 3">광고</span>
+        </small>
+        <small v-if="accuse.accuseIndex === 2">
+          <span class="badge badge-pill badge-dark mr-2">댓글 신고</span>
+          <span v-if="accuse.accuseKind == 1">욕설</span>
+          <span v-if="accuse.accuseKind == 2">노쇼</span>
+          <span v-if="accuse.accuseKind == 3">광고</span>
+        </small>
         <div>
           <div class="article-drop dropdown dropleft">
             <button type="button" class="article-btn" data-toggle="dropdown">
@@ -19,19 +28,8 @@
           </div>
         </div>
       </div>
+      <h5 class="mt-0 mb-2 mt-1"># {{ accuse.accuseId }}. "{{ accuse.reporter }}" 님의 신고 내용</h5>
       <h6>피신고자: {{ accuse.defendant }}</h6>
-      <h6 v-if="accuse.accuseIndex === 1">
-        <span class="badge badge-pill badge-light mr-2">게시물 신고</span>
-        <span v-if="accuse.accuseKind == 1">욕설</span>
-        <span v-if="accuse.accuseKind == 2">노쇼</span>
-        <span v-if="accuse.accuseKind == 3">광고</span>
-      </h6>
-      <h6 v-if="accuse.accuseIndex === 2">
-        <span class="badge badge-pill badge-dark mr-2">댓글 신고</span>
-        <span v-if="accuse.accuseKind == 1">욕설</span>
-        <span v-if="accuse.accuseKind == 2">노쇼</span>
-        <span v-if="accuse.accuseKind == 3">광고</span>
-      </h6>
       <p class="mb-0">{{ accuse.accuseReason }}</p>
     </b-media>
     <hr>
