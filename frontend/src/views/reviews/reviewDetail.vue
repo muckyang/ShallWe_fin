@@ -1,25 +1,30 @@
 <template>
-  <div class="container">
+  <div class="container mt-3">
     <div class="review-container">
-      <div class="review-drop dropdown dropleft" v-if="review.userId === userData.userId">
-        <button type="button" class="review-btn" data-toggle="dropdown">
-          <i class="fas fa-ellipsis-h"></i>
-        </button>
-        <div class="dropdown-menu">
-          <router-link
-            class="reviewUpdate"
-            :to="{
-                      name: 'reviewUpdate',
-                      params: { ID: this.review.articleId},
-                    }"
-          >
-            <a class="dropdown-item">수정</a>
-          </router-link>
-          <a class="dropdown-item">삭제</a>
-        </div>
-      </div>
       <div class="review-top">
-        <div class="review-info">
+        <div
+          class="review-drop dropdown dropleft m-0 pr-3"
+          v-if="review.userId === userData.userId"
+        >
+          <button type="button" class="review-btn" data-toggle="dropdown">
+            <i class="fas fa-ellipsis-h"></i>
+          </button>
+          <div class="dropdown-menu">
+            <router-link
+              class="reviewUpdate"
+              :to="{
+                        name: 'reviewUpdate',
+                        params: { ID: this.review.articleId},
+                      }"
+            >
+              <a class="dropdown-item">수정</a>
+            </router-link>
+            <a class="dropdown-item">삭제</a>
+          </div>
+        </div>
+        <div
+          :class="{'review-info':review.userId!== userData.userId,'review-info-ver':review.userId=== userData.userId}"
+        >
           <div class="review-writer">{{review.writer}}</div>
           <div class="review-time">{{review.timeAgo}}</div>
         </div>
@@ -30,21 +35,21 @@
               <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
               {{review.likeNum}}
             </div>
-            <div class="review-comment">
+            <!-- <div class="review-comment">
               <div class="comment-icon">
                 <i class="far fa-comment-dots"></i>
               </div>
               {{review.commentNum}}
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
       <!--화살표 클릭하면 보일 내용들. 내용,이미지-->
       <div class="collapse multi-collapse review-bottom mt-3" :id="'review'+review.articleId">
-        <div v-if="review.image">
+        <div class="review-content">{{review.description}}</div>
+        <div v-if="review.image" :class="{'review-img-box':review.image}">
           <b-img :src="review.image" fluid alt="Responsive image" class="review-img"></b-img>
         </div>
-        <div class="review-content">{{review.description}}</div>
         <reviewCommentList :reviewId="review.articleId" />
       </div>
       <div class="arrow">
@@ -55,7 +60,7 @@
           aria-expanded="false"
           aria-controls="review11"
         >
-          <i class="fas fa-angle-double-down"></i>
+          <i class="fas fa-angle-down"></i>
         </a>
       </div>
     </div>
@@ -134,7 +139,12 @@ export default {
 .review-info {
   display: flex;
   justify-content: space-between;
-  padding: 15px 20px 7px 20px;
+  margin: 15px 20px 7px 20px;
+}
+.review-info-ver {
+  display: flex;
+  justify-content: space-between;
+  margin: 2px 20px 7px 20px;
 }
 .review-title {
   font-weight: bold;
@@ -178,6 +188,10 @@ export default {
 .review-bottom {
   /* border: 1px solid red; */
 }
+.review-img-box {
+  text-align: left;
+  padding: 0px 25px;
+}
 .review-img {
   /* border: 1px solid blue; */
 }
@@ -185,6 +199,8 @@ export default {
   opacity: 0.6;
 }
 .review-content {
-  margin: 10px 0 20px 0;
+  margin: 10px 0 10px 0;
+  text-align: left;
+  padding: 0px 25px;
 }
 </style>

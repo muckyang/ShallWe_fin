@@ -1,5 +1,11 @@
 <template>
   <div class="container review-list mt-5">
+    <div class="review-list-top">
+      <div class="review-length">{{reviews.length}}개의 후기가 있습니다.</div>
+      <div class="review-create">
+        <button class="review-create-btn">후기 등록</button>
+      </div>
+    </div>
     <reviewDetail
       v-for="review in reviews"
       :key="review.articleId"
@@ -81,8 +87,29 @@ export default {
 </script>
 
 <style>
+.review-list-top {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 15px;
+}
+.review-length {
+  align-self: center;
+}
 .review-list {
   /* border: 1px solid black; */
-  width: 100%;
+  width: 75%;
+}
+.review-create-btn {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #ee6e9f;
+  padding: 5px;
+  opacity: 0.9;
+  transition: 0.3s;
+}
+.review-create-btn:hover {
+  opacity: 1;
 }
 </style>
