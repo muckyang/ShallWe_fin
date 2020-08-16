@@ -107,9 +107,11 @@ export default {
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
-  padding: 5px;
   opacity: 0.9;
   transition: 0.3s;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
 }
 .review-create-btn:hover {
   opacity: 1;

@@ -10,12 +10,7 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col
-              cols="12"
-              sm="4"
-              v-for="article in articles"
-              :key="article.articleId"
-            >
+            <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -36,18 +31,15 @@
                 >
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address">
-                      {{ article.address }}
-                    </h6>
+                    <h6 class="article-address">{{ article.address }}</h6>
                     <br />
-                    <h6 class="article-price">
-                      가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
-                    </h6>
+                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
                       <small>
-                        <b-icon-heart></b-icon-heart> {{ article.likeNum }}개
+                        <b-icon-heart></b-icon-heart>
+                        {{ article.likeNum }}개
                         <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
                         {{ article.commentNum }}개
                       </small>
@@ -62,20 +54,14 @@
       </div>
     </div>
     <br />
-    <infinite-loading
-      @infinite="infiniteHandler"
-      :identifier="infiniteId"
-      spinner="waveDots"
-    >
+    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
       <div
         slot="no-more"
         style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >
-        회원님의 동네에서 등록된 게시글이 더이상 존재하지 않습니다.
-      </div>
+      >회원님의 동네에서 등록된 게시글이 더이상 존재하지 않습니다.</div>
     </infinite-loading>
     <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
-      <button class="write-btn">글 쓰러 가기</button>
+      <button class="review-create-btn">글 쓰기</button>
     </router-link>
   </div>
 </template>
