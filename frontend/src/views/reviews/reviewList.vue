@@ -100,7 +100,7 @@ export default {
 }
 .review-list {
   /* border: 1px solid black; */
-  width: 75%;
+  width: 90%;
 }
 .review-create-btn {
   border: none;
