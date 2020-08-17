@@ -62,11 +62,23 @@
                         <div class="p-2">
                             <label for="nickname">닉네임</label>
                         </div>
-                        <input v-model="signUpData.nickname"
+                        <div role="group">
+                            <b-form-input
                             id="nickname"
                             class="joinInput"
+                            v-model="nickname"
+                            :state="nameState"
                             name="nickname"
-                            placeholder=" 닉네임을 입력해주세요" type="text"/>
+                            aria-describedby="input-live-help input-live-feedback"
+                            placeholder=" 닉네임을 입력해주세요" type="text"
+                            trim
+                            ></b-form-input>
+
+                            <!-- This will only be shown if the preceding input has an invalid state -->
+                            <b-form-invalid-feedback id="input-live-feedback">
+                            Enter at least 3 letters
+                            </b-form-invalid-feedback>
+                        </div>
                     </div>
                     <button @click="duCheck(signUpData.nickname)">중복확인</button>
 
@@ -361,10 +373,10 @@ const BACK_URL = process.env.VUE_APP_BACK_URL
         },
         data: () => {
             return {
+                nickname:'',
                 signUpData:{
                     address:'',
                     email: '',
-                    nickname: '',
                 },     
                 coNum:"2",
             }
@@ -379,6 +391,17 @@ const BACK_URL = process.env.VUE_APP_BACK_URL
         created:function(){
             this.signUpData.email=this.$route.query.kemail
         },
+        computed: {
+            nameState() {
+                return this.nickname.length > 2 ? true : false
+            }
+        },
+        // watch:{
+        //     nickname(){
+        //         this.signUpData.nickname=this.nickname
+        //         this.duCheck(this.signUpData.nickname)
+        //     }
+        // }
     }
 
 </script>

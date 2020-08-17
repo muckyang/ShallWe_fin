@@ -419,10 +419,10 @@ $x-large: 1200px;
     }
   }
 }
-.card-end {
+// .card-end {
   // background-color: #FFCBDB;
   // opacity: 0.7;
-}
+// }
 .navs {
   // border: 1px solid red;
   display: flex;
