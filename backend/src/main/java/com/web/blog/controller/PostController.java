@@ -159,12 +159,16 @@ public class PostController {
 
                 // 태그 등록
                 String[] tags = req.getTags();// 태그 내용
-                String ptag = "#";
-                for (int i = 0; i < tags.length; i++) {
-                    ptag += tags[i] + "#";
-
+                if(tags.length==0){
+                    post.setTag("태그");
+                }else{
+                    String ptag = "#";
+                    for (int i = 0; i < tags.length; i++) {
+                        ptag += tags[i] + "#";
+    
+                    }
+                    post.setTag(ptag.substring(0, ptag.length() - 1));
                 }
-                post.setTag(ptag.substring(0, ptag.length() - 1));
                 postDao.save(post);
                 int artiId = post.getArticleId();
                 System.out.println("게시물 등록!!");
