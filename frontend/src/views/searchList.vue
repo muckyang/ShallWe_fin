@@ -30,34 +30,41 @@
       >
         {{ item2 }}<i class="down fas fa-sort-down"></i>
       </button> -->
-      <div v-if="searchData.temp === 1">
-        <a class="second-select" href="#" @click="selectCategory(1)">배달</a>
-        <a class="second-select" href="#" @click="selectCategory(2)"
-          >최저주문</a
-        >
-        <a class="second-select" href="#" @click="selectCategory(3)"
-          >공동구매</a
-        >
-      </div>
-      <div v-if="searchData.temp === 2">
-        <a class="second-select" href="#" @click="selectCategory(101)">공지</a>
-        <a class="second-select" href="#" @click="selectCategory(102)">후기</a>
-        <a class="second-select" href="#" @click="selectCategory(103)">자유</a>
+      <div class="search-row">
+        <div v-if="searchData.temp === 1">
+          <a class="second-select" href="#" @click="selectCategory(1)">배달</a>
+          <a class="second-select" href="#" @click="selectCategory(2)"
+            >최저주문</a
+          >
+          <a class="second-select" href="#" @click="selectCategory(3)"
+            >공동구매</a
+          >
+        </div>
+        <div v-if="searchData.temp === 2">
+          <a class="second-select" href="#" @click="selectCategory(101)"
+            >공지</a
+          >
+          <a class="second-select" href="#" @click="selectCategory(102)"
+            >후기</a
+          >
+          <a class="second-select" href="#" @click="selectCategory(103)"
+            >자유</a
+          >
+        </div>
+        |
+        <div v-if="searchData.temp !== 0" class="dropdown mr-1">
+          <a class="third-select" href="#" @click="selectSubject(0)">제목</a>
+          <a class="third-select" href="#" @click="selectSubject(1)">작성자</a>
+          <a
+            v-if="searchData.temp === 1"
+            class="third-select"
+            href="#"
+            @click="selectSubject(2)"
+            >주소</a
+          >
+        </div>
       </div>
     </div>
-
-    <div v-if="searchData.temp !== 0" class="dropdown mr-1">
-      <a class="third-select" href="#" @click="selectSubject(0)">제목</a>
-      <a class="third-select" href="#" @click="selectSubject(1)">작성자</a>
-      <a
-        v-if="searchData.temp === 1"
-        class="third-select"
-        href="#"
-        @click="selectSubject(2)"
-        >주소</a
-      >
-    </div>
-
     <input
       class="detail-search"
       style="font-family: FontAwesome;"
@@ -243,6 +250,10 @@ $x-large: 1200px;
       opacity: 1;
     }
   }
+}
+.search-row {
+  display: flex;
+  justify-content: center;
 }
 .main-select {
   margin: 0 10px;
