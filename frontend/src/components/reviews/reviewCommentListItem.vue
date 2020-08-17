@@ -1,6 +1,7 @@
 <template>
+  <!-- <div data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="mt-1"> -->
   <div class="mt-1">
-    <div class="d-flex ma">
+    <div class="d-flex">
       <div class="review-comment-container">
         <div class="comment-user">
           {{ comment.nickname }}
@@ -170,6 +171,7 @@ export default {
 <style>
 /* @import '../node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'; */
 /* @import url('node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'); */
+
 .review-comment-container {
   border-bottom: 1px solid rgb(237, 237, 240);
   display: flex;
