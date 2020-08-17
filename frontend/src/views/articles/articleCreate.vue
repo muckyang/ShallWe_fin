@@ -165,7 +165,6 @@ export default {
       file: '',
       path: '',
       uid: '',
-      please: '',
     };
   },
   methods: {
@@ -185,7 +184,8 @@ export default {
       .then((response) => {
         console.log(response.data, typeof(response.data), 'BBBBBBBBBBBB')
         alert("업로드 완료!\n" + response.data);
-        this.articleData.image = "C:\\imageTest\\" + response.data
+        this.path = "/file/" + response.data
+        this.articleData.image = this.path
         console.log(this.articleData.image, 'AAAAAAAA');
       })
       .catch((error) => {
