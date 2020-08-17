@@ -213,27 +213,13 @@ public class SearchController {
                     if (newend / scrollsize > 0) {// 적어도 10개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            CommentListAdd(result,i,plist.get(i));
+                            CommentListAdd(result, i, plist.get(i));
+
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            List<Comment> clist = commentDao.findCommentByArticleId(plist.get(i).getArticleId());
-                            List<CommentRes> crlist = new ArrayList<>();
-                            for (int j = 0; j < clist.size(); j++) {
-                                CommentRes cr = new CommentRes();
-                                Comment c = clist.get(j);
-                                cr.setArticleId(c.getArticleId());
-                                cr.setCommentId(c.getCommentId());
-                                cr.setUserId(c.getUserId());
-                                cr.setContent(c.getContent());
-                                cr.setNickname(c.getWriter());
-                                cr.setStatus(c.getStatus());
-                                cr.setTimeAgo(BeforeCreateTime(c.getCreateTime()));
-                                cr.setCreateTime(c.getCreateTime());
-                                crlist.add(cr);
-                            }
-                            result.postList.get(i).commentList = crlist;
+                            CommentListAdd(result, i, plist.get(i));
                         }
                     }
 
@@ -492,7 +478,8 @@ public class SearchController {
 
         return result;
     }
-    private void CommentListAdd(PostListResponse result,int index, Post p){
+
+    private void CommentListAdd(PostListResponse result, int index, Post p) {
 
         List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
         List<CommentRes> crlist = new ArrayList<>();
