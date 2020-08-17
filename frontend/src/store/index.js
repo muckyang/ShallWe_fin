@@ -86,13 +86,15 @@ export default new Vuex.Store({
       state.authToken = token;
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
-      setTimeout(function() {
-        Swal.fire(
-          '로그인 되셨습니다.',
-          '환영합니다.',
-          'success'
-        )
-      }, 50);
+    
+        Swal.fire({
+          icon: 'success',
+          height: 400,
+          width: 300,
+          title : '로그인 되셨습니다.',
+          text : '환영합니다.'
+        })
+     
     },
     SET_ADMIN_TOKEN(state, token) {
       state.adminToken = token;
@@ -201,11 +203,13 @@ export default new Vuex.Store({
             axios
               .post(`${BACK_URL}/account/signup`, signUpData)
               .then((response) => {
-                Swal.fire(
-                  '회원가입이 완료되었습니다.',
-                  'Shall we 에 가입되신걸 축하합니',
-                  'success'
-                )
+                Swal.fire({
+                  height: 400,
+                  width: 300,
+                  title: '회원가입이 완료되었습니다.',
+                  text:'Shall we 에 가입되신걸 축하합니다',
+                  icon : 'success'
+                 } )
                 commit("SET_TOKEN", response.data);
                 this.commit("termCheck");
                 router.push("/");
@@ -215,6 +219,8 @@ export default new Vuex.Store({
               });
           } else {
             swal.fire({
+              height: 400,
+              width: 300,
               icon : "error",
               title: '약관에 동의해 주세요',
               text: '',
@@ -223,6 +229,8 @@ export default new Vuex.Store({
           }
         } else {
           swal.fire({
+            height: 400,
+            width: 300,
             icon : "error",
             title: '닉네임을 입력해 주세요',
             text: '',
@@ -230,6 +238,8 @@ export default new Vuex.Store({
         }
       } else {
         swal.fire({
+          height: 400,
+          width: 300,
           icon : "error",
           title: '빈 칸을 모두 채워주세요',
           text: '',
