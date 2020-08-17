@@ -382,7 +382,7 @@ export default {
         )
         .then((response) => {
           alert(response.data);
-          this.getArticle()
+          this.getArticle(this.$route.params.ID)
         })
         .catch((error) => {
           console.log(error);
