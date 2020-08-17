@@ -18,10 +18,12 @@
     "bulma": "^0.9.0",
     "core-js": "^3.6.5",
     "next-images": "^1.4.1",
+    "sweetalert2": "^9.17.1",
     "vue": "^2.6.11",
     "vue-cookies": "^1.7.2",
     "vue-infinite-loading": "^2.4.5",
     "vue-router": "^3.2.0",
+    "vue-sweetalert2": "^3.0.6",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

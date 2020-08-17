@@ -5,6 +5,8 @@ import axios from "axios";
 import cookies from "vue-cookies";
 import router from "../router";
 
+// CommonJS
+
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 
 Vue.use(Vuex);
@@ -85,7 +87,11 @@ export default new Vuex.Store({
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
       setTimeout(function() {
-        alert("환영합니다.");
+        Swal.fire(
+          '로그인 되셨습니다.',
+          '환영합니다.',
+          'success'
+        )
       }, 50);
     },
     SET_ADMIN_TOKEN(state, token) {
@@ -95,6 +101,11 @@ export default new Vuex.Store({
     REMOVE_TOKEN(state) {
       if (state.adminToken) {
         cookies.remove("admin-token");
+        Swal.fire(
+          '로그아웃 되었습니다.',
+          '',
+          'success'
+        )
         state.adminToken = null;
       }
       state.authToken = null;
@@ -190,7 +201,11 @@ export default new Vuex.Store({
             axios
               .post(`${BACK_URL}/account/signup`, signUpData)
               .then((response) => {
-                alert("회원가입이 완료되었습니다.");
+                Swal.fire(
+                  '회원가입이 완료되었습니다.',
+                  'Shall we 에 가입되신걸 축하합니',
+                  'success'
+                )
                 commit("SET_TOKEN", response.data);
                 this.commit("termCheck");
                 router.push("/");
@@ -199,13 +214,26 @@ export default new Vuex.Store({
                 console.log(err);
               });
           } else {
-            alert("약관에 동의해 주세요");
+            swal.fire({
+              icon : "error",
+              title: '약관에 동의해 주세요',
+              text: '',
+            })
+            // alert("약관에 동의해 주세요");
           }
         } else {
-          alert("닉네임을 입력해 주세요");
+          swal.fire({
+            icon : "error",
+            title: '닉네임을 입력해 주세요',
+            text: '',
+          })
         }
       } else {
-        alert("빈 칸을 모두 채워주세요");
+        swal.fire({
+          icon : "error",
+          title: '빈 칸을 모두 채워주세요',
+          text: '',
+        })
       }
     },
     // login({ commit }, loginData) {
@@ -265,7 +293,13 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/account/update`, editData)
         .then(() => {
-          alert("수정이 완료되었습니다. 다시 로그인해 주세요");
+
+          swal.fire({
+            icon : "success",
+            title: '수정이 완료되었습니다.',
+            text: '다시 로그인 해주세요!!',
+          })
+          // alert("수정이 완료되었습니다. 다시 로그인해 주세요");
           commit("REMOVE_TOKEN");
         })
         .catch((err) => {
