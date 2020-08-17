@@ -10,7 +10,6 @@ import java.util.StringTokenizer;
 
 import javax.mail.MessagingException;
 
-import com.web.blog.dao.ArticleTagDao;
 import com.web.blog.dao.CommentDao;
 import com.web.blog.dao.LikeDao;
 import com.web.blog.dao.ParticipantDao;
@@ -63,9 +62,6 @@ public class SearchController {
 
     @Autowired
     CommentDao commentDao;
-
-    @Autowired
-    ArticleTagDao articleTagDao;
 
     @Autowired
     TagDao tagDao;
