@@ -58,7 +58,6 @@
         <div class="imageInsert">
           <input type="file" id="file" name="file" ref="file" />
           <button v-on:click="fileUpload" >fileUpload</button>
-          <img v-bind:src="'/file/image.png'" width="200"/>
           <img v-bind:src="path" width="200"/>
         </div>
         <!-- 파일 업로드 End -->
@@ -182,11 +181,12 @@ export default {
             }
         })
       .then((response) => {
-        console.log(response.data, typeof(response.data), 'BBBBBBBBBBBB')
         alert("업로드 완료!\n" + response.data);
-        this.path = "/file/" + response.data
+        this.path = response.data
         this.articleData.image = this.path
-        console.log(this.articleData.image, 'AAAAAAAA');
+        var tmp=this.articleData.image.split('.')
+        tmp[1]=tmp[1].toLowerCase()
+        this.articleData.image = tmp[0]+'.'+tmp[1]
       })
       .catch((error) => {
         console.log(error);

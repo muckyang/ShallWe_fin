@@ -541,7 +541,7 @@ public class PostController {
 
     @PostMapping("/file")
     public String fileTest(@RequestPart("file") MultipartFile ff) throws IllegalStateException, IOException {
-        File file = new File("C:\\Users\\multicampus\\Desktop\\S2_First\\HANSOL\\s03p13b203\\backend\\src\\main\\resources\\static\\file\\" + ff.getOriginalFilename());
+        File file = new File("C:\\Users\\multicampus\\Desktop\\PJT\\PJT1\\s03p13b203\\frontend\\src\\assets\\file\\" + ff.getOriginalFilename());
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }

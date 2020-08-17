@@ -81,7 +81,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="article.image"
+                  :img-src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -309,6 +309,7 @@ export default {
               this.articles = this.articles.concat(res.data.postList);
               this.page += 1;
               $state.loaded();
+              console.log(this.articles[0].image)
             } else {
               $state.complete();
             }
@@ -327,9 +328,14 @@ export default {
       // this.getArticles({ temp: 1, categoryId: this.categoryNum });
     },
   },
-  // computed: {
-  //   ...mapState(["articles"]),
-  // },
+    computed: {
+      imageUrl(){
+        return (article)=>{
+          var tmp = article.image.split('.')
+          return require('@/assets/file/'+`${tmp[0]}`+'.'+`${tmp[1]}`)
+        }
+      }
+    },
   // created() {
   //   this.getArticles({ temp: 1, categoryId: this.categoryNum });
   // },
