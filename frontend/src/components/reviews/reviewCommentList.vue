@@ -2,11 +2,11 @@
   <div class="review-comment-box">
     <div class="review-comment-start">
       <i class="far fa-comment-dots"></i>
-      댓글 {{commentList.length}}
+      댓글 {{ commentList.length }}
     </div>
 
     <!--댓글 보여주는 공간-->
-    <div class="review-comment-list-box">
+    <div class="review-comment-list-box mb-3">
       <reviewCommentListItem
         v-for="comment in commentList"
         :key="comment.commentId"
@@ -26,7 +26,9 @@
         />
       </div>
       <div class="review-comment-submit">
-        <button type="button" class="comment-submit-btn" @click="createComment">등록</button>
+        <button type="button" class="comment-submit-btn" @click="createComment">
+          등록
+        </button>
       </div>
     </div>
   </div>
@@ -185,7 +187,6 @@ export default {
   box-shadow: inset 0px 0px 5px rgb(209, 205, 205);
 }
 .review-comment-list-box::-webkit-scrollbar-thumb {
-  /* scrollbar-color: red; */
   border-radius: 10px;
   background: #727171;
   background-clip: padding-box;
