@@ -379,7 +379,7 @@ export default {
         )
         .then((response) => {
           alert(response.data);
-          this.getArticle(this.$route.params.ID)
+          this.getArticle(this.$route.params.ID);
         })
         .catch((error) => {
           console.log(error);
@@ -782,7 +782,7 @@ a {
   text-decoration: none;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
-  margin: 0 1% 0 2%;
+  margin: 0 2% 0 2%;
 }
 .detail-btns .detail-share:hover {
   transform: translateY(-3px);
