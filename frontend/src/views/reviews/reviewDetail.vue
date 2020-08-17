@@ -116,6 +116,11 @@ export default {
     },
     likeChange() {
       this.likeCheck();
+      if (this.isLiked == true) {
+        this.review.likeNum -= 1;
+      } else {
+        this.review.likeNum += 1;
+      }
     },
     toggleId(num) {
       const result = "review" + num;
@@ -226,6 +231,7 @@ export default {
   justify-content: space-between;
   text-align: left;
   width: 42%;
+  height: 100%;
   /* padding: 0px 25px; */
 }
 .review-content-ver {
