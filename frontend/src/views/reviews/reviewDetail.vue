@@ -19,7 +19,10 @@
             >
               <a class="dropdown-item">수정</a>
             </router-link>
-            <a class="dropdown-item">삭제</a>
+            <a
+              class="dropdown-item"
+              @click="deleteArticle({articleId: review.articleId, categoryId: review.categoryId})"
+            >삭제</a>
           </div>
         </div>
         <div
@@ -104,7 +107,12 @@ export default {
     ...mapState(["articleData", "userData"]),
   },
   methods: {
-    ...mapActions(["getArticle", "getUserData", "createArticleAccuse"]),
+    ...mapActions([
+      "getArticle",
+      "getUserData",
+      "createArticleAccuse",
+      "deleteArticle",
+    ]),
     likeCheck() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios

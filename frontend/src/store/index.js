@@ -172,19 +172,19 @@ export default new Vuex.Store({
     duCheck({ commit }, nickname) {
       axios
         .get(`${BACK_URL}/account/nicknamecheck/${nickname}`)
-        .then((response) => { 
-          if(response.data==="사용가능한 닉네임입니다."){
+        .then((response) => {
+          if (response.data === "사용가능한 닉네임입니다.") {
             commit("duCheck", true);
-          }else{
+          } else {
             commit("duCheck", false);
           }
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
         });
     },
     signUp({ state, commit }, signUpData) {
-      if(signUpData.address&&signUpData.nickname){
+      if (signUpData.address && signUpData.nickname) {
         if (state.isChecked) {
           if (state.isTerm) {
             axios
@@ -204,8 +204,8 @@ export default new Vuex.Store({
         } else {
           alert("닉네임을 입력해 주세요");
         }
-      }else{
-        alert("빈 칸을 모두 채워주세요")
+      } else {
+        alert("빈 칸을 모두 채워주세요");
       }
     },
     // login({ commit }, loginData) {
@@ -306,6 +306,7 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/post/detail/${articleID}`, auth)
         .then((response) => {
+          console.log(response, "디테일");
           commit("GET_ARTICLE", response);
           commit("GET_COMMENTS", response.data.commentList);
         })
@@ -369,12 +370,19 @@ export default new Vuex.Store({
         });
     },
     //게시글 삭제하기
-    deleteArticle({ state, dispatch }, articleId) {
-      console.log(articleId);
+    deleteArticle({ state, dispatch }, data) {
       const auth = { token: state.authToken };
       axios
-        .get(`${BACK_URL}/post/delete/${articleId}`)
-        .then(() => {})
+        .get(`${BACK_URL}/post/delete/${data.articleId}`)
+        .then(() => {
+          if (data.categoryId < 10) {
+            router.push(`/article`);
+          } else if (data.categoryId == 102) {
+            router.push(`reviews`);
+          } else {
+            router.push(`/posts`);
+          }
+        })
         .catch((err) => {
           console.log(err);
         });
