@@ -10,7 +10,6 @@ import java.util.Optional;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 
-import com.web.blog.dao.AuthDao;
 import com.web.blog.dao.PostDao;
 import com.web.blog.dao.CommentDao;
 import com.web.blog.dao.LikeDao;
@@ -63,8 +62,7 @@ public class AccountController {
     CommentDao commentDao;
     @Autowired
     LikeDao likeDao;
-    @Autowired
-    AuthDao authDao;
+
     @Autowired
     ParticipantDao partDao;
 
