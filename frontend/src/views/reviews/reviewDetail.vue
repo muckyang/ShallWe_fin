@@ -236,6 +236,8 @@ export default {
 }
 .review-description {
   padding: 0 12px;
+  height: 50%;
+  overflow: auto;
 }
 .review-description-ver {
   padding: 0 26px;
@@ -245,7 +247,7 @@ export default {
   /* margin: 10px 0 10px 0; */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   text-align: left;
   width: 42%;
   height: 100%;
