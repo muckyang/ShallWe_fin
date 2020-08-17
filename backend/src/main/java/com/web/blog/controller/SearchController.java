@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,6 +93,7 @@ public class SearchController {
 
     }
 
+    @Transactional(readOnly = true)
     @PostMapping("/post/read/{temp}/{categoryId}/{pageNum}")
     @ApiOperation(value = "게시글 및 임시글 목록")
     public PostListResponse read(@RequestBody TokenRequest req, @PathVariable int temp, @PathVariable int categoryId,
@@ -155,6 +157,7 @@ public class SearchController {
             List<Post> plist = new ArrayList<>();
             System.out.println("게시물 목록 출력!!");
             long before = System.currentTimeMillis();
+
             if (categoryId == 0) {// 전체 게시물 출력
                 // plist = postDao.findPostByTemp(temp);//다 뽑은 다음
                 list = postDao.findPostByTempOrderByCreateTimeDesc(temp);// 다 뽑은 다음
@@ -163,14 +166,10 @@ public class SearchController {
                     if (newend / scrollsize > 0) {// 적어도 6개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     }
                 }
@@ -181,25 +180,18 @@ public class SearchController {
                     int newend = list.size() - start;
                     if (newend / scrollsize > 0) {// 적어도 6개는 있음
                         for (int i = start; i < end; i++) {
-                            result.postList.get(i).commentList = new ArrayList<>();
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
-                            result.postList.get(i).commentList = new ArrayList<>();
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     }
                 }
             }
-            result = new PostListResponse();
+
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
             System.out.println("리턴!!" + (System.currentTimeMillis() - before) + "초 ");
-
             return result;
         } else if (temp == 2) { // 자유게시판
             scrollsize = 10;
@@ -215,15 +207,12 @@ public class SearchController {
                     if (newend / scrollsize > 0) {// 적어도 10개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-
                         }
                     }
-
                 }
             } else {
                 list = postDao.findPostByTempAndCategoryIdOrderByCreateTimeDesc(temp, categoryId);
@@ -233,32 +222,25 @@ public class SearchController {
                     if (newend / scrollsize > 0) {// 적어도 6개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            // System.out.println(list.get(i).getArticleId());
-                            // CommentListAdd(result, i, plist.get(i));
-
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            // System.out.println(list.get(i).getArticleId());
-
                         }
                     }
                 }
             }
 
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
-            if (categoryId == 102){
+            if (categoryId == 102) {
                 for (int i = 0; i < plist.size(); i++)
                     CommentListAdd(result, i, plist.get(i));
-                    
+
             }
 
             System.out.println("자유글 목록 출력!!");
             return result;
-        } else if (temp == 3)
-
-        {
+        } else if (temp == 3) {
             System.out.println("내 주변 게시물 목록 출력!!");
             String token = req.getToken();
             User jwtuser = jwtService.getUser(token);
