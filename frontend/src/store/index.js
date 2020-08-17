@@ -5,6 +5,8 @@ import axios from "axios";
 import cookies from "vue-cookies";
 import router from "../router";
 
+// CommonJS
+
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 
 Vue.use(Vuex);
@@ -85,7 +87,11 @@ export default new Vuex.Store({
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
       setTimeout(function() {
-        alert("환영합니다.");
+        Swal.fire(
+          '로그인 되셨습니다.',
+          '환영합니다.',
+          'success'
+        )
       }, 50);
     },
     SET_ADMIN_TOKEN(state, token) {
@@ -95,6 +101,11 @@ export default new Vuex.Store({
     REMOVE_TOKEN(state) {
       if (state.adminToken) {
         cookies.remove("admin-token");
+        Swal.fire(
+          '로그아웃 되었습니다.',
+          '',
+          'success'
+        )
         state.adminToken = null;
       }
       state.authToken = null;
