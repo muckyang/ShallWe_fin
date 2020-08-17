@@ -22,8 +22,8 @@
           <td>{{ user.grade }}</td>
           <td>{{ user.userPoint }}</td>
           <td>
-            <router-link class="btn btn-info btn-sm" :to="{name: 'userDetail', params: { ID: `${user.nickname}` }}"
-            >회원정보</router-link>
+            <router-link :to="{name: 'userDetail', params: { ID: `${user.nickname}` }}"
+            ><button class="info-btn">회원정보</button></router-link>
           </td>
         </tr>
       </tbody>
@@ -53,5 +53,19 @@
 </script> 
 
 <style>
-
+.info-btn {
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  padding: 7px 7px;
+  font-size: 14px;
+  background-color: #ee6e9f;
+  color: white;
+  margin: 0 0 0;
+  opacity: 0.8;
+}
+.info-btn:hover {
+  transition-duration: 0.5s;
+  opacity: 1;
+}
 </style>
