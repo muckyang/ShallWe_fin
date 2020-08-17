@@ -541,13 +541,17 @@ public class PostController {
 
     @PostMapping("/file")
     public String fileTest(@RequestPart("file") MultipartFile ff) throws IllegalStateException, IOException {
-        File file = new File("C:\\Users\\multicampus\\Desktop\\PJT\\PJT1\\s03p13b203\\frontend\\src\\assets\\file\\" + ff.getOriginalFilename());
+        String forSaveImg = ff.getOriginalFilename().toLowerCase();
+        // File file = new File("C:\\Users\\multicampus\\Desktop\\PJT\\PJT1\\s03p13b203\\frontend\\src\\assets\\file\\" + forSaveImg);
+        File file = new File("C:\\Users\\multicampus\\Desktop\\image\\" + forSaveImg);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
         ff.transferTo(file);
+        System.out.println(file.getName());
         
         return file.getName();
+
     }
 
     private static String BeforeCreateTime(LocalDateTime createTime) {
