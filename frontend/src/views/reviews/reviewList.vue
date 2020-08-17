@@ -3,6 +3,7 @@
     <div class="review-list-top">
       <div class="review-length">{{reviews.length}}개의 후기가 있습니다.</div>
     </div>
+    {{reviews}}
     <reviewDetail
       v-for="review in reviews"
       :key="review.articleId"
@@ -65,6 +66,7 @@ export default {
           setTimeout(() => {
             if (res.data.postList.length) {
               this.reviews = this.reviews.concat(res.data.postList);
+              console.log(res.data.postList, "여기");
               this.page += 1;
               $state.loaded();
             } else {
