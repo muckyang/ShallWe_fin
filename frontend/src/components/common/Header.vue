@@ -32,7 +32,7 @@
       <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
 
       <!-- 유저관리 -->
-      <div v-if="isLoggedin && userData.grade === 0" class="d-flex align-items-starts mr-1">
+      <div v-if="userData.grade === 0" class="d-flex align-items-starts mr-1">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="/user/userlist" class="nav-link navbar1-item">유저관리</a>
@@ -43,7 +43,7 @@
       <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
 
       <!-- 신고관리 -->
-      <div v-if="isLoggedin && userData.grade === 0" class="d-flex align-items-starts">
+      <div v-if="userData.grade === 0" class="d-flex align-items-starts">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="/user/accuselist" class="nav-link navbar1-item">신고관리</a>
@@ -169,82 +169,6 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-.modal {
-  text-align: center;
-}
-@media screen and (min-width: 768px) {
-  .modal:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
-  }
-}
-.modal-dialog {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
-}
-.modal-dialog.modalsize {
-  width: 27%;
-  height: 85%;
-  margin: 0;
-  padding: 0;
-}
-.modal-content.modalsize {
-  height: auto;
-  min-width: 10%;
-}
-.close-btn {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  width: 100%;
-}
-.close {
-  float: right;
-}
-.login-input {
-  margin: 7% 0 5% 0;
-}
-.login-email:focus::placeholder {
-  color: transparent;
-}
-.login-pw:focus::placeholder {
-  color: transparent;
-}
-.login-email,
-.login-pw {
-  width: 100%;
-  border-radius: 2px;
-}
-.login-email {
-  margin-bottom: 0.5%;
-}
-.modal-body .login-submit {
-  margin: 0 0 10% 0;
-}
-.submit-btn,
-.kakao-btn,
-.google-btn {
-  border-radius: 4px;
-  border: none;
-  font-weight: bold;
-  height: 35px;
-  text-align: center;
-  vertical-align: middle; /* 적용 안 됨 */
-}
-.submit-btn {
-  background-color: #ee6e9f;
-  color: white;
-  margin: 2% 0 0 0;
-  width: 100%;
-  opacity: 0.8;
-}
-.submit-btn:hover {
-  transition-duration: 0.5s;
-  opacity: 1;
-}
 .row-items {
   margin: 5% 0 3% 0;
   width: 100%;
@@ -277,7 +201,6 @@ export default {
   width: 23px;
   /* margin: 0 0 0 5px; */
 }
-
 .blank {
   width: 10px;
 }
