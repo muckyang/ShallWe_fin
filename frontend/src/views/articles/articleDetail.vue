@@ -107,12 +107,12 @@
             <!--좋아요 버튼-->
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
             <!--공유 버튼-->
-            <button @click="shareContent" class="detail-share">
-              <a href="javascript:;" class="kakao-share" @click="shareContent" id="kakao-link">
+            <a href="javascript:;" class="mx-1" @click="shareContent" id="kakao-link">
+              <button @click="shareContent" class="detail-share">
                 <!-- <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제" /> -->
                 <i class="fas fa-share-alt"></i> 공유
-              </a>
-            </button>
+              </button>
+            </a>
             <div v-if="articleData.status===4 && checkParticipant" class="like-content">
               <router-link :to="{ name: 'reviewCreate' }" class="ml-auto routerLink">
                 <button class="review-create-button">
@@ -769,21 +769,20 @@ a {
   text-align: center;
 }
 .detail-btns .detail-share {
-  display: block;
-  text-align: center;
-  background: rgb(250, 227, 1);
-  border-radius: 3px;
-  box-shadow: 0 10px 20px -8px rgb(202, 190, 21);
-  padding: 10px 12px;
-  font-size: 17px;
-  cursor: pointer;
   border: none;
   outline: none;
+  background: rgb(250, 227, 1);
+  border-radius: 3px;
   color: #ffffff;
+  padding: 10px 12px;
+  font-size: 17px;
+  text-align: center;
+  box-shadow: 0 10px 20px -8px rgb(202, 190, 21);
   text-decoration: none;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
-  margin: 0 2% 0 2%;
+  display: block;
+  /* margin: 0 2% 0 2%; */
 }
 .detail-btns .detail-share:hover {
   transform: translateY(-3px);
