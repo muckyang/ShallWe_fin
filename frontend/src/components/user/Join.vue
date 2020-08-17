@@ -76,11 +76,10 @@
 
                             <!-- This will only be shown if the preceding input has an invalid state -->
                             <b-form-invalid-feedback id="input-live-feedback">
-                            Enter at least 3 letters
+                            {{message}}
                             </b-form-invalid-feedback>
                         </div>
                     </div>
-                    <button @click="duCheck(signUpData.nickname)">중복확인</button>
 
                     <div class="input-wrap address-warp">
                         <div class="p-2">
@@ -90,8 +89,9 @@
                             id="address"
                             class="joinInput"
                             name="address"
-                            placeholder="주소를 입력해주세요"
-                            type="text"/>
+                            placeholder="아래 지도에서 주소를 클릭해주세요."
+                            type="text"
+                            readonly/>
                     </div>
                     <kakaoMap :coNum="coNum" @setAddress="setAddress"/>
 
@@ -363,7 +363,7 @@
 <script>
 import kakaoMap from '@/components/articles/kakaoMap'
 import axios from "axios"
-import {mapActions, mapMutations} from 'vuex'
+import {mapState, mapActions, mapMutations} from 'vuex'
 const BACK_URL = process.env.VUE_APP_BACK_URL
 
     export default {
@@ -379,6 +379,8 @@ const BACK_URL = process.env.VUE_APP_BACK_URL
                     email: '',
                 },     
                 coNum:"2",
+                message:"",
+                lenCheck:'',
             }
         },
         methods: {
@@ -392,16 +394,34 @@ const BACK_URL = process.env.VUE_APP_BACK_URL
             this.signUpData.email=this.$route.query.kemail
         },
         computed: {
+            ...mapState(["isChecked"]),
             nameState() {
-                return this.nickname.length > 2 ? true : false
+                var nickType = /^[가-힣|a-z|A-Z|0-9|\*]+$/
+                if(this.lenCheck){
+                    if(this.isChecked){
+                        this.message="닉네임은 0~9까지의 숫자, 영문, 한글만으로 조합하여야 합니다."
+                    }else{
+                        this.message="이미 사용중인 닉네임입니다."
+                    }
+                }else{
+                    this.message="닉네임은 2글자 이상 입력하셔야 합니다."
+                }
+                return nickType.test(this.nickname)&&this.lenCheck&&this.isChecked ? true : false
             }
         },
-        // watch:{
-        //     nickname(){
-        //         this.signUpData.nickname=this.nickname
-        //         this.duCheck(this.signUpData.nickname)
-        //     }
-        // }
+        watch:{
+            nickname(){
+                if(this.nickname.length>=2){
+                    this.lenCheck=true
+                }else{
+                    this.lenCheck=false
+                }
+                this.signUpData.nickname=this.nickname
+                if(this.lenCheck){
+                    this.duCheck(this.signUpData.nickname)
+                }
+            }   
+        }
     }
 
 </script>

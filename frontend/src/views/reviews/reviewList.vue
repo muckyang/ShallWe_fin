@@ -2,11 +2,6 @@
   <div class="container review-list mt-5">
     <div class="review-list-top">
       <div class="review-length">{{reviews.length}}개의 후기가 있습니다.</div>
-      <div class="review-create">
-        <!-- <router-link :to="{ name: 'reviewCreate' }" class="ml-auto">
-          <button class="review-create-btn">후기 등록</button>
-        </router-link>-->
-      </div>
     </div>
     <reviewDetail
       v-for="review in reviews"
@@ -101,19 +96,5 @@ export default {
 .review-list {
   /* border: 1px solid black; */
   width: 90%;
-}
-.review-create-btn {
-  border: none;
-  outline: none;
-  border-radius: 4px;
-  background-color: #ee6e9f;
-  opacity: 0.9;
-  transition: 0.3s;
-  padding: 5px 10px;
-  color: white;
-  font-weight: bold;
-}
-.review-create-btn:hover {
-  opacity: 1;
 }
 </style>
