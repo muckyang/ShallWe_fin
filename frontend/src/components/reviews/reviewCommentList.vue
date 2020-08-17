@@ -32,6 +32,7 @@
 <script>
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 import axios from "axios";
+import cookies from "vue-cookies";
 import { mapState, mapActions, mapMutations } from "vuex";
 import reviewCommentListItem from "@/components/reviews/reviewCommentListItem";
 
@@ -59,14 +60,24 @@ export default {
   methods: {
     ...mapActions(["getArticle"]),
     ...mapMutations(["GET_COMMENTS"]),
+    getReview(reviewID) {
+      const auth = { token: cookies.get("auth-token") };
+      axios
+        .post(`${BACK_URL}/post/detail/${reviewID}`, auth)
+        .then((response) => {
+          this.commentList = response.data.commentList;
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     createComment() {
       if (this.commentData.content) {
         axios
           .post(`${BACK_URL}/comment/create`, this.commentData)
           .then(() => {
-            console.log("댓글 등록 완료");
             this.commentData.content = "";
-            this.getArticle(this.reviewId); //다시 보기
+            this.getReview(this.reviewId); //다시 보기
           })
           .catch((err) => {
             console.error(err);
