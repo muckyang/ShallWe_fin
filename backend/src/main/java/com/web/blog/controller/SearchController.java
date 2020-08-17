@@ -213,7 +213,7 @@ public class SearchController {
                     if (newend / scrollsize > 0) {// 적어도 10개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            CommentListAdd(result,i,plist.get(i));
+                            CommentListAdd(result, i, plist.get(i));
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
@@ -246,12 +246,14 @@ public class SearchController {
                     if (newend / scrollsize > 0) {// 적어도 6개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
+                            CommentListAdd(result, i, plist.get(i));
                             System.out.println(list.get(i).getArticleId());
 
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
+                            CommentListAdd(result, i, plist.get(i));
                             System.out.println(list.get(i).getArticleId());
                         }
                     }
@@ -492,7 +494,8 @@ public class SearchController {
 
         return result;
     }
-    private void CommentListAdd(PostListResponse result,int index, Post p){
+
+    private void CommentListAdd(PostListResponse result, int index, Post p) {
 
         List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
         List<CommentRes> crlist = new ArrayList<>();

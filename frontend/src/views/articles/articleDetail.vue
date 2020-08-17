@@ -121,10 +121,11 @@
               </router-link>
             </div>
             <div v-if="articleData.status < 4">
-              <b-button id="show-btn" v-b-modal.join-modal class="detail-join" v-if="joinFlag">
-                <i class="fas fa-user-plus"></i>
-                참여
+              <b-button id="show-btn" v-b-modal.join-modal class="participate-btn" v-if="joinFlag">
+                <i class="fas fa-user-plus"></i> 참여
               </b-button>
+              <!-- <b-button id="show-btn" v-b-modal.join-modal class="detail-join" v-if="joinFlag">
+              </b-button>-->
             </div>
             <div v-if="articleData.writer === userData.nickname">
               <div v-if="articleData.status === 3">
@@ -790,28 +791,24 @@ a {
 .detail-btns .detail-share .fa {
   margin-right: 5px;
 }
-.detail-btns .detail-join {
-  display: block;
-  text-align: center;
-  background: #31312f;
+.participate-btn {
+  /* background-color: rgb(37, 7, 44); */
+  background-color: #32093d;
+  box-shadow: 0 10px 20px -8px rgb(5, 1, 7);
+  padding: 10px 11px;
   border-radius: 3px;
-  box-shadow: 0 10px 20px -8px rgb(27, 27, 25);
-  padding: 10px 12px;
-  font-size: 17px;
-  cursor: pointer;
   border: none;
   outline: none;
-  color: #ffffff;
   text-decoration: none;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
-  margin: 0 1% 0 1%;
+  font-size: 17px;
+  display: block;
+  text-align: center;
 }
-.detail-btns .detail-join:hover {
+.detail-btns .participate-btn:hover {
   transform: translateY(-3px);
-}
-.detail-btns .detail-join .fa {
-  margin-right: 5px;
+  background-color: #2e0838;
 }
 .article-drop {
   display: flex;
