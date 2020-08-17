@@ -172,34 +172,40 @@ export default new Vuex.Store({
     duCheck({ commit }, nickname) {
       axios
         .get(`${BACK_URL}/account/nicknamecheck/${nickname}`)
-        .then((response) => {
-          alert(response.data);
-          commit("duCheck", true);
+        .then((response) => { 
+          if(response.data==="사용가능한 닉네임입니다."){
+            commit("duCheck", true);
+          }else{
+            commit("duCheck", false);
+          }
         })
         .catch((error) => {
-          alert(error.data);
-          commit("duCheck", false);
+          console.log(error)
         });
     },
     signUp({ state, commit }, signUpData) {
-      if (state.isChecked) {
-        if (state.isTerm) {
-          axios
-            .post(`${BACK_URL}/account/signup`, signUpData)
-            .then((response) => {
-              alert("회원가입이 완료되었습니다.");
-              commit("SET_TOKEN", response.data);
-              this.commit("termCheck");
-              router.push("/");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+      if(signUpData.address&&signUpData.nickname){
+        if (state.isChecked) {
+          if (state.isTerm) {
+            axios
+              .post(`${BACK_URL}/account/signup`, signUpData)
+              .then((response) => {
+                alert("회원가입이 완료되었습니다.");
+                commit("SET_TOKEN", response.data);
+                this.commit("termCheck");
+                router.push("/");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            alert("약관에 동의해 주세요");
+          }
         } else {
-          alert("약관에 동의해 주세요");
+          alert("닉네임을 입력해 주세요");
         }
-      } else {
-        alert("빈 칸을 채워 주세요");
+      }else{
+        alert("빈 칸을 모두 채워주세요")
       }
     },
     // login({ commit }, loginData) {
