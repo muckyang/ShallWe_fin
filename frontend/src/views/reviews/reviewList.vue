@@ -1,7 +1,7 @@
 <template>
   <div class="container review-list mt-5">
     <div class="review-list-top">
-      <div class="review-length">{{reviews.length}}개의 후기가 있습니다.</div>
+      <!-- <div class="review-length">{{reviews.length}}개의 후기가 있습니다.</div> -->
     </div>
     <reviewDetail
       v-for="review in reviews"
