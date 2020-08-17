@@ -109,13 +109,15 @@
             <!--공유 버튼-->
             <button @click="shareContent" class="detail-share">
               <a href="javascript:;" class="kakao-share" @click="shareContent" id="kakao-link">
-                <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제" />
-                공유
+                <!-- <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제" /> -->
+                <i class="fas fa-share-alt"></i> 공유
               </a>
             </button>
-            <div v-if="articleData.status===4 && checkParticipant">
-              <router-link :to="{ name: 'reviewCreate' }" class="ml-auto">
-                <button class="review-create-btn">후기 등록</button>
+            <div v-if="articleData.status===4 && checkParticipant" class="like-content">
+              <router-link :to="{ name: 'reviewCreate' }" class="ml-auto routerLink">
+                <button class="review-create-button">
+                  <i class="fas fa-pencil-alt"></i> 후기
+                </button>
               </router-link>
             </div>
             <div v-if="articleData.status < 4">
@@ -353,10 +355,8 @@ export default {
         }
       }
       if (participantList.includes(this.userData.userId)) {
-        console.log("참?");
         return true;
       } else {
-        console.log("거짓?");
         return false;
       }
     },
@@ -557,6 +557,28 @@ export default {
 </script>
 
 <style>
+.routerLink {
+  text-decoration: none;
+}
+.review-create-button {
+  /* display: block;
+  text-align: center;
+  text-decoration: none; */
+  border: none;
+  outline: none;
+  background-color: #451453;
+  color: #eee;
+  border-radius: 3px;
+  box-shadow: 0 10px 20px -8px #1d0622;
+  padding: 10px 12px;
+  -webkit-transition: 0.3s ease;
+}
+.review-create-button:hover {
+  transform: translateY(-3px);
+}
+.review-create-button .fa {
+  margin-right: 5px;
+}
 .kakao-map {
   display: flex;
   width: 100%;
