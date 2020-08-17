@@ -95,7 +95,7 @@
 
       <!--중간 부분. 이미지, 주요 정보들 -->
       <div class="middle-row">
-        <img class="MyImage" :src="articleData.image" alt="..." />
+        <img class="MyImage" :src="imageUrl" alt="..." />
         <div class="articleInfo">
           <div class="detail-info">
             <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
@@ -246,7 +246,37 @@
                       size="sm"
                       @click="acceptParticpation(participant.writer)"
                     >수락</b-button>
-                    <b-button variant="light" size="sm" v-if="!isDenied" @click="denyConfirm">거절</b-button>
+                    <b-button @click="$bvModal.show('modal-scoped')">Open Modal</b-button>
+
+                      <b-modal id="modal-scoped">
+                        <template v-slot:modal-header="{ close }">
+                          <!-- Emulate built in modal header close button action -->
+                          <b-button size="sm" variant="outline-danger" @click="close()">
+                            Close Modal
+                          </b-button>
+                          <h5>Modal Header</h5>
+                        </template>
+
+                        <template v-slot:default="{ hide }">
+                          <p>Modal Body with button</p>
+                          <b-button @click="hide()">Hide Modal</b-button>
+                        </template>
+
+                        <template v-slot:modal-footer="{ ok, cancel, hide }">
+                          <b>Custom Footer</b>
+                          <!-- Emulate built in modal footer ok and cancel button actions -->
+                          <b-button size="sm" variant="success" @click="ok()">
+                            OK
+                          </b-button>
+                          <b-button size="sm" variant="danger" @click="cancel()">
+                            Cancel
+                          </b-button>
+                          <!-- Button with custom close trigger value -->
+                          <b-button size="sm" variant="outline-secondary" @click="hide('forget')">
+                            Forget it
+                          </b-button>
+                        </template>
+                      </b-modal>
                     <b-button
                       variant="light"
                       size="sm"
@@ -327,6 +357,9 @@ export default {
   },
   computed: {
     ...mapState(["articleData", "userData"]),
+    imageUrl(){
+        return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
+    },
     joinFlag() {
       const tempList = [];
       for (const p of this.articleData.partList) {
