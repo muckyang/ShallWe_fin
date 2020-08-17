@@ -35,12 +35,12 @@
               <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
               {{review.likeNum}}
             </div>
-            <!-- <div class="review-comment">
+            <div class="review-comment">
               <div class="comment-icon">
                 <i class="far fa-comment-dots"></i>
               </div>
-              {{review.commentNum}}
-            </div>-->
+              {{review.commentList.length}}
+            </div>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@
             <div
               :class="{'review-description':review.image, 'review-description-ver':review.image==null}"
             >{{review.description}}</div>
-            <reviewCommentList :reviewId="review.articleId" />
+            <reviewCommentList :commentList="review.commentList" :reviewId="review.articleId" />
           </div>
         </div>
       </div>

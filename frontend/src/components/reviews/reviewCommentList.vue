@@ -2,12 +2,12 @@
   <div class="review-comment-box">
     <div class="review-comment-start">
       <i class="far fa-comment-dots"></i>
-      댓글 {{comments.length}}
+      댓글 {{commentList.length}}
     </div>
 
     <!--댓글 보여주는 공간-->
     <reviewCommentListItem
-      v-for="comment in comments"
+      v-for="comment in commentList"
       :key="comment.commentId"
       :comment="comment"
       @re-render="getArticle(reviewId)"
@@ -42,6 +42,7 @@ export default {
   },
   props: {
     reviewId: Number,
+    commentList: Array,
   },
   data() {
     return {
