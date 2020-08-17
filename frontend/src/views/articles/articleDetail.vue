@@ -5,10 +5,12 @@
       <div class="top">
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
-
           <!--게시글 수정,삭제,신고 버튼-->
           <div v-if="articleData.partList.length===1">
-            <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
+            <div
+              class="article-drop dropdown dropleft"
+              v-if="articleData.userId === userData.userId"
+            >
               <button type="button" class="article-btn" data-toggle="dropdown">
                 <i class="fas fa-ellipsis-v"></i>
               </button>
@@ -30,9 +32,7 @@
 
             <!-- 게시물 신고 -->
             <div v-else>
-              <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm"
-                >신고</b-button
-              >
+              <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm">신고</b-button>
 
               <b-modal id="modal-1" title="신고 접수">
                 <h6>신고 사유</h6>
@@ -44,36 +44,22 @@
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
-                  >
-                    선택
-                  </button>
+                  >선택</button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" @click="changeAccuseKind(1)"
-                      >욕설</a
-                    >
-                    <a class="dropdown-item" href="#" @click="changeAccuseKind(2)"
-                      >노쇼</a
-                    >
-                    <a class="dropdown-item" href="#" @click="changeAccuseKind(3)"
-                      >광고</a
-                    >
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설</a>
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">노쇼</a>
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고</a>
                   </div>
                 </div>
                 <h6>신고할 게시물 URL</h6>
-                <b-form-input
-                  id="type-url"
-                  type="url"
-                  v-model="accuseArticleData.accuseUrl"
-                ></b-form-input>
+                <b-form-input id="type-url" type="url" v-model="accuseArticleData.accuseUrl"></b-form-input>
                 <h6>사유 상세</h6>
                 <b-form-textarea
                   id="textarea-rows"
                   rows="8"
                   v-model="accuseArticleData.accuseReason"
                 ></b-form-textarea>
-                <button @click="createArticleAccuse({ accuseArticleData })">
-                  신고접수
-                </button>
+                <button @click="createArticleAccuse({ accuseArticleData })">신고접수</button>
               </b-modal>
             </div>
           </div>
@@ -87,7 +73,12 @@
             nomargin: !tagsLength(articleData.tags),
           }"
         >
-          <button class="tag" v-for="tag in articleData.tags" :key="tag.no" @click="putWord(tag)">#{{ tag }}</button>
+          <button
+            class="tag"
+            v-for="tag in articleData.tags"
+            :key="tag.no"
+            @click="putWord(tag)"
+          >#{{ tag }}</button>
         </div>
         <div class="in-the-top">
           <div class="writer">
@@ -113,48 +104,38 @@
             <div v-if="checkedStatus">오픈 채팅방 url: {{articleData.openLink}}</div>
           </div>
           <div class="detail-btns">
+            <!--좋아요 버튼-->
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
-
+            <!--공유 버튼-->
             <button @click="shareContent" class="detail-share">
               <a href="javascript:;" class="kakao-share" @click="shareContent" id="kakao-link">
                 <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제" />
                 공유
               </a>
             </button>
+            <div v-if="articleData.status===4 && checkParticipant">
+              <router-link :to="{ name: 'reviewCreate' }" class="ml-auto">
+                <button class="review-create-btn">후기 등록</button>
+              </router-link>
+            </div>
             <div v-if="articleData.status < 4">
-              <b-button
-                id="show-btn"
-                v-b-modal.join-modal
-                class="detail-join"
-                v-if="joinFlag"
-              >
+              <b-button id="show-btn" v-b-modal.join-modal class="detail-join" v-if="joinFlag">
                 <i class="fas fa-user-plus"></i>
                 참여
               </b-button>
             </div>
             <div v-if="articleData.writer === userData.nickname">
               <div v-if="articleData.status === 3">
-              <b-button
-                id="show-btn"
-                class="detail-join"
-                v-if="articleData.minPrice <= articleData.sumPrice"
-                @click="confirmPurchase"
-              >
+                <b-button
+                  id="show-btn"
+                  class="detail-join"
+                  v-if="articleData.minPrice <= articleData.sumPrice"
+                  @click="confirmPurchase"
+                >
                   <i class="fas fa-user-plus"></i>확정
-              </b-button>
+                </b-button>
+              </div>
             </div>
-            </div>
-            <div v-if="checkedStatus">
-              <b-button
-                id="show-btn"
-                class="detail-join"
-                v-if="articleData.status >= 4"
-                @click="confirmPurchase"
-              >
-                <i class="fas fa-user-plus"></i>후기 작성
-              </b-button>
-            </div>
-
             <!--참가 modal-->
             <b-modal
               id="join-modal"
@@ -265,8 +246,7 @@
                       size="sm"
                       v-if="isDenied"
                       @click="denyParticpation(participant)"
-                      >거절 확정</b-button
-                    >
+                    >거절 확정</b-button>
                   </div>
                 </div>
               </div>
@@ -280,12 +260,10 @@
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-content"
-          >
-            요구사항: {{ participant.description }}
-          </div>
+          >요구사항: {{ participant.description }}</div>
           <div v-if="participant.status===0">처리상태:수락 대기</div>
           <div v-if="participant.status===1">처리상태:수락</div>
-          <div v-if="participant.status===2">처리상태:거절</div>
+          <div v-if="participant.sdtatus===2">처리상태:거절</div>
         </div>
       </div>
     </div>
@@ -331,47 +309,66 @@ export default {
         token: this.$cookies.get("auth-token"),
       },
       isDenied: false,
-      searchData:{
-        searchDataForSend:{
-          subject:'tag',
-          word:'',
+      searchData: {
+        searchDataForSend: {
+          subject: "tag",
+          word: "",
         },
-        categoryId:0,
-        temp:1,
+        categoryId: 0,
+        temp: 1,
       },
     };
   },
   computed: {
     ...mapState(["articleData", "userData"]),
-    joinFlag(){
-      const tempList=[]
+    joinFlag() {
+      const tempList = [];
       for (const p of this.articleData.partList) {
-        tempList.push(p.writer)
+        tempList.push(p.writer);
       }
-      if(tempList.includes(this.userData.nickname)){
-        return false
-      }else{
-        return true
+      if (tempList.includes(this.userData.nickname)) {
+        return false;
+      } else {
+        return true;
       }
     },
-    checkedStatus(){
-      const tempList=[]
-      for(const p of this.articleData.partList){
-        if(p.status===1 || p.status==0){
-          tempList.push(p.writer)
+    checkedStatus() {
+      const tempList = [];
+      for (const p of this.articleData.partList) {
+        if (p.status === 1 || p.status == 0) {
+          tempList.push(p.writer);
         }
       }
-      if(tempList.includes(this.userData.nickname)){
-        return true
-      }else{
-        return false
+      if (tempList.includes(this.userData.nickname)) {
+        return true;
+      } else {
+        return false;
       }
-    }
-
-
+    },
+    checkParticipant() {
+      const participantList = [];
+      for (const par of this.articleData.partList) {
+        if (par.status === 1) {
+          participantList.push(par.userId);
+        }
+      }
+      if (participantList.includes(this.userData.userId)) {
+        console.log("참?");
+        return true;
+      } else {
+        console.log("거짓?");
+        return false;
+      }
+    },
   },
   methods: {
-    ...mapActions(["getArticle", "getUserData", "createArticleAccuse","detailSearch","deleteArticle"]),
+    ...mapActions([
+      "getArticle",
+      "getUserData",
+      "createArticleAccuse",
+      "detailSearch",
+      "deleteArticle",
+    ]),
     denyConfirm() {
       this.isDenied = true;
     },
@@ -382,7 +379,7 @@ export default {
         )
         .then((response) => {
           alert(response.data);
-          this.getArticle()
+          this.getArticle();
         })
         .catch((error) => {
           console.log(error);
@@ -396,7 +393,7 @@ export default {
         .then((response) => {
           alert(response.data);
           this.isDenied = false;
-          participant.status=2
+          participant.status = 2;
         })
         .catch((error) => {
           console.log(error);
@@ -412,10 +409,10 @@ export default {
           console.log(error);
         });
     },
-    putWord(tag){
-      console.log(this.searchData.searchDataForSend.word)
-      this.searchData.searchDataForSend.word=tag
-      this.detailSearch(this.searchData)
+    putWord(tag) {
+      console.log(this.searchData.searchDataForSend.word);
+      this.searchData.searchDataForSend.word = tag;
+      this.detailSearch(this.searchData);
     },
 
     // 신고 유형 변경
@@ -550,7 +547,6 @@ export default {
       this.getArticle(this.$route.params.ID);
       this.likeCheck();
     },
-
   },
   created: function () {
     this.getArticle(this.$route.params.ID);
