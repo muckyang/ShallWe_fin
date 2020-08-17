@@ -563,8 +563,8 @@ export default {
 }
 .review-create-button {
   /* display: block;
-  text-align: center;
-  text-decoration: none; */
+  text-align: center;*/
+  text-decoration: none;
   border: none;
   outline: none;
   background-color: #451453;
