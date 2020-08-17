@@ -377,8 +377,6 @@ export default new Vuex.Store({
         .then(() => {
           if (data.categoryId < 10) {
             router.push(`/article`);
-          } else if (data.categoryId == 102) {
-            router.push(`reviews`);
           } else {
             router.push(`/posts`);
           }

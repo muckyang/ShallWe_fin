@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3">
-    <div class="review-container">
+    <div v-if="!isdeleted" class="review-container">
       <div class="review-top">
         <div
           class="review-drop dropdown dropleft m-0 pr-3"
@@ -19,10 +19,7 @@
             >
               <a class="dropdown-item">수정</a>
             </router-link>
-            <a
-              class="dropdown-item"
-              @click="deleteArticle({articleId: review.articleId, categoryId: review.categoryId})"
-            >삭제</a>
+            <a class="dropdown-item" @click="deleteReview(review.articleId)">삭제</a>
           </div>
         </div>
         <div
@@ -98,6 +95,7 @@ export default {
   },
   data() {
     return {
+      isdeleted: false,
       isLiked: false,
       likeFlag: false,
       mainProps: { width: 450, height: 450 },
@@ -113,6 +111,17 @@ export default {
       "createArticleAccuse",
       "deleteArticle",
     ]),
+    deleteReview(reviewID) {
+      const auth = { token: this.$cookies.get("auth-token") };
+      axios
+        .get(`${BACK_URL}/post/delete/${reviewID}`)
+        .then(() => {
+          this.isdeleted = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     likeCheck() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios
