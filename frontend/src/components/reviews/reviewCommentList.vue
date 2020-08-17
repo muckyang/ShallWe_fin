@@ -159,6 +159,7 @@ export default {
   /* border: none;
   outline: none; */
   display: block;
+  /* height: 100%; */
 }
 .review-comment-input {
   border: none;
