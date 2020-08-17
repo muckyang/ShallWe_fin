@@ -76,9 +76,10 @@ export default {
   background-color: #ffffff;
   border: 0.5px solid #bbb3b3;
   border-radius: 20px;
-  color: #494747;
+  color: #6d6a6a;
   -webkit-transition: 0.3s ease;
   box-shadow: 0 10px 20px -8px #b2b0b3;
+  font-weight: 100;
 }
 
 .totheTop:hover {
