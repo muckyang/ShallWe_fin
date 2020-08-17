@@ -10,7 +10,8 @@
       v-for="comment in commentList"
       :key="comment.commentId"
       :comment="comment"
-      @re-render="getArticle(reviewId)"
+      :reviewId="reviewId"
+      @re-render="delComment(reviewId)"
     />
     <!--댓글 등록 공간-->
     <div class="review-comment-write">
@@ -60,12 +61,26 @@ export default {
   methods: {
     ...mapActions(["getArticle"]),
     ...mapMutations(["GET_COMMENTS"]),
-    getReview(reviewID) {
+    delComment(reviewID) {
       const auth = { token: cookies.get("auth-token") };
       axios
         .post(`${BACK_URL}/post/detail/${reviewID}`, auth)
         .then((response) => {
           this.commentList = response.data.commentList;
+          this.$emit("lengthCheck", this.commentList.length);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    getReview(reviewID) {
+      const auth = { token: cookies.get("auth-token") };
+      axios
+        .post(`${BACK_URL}/post/detail/${reviewID}`, auth)
+        .then((response) => {
+          this.commentList.push(
+            response.data.commentList[response.data.commentList.length - 1]
+          );
         })
         .catch((err) => {
           console.error(err);
@@ -77,7 +92,8 @@ export default {
           .post(`${BACK_URL}/comment/create`, this.commentData)
           .then(() => {
             this.commentData.content = "";
-            this.getReview(this.reviewId); //다시 보기
+            this.getReview(this.reviewId);
+            this.$emit("lengthCheck", this.commentList.length);
           })
           .catch((err) => {
             console.error(err);

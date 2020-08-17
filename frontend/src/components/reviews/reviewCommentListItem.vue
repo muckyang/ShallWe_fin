@@ -65,12 +65,14 @@
 <script>
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 import axios from "axios";
+import cookies from "vue-cookies";
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "commentListItem",
   props: {
     comment: Object,
+    reviewId: Number,
   },
   data() {
     return {

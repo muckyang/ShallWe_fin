@@ -35,12 +35,12 @@
               <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
               {{review.likeNum}}
             </div>
-            <div class="review-comment">
+            <!-- <div class="review-comment">
               <div class="comment-icon">
                 <i class="far fa-comment-dots"></i>
               </div>
               {{review.commentList.length}}
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
@@ -54,7 +54,11 @@
             <div
               :class="{'review-description':review.image, 'review-description-ver':review.image==null}"
             >{{review.description}}</div>
-            <reviewCommentList :commentList="review.commentList" :reviewId="review.articleId" />
+            <reviewCommentList
+              :commentList="review.commentList"
+              :reviewId="review.articleId"
+              @lengthCheck="lengthCheck"
+            />
           </div>
         </div>
       </div>
@@ -117,9 +121,12 @@ export default {
       const result = "review" + num;
       return result;
     },
-    created: function () {
-      this.likeCheck();
+    lengthCheck(commentLength) {
+      this.review.commentList.length = commentLength;
     },
+  },
+  created: function () {
+    this.likeCheck();
   },
 };
 </script>
