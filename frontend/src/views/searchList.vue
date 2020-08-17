@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="dropdown mr-1">
-      <button
+      <!-- <button
         class="downBtn btn btn-secondary"
         type="button"
         id="dropdownMenuButton"
@@ -9,16 +9,18 @@
         aria-haspopup="true"
         aria-expanded="false"
       >
-        {{ item3 }}<i class="down fas fa-sort-down"></i>
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#" @click="selectTemp(1)">구매글</a>
-        <a class="dropdown-item" href="#" @click="selectTemp(2)">자유게시글</a>
+        {{ item3 }}
+      </button> -->
+      <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
+      <div class="mainSearch">
+        <a class="main-select" href="#" @click="selectTemp(1)">구매글</a>
+        <a class="main-select" href="#" @click="selectTemp(2)">자유게시글</a>
       </div>
+      <!-- </div> -->
     </div>
 
     <div v-if="searchData.temp !== 0" class="dropdown mr-1">
-      <button
+      <!-- <button
         class="downBtn btn btn-secondary"
         type="button"
         id="dropdownMenuButton"
@@ -27,53 +29,33 @@
         aria-expanded="false"
       >
         {{ item2 }}<i class="down fas fa-sort-down"></i>
-      </button>
-      <div
-        v-if="searchData.temp === 1"
-        class="dropdown-menu"
-        aria-labelledby="dropdownMenuButton"
-      >
-        <a class="dropdown-item" href="#" @click="selectCategory(1)">배달</a>
-        <a class="dropdown-item" href="#" @click="selectCategory(2)"
+      </button> -->
+      <div v-if="searchData.temp === 1">
+        <a class="second-select" href="#" @click="selectCategory(1)">배달</a>
+        <a class="second-select" href="#" @click="selectCategory(2)"
           >최저주문</a
         >
-        <a class="dropdown-item" href="#" @click="selectCategory(3)"
+        <a class="second-select" href="#" @click="selectCategory(3)"
           >공동구매</a
         >
       </div>
-      <div
-        v-if="searchData.temp === 2"
-        class="dropdown-menu"
-        aria-labelledby="dropdownMenuButton"
-      >
-        <a class="dropdown-item" href="#" @click="selectCategory(101)">공지</a>
-        <a class="dropdown-item" href="#" @click="selectCategory(102)">후기</a>
-        <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
+      <div v-if="searchData.temp === 2">
+        <a class="second-select" href="#" @click="selectCategory(101)">공지</a>
+        <a class="second-select" href="#" @click="selectCategory(102)">후기</a>
+        <a class="second-select" href="#" @click="selectCategory(103)">자유</a>
       </div>
     </div>
 
     <div v-if="searchData.temp !== 0" class="dropdown mr-1">
-      <button
-        class="downBtn btn btn-secondary"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
+      <a class="third-select" href="#" @click="selectSubject(0)">제목</a>
+      <a class="third-select" href="#" @click="selectSubject(1)">작성자</a>
+      <a
+        v-if="searchData.temp === 1"
+        class="third-select"
+        href="#"
+        @click="selectSubject(2)"
+        >주소</a
       >
-        {{ item1 }}<i class="down fas fa-sort-down"></i>
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#" @click="selectSubject(0)">제목</a>
-        <a class="dropdown-item" href="#" @click="selectSubject(1)">작성자</a>
-        <a
-          v-if="searchData.temp === 1"
-          class="dropdown-item"
-          href="#"
-          @click="selectSubject(2)"
-          >주소</a
-        >
-      </div>
     </div>
 
     <input
@@ -261,6 +243,13 @@ $x-large: 1200px;
       opacity: 1;
     }
   }
+}
+.main-select {
+  margin: 0 10px;
+}
+.second-select,
+.third-select {
+  margin: 0 5px;
 }
 .detail-search {
   border-top: 0px;
