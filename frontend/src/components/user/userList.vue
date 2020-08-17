@@ -1,12 +1,11 @@
 <template>
   <div class="mt-5">
-    <h1>회원관리</h1>
+    <h3 class="mb-3">유저관리</h3>
     <table class="table">
-      <thead class="thead-dark">
+      <thead class="">
         <tr>
           <th scope="col">#</th>
           <th scope="col">이메일</th>
-          <th scope="col">이름</th>
           <th scope="col">닉네임</th>
           <th scope="col">지역</th>
           <th scope="col">등급</th>
@@ -16,14 +15,13 @@
       </thead>
       <tbody v-for="user in users" :key="user.userId">
         <tr>
-          <th scope="row">{{ user.userId }}</th>
+          <td>{{ user.userId }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.name }}</td>
           <td>{{ user.nickname }}</td>
           <td>{{ user.address }}</td>
           <td>{{ user.grade }}</td>
           <td>{{ user.userPoint }}</td>
-          <td class="d-flex justify-content-center">
+          <td>
             <router-link class="btn btn-info btn-sm" :to="{name: 'userDetail', params: { ID: `${user.nickname}` }}"
             >회원정보</router-link>
           </td>
