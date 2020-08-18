@@ -114,11 +114,8 @@
     </div>
 
     <div class="create-submit">
-      <button class="temp-form" @click="createArticle({articleData,temp:0})">임시저장</button>
-      <!-- <button class="complete-form" @click="createArticle({articleData,temp:1})">
-        <i class="fas fa-check"></i> 완료
-      </button> -->
-      <button class="complete-form" @click="articleCreate">
+      <button class="temp-form" @click="articleCreate(0)">임시저장</button>
+      <button class="complete-form" @click="articleCreate(1)">
         <i class="fas fa-check"></i> 완료
       </button>
     </div>
@@ -164,11 +161,11 @@ export default {
   },
   methods: {
     ...mapActions(["createArticle", "tempSaveArticle"]),
-    articleCreate(){
+    articleCreate(num){
       this.fileUpload()
       setTimeout(() => {
         var articleData=this.articleData 
-        this.createArticle({articleData,temp:1})
+        this.createArticle({articleData,temp:num})
       }, 300);
     },
     fileUpload: function () {
@@ -223,6 +220,26 @@ export default {
       this.articleData.address = address;
     },
   },
+  watch: {
+    articleData:{
+      deep: true,
+      handler(){
+        try{
+          if(this.articleData.minPrice<0){
+            alert("1이상의 정수만 입력이 가능합니다.")
+            this.articleData.minPrice=null
+          }
+          if(this.articleData.myPrice<0){
+            alert("1이상의 정수만 입력이 가능합니다.")
+            this.articleData.myPrice=null
+          }
+
+        }catch{
+
+        }
+      }
+    }
+  }
 };
 </script>
 

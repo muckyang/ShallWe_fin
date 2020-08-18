@@ -22,7 +22,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-
 @ApiResponses(value = { @ApiResponse(code = 401, message = "Unauthorized", response = PostResponse.class),
         @ApiResponse(code = 403, message = "Forbidden", response = PostResponse.class),
         @ApiResponse(code = 404, message = "Not Found", response = PostResponse.class),
@@ -37,51 +36,60 @@ public class MainController {
     @PostMapping("/main/post")
     @ApiOperation(value = "메인페이지 목록")
     public PostListResponse mainRead(@RequestBody TokenRequest req) {
-        PostListResponse result = null;
-        List<Post> plist = new ArrayList<>();
-        int max=6;
+        PostListResponse  result = new PostListResponse();
+        // List<Post> plist = new ArrayList<>();
+        // MainResponse mainres = new MainResponse();
+        result.recentList = new LinkedList<>();
+        result.deadLineList = new LinkedList<>();
+        result.bestReviewList = new LinkedList<>();
+        int max = 6;
         long before = System.currentTimeMillis();
-        result = new PostListResponse();
-        
-        
+        List<Post> recentList = new LinkedList<>();
+        List<Post> deadLineList = new LinkedList<>();
+        List<Post> bestReviewList = new LinkedList<>();
+
         List<Post> list;
-        max=6;
-        System.out.println("일반게시물 실시간 게시물");//temp:1 category:0 생성타임내림차순 status:1,2 
-        list=postDao.findPostByTempOrderByCreateTimeDesc(1);//일반 게시물 뽑아 온 다음
+        max = 6;
+        System.out.println("일반게시물 실시간 게시물");// temp:1 category:0 생성타임내림차순 status:1,2
+        list = postDao.findPostByTempOrderByCreateTimeDesc(1);// 일반 게시물 뽑아 온 다음
         for (int i = 0; i < list.size(); i++) {
-            if(max==0) break;
-            if(list.get(i).getStatus()==1||list.get(i).getStatus()==2){
-                plist.add(list.get(i));//status에서 1 or 2 뽑아줌
+            if (max == 0)
+                break;
+            if (list.get(i).getStatus() == 1 || list.get(i).getStatus() == 2|| list.get(i).getStatus()==3) {
+                recentList.add(list.get(i));// status에서 1 or 2 뽑아줌
                 max--;
             }
         }
-        
+
         List<Post> elist;
-        max=6;
-        System.out.println("마감임박 게시물");//temp:1 category:0 마감시간오름차순 status:1,2
-        elist=postDao.findPostByTempOrderByEndTimeAsc(1);//일반 게시물 뽑아 온 다음
+        max = 6;
+        System.out.println("마감임박 게시물");// temp:1 category:0 마감시간오름차순 status:1,2
+        elist = postDao.findPostByTempOrderByEndTimeAsc(1);// 일반 게시물 뽑아 온 다음
         for (int i = 0; i < elist.size(); i++) {
-            if(max==0) break;
-            if(elist.get(i).getStatus()==1||elist.get(i).getStatus()==2){
-                plist.add(elist.get(i));//status에서 1 or 2 뽑아줌
-                 max--;
-             }
-        } 
-        
-        List<Post> likelist;
-        max=6;
-        System.out.println("좋아요수에 따른 베스트 후기");//temp:2 category:102 좋아요수내림차순
-        likelist=postDao.findPostByTempAndCategoryIdOrderByLikeNumDesc(2,102);
-        for (int i = 0; i < likelist.size(); i++) {
-            if(max==0) break;
-            if(likelist.get(i).getStatus()==1||likelist.get(i).getStatus()==2){
-                plist.add(likelist.get(i));//status에서 1 or 2 뽑아줌
+            if (max == 0)
+                break;
+            if (elist.get(i).getStatus() == 1 || elist.get(i).getStatus() == 2 || elist.get(i).getStatus()==3) {
+                deadLineList.add(elist.get(i));// status에서 1 or 2 뽑아줌
                 max--;
             }
-        } 
-        
+        }
 
-        result.postList = getPostList(plist); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
+        List<Post> likelist;
+        max = 6;
+        System.out.println("좋아요수에 따른 베스트 후기");// temp:2 category:102 좋아요수내림차순
+        likelist = postDao.findPostByTempAndCategoryIdOrderByLikeNumDesc(2, 102);
+        for (int i = 0; i < likelist.size(); i++) {
+            if (max == 0)
+                break;
+            if (likelist.get(i).getStatus() == 1 ) {
+                bestReviewList.add(likelist.get(i));// status에서 1 or 2 뽑아줌
+                max--;
+            }
+        }
+
+        result.recentList = getPostList(recentList); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
+        result.deadLineList = getPostList(deadLineList); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
+        result.bestReviewList = getPostList(bestReviewList); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
         System.out.println("리턴!!" + (System.currentTimeMillis() - before) + "초 ");
         return result;
     }
@@ -101,7 +109,6 @@ public class MainController {
                 }
             }
 
-  
             PostResponse presp = new PostResponse();
 
             presp.articleId = p.getArticleId();

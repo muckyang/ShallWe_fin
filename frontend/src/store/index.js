@@ -373,6 +373,9 @@ export default new Vuex.Store({
         if(!articleData.articleData.image&&articleData.temp===1){
           articleData.articleData.image="default.jpeg"
         }
+        if(cookies.get('admin-token')){
+          articleData.articleData.categoryId=101
+        }
         axios
           .post(
             `${BACK_URL}/post/create/${articleData.temp}`,
@@ -394,32 +397,36 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
-      if (updateData.articleUpdateData.endTime) {
-        if (updateData.articleUpdateData.endTime.length < 8) {
-          updateData.articleUpdateData.endTime =
-            updateData.articleUpdateData.endTime + ":00";
-        }
-      }
-      updateData.articleUpdateData.token = state.authToken;
-      axios
-        .post(
-          `${BACK_URL}/post/update/${updateData.temp}`,
-          updateData.articleUpdateData
-        )
-        .then(() => {
-          if (updateData.temp === 2) {
-            if (updateData.articleUpdateData.categoryId === 102) {
-              router.push(`/reviews`);
-            } else {
-              router.push(`/pdetail/${updateData.articleUpdateData.articleId}`);
-            }
-          } else {
-            router.push(`/detail/${updateData.articleUpdateData.articleId}`);
+      if(!updateData.articleUpdateData.categoryId||!updateData.articleUpdateData.title||!updateData.articleUpdateData.address||!updateData.articleUpdateData.description||!updateData.articleUpdateData.minPrice||!updateData.articleUpdateData.myPrice||!updateData.articleUpdateData.endDate||!updateData.articleUpdateData.endTime){
+        alert("필수 입력칸을 모두 채워 주세요")
+      }else{
+        if (updateData.articleUpdateData.endTime) {
+          if (updateData.articleUpdateData.endTime.length < 8) {
+            updateData.articleUpdateData.endTime =
+              updateData.articleUpdateData.endTime + ":00";
           }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+        }
+        updateData.articleUpdateData.token = state.authToken;
+        axios
+          .post(
+            `${BACK_URL}/post/update/${updateData.temp}`,
+            updateData.articleUpdateData
+          )
+          .then(() => {
+            if (updateData.temp === 2) {
+              if (updateData.articleUpdateData.categoryId === 102) {
+                router.push(`/reviews`);
+              } else {
+                router.push(`/pdetail/${updateData.articleUpdateData.articleId}`);
+              }
+            } else {
+              router.push(`/detail/${updateData.articleUpdateData.articleId}`);
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
     },
     //게시글 삭제하기
     deleteArticle({ state, dispatch }, data) {
