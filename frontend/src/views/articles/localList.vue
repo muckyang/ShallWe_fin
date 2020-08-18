@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="tab-content" id="nav-tabContent" v-if="articles">
+      <router-link v-if="!articles" :to="{ name: 'articleCreate' }" class="ml-auto">
+        <button class="article-create-btn">글쓰기</button>
+      </router-link>
       <div
         v-if="categoryNum === 0"
         class="tab-pane fade show active"
@@ -60,9 +63,6 @@
         style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
       >회원님의 동네에서 등록된 게시글이 더이상 존재하지 않습니다.</div>
     </infinite-loading>
-    <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
-      <button class="article-create-btn">글쓰기</button>
-    </router-link>
   </div>
 </template>
 
