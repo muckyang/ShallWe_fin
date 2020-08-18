@@ -350,7 +350,6 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/post/detail/${articleID}`, auth)
         .then((response) => {
-          console.log(response, "디테일");
           commit("GET_ARTICLE", response);
           commit("GET_COMMENTS", response.data.commentList);
         })
@@ -360,29 +359,36 @@ export default new Vuex.Store({
     },
     //게시글 생성
     createArticle(context, articleData) {
-      if (articleData.temp === 1 || articleData.temp === 0) {
-        if (articleData.articleData.endTime.length < 8) {
-          articleData.articleData.endTime =
-            articleData.articleData.endTime + ":00";
-        }
-      }
-      axios
-        .post(
-          `${BACK_URL}/post/create/${articleData.temp}`,
-          articleData.articleData
-        )
-        .then(() => {
-          if (articleData.temp === 1 || articleData.temp === 0) {
-            router.push("/article");
-          } else {
-            if (articleData.articleData.categoryId === 102) {
-              router.push("/reviews");
-            } else {
-              router.push("/posts");
-            }
+      if(articleData.temp===1&&(!articleData.articleData.categoryId||!articleData.articleData.title||!articleData.articleData.address||!articleData.articleData.description||!articleData.articleData.minPrice||!articleData.articleData.myPrice||!articleData.articleData.endDate||!articleData.articleData.endTime)){
+        alert("필수 입력칸을 모두 채워 주세요")
+      }else{
+        if (articleData.temp === 1 || articleData.temp === 0) {
+          if (articleData.articleData.endTime.length < 8) {
+            articleData.articleData.endTime =
+              articleData.articleData.endTime + ":00";
           }
-        })
-        .catch((err) => console.log(err));
+        }
+        if(!articleData.articleData.image){
+          articleData.articleData.image="default.jpeg"
+        }
+        axios
+          .post(
+            `${BACK_URL}/post/create/${articleData.temp}`,
+            articleData.articleData
+          )
+          .then(() => {
+            if (articleData.temp === 1 || articleData.temp === 0) {
+              router.push("/article");
+            } else {
+              if (articleData.articleData.categoryId === 102) {
+                router.push("/reviews");
+              } else {
+                router.push("/posts");
+              }
+            }
+          })
+          .catch((err) => console.log(err));
+      }
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {

@@ -345,7 +345,12 @@ export default {
       }
     },
     imageUrl(){
-        return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
+      // try{
+      //   return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
+      // }catch{
+        
+      // }
+      return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
     },
     joinFlag() {
       const tempList = [];
@@ -388,7 +393,6 @@ export default {
   methods: {
     ...mapActions([
       "getArticle",
-      "getUserData",
       "createArticleAccuse",
       "detailSearch",
       "deleteArticle",
@@ -524,7 +528,7 @@ export default {
           title: this.articleData.title,
           description: this.articleData.description,
           imageUrl:
-            "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
+            "https://ifh.cc/g/5VcUjM.png",
           link: {
             mobileWebUrl: "https://developers.kakao.com",
             androidExecParams: "test",
@@ -566,7 +570,6 @@ export default {
   },
   created: function () {
     this.getArticle(this.$route.params.ID);
-    this.getUserData();
     this.likeCheck();
   },
 };
