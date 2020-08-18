@@ -368,7 +368,7 @@ export default new Vuex.Store({
               articleData.articleData.endTime + ":00";
           }
         }
-        if(!articleData.articleData.image){
+        if(!articleData.articleData.image&&articleData.temp===1){
           articleData.articleData.image="default.jpeg"
         }
         axios

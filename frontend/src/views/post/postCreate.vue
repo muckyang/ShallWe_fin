@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       articleData: {
-        categoryId: 0,
+        categoryId: 103,
         title: null,
         description: null,
         token: this.$cookies.get("auth-token"),
