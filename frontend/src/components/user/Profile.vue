@@ -66,7 +66,7 @@
                     <th scope="col">비고</th>
                   </tr>
                 </thead>
-                <tbody v-for="alist in userData.articleList" :key="alist.articleId">
+                <tbody v-for="alist in userData.articleList" :key="alist.createTime">
                   <tr>
                     <td>{{ alist.title }}</td>
                     <td>{{ alist.description }}</td>
@@ -86,7 +86,7 @@
                     <th scope="col">비고</th>
                   </tr>
                 </thead>
-                <tbody v-for="jlist in userData.joinList" :key="jlist.articleId">
+                <tbody v-for="jlist in userData.joinList" :key="jlist.createTime">
                   <tr>
                     <td>{{ jlist.title }}</td>
                     <td>{{ jlist.description }}</td>
@@ -106,7 +106,7 @@
                     <th scope="col">비고</th>
                   </tr>
                 </thead>
-                <tbody v-for="clist in userData.completeList" :key="clist.articleId">
+                <tbody v-for="clist in userData.completeList" :key="clist.createTime">
                   <tr>
                     <td>{{ clist.title }}</td>
                     <td>{{ clist.description }}</td>
@@ -125,7 +125,7 @@
                     <th scope="col">비고</th>
                   </tr>
                 </thead>
-                <tbody v-for="rlist in userData.reviewList" :key="rlist.articleId">
+                <tbody v-for="rlist in userData.reviewList" :key="rlist.createTime">
                   <tr>
                     <td>{{ rlist.title }}</td>
                     <td>{{ rlist.description }}</td>
@@ -143,7 +143,7 @@
                     <th scope="col">비고</th>
                   </tr>
                 </thead>
-                <tbody v-for="flist in userData.reviewList" :key="flist.articleId">
+                <tbody v-for="flist in userData.reviewList" :key="flist.createTime">
                   <tr>
                     <td>{{ flist.title }}</td>
                     <td>{{ flist.description }}</td>
@@ -162,7 +162,7 @@
                     <th scope="col">비고</th>
                   </tr>
                 </thead>
-                <tbody v-for="llist in userData.likeList" :key="llist.articleId">
+                <tbody v-for="llist in userData.likeList" :key="llist.createTime">
                   <tr>
                     <td>{{ llist.title }}</td>
                     <td>{{ llist.description }}</td>
@@ -182,7 +182,7 @@
                     <th scope="col">비고</th>
                   </tr>
                 </thead>
-                <tbody v-for="tlist in userData.tempList" :key="tlist.articleId">
+                <tbody v-for="tlist in userData.tempList" :key="tlist.createTime">
                   <tr>
                     <td>{{ tlist.title }}</td>
                     <td>{{ tlist.description }}</td>
@@ -214,13 +214,14 @@ export default {
     data: function () {
         return {
             constants,
+            date:'',
         }
     },
     methods: {
         ...mapActions(['deleteUser','getArticles','deleteArticle']),
     },
     computed:{
-        ...mapState(['userData','articles'])
+        ...mapState(['userData','articles']),
     },
 }
 </script>
