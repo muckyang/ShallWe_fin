@@ -34,7 +34,7 @@
       </div>
       <!-- </div> -->
 
-      <div v-if="searchData.temp !== 0" class="select-item-row">
+      <div v-if="searchData.temp !== 0" class="select-item-row mt-2">
         <div v-if="searchData.temp === 1">
           <a
             :class="{
@@ -128,7 +128,7 @@
     </div>
 
     <input
-      class="detail-search"
+      class="detail-search mt-4"
       style="font-family: FontAwesome;"
       placeholder="Search"
       v-model="searchData.searchDataForSend.word"
