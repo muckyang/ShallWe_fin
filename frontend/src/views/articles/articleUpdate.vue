@@ -1,93 +1,124 @@
 <template>
-  <div>
-    <table class="table mt-5">
-      <tbody>
-        <tr>
-          <th scope="row">제목</th>
-          <td class="d-flex">
-            <div class="btn-group">
-              <button
-                type="button"
-                class="btn btn-outline-secondary btn-sm dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >{{ selectedTBG }}</button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" @click="selectCategory(1)">쉘위배달</a>
-                <a class="dropdown-item" @click="selectCategory(2)">쉘위택배</a>
-                <a class="dropdown-item" @click="selectCategory(3)">쉘위공구</a>
-              </div>
-            </div>
-            <b-form-input type="text" v-model="articleUpdateData.title"></b-form-input>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <hr />
-    <div>
-      <div class="bg-secondary text-light">
-        <h3>어디서 만날까? - {{articleUpdateData.address}}</h3>
+  <div class="mt-5 create-container">
+    <div class="create-form">
+      <!-- 지도 -->
+      <div class="kakao-map-select">
+        <kakaoMap :coNum="coNum" @setAddress="setAddress" />
       </div>
-      <kakaoMap @setAddress="setAddress" />
+      <div class="right-items">
+        <!--선택 장소-->
+        <div class="selected-place">
+          <label for>어디서 만날까?</label>
+          <input
+            type="text"
+            v-model="articleData.address"
+            :placeholder="address"
+            style="font-family: FontAwesome;"
+            readonly
+          />
+        </div>
+        <!--제목-->
+        <div class="title">
+          <label for="title">제목</label>
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-outline-secondary btn-sm dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >{{ selectedTBG }}</button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" @click="selectCategory(1)">쉘위배달</a>
+              <a class="dropdown-item" @click="selectCategory(2)">쉘위택배</a>
+              <a class="dropdown-item" @click="selectCategory(3)">쉘위공구</a>
+            </div>
+          </div>
+          <input type="text" id="title" v-model="articleData.title" placeholder=" 제목을 입력하세요" />
+        </div>
+        <!--시작금액/전체금액-->
+        <div class="price">
+          <label for>시작금액 / 전체금액</label>
+          <input type="number" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
+          <input type="number" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
+        </div>
+        <!--종료일시-->
+        <div class="endTime">
+          <label for>종료일자 / 종료시간</label>
+          <input type="date" v-model="articleData.endDate" />
+          <input type="time" id="form-endTime" v-model="articleData.endTime" />
+        </div>
+        <!-- 파일 업로드 -->
+        <div class="imageInsert d-flex">
+          <label>사진 업로드</label>
+          <div class="d-flex">
+            <input type="file" id="file" name="file" ref="file" class="w-100 ml-3"/>
+            <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button>
+          </div>
+        </div>
+        <!--url-->
+        <div class="url">
+          <label for="url">URL</label>
+          <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" required/>
+        </div>
+        <!--오픈톡방url-->
+        <div class="url">
+          <label for="url">오픈 카카오톡 URL</label>
+          <input type="url" id="url" v-model="articleData.openLink" placeholder=" url을 입력하세요" />
+        </div>
+        <!--내용-->
+        <div class="createContent">
+          <label for="textarea-rows">내용</label>
+          <b-form-textarea
+              id="textarea-rows"
+              v-model="articleData.description"
+              placeholder="내용을 입력하세요..."
+              rows="3"
+              max-rows="6"
+            ></b-form-textarea>
+        </div>
+      </div>
     </div>
-    <table class="table mt-5">
-      <tbody>
-        <tr>
-          <th scope="row">시작금액/전체금액</th>
-          <td class="d-flex">
-            <b-form-input type="number" v-model="articleUpdateData.myPrice"></b-form-input>
-            <b-form-input type="number" v-model="articleUpdateData.minPrice"></b-form-input>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">URL</th>
-          <td>
-            <b-form-input type="url" v-model="articleUpdateData.urlLink"></b-form-input>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">사진첨부</th>
-          <td>
-            <b-form-file class="mt-3" @change="imageChange" plain></b-form-file>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">종료일자/종료시간</th>
-          <td class="d-flex">
-            <b-form-input type="date" v-model="articleUpdateData.endDate"></b-form-input>
-            <b-form-input type="time" v-model="articleUpdateData.endTime"></b-form-input>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">내용</th>
-          <td>
-            <div>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="articleUpdateData.description"></b-form-textarea>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">태그</th>
-          <td>
-            <div>
-              <b-form-tags input-id="tags-basic" v-model="articleUpdateData.tags" class="mb-2"></b-form-tags>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <hr />
-    <button
-      class="btn btn-secondary"
-      type="submit"
-      @click="updateArticle({articleUpdateData,temp:1})"
-    >수정</button>
-    <button
-      class="ml-1 btn btn-danger"
-      type="submit"
-      @click="deleteArticle({id:articleUpdateData.articleId,temp:1})"
-    >삭제</button>
+
+    <!--태그-->
+    <div class="tags">
+      <label for>태그</label>
+      <b-form-tags v-model="articleData.tags" no-outer-focus class="mb-2">
+        <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
+          <b-input-group class="mb-2">
+            <b-form-input
+              v-bind="inputAttrs"
+              v-on="inputHandlers"
+              placeholder="엔터를 누르면 태그가 추가돼요! :)"
+              id="tag-input"
+              class="form-control"
+            ></b-form-input>
+            <b-input-group-append>
+              <div class="tag-btn">
+                <b-button @click="addTag()" class="tag-btn" variant="dark">등록</b-button>
+              </div>
+            </b-input-group-append>
+          </b-input-group>
+          <div class="d-inline-block" style="font-size: 1.5rem;">
+            <b-form-tag
+              v-for="tag in tags"
+              @remove="removeTag(tag)"
+              :key="tag"
+              :title="tag"
+              :variant="tagVariant"
+              class="mr-1"
+            >{{ tag }}</b-form-tag>
+          </div>
+        </template>
+      </b-form-tags>
+    </div>
+
+    <div class="create-submit">
+      <button class="temp-form" @click="createArticle({articleData,temp:0})">임시저장</button>
+      <button class="complete-form" @click="createArticle({articleData,temp:1})">
+        <i class="fas fa-check"></i> 완료
+      </button>
+    </div>
   </div>
 </template>
 

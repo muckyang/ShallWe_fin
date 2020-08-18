@@ -1,5 +1,8 @@
 <template>
   <div class="container review-list mt-5">
+    <div class="review-list-top">
+      <!-- <div class="review-length">{{reviews.length}}개의 후기가 있습니다.</div> -->
+    </div>
     <reviewDetail
       v-for="review in reviews"
       :key="review.articleId"
@@ -81,8 +84,17 @@ export default {
 </script>
 
 <style>
+.review-list-top {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 15px;
+}
+.review-length {
+  align-self: center;
+}
 .review-list {
   /* border: 1px solid black; */
-  width: 100%;
+  width: 90%;
 }
 </style>

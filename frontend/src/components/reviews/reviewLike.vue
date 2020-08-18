@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <button v-if="!isLiked" @click="like" class="review-like">
+  <div class="review-like">
+    <button v-if="!isLiked" @click="like" class="like-icon" style="color:#ee6e9f;">
       <i class="far fa-heart"></i>
     </button>
 
-    <button v-if="isLiked" @click="like" class="review-like">
+    <button v-if="isLiked" @click="like" class="like-icon" style="color:#ee6e9f;">
       <i class="fas fa-heart"></i>
     </button>
   </div>
@@ -37,11 +37,15 @@ export default {
 
 <style>
 .review-like {
+  margin: 0 3px;
+}
+.like-icon {
   border: none;
   outline: none;
   background-color: transparent;
+  padding: 0;
 }
-.review-like:focus {
+.like-icon:focus {
   border: none;
   outline: none;
 }

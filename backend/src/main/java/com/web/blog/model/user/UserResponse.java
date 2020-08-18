@@ -45,10 +45,28 @@ public class UserResponse {
 
     @ApiModelProperty(value = "tempList", position = 16)
     public List<Post> tempList;
+
+
     @ApiModelProperty(value = "grade", position = 17)
     public int grade;
     @ApiModelProperty(value = "status", position = 18)
     public int status;
   
+    @ApiModelProperty(value = "joinCount", position = 19)
+    public int joinCount;
 
+
+    @ApiModelProperty(value = "joinList", position = 20)
+    public List<Post> joinList;
+
+    @ApiModelProperty(value = "completeCount", position = 21)
+    public int completeCount;
+    
+    @ApiModelProperty(value = "completeList", position = 22)
+    public List<Post> completeList; 
+     @ApiModelProperty(value = "freeCount", position = 23)
+    public int freeCount;
+    
+    @ApiModelProperty(value = "freeList", position = 24)
+    public List<Post> freeList;
 }

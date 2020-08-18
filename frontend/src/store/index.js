@@ -5,6 +5,8 @@ import axios from "axios";
 import cookies from "vue-cookies";
 import router from "../router";
 
+// CommonJS
+
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 
 Vue.use(Vuex);
@@ -36,6 +38,8 @@ export default new Vuex.Store({
       reviewList: [],
       likeList: [],
       tempList: [],
+      joinList: [],
+      completeList: [],
       grade: "",
     },
     articleData: {
@@ -84,9 +88,15 @@ export default new Vuex.Store({
       state.authToken = token;
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
-      setTimeout(function () {
-        alert("환영합니다.");
-      }, 50);
+    
+        Swal.fire({
+          icon: 'success',
+          height: 400,
+          width: 300,
+          title : '로그인 되셨습니다.',
+          text : '환영합니다.'
+        })
+     
     },
     SET_ADMIN_TOKEN(state, token) {
       state.adminToken = token;
@@ -95,6 +105,11 @@ export default new Vuex.Store({
     REMOVE_TOKEN(state) {
       if (state.adminToken) {
         cookies.remove("admin-token");
+        Swal.fire(
+          '로그아웃 되었습니다.',
+          '',
+          'success'
+        )
         state.adminToken = null;
       }
       state.authToken = null;
@@ -173,33 +188,64 @@ export default new Vuex.Store({
       axios
         .get(`${BACK_URL}/account/nicknamecheck/${nickname}`)
         .then((response) => {
-          alert(response.data);
-          commit("duCheck", true);
+          if (response.data === "사용가능한 닉네임입니다.") {
+            commit("duCheck", true);
+          } else {
+            commit("duCheck", false);
+          }
         })
         .catch((error) => {
-          alert(error.data);
-          commit("duCheck", false);
+          console.log(error);
         });
     },
     signUp({ state, commit }, signUpData) {
-      if (state.isChecked) {
-        if (state.isTerm) {
-          axios
-            .post(`${BACK_URL}/account/signup`, signUpData)
-            .then((response) => {
-              alert("회원가입이 완료되었습니다.");
-              commit("SET_TOKEN", response.data);
-              this.commit("termCheck");
-              router.push("/");
+      if (signUpData.address && signUpData.nickname) {
+        if (state.isChecked) {
+          if (state.isTerm) {
+            axios
+              .post(`${BACK_URL}/account/signup`, signUpData)
+              .then((response) => {
+                Swal.fire({
+                  height: 400,
+                  width: 300,
+                  title: '회원가입이 완료되었습니다.',
+                  text:'Shall we 에 가입되신걸 축하합니다',
+                  icon : 'success'
+                 } )
+                commit("SET_TOKEN", response.data);
+                this.commit("termCheck");
+                router.push("/");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else {
+            swal.fire({
+              height: 400,
+              width: 300,
+              icon : "error",
+              title: '약관에 동의해 주세요',
+              text: '',
             })
-            .catch((err) => {
-              console.log(err);
-            });
+            // alert("약관에 동의해 주세요");
+          }
         } else {
-          alert("약관에 동의해 주세요");
+          swal.fire({
+            height: 400,
+            width: 300,
+            icon : "error",
+            title: '닉네임을 입력해 주세요',
+            text: '',
+          })
         }
       } else {
-        alert("빈 칸을 채워 주세요");
+        swal.fire({
+          height: 400,
+          width: 300,
+          icon : "error",
+          title: '빈 칸을 모두 채워주세요',
+          text: '',
+        })
       }
     },
     // login({ commit }, loginData) {
@@ -241,10 +287,10 @@ export default new Vuex.Store({
     },
 
     // 이한솔 시작
-    getUserDatailData({ state, commit }, userNickname) {
+    getUserDatailData({ state, commit }, userId) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/account/read/${userNickname}`, auth)
+        .post(`${BACK_URL}/account/read/${userId}`, auth)
         .then((res) => {
           commit("GET_USER", res);
         })
@@ -259,7 +305,13 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/account/update`, editData)
         .then(() => {
-          alert("수정이 완료되었습니다. 다시 로그인해 주세요");
+
+          swal.fire({
+            icon : "success",
+            title: '수정이 완료되었습니다.',
+            text: '다시 로그인 해주세요!!',
+          })
+          // alert("수정이 완료되었습니다. 다시 로그인해 주세요");
           commit("REMOVE_TOKEN");
         })
         .catch((err) => {
@@ -309,25 +361,36 @@ export default new Vuex.Store({
     },
     //게시글 생성
     createArticle(context, articleData) {
-      if (articleData.temp === 1 || articleData.temp === 0) {
-        if (articleData.articleData.endTime.length < 8) {
-          articleData.articleData.endTime =
-            articleData.articleData.endTime + ":00";
-        }
-      }
-      axios
-        .post(
-          `${BACK_URL}/post/create/${articleData.temp}`,
-          articleData.articleData
-        )
-        .then(() => {
-          if (articleData.temp === 1 || articleData.temp === 0) {
-            router.push("/article");
-          } else {
-            router.push("/posts");
+      if(articleData.temp===1&&(!articleData.articleData.categoryId||!articleData.articleData.title||!articleData.articleData.address||!articleData.articleData.description||!articleData.articleData.minPrice||!articleData.articleData.myPrice||!articleData.articleData.endDate||!articleData.articleData.endTime)){
+        alert("필수 입력칸을 모두 채워 주세요")
+      }else{
+        if (articleData.temp === 1 || articleData.temp === 0) {
+          if (articleData.articleData.endTime.length < 8) {
+            articleData.articleData.endTime =
+              articleData.articleData.endTime + ":00";
           }
-        })
-        .catch((err) => console.log(err));
+        }
+        if(!articleData.articleData.image&&articleData.temp===1){
+          articleData.articleData.image="default.jpeg"
+        }
+        axios
+          .post(
+            `${BACK_URL}/post/create/${articleData.temp}`,
+            articleData.articleData
+          )
+          .then(() => {
+            if (articleData.temp === 1 || articleData.temp === 0) {
+              router.push("/article");
+            } else {
+              if (articleData.articleData.categoryId === 102) {
+                router.push("/reviews");
+              } else {
+                router.push("/posts");
+              }
+            }
+          })
+          .catch((err) => console.log(err));
+      }
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
@@ -359,12 +422,17 @@ export default new Vuex.Store({
         });
     },
     //게시글 삭제하기
-    deleteArticle({ state, dispatch }, articleId) {
-      console.log(articleId);
+    deleteArticle({ state, dispatch }, data) {
       const auth = { token: state.authToken };
       axios
-        .get(`${BACK_URL}/post/delete/${articleId}`)
-        .then(() => {})
+        .get(`${BACK_URL}/post/delete/${data.articleId}`)
+        .then(() => {
+          if (data.categoryId < 10) {
+            router.push(`/article`);
+          } else {
+            router.push(`/posts`);
+          }
+        })
         .catch((err) => {
           console.log(err);
         });
@@ -467,17 +535,6 @@ export default new Vuex.Store({
     //     })
     //     .catch((err) => console.log(err));
     // },
-    getUsers({ state, commit }, users) {
-      const auth = { token: state.authToken };
-      axios
-        .post(`${BACK_URL}/account/readAll`, auth)
-        .then((res) => {
-          commit("GET_USERS", res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
     createArticleAccuse(context, accuseArticleData) {
       axios
         .post(`${BACK_URL}/accuse/create`, accuseArticleData)
