@@ -195,7 +195,9 @@ public class AccountController {
             result.completeList = new LinkedList<>();
             List<Participant> partlist = partDao.getParticipantByUserIdAndStatus(userId, 1);// 참가 수락된 것 중
             for (int i = 0; i < partlist.size(); i++) {
-                result.completeList.add(postDao.getPostByArticleIdAndStatus(partlist.get(i).getArticleId(), 4));
+                Post p = postDao.getPostByArticleId(partlist.get(i).getArticleId());
+                if(p.getStatus() == 4)
+                    result.completeList.add(p);
             }
 
             result.joinList = new LinkedList<>();
@@ -205,7 +207,9 @@ public class AccountController {
             numlist.add(4);
             List<Participant> partlist2 = partDao.getParticipantByUserIdAndStatus(userId, 1);// 참가 수락된 것 중
             for (int i = 0; i < partlist2.size(); i++) {
-                result.joinList.add(postDao.getPostByArticleIdAndStatusIn(partlist2.get(i).getArticleId(), numlist));
+                Post p = postDao.getPostByArticleId(partlist2.get(i).getArticleId());
+                if(p.getStatus() == 4|| p.getStatus() == 2|| p.getStatus() == 1)
+                    result.completeList.add(p);
             }
 
             result.articleCount = result.articleList.size();
