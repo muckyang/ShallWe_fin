@@ -60,9 +60,7 @@
 			return {
 				editData:{
 					address:'',
-					nickname:'',
 					birthday:'',
-					// profileImage: '',
 					introduce: '',
 				},
 			}
