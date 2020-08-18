@@ -224,7 +224,7 @@ public class AccountController {
             result.articleList = new LinkedList<>();
             result.reviewList = new LinkedList<>();
             result.tempList = new LinkedList<>();
-            
+
             List<Post> plist = postDao.findPostByUserId(userId);
 
             for (int i = 0; i < plist.size(); i++) {
@@ -237,6 +237,26 @@ public class AccountController {
                     result.tempList.add(p);
                 }
             }
+
+            result.joinList = new LinkedList<>();
+            result.completeList = new LinkedList<>();
+            List<Participant> partlist = partDao.getParticipantByUserIdAndStatus(userId,1);// 참가 수락된 것 중 
+            for(int i = 0 ; i < partlist.size();i++){
+                result.completeList.add(postDao.getPostByArticleIdAndStatus(partlist.get(i).getArticleId(),4));
+            }
+
+
+            result.completeList = new LinkedList<>();
+            List<Integer> numlist = new LinkedList<>();
+            numlist.add(1);
+            numlist.add(2);
+            numlist.add(4);
+            List<Participant> partlist2 = partDao.getParticipantByUserIdAndStatus(userId,1);// 참가 수락된 것 중 
+            for(int i = 0 ; i < partlist2.size();i++){
+                result.completeList.add(postDao.getPostByArticleIdAndStatusIn(partlist2.get(i).getArticleId(),numlist));
+            }
+
+
             List<Like> llist = likeDao.findLikeByUserId(userId);
             result.likeList = new LinkedList<>();
             for (int i = 0; i < llist.size(); i++) {
@@ -247,6 +267,8 @@ public class AccountController {
             result.reviewCount = result.reviewList.size();
             result.likeCount = result.likeList.size();
             result.tempCount = result.tempList.size();
+            result.joinCount = result.joinList.size();
+            result.completeCount = result.completeList.size();
             System.out.println("상대 프로필 리턴 !!! ");
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {

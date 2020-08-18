@@ -21,7 +21,8 @@ public interface PostDao extends JpaRepository<Post, String> {
     List<Post> getPostByUserIdAndTemp(int userId,int temp);
     List<Post> getPostByUserIdAndCategoryId(int userId,int categoryId);
     List<Post> getPostByTempAndCategoryIdNotOrderByCategoryIdAscCreateTimeDesc(int userId,int categoryId);
-
+    Post getPostByArticleIdAndStatus(int articleId,int status);
+    Post getPostByArticleIdAndStatusIn(int articleId,List<Integer> numlist);
     List<Post> findPostByTempAndWriterOrderByCreateTimeDesc(int temp, String writer);
 
 
