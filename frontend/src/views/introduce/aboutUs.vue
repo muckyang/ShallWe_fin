@@ -1,102 +1,131 @@
 <template>
-  <div class="introduce-list-box mt-5 mx-auto">
-    <div class="a_layer">
-      <div class="a_layer_inner">
-        <div class="a_content">
-          <div class="shall-we">
-            <div id="pink">
-              Sh
-              <div id="black">are</div>
-            </div>
-            <div id="pink">
-              a
-              <div id="black">t</div>
-            </div>
-            <div id="pink">
-              l
-              <div id="black">oca</div>l
-              <div id="black">area</div>
-            </div>
-            <div id="pink">
-              w
-              <div id="black">ith</div>
-            </div>
-            <div id="pink">
-              e
-              <div id="black">njoy</div>
-            </div>
-            <div>
-              <h5>- 같은 동네에서 즐겁게 공유하세요 -</h5>
-            </div>
-          </div>
-        </div>
+  <div class="introduce-list-box mt-5">
+    <!-- <div class="a_layer">
+    <div class="a_layer_inner">-->
+    <div class="about-us-top">
+      <div class="shall-we">
+        <span>Sh</span>
+        <span id="black">are</span>
+        <span class="margin-Left">a</span>
+        <span id="black">t</span>
+        <span class="margin-Left">l</span>
+        <span id="black">oca</span>
+        <span>l</span>
+        <span id="black" class="margin-Left">area</span>
+        <span class="margin-Left">w</span>
+        <span id="black">ith</span>
+        <span class="margin-Left">e</span>
+        <span id="black">njoy</span>
+      </div>
+      <div>
+        <h3 class="mainMenu share-kor" style="color: #000">같은 동네에서 즐겁게 공유하세요</h3>
       </div>
     </div>
-    <div class="row aln-center">
+    <div class="about-us-middle mt-5">
       <div class="col-4 col-6-medium col-12-small main-point">
         <section class="box style1 main-point-box p-3 _card card__one">
           <img src="@/assets/img/food1.png" class="foodIcon" />
-          <h3>쉘위배민</h3>
-          <p>배달음식의 최저금액을 같이 맞춰</p>
-          <p style="color:#ee6e9f">최소의 금액으로 최대의 맛있는 음식</p>
-          <p>을 나눠 보아요 :)</p>
+          <h2 class="font-change mb-4">쉘위 배민</h2>
+          <!--배달음식의 최소주문금액을 같이 맞춰 최소의 금액으로 최대의 맛있는 음식을 나눠 보아요-->
+          <h4 class="font-change">
+            <span>
+              배달음식의 최소주문금액을 함께
+              <br />
+              <br />채우고
+            </span>
+            <span style="color:#ee6e9f" class="font-change">가심비를 즐겨보아요</span>
+            <!-- <span class="font-change">을 나눠 보아요</span> -->
+          </h4>
         </section>
       </div>
+
       <div class="col-4 col-6-medium col-12-small">
         <section class="box style1 main-point-box p-3 _card card__one">
+          <!-- <div class="infinite">
+            <img src="@/assets/img/truck1.png" class="truckIcon" />
+          </div>-->
           <img src="@/assets/img/truck1.png" class="truckIcon" />
-          <h3>쉘위택배</h3>
-          <p>물건의 최저금액을 같이 맞춰</p>
-          <p style="color:#ee6e9f">배송비를 절약</p>
-          <p>해 보아요 :)</p>
+          <div class="infinite-bottom">
+            <h2 class="font-change mb-4">쉘위 택배</h2>
+            <h4 class="font-change">
+              물건의 최저금액을 같이 맞춰
+              <span style="color:#ee6e9f" class="font-change">
+                <br />
+                <br />배송비를 절약
+              </span>
+              <span class="font-change">해 보아요</span>
+            </h4>
+          </div>
         </section>
       </div>
+
       <div class="col-4 col-6-medium col-12-small">
         <section class="box style1 main-point-box p-3 _card card__one">
           <img src="@/assets/img/N1.png" class="nIcon" />
-          <h3>쉘위공구</h3>
-          <p>같은 물건을 대량구매하여 확</p>
-          <p style="color:#ee6e9f">저렴해진 가격</p>
-          <p>으로 구매해 보아요 :)</p>
+          <h2 class="font-change mb-4">쉘위 공구</h2>
+          <h4 class="font-change">
+            같은 물건을 대량구매하여 확
+            <br />
+            <br />
+            <span style="color:#ee6e9f" class="font-change">저렴해진 가격</span>
+            <span class="font-change">으로 구매해 보아요</span>
+          </h4>
         </section>
       </div>
     </div>
 
-    <section class="row aln-center" id="point">
+    <div class="about-us-bottom">
       <div class="col-2-small">
         <section class="box style1">
-          <h2>신뢰성</h2>
-          <p>
-            회원관리에 있어 점수 또는 등급을 부여
-            <br />카카오 로그인으로 1인 1계정으로 신뢰점수 ↑
-          </p>
-          <img src="@/assets/img/trust.png" class="trustIcon" />
+          <div class="about-us-point mb-5">
+            <h2 class="font-change" style="color: #000">신뢰성</h2>
+            <h4>
+              <p class="font-change" style="color: #000">
+                회원관리에 있어 점수 또는 등급을 부여
+                <br />
+                <div class="mt-1 font-change" style="color: #000">카카오 로그인으로 1인 1계정으로 신뢰점수 ↑</div>
+              </p>
+            </h4>
+          </div>
+          <img src="@/assets/img/trust2.png" class="trustIcon" />
         </section>
       </div>
       <div class="col-2-small">
         <section class="box style1">
-          <h2>안정성</h2>
-          <p>
-            주변 CCTV가 많은 편의점 지도 API를 통해
-            <br />사용자가 서로의 위치의 중간지점 편의점 지정
-          </p>
-          <img src="@/assets/img/Convenience.png" class="ConIcon" />
+          <div class="about-us-point mb-5">
+            <h2 class="font-change" style="color: #000">안정성</h2>
+            <h4>
+              <p class="font-change" style="color: #000">
+                주변 CCTV가 많은 편의점 지도 API를 통해
+                <br /><div class="mt-1 font-change" style="color: #000">사용자가 서로의 위치의 중간지점 편의점 지정</div>
+              </p>
+            </h4>
+          </div>
+          <img src="@/assets/img/Convenience2.png" class="ConIcon" />
         </section>
       </div>
-    </section>
+    </div>
 
-    <section class="row aln-center">
-      <div class="col-2-small">
+    <section class="about-us-map-container">
         <section class="box style1">
-          <h2>나의 동네에서 싸게 구매하자!!</h2>
+          <h2 class="font-change">나의 동네에서 싸게 구매하자!!</h2>
           <p>회원가입 때 등록한 가장 가까운 편의점 주소로 같은 동네의 거래 상황을 알 수 있습니다.</p>
         </section>
-      </div>
+          <div class="about-us-map"><img src="@/assets/img/about-us-map.png" class="mapIcon" /></div>
     </section>
   </div>
 </template>
 
 <script>
+$(document).ready(function () {
+  $("div.infinite")
+    .mouseenter(function () {
+      $(this).css("-webkit-animation-name", "iteration-count");
+    })
+    .mouseout(function () {
+      $(this).css("-webkit-animation-name", 1);
+    });
+});
 export default {
   name: "aboutUs",
   data() {
@@ -113,6 +142,46 @@ export default {
 </script>
 
 <style>
+.about-us-map-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 150px 0;
+}
+.about-us-map{
+    width:800px;
+    height: 350px; 
+}
+.mapIcon{
+    width: 100%;
+    height:350px;
+}
+.about-us-middle {
+  display: flex;
+  /* border: 1px solid blue; */
+  margin: 0 0 120px 0;
+}
+@font-face {
+  font-family: "Recipekorea";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Recipekorea.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+.font-change {
+  font-family: Recipekorea;
+  font-weight: normal;
+  font-style: normal;
+}
+.about-us-top {
+  margin: 90px 0 140px 0;
+}
+.share-kor {
+  color: #000;
+}
+.margin-Left {
+  margin-left: 20px;
+}
 .main-point {
   /* border: 1px solid red; */
 }
@@ -123,28 +192,56 @@ export default {
   /* border: 1px solid red; */
 }
 .a_layer {
-  display: table;
+  /* display: table;
   margin: 10px auto;
-  background: white;
+  background: white; */
 }
 .a_layer_inner {
-  display: table-cell;
+  /* display: table-cell;
   text-align: center;
-  vertical-align: middle;
+  vertical-align: middle; */
+}
+.shall-we {
+  color: #ee6e9f;
+  font-family: "Lobster", "cursive";
+  font-size: 80px;
 }
 #pink {
   display: inline;
-  text-align: center;
+  /* text-align: center; */
   color: #ee6e9f;
   font-family: "Lobster", "cursive";
   font-size: 80px;
 }
 #black {
-  text-align: center;
-  display: inline;
   color: black;
   font-family: "Lobster", "cursive";
-  font-size: 70px;
+  font-size: 80px;
+}
+.infinite {
+  height: 100px;
+  width: 100px;
+  margin: 20px 20px;
+  animation-iteration-count: infinite;
+}
+.truckIcon {
+  margin: 20px 20px;
+  height: 100px;
+  width: 100px;
+  animation-iteration-count: infinite;
+}
+@-webkit-keyframes iteration-count {
+  from {
+    left: 10px;
+  }
+  to {
+    left: 120px;
+  }
+}
+div.infinite {
+  position: relative;
+  animation-timing-function: linear;
+  animation-duration: 2s;
 }
 .foodIcon {
   height: 100px;
@@ -152,12 +249,7 @@ export default {
   /* padding: 20px 20px; */
   margin: 20px 20px;
 }
-.truckIcon {
-  height: 100px;
-  width: 100px;
-  /* padding: 20px 20px; */
-  margin: 20px 20px;
-}
+
 .nIcon {
   height: 100px;
   width: 100px;
@@ -167,23 +259,24 @@ export default {
 .trustIcon {
   height: 250px;
   width: 250px;
-  /* padding: 20px 20px; */
-  margin: 15px 10px;
+  margin: 10px 10px;
 }
 .ConIcon {
-  height: 300px;
-  width: 300px;
+  height: 280px;
+  width: 320px;
   /* padding: 20px 20px; */
-  margin: 15px 10px;
+  margin: 5px 0 5px 60px;
 }
 h3 {
   margin: 20px 20px;
 }
 
-#point {
-  background: #fec9c9;
+.about-us-bottom {
+  background: #ee6e9f;
   margin: 30px;
   padding: 40px;
+  display: flex;
+  margin: 0 0 150px 0;
 }
 .col-2-small {
   width: 50%;
