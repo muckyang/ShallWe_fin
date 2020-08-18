@@ -199,17 +199,18 @@
 				const auth = { token: this.$cookies.get("auth-token") };
 				axios.post(`${BACK_URL}/main/post`,auth)
 					.then((response)=>{
-						console.log(response.data)
-						for (let i=0;i<18;i++){
-							response.data.postList[i].keyVal=i
-							if(i<6){
-								this.recentList.push(response.data.postList[i])
-							}else if(i<12){
-								this.deadLineList.push(response.data.postList[i])
-							}else{
-								this.bestReview.push(response.data.postList[i])
-							}
+						for (let i=0;i<6;i++){
+							response.data.recentList.newVal=i
 						}
+						for (let i=6;i<12;i++){
+							response.data.deadLineList.newVal=i
+						}
+						for (let i=12;i<18;i++){
+							response.data.bestReviewList.newVal=i
+						}
+						this.recentList=response.data.recentList
+						this.deadLineList=response.data.deadLineList
+						this.bestReview=response.data.bestReviewList
 					})
 					.catch((error)=>{
 						console.log(error)
