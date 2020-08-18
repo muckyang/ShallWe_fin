@@ -1,58 +1,45 @@
 <template>
 	<div>
 		<hr>
-		<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
-
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item active">
-      <img class="carousel-img" src="@/assets/img/shallwe.png" alt="Chania">
-      <div class="caption">
-		<h5>지금 바로 쉘위 소개를 확인해보세요!</h5>
-		<p><router-link to="/introduce" class="ml-0" id="introduce"><button class="carouselBtn">확인 하러가기</button></router-link></p>
-      </div>
-    </div>
-
-    <div class="item">
-      <img class="carousel-img" src="@/assets/img/forNbbang.png" alt="Chicago">
-      <div class="carousel-caption">
-        <h3 style="font-color:black;">필요한 만큼만 사고 싶은데...</h3>
-        <p><router-link to="/introduce" class="ml-0" id="introduce"><button class="carouselBtn">N빵 하러가기</button></router-link></p>
-      </div>
-    </div>
-
-    <div class="item">
-      <img class="carousel-img" src="@/assets/img/forNbbang.png" alt="Chicago">
-      <div class="carousel-caption">
-        <h3 style="font-color:black;">필요한 만큼만 사고 싶은데...</h3>
-        <p><router-link to="/introduce" class="ml-0" id="introduce"><button class="carouselBtn">N빵 하러가기</button></router-link></p>
-      </div>
-    </div>
-	<div class="item">
-      <img class="carousel-img" src="@/assets/img/forNbbang.png" alt="Chicago">
-      <div class="carousel-caption">
-        <h3 style="font-color:black;">필요한 만큼만 사고 싶은데...</h3>
-        <p><router-link to="/introduce" class="ml-0" id="introduce"><button class="carouselBtn">N빵 하러가기</button></router-link></p>
-      </div>
-    </div>
+		  <div>
+    <b-carousel
+      id="carousel-1"
+      v-model="slide"
+      :interval="4000"
+      controls
+      indicators
+      background="#ababab"
+      img-width="1024"
+      img-height="480"
+      style="text-shadow: 1px 1px 2px #333;"
+      @sliding-start="onSlideStart"
+      @sliding-end="onSlideEnd"
+    >
+			<b-carousel-slide>
+        <template v-slot:img>
+          <img
+            class="d-block img-fluid w-100"
+            width="1024"
+            height="480"
+            src="@/assets/img/shallwe.png"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide>
+			<router-link to="/introduce" class="ml-0" id="introduce">
+      <b-carousel-slide background="white">
+        <template v-slot:img>
+          <img
+            class="d-block img-fluid w-100"
+            width="1024"
+            height="480"
+            src="@/assets/img/캐러셀1.jpg"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide></router-link>
+    </b-carousel>
   </div>
-
-  <!-- Left and right controls -->
-  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#myCarousel" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
 
 
 		<!-- 2. 실시간 게시물-->
@@ -187,7 +174,7 @@
 	
 </script>
 
-<style>
+<style scoped>
 .carouselBtn{
 	border: none;
   outline: none;
