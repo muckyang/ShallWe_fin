@@ -2,17 +2,19 @@
   <div class="review-comment-box">
     <div class="review-comment-start">
       <i class="far fa-comment-dots"></i>
-      댓글 {{commentList.length}}
+      댓글 {{ commentList.length }}
     </div>
 
     <!--댓글 보여주는 공간-->
-    <reviewCommentListItem
-      v-for="comment in commentList"
-      :key="comment.commentId"
-      :comment="comment"
-      :reviewId="reviewId"
-      @re-render="delComment(reviewId)"
-    />
+    <div class="review-comment-list-box mb-3">
+      <reviewCommentListItem
+        v-for="comment in commentList"
+        :key="comment.commentId"
+        :comment="comment"
+        :reviewId="reviewId"
+        @re-render="delComment(reviewId)"
+      />
+    </div>
     <!--댓글 등록 공간-->
     <div class="review-comment-write">
       <div class="review-comment-text">
@@ -24,7 +26,9 @@
         />
       </div>
       <div class="review-comment-submit">
-        <button type="button" class="comment-submit-btn" @click="createComment">등록</button>
+        <button type="button" class="comment-submit-btn" @click="createComment">
+          등록
+        </button>
       </div>
     </div>
   </div>
@@ -120,9 +124,10 @@ export default {
 
 <style>
 .review-comment-box {
-  /* border: 1px solid red; */
+  /* margin: 0 auto; */
   width: 100%;
-  margin: 0 auto;
+  /* height: 50px; */
+  /* padding: 0 12px; */
 }
 .review-comment-start {
   width: 95%;
@@ -168,5 +173,23 @@ export default {
 }
 .review-comment-input:focus::placeholder {
   color: transparent;
+}
+.review-comment-list-box {
+  max-height: 230px;
+  overflow: auto;
+}
+.review-comment-list-box::-webkit-scrollbar {
+  width: 7.5px;
+}
+.review-comment-list-box::-webkit-scrollbar-track {
+  background-color: rgb(184, 184, 184);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px rgb(209, 205, 205);
+}
+.review-comment-list-box::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #727171;
+  background-clip: padding-box;
+  border: 2px solid transparent;
 }
 </style>

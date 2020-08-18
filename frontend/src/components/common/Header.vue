@@ -6,128 +6,12 @@
         <!-- 로그인 X -->
         <li class="nav-item mr-1">
           <a
-            v-if="!isLoggedin"
-            v-bind:to="{ name: constants.URL_TYPE.USER.LOGIN }"
+            href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code"
             class="nav-link navbar1-item loginBtn"
-            data-toggle="modal"
-            data-target="#Login"
-          >로그인</a>
-        </li>
-
-        <div class="wall" v-show="!isLoggedin">|</div>
-
-        <!--modal-->
-        <div
-          class="modal fade"
-          id="Login"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog modalsize">
-            <div class="modal-content modalsize">
-              <!-- <div class="modal-header">
-              </div>-->
-              <div class="modal-body">
-                <div class="login-header">
-                  <div>
-                    <a type="button" class="close-btn" data-dismiss="modal" aria-label="Close">
-                      <span class="close" aria-hidden="true">&times;</span>
-                    </a>
-                  </div>
-                  <h5
-                    class="modal-title text-center"
-                    style="color: #ee6e9f; font-family: 'Lobster', cursive; 
-                font-size: 35px"
-                    id="exampleModalLabel"
-                  >Shall we?</h5>
-                </div>
-                <div class="login-input">
-                  <form>
-                    <div class="form-group mb-1">
-                      <div class="container">
-                        <input
-                          class="login-email"
-                          v-model="loginData.email"
-                          id="email"
-                          style="font-family: FontAwesome;"
-                          :placeholder="email"
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="container">
-                        <input
-                          class="login-pw"
-                          v-model="loginData.password"
-                          type="password"
-                          id="password"
-                          style="font-family: FontAwesome;"
-                          :placeholder="pw"
-                          @keypress.enter="login(loginData)"
-                        />
-                      </div>
-                    </div>
-                  </form>
-                </div>
-
-                <div class="login-sumit">
-                  <div class="container mb-3">
-                    <button
-                      type="submit"
-                      class="submit-btn"
-                      @click="login(loginData)"
-                      data-dismiss="modal"
-                    >로그인</button>
-
-                    <div class="row-items d-flex justify-content-center">
-                      <div class="bottom-line"></div>
-                      <div class="or">또는</div>
-                      <div class="bottom-line"></div>
-                    </div>
-
-                    <button class="kakao-btn">
-                      <a
-                        href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code"
-                      >
-                        <img src="../../assets/img/kakao_logo.jpg" class="kakao-img" />
-                        카톡 로그인
-                      </a>
-                    </button>
-                    <div class="blank"></div>
-                    <button class="google-btn">
-                      <img src="../../assets/img/google_logo4.png" class="google-img" />
-                      구글 로그인
-                    </button>
-                  </div>
-                </div>
-
-                <div class="modal-footer d-flex justify-content-center">
-                  <div class="signup d-flex justify-content-center">
-                    <div class="ask">계정이 없으신가요?</div>
-                    <div class="blank"></div>
-                    <div class="click">
-                      <router-link
-                        v-bind:to="{ name: constants.URL_TYPE.USER.JOIN }"
-                        class="goJoin"
-                        data-dismiss="modal"
-                      >가입하기</router-link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <li class="nav-item mr-2">
-          <router-link
-            v-if="!isLoggedin"
-            v-bind:to="{ name: constants.URL_TYPE.USER.JOIN }"
-            class="nav-link navbar1-item"
-          >회원가입</router-link>
+            v-if="!isLoggedin" @click="REMOVE_TOKEN"
+          >
+            카카오 로그인
+          </a>
         </li>
         <!-- 로그인 O -->
         <li class="nav-item mr-1">
@@ -148,7 +32,7 @@
       <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
 
       <!-- 유저관리 -->
-      <div v-if="isLoggedin && userData.grade === 0" class="d-flex align-items-starts mr-1">
+      <div v-if="userData.grade === 0" class="d-flex align-items-starts mr-1">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="/user/userlist" class="nav-link navbar1-item">유저관리</a>
@@ -159,7 +43,7 @@
       <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
 
       <!-- 신고관리 -->
-      <div v-if="isLoggedin && userData.grade === 0" class="d-flex align-items-starts">
+      <div v-if="userData.grade === 0" class="d-flex align-items-starts">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="/user/accuselist" class="nav-link navbar1-item">신고관리</a>
@@ -285,82 +169,6 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-.modal {
-  text-align: center;
-}
-@media screen and (min-width: 768px) {
-  .modal:before {
-    display: inline-block;
-    vertical-align: middle;
-    content: " ";
-    height: 100%;
-  }
-}
-.modal-dialog {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
-}
-.modal-dialog.modalsize {
-  width: 27%;
-  height: 85%;
-  margin: 0;
-  padding: 0;
-}
-.modal-content.modalsize {
-  height: auto;
-  min-width: 10%;
-}
-.close-btn {
-  border: none;
-  outline: none;
-  background-color: transparent;
-  width: 100%;
-}
-.close {
-  float: right;
-}
-.login-input {
-  margin: 7% 0 5% 0;
-}
-.login-email:focus::placeholder {
-  color: transparent;
-}
-.login-pw:focus::placeholder {
-  color: transparent;
-}
-.login-email,
-.login-pw {
-  width: 100%;
-  border-radius: 2px;
-}
-.login-email {
-  margin-bottom: 0.5%;
-}
-.modal-body .login-submit {
-  margin: 0 0 10% 0;
-}
-.submit-btn,
-.kakao-btn,
-.google-btn {
-  border-radius: 4px;
-  border: none;
-  font-weight: bold;
-  height: 35px;
-  text-align: center;
-  vertical-align: middle; /* 적용 안 됨 */
-}
-.submit-btn {
-  background-color: #ee6e9f;
-  color: white;
-  margin: 2% 0 0 0;
-  width: 100%;
-  opacity: 0.8;
-}
-.submit-btn:hover {
-  transition-duration: 0.5s;
-  opacity: 1;
-}
 .row-items {
   margin: 5% 0 3% 0;
   width: 100%;
@@ -393,7 +201,6 @@ export default {
   width: 23px;
   /* margin: 0 0 0 5px; */
 }
-
 .blank {
   width: 10px;
 }

@@ -1,12 +1,11 @@
 <template>
   <div class="mt-5">
-    <h1>회원관리</h1>
+    <h3 class="mb-3">유저관리</h3>
     <table class="table">
-      <thead class="thead-dark">
+      <thead class="">
         <tr>
           <th scope="col">#</th>
           <th scope="col">이메일</th>
-          <th scope="col">이름</th>
           <th scope="col">닉네임</th>
           <th scope="col">지역</th>
           <th scope="col">등급</th>
@@ -16,16 +15,15 @@
       </thead>
       <tbody v-for="user in users" :key="user.userId">
         <tr>
-          <th scope="row">{{ user.userId }}</th>
+          <td>{{ user.userId }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.name }}</td>
           <td>{{ user.nickname }}</td>
           <td>{{ user.address }}</td>
           <td>{{ user.grade }}</td>
           <td>{{ user.userPoint }}</td>
-          <td class="d-flex justify-content-center">
-            <router-link class="btn btn-info btn-sm" :to="{name: 'userDetail', params: { ID: `${user.nickname}` }}"
-            >회원정보</router-link>
+          <td>
+            <router-link :to="{name: 'userDetail', params: { ID: `${user.nickname}` }}"
+            ><button class="info-btn">회원정보</button></router-link>
           </td>
         </tr>
       </tbody>
@@ -55,5 +53,19 @@
 </script> 
 
 <style>
-
+.info-btn {
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  padding: 7px 7px;
+  font-size: 14px;
+  background-color: #ee6e9f;
+  color: white;
+  margin: 0 0 0;
+  opacity: 0.8;
+}
+.info-btn:hover {
+  transition-duration: 0.5s;
+  opacity: 1;
+}
 </style>
