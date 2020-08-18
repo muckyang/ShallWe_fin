@@ -102,11 +102,12 @@ public class AccountController {
             User tuser = new User(user.get().getEmail(), user.get().getNickname());
 
             String token = jwtService.createLoginToken(tuser);
-            // redirectView.setUrl("http://localhost:8081/user/klogin");// 로그인 완료된 페이지
-            redirectView.setUrl("http://i3b203.p.ssafy.io/user/klogin");// 로그인 완료된 페이지
+            redirectView.setUrl("http://localhost:8081/user/klogin");// 로그인 완료된 페이지
+            // redirectView.setUrl("http://i3b203.p.ssafy.io/user/klogin");// 로그인 완료된 페이지
             redirectView.addStaticAttribute("token", token);
         } else {// 가입전 사용자
-            redirectView.setUrl("http://i3b203.p.ssafy.io/user/join"); // 회원가입 폼으로 이동
+            redirectView.setUrl("http://localhost:8081/user/join");// 로그인 완료된 페이지
+            // redirectView.setUrl("http://i3b203.p.ssafy.io/user/join"); // 회원가입 폼으로 이동
             redirectView.addStaticAttribute("kemail", kemail);
         }
         return redirectView;
@@ -194,23 +195,15 @@ public class AccountController {
             }
 
             result.completeList = new LinkedList<>();
+            result.joinList = new LinkedList<>();
             List<Participant> partlist = partDao.getParticipantByUserIdAndStatus(userId, 1);// 참가 수락된 것 중
             for (int i = 0; i < partlist.size(); i++) {
                 Post p = postDao.getPostByArticleId(partlist.get(i).getArticleId());
-                if(p.getStatus() == 4)
+                if (p.getStatus() == 4)
                     result.completeList.add(p);
-            }
-
-            result.joinList = new LinkedList<>();
-            List<Integer> numlist = new LinkedList<>();
-            numlist.add(1);
-            numlist.add(2);
-            numlist.add(4);
-            List<Participant> partlist2 = partDao.getParticipantByUserIdAndStatus(userId, 1);// 참가 수락된 것 중
-            for (int i = 0; i < partlist2.size(); i++) {
-                Post p = postDao.getPostByArticleId(partlist2.get(i).getArticleId());
-                if(p.getStatus() == 4|| p.getStatus() == 2|| p.getStatus() == 1)
-                    result.completeList.add(p);
+                else if (p.getStatus() == 3 || p.getStatus() == 2 || p.getStatus() == 1) {
+                    result.joinList.add(p);
+                }
             }
 
             result.articleCount = result.articleList.size();
