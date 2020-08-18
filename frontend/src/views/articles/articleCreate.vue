@@ -48,21 +48,14 @@
           <input type="date" v-model="articleData.endDate" />
           <input type="time" id="form-endTime" v-model="articleData.endTime" />
         </div>
-        <!--이미지-->
-        <!-- <div class="imageInsert">
-          <label for>사진 첨부</label>
-          <input type="file" @change="imageChange" /> -->
-          <!-- <b-form-file @change="imageChange" plain></b-form-file> -->
-        <!-- </div> -->
-
-        <!-- 파일 업로드 Start -->
-        <div class="imageInsert">
-          <input type="file" id="file" name="file" ref="file" />
-          <button v-on:click="fileUpload" >fileUpload</button>
-          <img v-bind:src="path" width="200"/>
+        <!-- 파일 업로드 -->
+        <div class="imageInsert d-flex">
+          <label class="ml-3">사진 업로드</label>
+          <div class="d-flex">
+            <input type="file" id="file" name="file" ref="file" class="w-100 ml-1"/>
+            <button v-on:click="fileUpload" class="w-50 mr-2 _temp-form">업로드</button>
+          </div>
         </div>
-        <!-- 파일 업로드 End -->
-
         <!--url-->
         <div class="url">
           <label for="url">URL</label>
@@ -290,6 +283,16 @@ export default {
   transition: 0.4s;
 }
 .temp-form {
+  background-color: rgb(151, 151, 151);
+}
+._temp-form {
+  border: none;
+  outline: none;
+  margin: 0 0.5vw;
+  padding: 7px;
+  border-radius: 4px;
+  opacity: 0.85;
+  transition: 0.4s;
   background-color: rgb(151, 151, 151);
 }
 .complete-form {
