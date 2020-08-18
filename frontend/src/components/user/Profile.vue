@@ -46,11 +46,12 @@
         <div class="col-3">
           <div class="list-group flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <a class="list-group-item list-group-item-action" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">내가 쓴 게시물</a>
-            <a class="list-group-item list-group-item-action" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">내가 쓴 후기</a>
-            <a class="list-group-item list-group-item-action" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="true">참여한 게시물</a>
-            <a class="list-group-item list-group-item-action" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-4" role="tab" aria-controls="v-pills-4" aria-selected="false">거래 완료 게시물</a>
-            <a class="list-group-item list-group-item-action" id="v-pills-5-tab" data-toggle="pill" href="#v-pills-5" role="tab" aria-controls="v-pills-5" aria-selected="false">찜 목록</a>
-            <a class="list-group-item list-group-item-action" id="v-pills-6-tab" data-toggle="pill" href="#v-pills-6" role="tab" aria-controls="v-pills-6" aria-selected="false">임시 저장</a>
+            <a class="list-group-item list-group-item-action" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="true">참여한 게시물</a>
+            <a class="list-group-item list-group-item-action" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="false">거래 완료 게시물</a>
+            <a class="list-group-item list-group-item-action" id="v-pills-4-tab" data-toggle="pill" href="#v-pills-4" role="tab" aria-controls="v-pills-4" aria-selected="false">내가 쓴 후기</a>
+            <a class="list-group-item list-group-item-action" id="v-pills-5-tab" data-toggle="pill" href="#v-pills-5" role="tab" aria-controls="v-pills-5" aria-selected="false">내가 쓴 커뮤니티</a>
+            <a class="list-group-item list-group-item-action" id="v-pills-6-tab" data-toggle="pill" href="#v-pills-6" role="tab" aria-controls="v-pills-6" aria-selected="false">찜 목록</a>
+            <a class="list-group-item list-group-item-action" id="v-pills-7-tab" data-toggle="pill" href="#v-pills-7" role="tab" aria-controls="v-pills-7" aria-selected="false">임시 저장</a>
           </div>
         </div>
         <div class="col-9">
@@ -60,34 +61,28 @@
               {{ userData.articleList }}
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
-              내가 쓴 후기 목록
-              {{ userData.reviewList }}
-            </div>
-            <div class="tab-pane fade text-dark" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
               참여한 게시물
               {{ userData.joinList }}
             </div>
-            <div class="tab-pane fade text-dark" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
+            <div class="tab-pane fade text-dark" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
               거래 완료 게시물
               {{ userData.completeList }}
             </div>
+            <div class="tab-pane fade text-dark" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
+              내가 쓴 후기 목록
+              {{ userData.reviewList }}
+            </div>
             <div class="tab-pane fade text-dark" id="v-pills-5" role="tabpanel" aria-labelledby="v-pills-5-tab">
+              내가 쓴 커뮤니티 목록
+              {{ userData.freeList }}
+            </div>
+            <div class="tab-pane fade text-dark" id="v-pills-6" role="tabpanel" aria-labelledby="v-pills-6-tab">
               내가 찜한 목록
               {{ userData.likeList }}
             </div>
-            <div class="tab-pane fade text-dark" id="v-pills-6" role="tabpanel" aria-labelledby="v-pills-6-tab">
-              <div v-for="article in articles" :key="article.articleId">
-                <router-link :to="{name:'articleUpdate', params: {ID:article.articleId}}" class="text-decoration-none">
-                  <b-card class="">
-                    <b-card-text class="d-flex justify-content-between">
-                      <h6>제목: {{article.title}}</h6>
-                      <div>
-                        <button class="btn btn-danger btn-sm" @click="deleteArticle({id:article.articleId,temp:0})">삭제하기</button>
-                      </div>
-                    </b-card-text>
-                  </b-card>
-                </router-link>
-              </div>
+            <div class="tab-pane fade text-dark" id="v-pills-7" role="tabpanel" aria-labelledby="v-pills-7-tab">
+              임시 저장 목록
+              {{ userData.tempList }}
             </div>
           </div>
         </div>
@@ -166,6 +161,11 @@ export default {
       height: 500px;
     }
     #v-pills-6 {
+      border: solid lightgray 1px;
+      border-radius: 1%;
+      height: 500px;
+    }
+    #v-pills-7 {
       border: solid lightgray 1px;
       border-radius: 1%;
       height: 500px;
