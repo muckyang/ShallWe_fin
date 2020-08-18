@@ -3,7 +3,7 @@
     <div class="d-flex">
       <div class="comment-box">
         <div class="comment-user">
-          {{ comment.nickname }}
+          <router-link :to="{ name: 'userDetail', params: { ID: comment.userId }}">{{ comment.nickname }}</router-link>
           <div class="comment-drop dropdown dropleft" v-if="comment.userId === userData.userId">
             <button type="button" class="comment-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>

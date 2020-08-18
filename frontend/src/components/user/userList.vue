@@ -22,7 +22,7 @@
           <td>{{ user.grade }}</td>
           <td>{{ user.userPoint }}</td>
           <td>
-            <router-link :to="{name: 'userDetail', params: { ID: `${user.nickname}` }}"
+            <router-link :to="{name: 'userDetail', params: { ID: `${user.userId}` }}"
             ><button class="info-btn">회원정보</button></router-link>
           </td>
         </tr>

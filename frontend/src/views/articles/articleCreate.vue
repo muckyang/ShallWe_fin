@@ -14,6 +14,7 @@
             v-model="articleData.address"
             :placeholder="address"
             style="font-family: FontAwesome;"
+            readonly
           />
         </div>
         <!--제목-->
@@ -38,8 +39,8 @@
         <!--시작금액/전체금액-->
         <div class="price">
           <label for>시작금액 / 전체금액</label>
-          <input type="text" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
-          <input type="text" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
+          <input type="number" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
+          <input type="number" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
         </div>
         <!--종료일시-->
         <div class="endTime">
@@ -65,7 +66,7 @@
         <!--url-->
         <div class="url">
           <label for="url">URL</label>
-          <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" />
+          <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" required/>
         </div>
         <!--오픈톡방url-->
         <div class="url">
@@ -77,13 +78,6 @@
           <label for="textarea-rows">내용</label>
           <textarea name id="textarea-rows" cols="38" rows="6" v-model="articleData.description"></textarea>
         </div>
-        <!--태그-->
-        <!-- <div class="tag">
-          <label for="tags-basic">태그</label>
-          <div class="tags">
-            <b-form-tags size="sm" input-id="tags-basic" v-model="articleData.tags" class="mb-2"></b-form-tags>
-          </div>
-        </div>-->
       </div>
     </div>
 
@@ -143,9 +137,9 @@ export default {
   data() {
     return {
       articleData: {
-        categoryId: "카테고리",
+        categoryId: null,
         title: null,
-        address: "",
+        address: null,
         description: null,
         minPrice: null,
         myPrice: null,
