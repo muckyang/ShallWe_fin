@@ -100,8 +100,8 @@
           <div class="detail-info">
             <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
             <div class="detail-price">
-              <div class="min-price">최소 주문 금액: {{ articleData.minPrice }}원</div>
-              <div class="min-price">모인 금액: {{ articleData.sumPrice }}원</div>
+              <div class="min-price">최소 주문 금액: {{ minPrice }}</div>
+              <div class="min-price">모인 금액: {{ sumPrice }}</div>
             </div>
             <div class="detail-endTime">마감 시간: {{ cutDate(articleData.endTime) }}까지</div>
             <div v-if="checkedStatus">오픈 채팅방 url: {{articleData.openLink}}</div>
@@ -246,43 +246,19 @@
                       size="sm"
                       @click="acceptParticpation(participant.writer)"
                     >수락</b-button>
-                    <b-button @click="$bvModal.show('modal-scoped')">Open Modal</b-button>
+                    <b-button @click="$bvModal.show('modal-scoped')">거절</b-button>
 
                       <b-modal id="modal-scoped">
-                        <template v-slot:modal-header="{ close }">
-                          <!-- Emulate built in modal header close button action -->
-                          <b-button size="sm" variant="outline-danger" @click="close()">
-                            Close Modal
+                          <p>정말 거절하시겠습니까?</p>
+                        <template v-slot:modal-footer="{ ok }">
+                          <b-button size="sm" variant="danger" @click="denyParticpation(participant)">
+                            거절
                           </b-button>
-                          <h5>Modal Header</h5>
-                        </template>
-
-                        <template v-slot:default="{ hide }">
-                          <p>Modal Body with button</p>
-                          <b-button @click="hide()">Hide Modal</b-button>
-                        </template>
-
-                        <template v-slot:modal-footer="{ ok, cancel, hide }">
-                          <b>Custom Footer</b>
-                          <!-- Emulate built in modal footer ok and cancel button actions -->
                           <b-button size="sm" variant="success" @click="ok()">
-                            OK
-                          </b-button>
-                          <b-button size="sm" variant="danger" @click="cancel()">
-                            Cancel
-                          </b-button>
-                          <!-- Button with custom close trigger value -->
-                          <b-button size="sm" variant="outline-secondary" @click="hide('forget')">
-                            Forget it
+                            취소
                           </b-button>
                         </template>
                       </b-modal>
-                    <b-button
-                      variant="light"
-                      size="sm"
-                      v-if="isDenied"
-                      @click="denyParticpation(participant)"
-                    >거절 확정</b-button>
                   </div>
                 </div>
               </div>
@@ -292,14 +268,14 @@
             v-if="articleData.userId !== participant.userId"
             class="member-title"
           >제목: {{ participant.title }}</div>
-          <div class="member-price">가격: {{ participant.price }}</div>
+          <div class="member-price">가격: {{ parPrice(participant.price) }}</div>
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-content"
           >요구사항: {{ participant.description }}</div>
           <div v-if="participant.status===0">처리상태:수락 대기</div>
           <div v-if="participant.status===1">처리상태:수락</div>
-          <div v-if="participant.sdtatus===2">처리상태:거절</div>
+          <div v-if="participant.status===2">처리상태:거절</div>
         </div>
       </div>
     </div>
@@ -357,6 +333,17 @@ export default {
   },
   computed: {
     ...mapState(["articleData", "userData"]),
+    minPrice(){
+      return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(this.articleData.minPrice)
+    },
+    sumPrice(){
+      return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(this.articleData.sumPrice)
+    },
+    parPrice(){
+      return(price)=>{
+        return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(price)
+      }
+    },
     imageUrl(){
         return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
     },
@@ -447,7 +434,6 @@ export default {
         });
     },
     putWord(tag) {
-      console.log(this.searchData.searchDataForSend.word);
       this.searchData.searchDataForSend.word = tag;
       this.detailSearch(this.searchData);
     },
@@ -535,8 +521,8 @@ export default {
         container: "#kakao-link",
         objectType: "feed",
         content: {
-          title: "디저트 사진",
-          description: "아메리카노, 빵, 케익",
+          title: this.articleData.title,
+          description: this.articleData.description,
           imageUrl:
             "http://mud-kage.kakao.co.kr/dn/NTmhS/btqfEUdFAUf/FjKzkZsnoeE4o19klTOVI1/openlink_640x640s.jpg",
           link: {
@@ -545,19 +531,12 @@ export default {
           },
         },
         social: {
-          likeCount: 10,
-          commentCount: 20,
-          sharedCount: 30,
+          likeCount: this.articleData.likeNum,
+          commentCount: this.articleData.commentNum,
         },
         buttons: [
           {
             title: "웹으로 이동",
-            link: {
-              mobileWebUrl: "https://developers.kakao.com",
-            },
-          },
-          {
-            title: "앱으로 이동",
             link: {
               mobileWebUrl: "https://developers.kakao.com",
             },
