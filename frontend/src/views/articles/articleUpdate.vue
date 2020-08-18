@@ -12,7 +12,7 @@
           <input
             type="text"
             v-model="articleData.address"
-            :placeholder="address"
+            :placeholder="articleData.address"
             style="font-family: FontAwesome;"
             readonly
           />
@@ -53,7 +53,6 @@
           <label>사진 업로드</label>
           <div class="d-flex">
             <input type="file" id="file" name="file" ref="file" class="w-100 ml-3"/>
-            <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button>
           </div>
         </div>
         <!--url-->
@@ -114,8 +113,7 @@
     </div>
 
     <div class="create-submit">
-      <button class="temp-form" @click="createArticle({articleData,temp:0})">임시저장</button>
-      <button class="complete-form" @click="createArticle({articleData,temp:1})">
+      <button class="complete-form" @click="articleUpdate">
         <i class="fas fa-check"></i> 완료
       </button>
     </div>
@@ -137,10 +135,41 @@ export default {
     return {
       articleUpdateData: {},
       selectedTBG: "카테고리",
+      coNum: "1",
     };
   },
   methods: {
     ...mapActions(["getArticle", "deleteArticle", "updateArticle"]),
+     fileUpload: function () {
+      var formData = new FormData();
+      this.file = this.$refs.file.files[0];
+      formData.append("file", this.file);
+      formData.append("uid", 10);
+      axios.post(`${BACK_URL}/file`
+          ,formData
+          , {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          })
+        .then((response) => {
+          this.path = response.data
+          this.articleData.image = this.path
+          var tmp=this.articleData.image.split('.')
+          tmp[1]=tmp[1].toLowerCase()
+          this.articleData.image = tmp[0]+'.'+tmp[1]
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    articleUpdate(){
+      this.fileUpload()
+      setTimeout(() => {
+        var articleUpdateData=this.articleData
+        this.updateArticle({articleUpdateData,temp:1})
+      }, 300);
+    },
     selectCategory(num) {
       this.articleUpdateData.categoryId = num;
       if (num === 1) {
@@ -180,6 +209,8 @@ export default {
     } else {
       this.selectedTBG = "쉘위공구";
     }
+    this.articleData.endDate=''
+    this.articleData.endTime=''
   },
   computed: {
     ...mapState(["articleData"]),

@@ -6,7 +6,7 @@
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
           <!--게시글 수정,삭제,신고 버튼-->
-          <div v-if="articleData.partList.length===1">
+          <div v-if="udflag">
             <div
               class="article-drop dropdown dropleft"
               v-if="articleData.userId === userData.userId"
@@ -280,6 +280,7 @@
       </div>
     </div>
     <commentList />
+    <div>{{udflag}}</div>
   </div>
 </template>
 
@@ -351,6 +352,16 @@ export default {
         
       // }
       return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
+    },
+    udflag(){
+      var tmp = 0
+      for(const t of this.articleData.partList){
+        if(t.status===1){
+          tmp++
+        }
+      }
+
+      return tmp===1 ? true : false
     },
     joinFlag() {
       const tempList = [];
@@ -432,6 +443,7 @@ export default {
         .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
         .then((response) => {
           alert("구매가 확정되었습니다.");
+          this.getArticle(this.$route.params.ID)
         })
         .catch((error) => {
           console.log(error);

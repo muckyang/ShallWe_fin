@@ -11,7 +11,7 @@
                 장소 :
                 <input
                   type="text"
-                  value="편의점"
+                  :value="userData.address"
                   id="keyword"
                   size="15"
                   @keypress.enter="searchPlaces"
@@ -34,6 +34,7 @@
 
 <script>
 const APP_KEY=process.env.VUE_APP_KAKAO_APP_KEY
+import {mapState} from 'vuex'
 export default {
   props: {
     coNum: String,
@@ -58,6 +59,12 @@ export default {
       document.head.appendChild(script);
     }
   },
+  computed:{
+    ...mapState(['userData'])
+  },
+  updated(){
+    this.searchPlaces()
+  },
   methods: {
     initMap() {
       var mapContainer = document.getElementById("map");
@@ -75,7 +82,7 @@ export default {
     },
     searchPlaces() {
       if (document.getElementById("keyword").value.indexOf("편의점") === -1) {
-        var keyword = document.getElementById("keyword").value + " 편의점";
+        var keyword = document.getElementById("keyword").value + "편의점";
       } else {
         var keyword = document.getElementById("keyword").value;
       }
