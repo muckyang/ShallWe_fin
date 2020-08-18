@@ -7,21 +7,18 @@
         <b-card no-body class="overflow-hidden">
           <b-row no-gutters>
             <b-col>
-              <b-card-img height="50%" src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0 mt-3" style="width: 50%;"></b-card-img>
-              <hr style="width: 70%" class="mb-1">
-              <h5>{{ userData.name }} 님의 프로필</h5>
-              <h6 class="mt-0" style="font-size: 70%;">{{ userData.email }}</h6>
+              <h5 class="mt-5">"{{ userData.nickname }}" 님의 프로필</h5>
+              <hr style="width: 70%;">
+              <h6 class="mt-0 mb-4">{{ userData.email }}</h6>
+              <h6 class="mt-0">닉네임: {{ userData.nickname }}</h6>
+              <h6 class="mt-0">지역: {{ userData.address }}</h6>
             </b-col>
             <b-col style="border-left: solid 1px lightgray">
               <b-card-body>
                 <b-card-text>
                   <div class="text-left">
-                    <h6 class="mt-0">닉네임: {{ userData.nickname }}</h6>
-                    <h6 class="mt-0">생일: {{ userData.birthday }}</h6>
-                    <h6 class="mt-0">지역: {{ userData.address }}</h6>
-                    <hr style="width: 90%">
-                    <h6>자기소개</h6>
-                    <div style="border: solid 1px lightgray; height: 70px;"></div>
+                    <h6 class="text-center mt-5">자기소개</h6>
+                    <div class="mb-5" style="border: solid 1px lightgray; height: 100px;"></div>
                   </div>
                 </b-card-text>
               </b-card-body>
@@ -29,32 +26,21 @@
           </b-row>
         </b-card>
       </div>
-      <div class="col-3">
-        <b-card
-          tag="article"
-          style="max-width: 20rem;"
-        >
-          <b-card-title class="mt-4">포인트</b-card-title>
-          <b-card-img width="50" class="mb-3" src="https://picsum.photos/600/300/?image=25"></b-card-img>
-          <b-card-text class="mb-3">
-            {{ userData.userPoint }} Point
-          </b-card-text>
-        </b-card>
-      </div>
-      <div class="col-3">
-        <b-card
-          tag="article"
-          style="max-width: 20rem;"
-        >
-          <b-card-title class="mt-4">등급</b-card-title>
-          <b-card-img width="50" class="mb-3" src="https://picsum.photos/600/300/?image=25"></b-card-img>
-          <b-card-text class="mb-3">
-            Level {{ userData.grade }}
-          </b-card-text>
-        </b-card>
+        <div class="col-6">
+          <b-card no-body class="overflow-hidden h-100">
+            <b-row no-gutters>
+              <b-col class="d-flex justify-content-center mt-5 mb-5">
+                <img class="mt-4 mb-4" style="width: 120px; height: 120px" src="https://picsum.photos/1024/480/?image=52" alt="">
+                <div class="ml-5 mt-4" style="border-left: solid 1px lightgray">
+                  <h6 class="mb-5 mt-3 ml-5">등급: Level {{ userData.grade }}</h6>
+                  <h6 class="ml-5">포인트: {{ userData.userPoint }}<small class="ml-1">Point</small></h6>
+                </div>
+              </b-col>
+            </b-row>
+          </b-card>
+        </div>
       </div>
     </div>
-  </div>
 
       <!-- 2. 중단 -->
       <div class="container">
