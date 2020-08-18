@@ -94,12 +94,3 @@ export default {
 };
 </script>
 
-<style>
-a:link { color: red; text-decoration: none;}
- a:visited { color: black; text-decoration: none;}
- a:hover { color: blue; text-decoration: underline;}
-router-link:link { color: red; text-decoration: none;}
- router-link:visited { color: black; text-decoration: none;}
- router-link:hover { color: blue; text-decoration: underline;}
-
-</style>
