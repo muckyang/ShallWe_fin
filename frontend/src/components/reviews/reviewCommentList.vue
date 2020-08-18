@@ -2,16 +2,19 @@
   <div class="review-comment-box">
     <div class="review-comment-start">
       <i class="far fa-comment-dots"></i>
-      댓글 {{comments.length}}
+      댓글 {{ commentList.length }}
     </div>
 
     <!--댓글 보여주는 공간-->
-    <reviewCommentListItem
-      v-for="comment in comments"
-      :key="comment.commentId"
-      :comment="comment"
-      @re-render="getArticle(reviewId)"
-    />
+    <div class="review-comment-list-box mb-3">
+      <reviewCommentListItem
+        v-for="comment in commentList"
+        :key="comment.commentId"
+        :comment="comment"
+        :reviewId="reviewId"
+        @re-render="delComment(reviewId)"
+      />
+    </div>
     <!--댓글 등록 공간-->
     <div class="review-comment-write">
       <div class="review-comment-text">
@@ -23,7 +26,9 @@
         />
       </div>
       <div class="review-comment-submit">
-        <button type="button" class="comment-submit-btn" @click="createComment">등록</button>
+        <button type="button" class="comment-submit-btn" @click="createComment">
+          등록
+        </button>
       </div>
     </div>
   </div>
@@ -32,6 +37,7 @@
 <script>
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 import axios from "axios";
+import cookies from "vue-cookies";
 import { mapState, mapActions, mapMutations } from "vuex";
 import reviewCommentListItem from "@/components/reviews/reviewCommentListItem";
 
@@ -42,6 +48,7 @@ export default {
   },
   props: {
     reviewId: Number,
+    commentList: Array,
   },
   data() {
     return {
@@ -58,14 +65,39 @@ export default {
   methods: {
     ...mapActions(["getArticle"]),
     ...mapMutations(["GET_COMMENTS"]),
+    delComment(reviewID) {
+      const auth = { token: cookies.get("auth-token") };
+      axios
+        .post(`${BACK_URL}/post/detail/${reviewID}`, auth)
+        .then((response) => {
+          this.commentList = response.data.commentList;
+          this.$emit("lengthCheck", this.commentList.length);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+    getReview(reviewID) {
+      const auth = { token: cookies.get("auth-token") };
+      axios
+        .post(`${BACK_URL}/post/detail/${reviewID}`, auth)
+        .then((response) => {
+          this.commentList.push(
+            response.data.commentList[response.data.commentList.length - 1]
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
     createComment() {
       if (this.commentData.content) {
         axios
           .post(`${BACK_URL}/comment/create`, this.commentData)
           .then(() => {
-            console.log("댓글 등록 완료");
             this.commentData.content = "";
-            this.getArticle(this.reviewId); //다시 보기
+            this.getReview(this.reviewId);
+            this.$emit("lengthCheck", this.commentList.length);
           })
           .catch((err) => {
             console.error(err);
@@ -92,9 +124,10 @@ export default {
 
 <style>
 .review-comment-box {
-  /* border: 1px solid red; */
+  /* margin: 0 auto; */
   width: 100%;
-  margin: 0 auto;
+  /* height: 50px; */
+  /* padding: 0 12px; */
 }
 .review-comment-start {
   width: 95%;
@@ -131,6 +164,7 @@ export default {
   /* border: none;
   outline: none; */
   display: block;
+  /* height: 100%; */
 }
 .review-comment-input {
   border: none;
@@ -139,5 +173,23 @@ export default {
 }
 .review-comment-input:focus::placeholder {
   color: transparent;
+}
+.review-comment-list-box {
+  max-height: 230px;
+  overflow: auto;
+}
+.review-comment-list-box::-webkit-scrollbar {
+  width: 7.5px;
+}
+.review-comment-list-box::-webkit-scrollbar-track {
+  background-color: rgb(184, 184, 184);
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 5px rgb(209, 205, 205);
+}
+.review-comment-list-box::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #727171;
+  background-clip: padding-box;
+  border: 2px solid transparent;
 }
 </style>

@@ -62,130 +62,47 @@
 		</div>
 		<hr class="division-box-underline-1">
 
-		<!-- 첫번째 줄 -->
-		<b-container>
-			<b-row>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-			</b-row>
-		</b-container>
-
-		<!-- 두번째 줄 -->
-		<b-container>
-			<b-row>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-			</b-row>
+		<b-container class="bv-example-row">
+		<b-row align-h="start">
+			<b-col cols="12" sm="6" lg="4" v-for="article in recentList" :key="article.articleId">
+			<router-link
+				:to="{
+				name: 'articleDetail',
+				params: { ID: `${article.articleId}` },
+				}"
+				class="text-decoration-none text-dark"
+			>
+				<b-card
+				class="article-card m-4 _card card__one"
+				align="left"
+				img-width="100%"
+				img-height="60%"
+				:img-src="article.image"
+				img-alt="Image"
+				img-top
+				footer-bg-variant="#ee6e9f"
+				footer-class="card-end"
+				>
+				<b-card-text>
+					<h5 class="article-title">{{ article.title }}</h5>
+					<h6 class="article-address">{{ article.address }}</h6>
+					<h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+				</b-card-text>
+				<template v-slot:footer>
+					<div class="d-flex justify-content-between">
+					<small>
+						<b-icon-heart></b-icon-heart>
+						{{ article.likeNum }}개
+						<b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
+						{{ article.commentNum }}개
+					</small>
+					<small class="text-muted">{{ article.timeAgo }}</small>
+					</div>
+				</template>
+				</b-card>
+			</router-link>
+			</b-col>
+		</b-row>
 		</b-container>
 
 		<!-- 3. 마감 임박 게시물-->
@@ -195,130 +112,47 @@
 		</div>
 		<hr class="division-box-underline-2">
 		
-		<!-- 첫번째 줄 -->
-		<b-container>
-			<b-row>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-			</b-row>
-		</b-container>
-
-		<!-- 두번째 줄 -->
-		<b-container>
-			<b-row>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="m-4" align="left" img-width="100%" 
-					img-height="60%" img-src="https://picsum.photos/300/300/?image=41" img-alt="Image" img-top>
-						<b-card-text>
-							<h5>제목: 제목입니다.</h5>
-							<h6>지역: 대전</h6>
-							<h6>가격: 50000원/20000원</h6>
-						</b-card-text>
-						<template v-slot:footer>
-							<div class="d-flex justify-content-between">
-								<small>
-									<b-icon-heart></b-icon-heart> 0개
-									<b-icon-chat-dots class="ml-1"></b-icon-chat-dots> 0개
-								</small>
-								<small class="text-muted">10분 전</small>
-							</div>
-						</template>
-					</b-card>
-				</b-col>
-			</b-row>
+		<b-container class="bv-example-row">
+		<b-row align-h="start">
+			<b-col cols="12" sm="6" lg="4" v-for="article in deadLineList" :key="article.articleId">
+			<router-link
+				:to="{
+				name: 'articleDetail',
+				params: { ID: `${article.articleId}` },
+				}"
+				class="text-decoration-none text-dark"
+			>
+				<b-card
+				class="article-card m-4 _card card__one"
+				align="left"
+				img-width="100%"
+				img-height="60%"
+				:img-src="article.image"
+				img-alt="Image"
+				img-top
+				footer-bg-variant="#ee6e9f"
+				footer-class="card-end"
+				>
+				<b-card-text>
+					<h5 class="article-title">{{ article.title }}</h5>
+					<h6 class="article-address">{{ article.address }}</h6>
+					<h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+				</b-card-text>
+				<template v-slot:footer>
+					<div class="d-flex justify-content-between">
+					<small>
+						<b-icon-heart></b-icon-heart>
+						{{ article.likeNum }}개
+						<b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
+						{{ article.commentNum }}개
+					</small>
+					<small class="text-muted">{{ article.timeAgo }}</small>
+					</div>
+				</template>
+				</b-card>
+			</router-link>
+			</b-col>
+		</b-row>
 		</b-container>
 		
 		<!-- 4. 베스트 후기 -->
@@ -328,74 +162,24 @@
 		</div>
 		<hr class="division-box-underline-3">
 
-		<!-- 첫번째 줄 -->
-		<b-container>
-			<b-row>
-				<b-col cols="12" sm="4">
-					<b-card class="text-center mt-3">
-						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="text-center mt-3">
-						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="text-center mt-3">
-						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-					</b-card>
-				</b-col>
-			</b-row>
-		</b-container>
-
-		<!-- 두번째 줄 -->
-		<b-container>
-			<b-row>
-				<b-col cols="12" sm="4">
-					<b-card class="text-center mt-3">
-						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="text-center mt-3">
-						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="text-center mt-3">
-						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-					</b-card>
-				</b-col>
-			</b-row>
-		</b-container>
-
-		<!-- 세번째 줄 -->
-		<b-container>
-			<b-row>
-				<b-col cols="12" sm="4">
-					<b-card class="text-center mt-3">
-						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="text-center mt-3">
-						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-					</b-card>
-				</b-col>
-				<b-col cols="12" sm="4">
-					<b-card class="text-center mt-3">
-						<b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
-					</b-card>
-				</b-col>
-			</b-row>
-		</b-container>
-
+			<b-container>
+				<b-row>
+					<b-col cols="12" sm="4" v-for="review in bestReview" :key="review.articleId">
+						<b-card class="text-center mt-3">
+							<b-card-text>{{review.title}}</b-card-text>
+							<b-card-text>{{review.description}}</b-card-text>
+						</b-card>
+					</b-col>
+				</b-row>
+			</b-container>
 		<hr>
 	</div>
 </template>
 
 <script>
+	const BACK_URL = process.env.VUE_APP_BACK_URL
+	import axios from 'axios'
+
 	export default {
 		name:'Home',
 		

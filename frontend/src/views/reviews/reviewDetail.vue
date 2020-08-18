@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-3">
-    <div class="review-container">
+    <div v-if="!isdeleted" class="review-container">
       <div class="review-top">
         <div
           class="review-drop dropdown dropleft m-0 pr-3"
@@ -19,7 +19,7 @@
             >
               <a class="dropdown-item">수정</a>
             </router-link>
-            <a class="dropdown-item">삭제</a>
+            <a class="dropdown-item" @click="deleteReview(review.articleId)">삭제</a>
           </div>
         </div>
         <div
@@ -39,7 +39,7 @@
               <div class="comment-icon">
                 <i class="far fa-comment-dots"></i>
               </div>
-              {{review.commentNum}}
+              {{review.commentList.length}}
             </div>-->
           </div>
         </div>
@@ -54,7 +54,11 @@
             <div
               :class="{'review-description':review.image, 'review-description-ver':review.image==null}"
             >{{review.description}}</div>
-            <reviewCommentList :reviewId="review.articleId" />
+            <reviewCommentList
+              :commentList="review.commentList"
+              :reviewId="review.articleId"
+              @lengthCheck="lengthCheck"
+            />
           </div>
         </div>
       </div>
@@ -91,6 +95,7 @@ export default {
   },
   data() {
     return {
+      isdeleted: false,
       isLiked: false,
       likeFlag: false,
       mainProps: { width: 450, height: 450 },
@@ -100,7 +105,23 @@ export default {
     ...mapState(["articleData", "userData"]),
   },
   methods: {
-    ...mapActions(["getArticle", "getUserData", "createArticleAccuse"]),
+    ...mapActions([
+      "getArticle",
+      "getUserData",
+      "createArticleAccuse",
+      "deleteArticle",
+    ]),
+    deleteReview(reviewID) {
+      const auth = { token: this.$cookies.get("auth-token") };
+      axios
+        .get(`${BACK_URL}/post/delete/${reviewID}`)
+        .then(() => {
+          this.isdeleted = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     likeCheck() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios
@@ -112,14 +133,22 @@ export default {
     },
     likeChange() {
       this.likeCheck();
+      if (this.isLiked == true) {
+        this.review.likeNum -= 1;
+      } else {
+        this.review.likeNum += 1;
+      }
     },
     toggleId(num) {
       const result = "review" + num;
       return result;
     },
-    created: function () {
-      this.likeCheck();
+    lengthCheck(commentLength) {
+      this.review.commentList.length = commentLength;
     },
+  },
+  created: function () {
+    this.likeCheck();
   },
 };
 </script>
@@ -207,6 +236,8 @@ export default {
 }
 .review-description {
   padding: 0 12px;
+  height: 50%;
+  overflow: auto;
 }
 .review-description-ver {
   padding: 0 26px;
@@ -216,9 +247,10 @@ export default {
   /* margin: 10px 0 10px 0; */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   text-align: left;
   width: 42%;
+  height: 100%;
   /* padding: 0px 25px; */
 }
 .review-content-ver {

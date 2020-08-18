@@ -1,9 +1,12 @@
 <template>
+  <!-- <div data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="mt-1"> -->
   <div class="mt-1">
-    <div class="d-flex ma">
+    <div class="d-flex">
       <div class="review-comment-container">
         <div class="comment-user">
-          {{ comment.nickname }}
+          <router-link
+            :to="{ name: 'userDetail', params: { ID: comment.userId }}"
+          >{{ comment.nickname }}</router-link>
           <div class="comment-drop dropdown dropleft" v-if="comment.userId === userData.userId">
             <button type="button" class="comment-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
@@ -16,7 +19,7 @@
 
           <!-- 댓글 신고 -->
           <div v-else>
-            <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm">신고</b-button>
+            <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
             <b-modal id="modal-1" title="신고 접수">
               <h6>신고 사유</h6>
               <div class="dropdown">
@@ -65,12 +68,14 @@
 <script>
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 import axios from "axios";
+import cookies from "vue-cookies";
 import { mapState, mapActions } from "vuex";
 
 export default {
   name: "commentListItem",
   props: {
     comment: Object,
+    reviewId: Number,
   },
   data() {
     return {
@@ -168,6 +173,24 @@ export default {
 <style>
 /* @import '../node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'; */
 /* @import url('node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'); */
+.siren-btn {
+  border: none;
+  background-color: transparent;
+  color: black;
+  font-size: 80%;
+  font-weight: bold;
+}
+.siren-btn:hover {
+  border: none;
+  background-color: transparent;
+  color: black;
+}
+.siren-btn:focus {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: black;
+}
 .review-comment-container {
   border-bottom: 1px solid rgb(237, 237, 240);
   display: flex;

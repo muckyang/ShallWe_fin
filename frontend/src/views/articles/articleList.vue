@@ -81,7 +81,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="article.image"
+                  :img-src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -90,7 +90,7 @@
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
                     <h6 class="article-address">{{ article.address }}</h6>
-                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                    <h6 class="article-price">가격: {{ sumPrice(article.sumPrice) }}/{{ minPrice(article.minPrice) }}</h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
@@ -131,7 +131,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="article.image"
+                  :img-src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -140,7 +140,7 @@
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
                     <h6 class="article-address" style="font-size: 13.5px;">{{ article.address }}</h6>
-                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                    <h6 class="article-price">가격: {{ sumPrice(article.sumPrice) }}/{{ minPrice(article.minPrice) }}</h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
@@ -181,7 +181,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="article.image"
+                  :img-src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -190,7 +190,7 @@
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
                     <h6 class="article-address" style="font-size: 13.5px;">{{ article.address }}</h6>
-                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                    <h6 class="article-price">가격: {{ sumPrice(article.sumPrice) }}/{{ minPrice(article.minPrice) }}</h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
@@ -231,7 +231,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="article.image"
+                  :img-src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -240,7 +240,7 @@
                   <b-card-text>
                     <h5 class="article-title">{{ article.title }}</h5>
                     <h6 class="article-address">{{ article.address }}</h6>
-                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                    <h6 class="article-price">가격: {{ sumPrice(article.sumPrice) }}/{{ minPrice(article.minPrice) }}</h6>
                   </b-card-text>
                   <template v-slot:footer>
                     <div class="d-flex justify-content-between">
@@ -327,12 +327,23 @@ export default {
       // this.getArticles({ temp: 1, categoryId: this.categoryNum });
     },
   },
-  // computed: {
-  //   ...mapState(["articles"]),
-  // },
-  // created() {
-  //   this.getArticles({ temp: 1, categoryId: this.categoryNum });
-  // },
+    computed: {
+      imageUrl(){
+        return (article)=>{
+          return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
+        }
+      },
+      minPrice(){
+        return(price)=>{
+          return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(price)
+        }
+      },
+      sumPrice(){
+          return(price)=>{
+            return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(price)
+          }
+        },
+      },
 };
 </script>
 
