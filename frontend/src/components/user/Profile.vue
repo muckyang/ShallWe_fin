@@ -57,32 +57,140 @@
         <div class="col-9">
           <div class="tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active text-dark" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-1-tab">
-              내가 쓴 게시물 목록
-              {{ userData.articleList }}
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">제목</th>
+                    <th scope="col">내용</th>
+                    <th scope="col">최소 금액 / 모인 금액</th>
+                    <th scope="col">비고</th>
+                  </tr>
+                </thead>
+                <tbody v-for="alist in userData.articleList" :key="alist.articleId">
+                  <tr>
+                    <td>{{ alist.title }}</td>
+                    <td>{{ alist.description }}</td>
+                    <td>{{ alist.sumPrice }}원 / {{ alist.minPrice }}원</td>
+                    <td><router-link class="btn btn-info btn-sm" :to="{ name: 'articleDetail', params: { ID: `${alist.articleId}` },}">보러가기</router-link></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
-              참여한 게시물
-              {{ userData.joinList }}
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">제목</th>
+                    <th scope="col">내용</th>
+                    <th scope="col">최소 금액 / 모인 금액</th>
+                    <th scope="col">비고</th>
+                  </tr>
+                </thead>
+                <tbody v-for="jlist in userData.joinList" :key="jlist.articleId">
+                  <tr>
+                    <td>{{ jlist.title }}</td>
+                    <td>{{ jlist.description }}</td>
+                    <td>{{ jlist.sumPrice }}원 / {{ jlist.minPrice }}원</td>
+                    <td><router-link class="btn btn-info btn-sm" :to="{ name: 'articleDetail', params: { ID: `${jlist.articleId}` },}">보러가기</router-link></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
-              거래 완료 게시물
-              {{ userData.completeList }}
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">제목</th>
+                    <th scope="col">내용</th>
+                    <th scope="col">최소 금액 / 모인 금액</th>
+                    <th scope="col">비고</th>
+                  </tr>
+                </thead>
+                <tbody v-for="clist in userData.completeList" :key="clist.articleId">
+                  <tr>
+                    <td>{{ clist.title }}</td>
+                    <td>{{ clist.description }}</td>
+                    <td>{{ clist.sumPrice }}원 / {{ clist.minPrice }}원</td>
+                    <td><router-link class="btn btn-info btn-sm" :to="{ name: 'articleDetail', params: { ID: `${clist.articleId}` },}">보러가기</router-link></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
-              내가 쓴 후기 목록
-              {{ userData.reviewList }}
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">제목</th>
+                    <th scope="col">내용</th>
+                    <th scope="col">비고</th>
+                  </tr>
+                </thead>
+                <tbody v-for="rlist in userData.reviewList" :key="rlist.articleId">
+                  <tr>
+                    <td>{{ rlist.title }}</td>
+                    <td>{{ rlist.description }}</td>
+                    <td><router-link class="btn btn-info btn-sm" :to="{ name: 'articleDetail', params: { ID: `${rlist.articleId}` },}">보러가기</router-link></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-5" role="tabpanel" aria-labelledby="v-pills-5-tab">
-              내가 쓴 커뮤니티 목록
-              {{ userData.freeList }}
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">제목</th>
+                    <th scope="col">내용</th>
+                    <th scope="col">비고</th>
+                  </tr>
+                </thead>
+                <tbody v-for="flist in userData.reviewList" :key="flist.articleId">
+                  <tr>
+                    <td>{{ flist.title }}</td>
+                    <td>{{ flist.description }}</td>
+                    <td><router-link class="btn btn-info btn-sm" :to="{ name: 'articleDetail', params: { ID: `${flist.articleId}` },}">보러가기</router-link></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-6" role="tabpanel" aria-labelledby="v-pills-6-tab">
-              내가 찜한 목록
-              {{ userData.likeList }}
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">제목</th>
+                    <th scope="col">내용</th>
+                    <th scope="col">최소 금액 / 모인 금액</th>
+                    <th scope="col">비고</th>
+                  </tr>
+                </thead>
+                <tbody v-for="llist in userData.likeList" :key="llist.articleId">
+                  <tr>
+                    <td>{{ llist.title }}</td>
+                    <td>{{ llist.description }}</td>
+                    <td>{{ llist.sumPrice }}원 / {{ llist.minPrice }}원</td>
+                    <td><router-link class="btn btn-info btn-sm" :to="{ name: 'articleDetail', params: { ID: `${llist.articleId}` },}">보러가기</router-link></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-7" role="tabpanel" aria-labelledby="v-pills-7-tab">
-              임시 저장 목록
-              {{ userData.tempList }}
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">제목</th>
+                    <th scope="col">내용</th>
+                    <th scope="col">최소 금액 / 모인 금액</th>
+                    <th scope="col">비고</th>
+                  </tr>
+                </thead>
+                <tbody v-for="tlist in userData.tempList" :key="tlist.articleId">
+                  <tr>
+                    <td>{{ tlist.title }}</td>
+                    <td>{{ tlist.description }}</td>
+                    <td>{{ tlist.sumPrice }}원 / {{ tlist.minPrice }}원</td>
+                    <td><router-link class="btn btn-info btn-sm" :to="{ name: 'articleDetail', params: { ID: `${tlist.articleId}` },}">보러가기</router-link></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -103,9 +211,6 @@ import {mapState, mapActions} from 'vuex'
 
 export default {
     name:'Profile',
-    components:{
-        // tempList
-    },
     data: function () {
         return {
             constants,
@@ -116,8 +221,6 @@ export default {
     },
     computed:{
         ...mapState(['userData','articles'])
-    },
-    created: function(){
     },
 }
 </script>
