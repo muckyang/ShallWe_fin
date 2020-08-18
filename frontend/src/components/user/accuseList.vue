@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <h1>신고 관리</h1>
+    <h3 class="mb-3">신고관리</h3>
     <ul class="list-group">
       <li class="list-group-item">
         <accuseListItem v-for="accuse in accuses" :key="accuse.accuseId" :accuse="accuse" />
