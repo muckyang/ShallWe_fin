@@ -8,10 +8,9 @@
           <a
             href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code"
             class="nav-link navbar1-item loginBtn"
-            v-if="!isLoggedin" @click="REMOVE_TOKEN"
-          >
-            카카오 로그인
-          </a>
+            v-if="!isLoggedin"
+            @click="REMOVE_TOKEN"
+          >카카오 로그인</a>
         </li>
         <!-- 로그인 O -->
         <li class="nav-item mr-1">
@@ -78,7 +77,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item pb-0">
-            <router-link to="#" class="nav-link mainMenu pb-0" id="aboutUs">쉘위 소개</router-link>
+            <router-link to="/introduce" class="nav-link mainMenu pb-0" id="aboutUs">쉘위 소개</router-link>
           </li>
 
           <li class="nav-item pb-0">
