@@ -1,66 +1,60 @@
 <template>
-    <div class="mt-5">
-      <!-- 1. 상단 -->
-      <div class="mb-4 container">
-        <div class="row">
-          <div class="col-5">
-            <b-card no-body class="overflow-hidden">
-              <b-row no-gutters>
-                <b-col>
-                  <b-card-img height="50%" src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0 mt-3" style="width: 50%;"></b-card-img>
-                  <hr style="width: 70%" class="mb-1">
-                  <h5>{{ userData.name }} 님의 프로필</h5>
-                  <h6 class="mt-0" style="font-size: 70%;">{{ userData.email }}</h6>
-                </b-col>
-                <b-col style="border-left: solid 1px lightgray">
-                  <b-card-body>
-                    <b-card-text>
-                      <div class="text-left">
-                        <h6 class="mt-0">닉네임: {{ userData.nickname }}</h6>
-                        <h6 class="mt-0">생일: {{ userData.birthday }}</h6>
-                        <h6 class="mt-0">지역: {{ userData.address }}</h6>
-                        <hr style="width: 90%">
-                        <h6>자기소개</h6>
-                        <div style="border: solid 1px lightgray; height: 70px;"></div>
-                      </div>
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-            </b-card>
-          </div>
-          <div class="col-7">
-            <b-card bg-variant="light" text-variant="dark" >
-              <b-card-text class="mt-2">
-                <h3>나의 레벨</h3>
-                <div class="progress">
-                  <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p>{{ userData.userPoint }} Point</p>
-                <div class="container mt-4">
-                  <div class="row">
-                    <div class="col-4">
-                      <i class="fas fa-balance-scale" style="font-size: 40px;"></i><br>
-                      <small>신뢰점수</small>
-                      <h3>100 점</h3>
-                    </div>
-                    <div class="col-4">
-                      <i class="fas fa-star" style="font-size: 40px;"></i><br>
-                      <small>활동점수</small>
-                      <h3>100 점</h3>
-                    </div>
-                    <div class="col-4">
-                      <i class="fas fa-heart" style="font-size: 40px;"></i><br>
-                      <small>인기점수</small>
-                      <h3>100 점</h3>
-                    </div>
+<div class="mt-5">
+  <!-- 1. 상단 -->
+  <div class="mb-4 container">
+    <div class="row">
+      <div class="col-6">
+        <b-card no-body class="overflow-hidden">
+          <b-row no-gutters>
+            <b-col>
+              <b-card-img height="50%" src="https://picsum.photos/400/400/?image=20" alt="Image" class="rounded-0 mt-3" style="width: 50%;"></b-card-img>
+              <hr style="width: 70%" class="mb-1">
+              <h5>{{ userData.name }} 님의 프로필</h5>
+              <h6 class="mt-0" style="font-size: 70%;">{{ userData.email }}</h6>
+            </b-col>
+            <b-col style="border-left: solid 1px lightgray">
+              <b-card-body>
+                <b-card-text>
+                  <div class="text-left">
+                    <h6 class="mt-0">닉네임: {{ userData.nickname }}</h6>
+                    <h6 class="mt-0">생일: {{ userData.birthday }}</h6>
+                    <h6 class="mt-0">지역: {{ userData.address }}</h6>
+                    <hr style="width: 90%">
+                    <h6>자기소개</h6>
+                    <div style="border: solid 1px lightgray; height: 70px;"></div>
                   </div>
-                </div>
-              </b-card-text>
-            </b-card>
-          </div>
-        </div>
+                </b-card-text>
+              </b-card-body>
+            </b-col>
+          </b-row>
+        </b-card>
       </div>
+      <div class="col-3">
+        <b-card
+          tag="article"
+          style="max-width: 20rem;"
+        >
+          <b-card-title class="mt-4">포인트</b-card-title>
+          <b-card-img width="50" class="mb-3" src="https://picsum.photos/600/300/?image=25"></b-card-img>
+          <b-card-text class="mb-3">
+            {{ userData.userPoint }} Point
+          </b-card-text>
+        </b-card>
+      </div>
+      <div class="col-3">
+        <b-card
+          tag="article"
+          style="max-width: 20rem;"
+        >
+          <b-card-title class="mt-4">등급</b-card-title>
+          <b-card-img width="50" class="mb-3" src="https://picsum.photos/600/300/?image=25"></b-card-img>
+          <b-card-text class="mb-3">
+            Level {{ userData.grade }}
+          </b-card-text>
+        </b-card>
+      </div>
+    </div>
+  </div>
 
       <!-- 2. 중단 -->
       <div class="container">
