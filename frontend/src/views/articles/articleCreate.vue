@@ -53,7 +53,7 @@
           <label>사진 업로드</label>
           <div class="d-flex">
             <input type="file" id="file" name="file" ref="file" class="w-100 ml-3"/>
-            <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button>
+            <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
           </div>
         </div>
         <!--url-->
@@ -115,7 +115,10 @@
 
     <div class="create-submit">
       <button class="temp-form" @click="createArticle({articleData,temp:0})">임시저장</button>
-      <button class="complete-form" @click="createArticle({articleData,temp:1})">
+      <!-- <button class="complete-form" @click="createArticle({articleData,temp:1})">
+        <i class="fas fa-check"></i> 완료
+      </button> -->
+      <button class="complete-form" @click="articleCreate">
         <i class="fas fa-check"></i> 완료
       </button>
     </div>
@@ -161,29 +164,35 @@ export default {
   },
   methods: {
     ...mapActions(["createArticle", "tempSaveArticle"]),
+    articleCreate(){
+      this.fileUpload()
+      setTimeout(() => {
+        var articleData=this.articleData 
+        this.createArticle({articleData,temp:1})
+      }, 300);
+    },
     fileUpload: function () {
-    var formData = new FormData();
-    this.file = this.$refs.file.files[0];
-    formData.append("file", this.file);
-    formData.append("uid", 10);
-    axios.post(`${BACK_URL}/file`
-        ,formData
-        , {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+      var formData = new FormData();
+      this.file = this.$refs.file.files[0];
+      formData.append("file", this.file);
+      formData.append("uid", 10);
+      axios.post(`${BACK_URL}/file`
+          ,formData
+          , {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          })
+        .then((response) => {
+          this.path = response.data
+          this.articleData.image = this.path
+          var tmp=this.articleData.image.split('.')
+          tmp[1]=tmp[1].toLowerCase()
+          this.articleData.image = tmp[0]+'.'+tmp[1]
         })
-      .then((response) => {
-        alert("업로드 완료!\n" + response.data);
-        this.path = response.data
-        this.articleData.image = this.path
-        var tmp=this.articleData.image.split('.')
-        tmp[1]=tmp[1].toLowerCase()
-        this.articleData.image = tmp[0]+'.'+tmp[1]
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .catch((error) => {
+          console.log(error);
+        });
     },
     selectCategory(num) {
       this.articleData.categoryId = num;
