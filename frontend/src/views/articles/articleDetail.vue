@@ -211,7 +211,7 @@
         <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
           <div class="member">
             <div class="member-writer">
-              {{ participant.writer }}
+              <router-link :to="{ name: 'userDetail', params: { ID: participant.userId }}">{{participant.writer}}</router-link>
               <i
                 v-if="articleData.userId === participant.userId"
                 class="fas fa-crown"

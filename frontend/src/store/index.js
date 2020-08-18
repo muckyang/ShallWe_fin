@@ -517,17 +517,6 @@ export default new Vuex.Store({
     //     })
     //     .catch((err) => console.log(err));
     // },
-    getUsers({ state, commit }, users) {
-      const auth = { token: state.authToken };
-      axios
-        .post(`${BACK_URL}/account/readAll`, auth)
-        .then((res) => {
-          commit("GET_USERS", res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
     createArticleAccuse(context, accuseArticleData) {
       axios
         .post(`${BACK_URL}/accuse/create`, accuseArticleData)
