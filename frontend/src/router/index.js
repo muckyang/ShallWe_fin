@@ -17,6 +17,9 @@ import klogin from "@/components/user/klogin.vue";
 import adminLogin from "@/components/user/adminLogin.vue";
 import userDetail from "@/components/user/userDetail.vue";
 
+//소개
+import aboutUs from "../views/introduce/aboutUs.vue";
+
 // 아티클
 import articleCreate from "../views/articles/articleCreate.vue";
 import articleDetail from "../views/articles/articleDetail.vue";
@@ -89,6 +92,13 @@ const routes = [
     path: "/user/klogin",
     name: "klogin",
     component: klogin,
+  },
+
+  //쉘위 소개
+  {
+    path: "/introduce",
+    name: "aboutUs",
+    component: aboutUs,
   },
 
   //게시글 CRUD
