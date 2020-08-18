@@ -38,6 +38,8 @@ export default new Vuex.Store({
       reviewList: [],
       likeList: [],
       tempList: [],
+      joinList: [],
+      completeList: [],
       grade: "",
     },
     articleData: {

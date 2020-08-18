@@ -65,11 +65,11 @@
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-3-tab">
               참여한 게시물
-              {{ userData }}
+              {{ userData.joinList }}
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-4" role="tabpanel" aria-labelledby="v-pills-4-tab">
               거래 완료 게시물
-              {{ userData }}
+              {{ userData.completeList }}
             </div>
             <div class="tab-pane fade text-dark" id="v-pills-5" role="tabpanel" aria-labelledby="v-pills-5-tab">
               내가 찜한 목록
