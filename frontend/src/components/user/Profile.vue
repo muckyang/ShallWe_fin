@@ -123,10 +123,8 @@
                                 <button class="btn btn-danger btn-sm" @click="deleteArticle({id:article.articleId,temp:0})">삭제하기</button>
                               </div>
                             </b-card-text>
-                           
                           </b-card>
                           </router-link>
-              
                       </div>
                   </div>
               </div>
@@ -145,7 +143,6 @@
 const BACK_URL = 'http://127.0.0.1:8080'
 import constants from '../../lib/constants'
 import {mapState, mapActions} from 'vuex'
-// import tempList from '@/views/articles/tempList'
 
 export default {
     name:'Profile',
@@ -164,7 +161,6 @@ export default {
         ...mapState(['userData','articles'])
     },
     created: function(){
-        // this.getArticles({temp:0,categoryId:0})
     },
 }
 </script>
