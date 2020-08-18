@@ -3,16 +3,38 @@
     <div class="a_layer">
       <div class="a_layer_inner">
         <div class="a_content">
-          <pre>
-        <div id="pink">Sh<div id="black">are  </div></div><div id="pink">a<div id="black">t  </div></div><div id="pink">l<div id="black">oca</div>l<div id="black"> area  </div></div><div id="pink">w<div id="black">ith  </div></div><div id="pink">e<div id="black">njoy</div></div>
-        <div><h5>- 같은 동네에서 즐겁게 공유하세요 -</h5></div>
-        </pre>
+          <div class="shall-we">
+            <div id="pink">
+              Sh
+              <div id="black">are</div>
+            </div>
+            <div id="pink">
+              a
+              <div id="black">t</div>
+            </div>
+            <div id="pink">
+              l
+              <div id="black">oca</div>l
+              <div id="black">area</div>
+            </div>
+            <div id="pink">
+              w
+              <div id="black">ith</div>
+            </div>
+            <div id="pink">
+              e
+              <div id="black">njoy</div>
+            </div>
+            <div>
+              <h5>- 같은 동네에서 즐겁게 공유하세요 -</h5>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="row aln-center">
-      <div class="col-4 col-6-medium col-12-small">
-        <section class="box style1">
+      <div class="col-4 col-6-medium col-12-small main-point">
+        <section class="box style1 main-point-box p-3 _card card__one">
           <img src="@/assets/img/food1.png" class="foodIcon" />
           <h3>쉘위배민</h3>
           <p>배달음식의 최저금액을 같이 맞춰</p>
@@ -21,7 +43,7 @@
         </section>
       </div>
       <div class="col-4 col-6-medium col-12-small">
-        <section class="box style1">
+        <section class="box style1 main-point-box p-3 _card card__one">
           <img src="@/assets/img/truck1.png" class="truckIcon" />
           <h3>쉘위택배</h3>
           <p>물건의 최저금액을 같이 맞춰</p>
@@ -30,7 +52,7 @@
         </section>
       </div>
       <div class="col-4 col-6-medium col-12-small">
-        <section class="box style1">
+        <section class="box style1 main-point-box p-3 _card card__one">
           <img src="@/assets/img/N1.png" class="nIcon" />
           <h3>쉘위공구</h3>
           <p>같은 물건을 대량구매하여 확</p>
@@ -91,6 +113,15 @@ export default {
 </script>
 
 <style>
+.main-point {
+  /* border: 1px solid red; */
+}
+.main-point-box {
+  /* border: 1px solid blue; */
+}
+.main-point-box:hover {
+  /* border: 1px solid red; */
+}
 .a_layer {
   display: table;
   margin: 10px auto;
@@ -157,5 +188,57 @@ h3 {
 .col-2-small {
   width: 50%;
   margin: 10px auto;
+}
+</style>
+
+<style scoped lang="scss">
+$color-bg: #f8f8f8;
+$card-padding: 20px;
+$grid-gutter: 31px;
+
+// Media Queries breakpoints
+$small: 480px;
+$medium: 768px;
+$large: 992px;
+$x-large: 1200px;
+
+._card {
+  position: relative;
+  flex: 1 1 100%;
+  background: lighten($color-bg, 3%);
+  border-radius: 3px;
+
+  @media screen and (min-width: $medium) {
+    flex-basis: calc(33.33% - (#{$grid-gutter * 2} + #{$card-padding * 2}));
+    margin: 0 $grid-gutter;
+  }
+}
+.card__one {
+  border-radius: 3px;
+  transition: transform 0.3s;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.15);
+    content: "";
+    opacity: 0;
+    border-radius: 4px;
+    z-index: -1;
+  }
+
+  &:hover,
+  &:focus {
+    transform: scale3d(1.006, 1.006, 1);
+
+    &::after {
+      opacity: 1;
+    }
+  }
 }
 </style>
