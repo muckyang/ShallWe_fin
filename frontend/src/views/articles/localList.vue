@@ -61,7 +61,7 @@
       >회원님의 동네에서 등록된 게시글이 더이상 존재하지 않습니다.</div>
     </infinite-loading>
     <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
-      <button class="review-create-btn">글 쓰기</button>
+      <button class="article-create-btn">글쓰기</button>
     </router-link>
   </div>
 </template>
@@ -125,6 +125,15 @@ export default {
 </script>
 
 <style>
+.article-create-btn {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #ee6e9f;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
+}
 /* .article-title {
   font-size: 17px;
   font-weight: 600;
