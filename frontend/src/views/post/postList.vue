@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <nav class="mt-4 mb-3 ml-3">
+  <div class="article-list-box mt-5 mx-auto">
+    <nav class="mt-4 mb-3 mx-1">
       <div class="nav nav-tabs d-flex" id="nav-tab" role="tablist">
         <a
           @click="changeCategory(100)"
@@ -11,7 +11,8 @@
           role="tab"
           aria-controls="nav-home"
           aria-selected="true"
-        >전체</a>
+          >전체</a
+        >
         <a
           @click="changeCategory(101)"
           class="nav-item nav-link text-dark"
@@ -21,7 +22,8 @@
           role="tab"
           aria-controls="nav-contact"
           aria-selected="false"
-        >공지</a>
+          >공지</a
+        >
         <a
           @click="changeCategory(103)"
           class="nav-item nav-link text-dark"
@@ -31,7 +33,8 @@
           role="tab"
           aria-controls="nav-contact"
           aria-selected="false"
-        >자유</a>
+          >자유</a
+        >
         <router-link :to="{ name: 'postCreate' }" class="ml-auto">
           <button class="post-write-btn">글쓰기</button>
         </router-link>
@@ -55,29 +58,29 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="article in articles" :key="article.articleId">
+            <tr
+              v-for="article in articles"
+              :key="article.articleId"
+              :class="{ 'post-tr': article.categoryId === 101 }"
+            >
               <th scope="row" v-if="article.categoryId === 101">
-                <h5>
-                  <b-badge variant="warning">공지</b-badge>
-                </h5>
+                <span class="notification">공지</span>
               </th>
-              <th scope="row" v-else-if="article.categoryId === 102">
-                <h5>
-                  <b-badge variant="light">후기</b-badge>
-                </h5>
-              </th>
+              <!-- <th scope="row" v-else-if="article.categoryId === 103">
+                <span class="post-id">{{ article.articleId }}</span>
+              </th> -->
               <th scope="row" v-else-if="article.categoryId === 103">
-                <h5>
-                  <b-badge variant="success">자유</b-badge>
-                </h5>
+                <span class="post-free">자유</span>
               </th>
               <td>
                 <router-link
+                  :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                >{{ article.title }}</router-link>
+                  >{{ article.title }}</router-link
+                >
               </td>
               <td>
                 <router-link
@@ -85,7 +88,8 @@
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                >{{ article.writer }}</router-link>
+                  >{{ article.writer }}</router-link
+                >
               </td>
               <td>{{ cutDate(article.createTime) }}</td>
             </tr>
@@ -111,27 +115,23 @@
           <tbody>
             <tr v-for="article in articles" :key="article.articleId">
               <th scope="row" v-if="article.categoryId === 101">
-                <h5>
-                  <b-badge variant="warning">공지</b-badge>
-                </h5>
+                <span class="notification">공지</span>
               </th>
-              <th scope="row" v-else-if="article.categoryId === 102">
-                <h5>
-                  <b-badge variant="light">후기</b-badge>
-                </h5>
-              </th>
+              <!-- <th scope="row" v-else-if="article.categoryId === 103">
+                <span class="post-id">{{ article.articleId }}</span>
+              </th> -->
               <th scope="row" v-else-if="article.categoryId === 103">
-                <h5>
-                  <b-badge variant="success">자유</b-badge>
-                </h5>
+                <span class="post-free">자유</span>
               </th>
               <td>
                 <router-link
+                  :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                >{{ article.title }}</router-link>
+                  >{{ article.title }}</router-link
+                >
               </td>
               <td>
                 <router-link
@@ -139,7 +139,8 @@
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                >{{ article.writer }}</router-link>
+                  >{{ article.writer }}</router-link
+                >
               </td>
               <td>{{ cutDate(article.createTime) }}</td>
             </tr>
@@ -165,27 +166,23 @@
           <tbody>
             <tr v-for="article in articles" :key="article.articleId">
               <th scope="row" v-if="article.categoryId === 101">
-                <h5>
-                  <b-badge variant="warning">공지</b-badge>
-                </h5>
+                <span class="notification">공지</span>
               </th>
-              <th scope="row" v-else-if="article.categoryId === 102">
-                <h5>
-                  <b-badge variant="light">후기</b-badge>
-                </h5>
-              </th>
+              <!-- <th scope="row" v-else-if="article.categoryId === 103">
+                <span class="post-id">{{ article.articleId }}</span>
+              </th> -->
               <th scope="row" v-else-if="article.categoryId === 103">
-                <h5>
-                  <b-badge variant="success">자유</b-badge>
-                </h5>
+                <span class="post-free">자유</span>
               </th>
               <td>
                 <router-link
+                  :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                >{{ article.title }}</router-link>
+                  >{{ article.title }}</router-link
+                >
               </td>
               <td>
                 <router-link
@@ -193,7 +190,8 @@
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                >{{ article.writer }}</router-link>
+                  >{{ article.writer }}</router-link
+                >
               </td>
               <td>{{ cutDate(article.createTime) }}</td>
             </tr>
@@ -201,11 +199,17 @@
         </table>
       </div>
     </div>
-    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
+    <infinite-loading
+      @infinite="infiniteHandler"
+      :identifier="infiniteId"
+      spinner="waveDots"
+    >
       <div
         slot="no-more"
         style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >더이상 게시물이 존재하지 않습니다!</div>
+      >
+        더이상 게시물이 존재하지 않습니다!
+      </div>
     </infinite-loading>
   </div>
 </template>
@@ -281,6 +285,23 @@ export default {
 </script>
 
 <style>
+.notification {
+  border: 1px solid #da4e83;
+  border-radius: 4px;
+  padding: 5px 5px;
+  font-size: 85%;
+  color: #da4e83;
+}
+.post-tr {
+  background-color: rgb(255, 250, 253);
+}
+.post-free {
+  border: 1px solid #9c9a9b;
+  border-radius: 4px;
+  padding: 5px 5px;
+  font-size: 85%;
+  color: #a09c9d;
+}
 .post-write-btn {
   border: none;
   outline: none;
@@ -289,5 +310,16 @@ export default {
   padding: 5px 10px;
   color: white;
   font-weight: bold;
+}
+.post-id {
+  font-size: 85%;
+  opacity: 0.9;
+}
+.post-title {
+  text-decoration: none;
+  color: #e25c8f;
+}
+.post-title:hover {
+  text-decoration: none;
 }
 </style>

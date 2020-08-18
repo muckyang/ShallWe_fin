@@ -1,7 +1,48 @@
 <template>
-  <div>
-    <p>{{ userData.nickname }}</p>
-    <button class="btn btn-danger btn-sm" @click="changeUserStatus()">회원삭제</button>
+  <div class="mt-5">
+  <!-- 1. 상단 -->
+  <div class="mb-4 container">
+    <div class="row">
+      <div class="col-6">
+        <b-card no-body class="overflow-hidden">
+          <b-row no-gutters>
+            <b-col>
+              <h5 class="mt-5">"{{ userData.nickname }}" 님의 프로필</h5>
+              <hr style="width: 70%;">
+              <h6 class="mt-0 mb-4">{{ userData.email }}</h6>
+              <h6 class="mt-0">닉네임: {{ userData.nickname }}</h6>
+              <h6 class="mt-0">지역: {{ userData.address }}</h6>
+            </b-col>
+            <b-col style="border-left: solid 1px lightgray">
+              <b-card-body>
+                <b-card-text>
+                  <div class="text-left">
+                    <h6 class="text-center mt-5">자기소개</h6>
+                    <div class="mb-5" style="border: solid 1px lightgray; height: 100px;"></div>
+                  </div>
+                </b-card-text>
+              </b-card-body>
+            </b-col>
+          </b-row>
+        </b-card>
+      </div>
+        <div class="col-6">
+          <b-card no-body class="overflow-hidden h-100">
+            <b-row no-gutters>
+              <b-col class="d-flex justify-content-center mt-5 mb-5">
+                <img class="mt-4 mb-4" style="width: 120px; height: 120px" src="https://picsum.photos/1024/480/?image=52" alt="">
+                <div class="ml-5 mt-4" style="border-left: solid 1px lightgray">
+                  <h6 class="mb-5 mt-3 ml-5">등급: Level {{ userData.grade }}</h6>
+                  <h6 class="ml-5">포인트: {{ userData.userPoint }}<small class="ml-1">Point</small></h6>
+                </div>
+              </b-col>
+            </b-row>
+          </b-card>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <button class="btn btn-danger" @click="changeUserStatus()">회원삭제</button>
   </div>
 </template>
 

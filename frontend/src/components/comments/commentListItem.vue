@@ -3,7 +3,9 @@
     <div class="d-flex">
       <div class="comment-box">
         <div class="comment-user">
-          {{ comment.nickname }}
+          <router-link
+            :to="{ name: 'userDetail', params: { ID: comment.userId }}"
+          >{{ comment.nickname }}</router-link>
           <div class="comment-drop dropdown dropleft" v-if="comment.userId === userData.userId">
             <button type="button" class="comment-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
@@ -16,7 +18,7 @@
 
           <!-- 댓글 신고 -->
           <div v-else>
-            <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm">신고</b-button>
+            <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
             <b-modal id="modal-1" title="신고 접수">
               <h6>신고 사유</h6>
@@ -115,7 +117,7 @@ export default {
       return res;
     },
     linkCommentData() {
-      this.accuseCommentData.accuseValue = this.comment.commentId
+      this.accuseCommentData.accuseValue = this.comment.commentId;
     },
     // 신고 유형 변경
     changeAccuseKind(kind) {
@@ -147,20 +149,13 @@ export default {
         .post(BACK_URL + "/comment/update", this.comment)
         .then((response) => {
           this.flag = false;
-          //~~~~~~~~~~~~~~~~~~~~~~~~~중요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-          // this.commentData=response.data
-          //다시 댓글을 전부 다시 받는 것이 아니라 수정 후 응답으로 수정된 댓글만 다시 받아온다.
-          //~~~~~~~~~~~~~~~~~~~~~~~~~중요~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         })
         .catch((err) => {
           console.error(err);
         });
     },
     updateCancel() {
-      console.log(this.canceldata);
-      console.log(this.comment, "바뀐 댓글데이타");
       this.comment = this.canceldata;
-      console.log(this.comment, "취소 후");
       this.watchFlag = true;
       this.flag = false;
     },
@@ -170,9 +165,6 @@ export default {
       this.$emit("re-render");
     },
   },
-  // created(){
-  //     console.log(this.comment)
-  // }
 };
 </script>
 

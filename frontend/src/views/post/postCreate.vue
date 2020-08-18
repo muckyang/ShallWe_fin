@@ -8,7 +8,7 @@
         <tr>
           <th scope="row">제목</th>
           <td class="d-flex">
-            <div class="btn-group">
+            <!-- <div class="btn-group">
               <button
                 type="button"
                 class="btn btn-outline-secondary btn-sm dropdown-toggle"
@@ -18,20 +18,26 @@
               >{{ selectedTBG }}</button>
               <div class="dropdown-menu">
                 <a class="dropdown-item" href="#" @click="selectCategory(101)">공지</a>
-                <a class="dropdown-item" href="#" @click="selectCategory(102)">후기</a>
                 <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
-                <!-- 관리자라면 선택할 수 있음
-                <a class="dropdown-item" href="#" @click="selectCategory(104)">공지사항</a>-->
+                관리자라면 선택할 수 있음
+                <a class="dropdown-item" href="#" @click="selectCategory(104)">공지사항</a>
               </div>
-            </div>
-            <b-form-input type="text" v-model="articleData.title"></b-form-input>
+            </div> -->
+            <b-form-input
+              type="text"
+              v-model="articleData.title"
+            ></b-form-input>
           </td>
         </tr>
         <tr>
           <th scope="row">내용</th>
           <td>
             <div>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="articleData.description"></b-form-textarea>
+              <b-form-textarea
+                id="textarea-rows"
+                rows="8"
+                v-model="articleData.description"
+              ></b-form-textarea>
             </div>
           </td>
         </tr>
@@ -44,11 +50,13 @@
       </tbody>
     </table>
     <hr />
-    <button class="temp-form" @click="createArticle({articleData,temp:0})">임시저장</button>
+    <button class="temp-form" @click="createArticle({ articleData, temp: 0 })">
+      임시저장
+    </button>
     <button
       class="complete-form"
       type="submit"
-      @click="createArticle({articleData,temp:2})"
+      @click="createArticle({ articleData, temp: 2 })"
       value="Submit"
     >
       <i class="fas fa-check"></i> 완료
@@ -66,7 +74,7 @@ export default {
   data() {
     return {
       articleData: {
-        categoryId: "카테고리",
+        categoryId: 103,
         title: null,
         description: null,
         token: this.$cookies.get("auth-token"),

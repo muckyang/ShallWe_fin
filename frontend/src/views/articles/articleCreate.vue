@@ -14,6 +14,7 @@
             v-model="articleData.address"
             :placeholder="address"
             style="font-family: FontAwesome;"
+            readonly
           />
         </div>
         <!--제목-->
@@ -38,8 +39,8 @@
         <!--시작금액/전체금액-->
         <div class="price">
           <label for>시작금액 / 전체금액</label>
-          <input type="text" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
-          <input type="text" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
+          <input type="number" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
+          <input type="number" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
         </div>
         <!--종료일시-->
         <div class="endTime">
@@ -47,16 +48,18 @@
           <input type="date" v-model="articleData.endDate" />
           <input type="time" id="form-endTime" v-model="articleData.endTime" />
         </div>
-        <!--이미지-->
-        <div class="imageInsert">
-          <label for>사진 첨부</label>
-          <input type="file" @change="imageChange" />
-          <!-- <b-form-file @change="imageChange" plain></b-form-file> -->
+        <!-- 파일 업로드 -->
+        <div class="imageInsert d-flex">
+          <label>사진 업로드</label>
+          <div class="d-flex">
+            <input type="file" id="file" name="file" ref="file" class="w-100 ml-3"/>
+            <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
+          </div>
         </div>
         <!--url-->
         <div class="url">
           <label for="url">URL</label>
-          <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" />
+          <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" required/>
         </div>
         <!--오픈톡방url-->
         <div class="url">
@@ -66,15 +69,14 @@
         <!--내용-->
         <div class="createContent">
           <label for="textarea-rows">내용</label>
-          <textarea name id="textarea-rows" cols="38" rows="6" v-model="articleData.description"></textarea>
+          <b-form-textarea
+              id="textarea-rows"
+              v-model="articleData.description"
+              placeholder="내용을 입력하세요..."
+              rows="3"
+              max-rows="6"
+            ></b-form-textarea>
         </div>
-        <!--태그-->
-        <!-- <div class="tag">
-          <label for="tags-basic">태그</label>
-          <div class="tags">
-            <b-form-tags size="sm" input-id="tags-basic" v-model="articleData.tags" class="mb-2"></b-form-tags>
-          </div>
-        </div>-->
       </div>
     </div>
 
@@ -112,8 +114,8 @@
     </div>
 
     <div class="create-submit">
-      <button class="temp-form" @click="createArticle({articleData,temp:0})">임시저장</button>
-      <button class="complete-form" @click="createArticle({articleData,temp:1})">
+      <button class="temp-form" @click="articleCreate(0)">임시저장</button>
+      <button class="complete-form" @click="articleCreate(1)">
         <i class="fas fa-check"></i> 완료
       </button>
     </div>
@@ -134,9 +136,9 @@ export default {
   data() {
     return {
       articleData: {
-        categoryId: "카테고리",
+        categoryId: null,
         title: null,
-        address: "",
+        address: null,
         description: null,
         minPrice: null,
         myPrice: null,
@@ -152,10 +154,43 @@ export default {
       selectedTBG: "카테고리",
       coNum: "1",
       address: " \uf060" + " 지도에서 만남의 장소를 설정하세요",
+      file: '',
+      path: '',
+      uid: '',
     };
   },
   methods: {
     ...mapActions(["createArticle", "tempSaveArticle"]),
+    articleCreate(num){
+      this.fileUpload()
+      setTimeout(() => {
+        var articleData=this.articleData 
+        this.createArticle({articleData,temp:num})
+      }, 300);
+    },
+    fileUpload: function () {
+      var formData = new FormData();
+      this.file = this.$refs.file.files[0];
+      formData.append("file", this.file);
+      formData.append("uid", 10);
+      axios.post(`${BACK_URL}/file`
+          ,formData
+          , {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          })
+        .then((response) => {
+          this.path = response.data
+          this.articleData.image = this.path
+          var tmp=this.articleData.image.split('.')
+          tmp[1]=tmp[1].toLowerCase()
+          this.articleData.image = tmp[0]+'.'+tmp[1]
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     selectCategory(num) {
       this.articleData.categoryId = num;
       if (num === 1) {
@@ -185,6 +220,26 @@ export default {
       this.articleData.address = address;
     },
   },
+  watch: {
+    articleData:{
+      deep: true,
+      handler(){
+        try{
+          if(this.articleData.minPrice<0){
+            alert("1이상의 정수만 입력이 가능합니다.")
+            this.articleData.minPrice=null
+          }
+          if(this.articleData.myPrice<0){
+            alert("1이상의 정수만 입력이 가능합니다.")
+            this.articleData.myPrice=null
+          }
+
+        }catch{
+
+        }
+      }
+    }
+  }
 };
 </script>
 
@@ -260,6 +315,16 @@ export default {
   transition: 0.4s;
 }
 .temp-form {
+  background-color: rgb(151, 151, 151);
+}
+._temp-form {
+  border: none;
+  outline: none;
+  margin: 0 0.5vw;
+  padding: 7px;
+  border-radius: 4px;
+  opacity: 0.85;
+  transition: 0.4s;
   background-color: rgb(151, 151, 151);
 }
 .complete-form {

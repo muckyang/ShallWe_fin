@@ -4,7 +4,8 @@ import VueRouter from "vue-router";
 import constants from "../lib/constants";
 
 import Home from "../views/Home.vue";
-
+//테스트
+import test from "../views/introduce/test.vue";
 // 유저
 import Login from "../components/user/Login.vue";
 import Join from "../components/user/Join.vue";
@@ -16,6 +17,9 @@ import accuseList from "../components/user/accuseList.vue";
 import klogin from "@/components/user/klogin.vue";
 import adminLogin from "@/components/user/adminLogin.vue";
 import userDetail from "@/components/user/userDetail.vue";
+
+//소개
+import aboutUs from "../views/introduce/aboutUs.vue";
 
 // 아티클
 import articleCreate from "../views/articles/articleCreate.vue";
@@ -55,6 +59,11 @@ const routes = [
     name: "HOME",
     component: Home,
   },
+  {
+    path: "/test",
+    name: "test",
+    component: test,
+  },
   // 관리자 로그인
   {
     path: "/user/admin",
@@ -89,6 +98,13 @@ const routes = [
     path: "/user/klogin",
     name: "klogin",
     component: klogin,
+  },
+
+  //쉘위 소개
+  {
+    path: "/introduce",
+    name: "aboutUs",
+    component: aboutUs,
   },
 
   //게시글 CRUD

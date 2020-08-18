@@ -9,11 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.StringTokenizer;
 
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.validation.Valid;
-
-import com.web.blog.dao.ArticleTagDao;
 import com.web.blog.dao.CommentDao;
 import com.web.blog.dao.LikeDao;
 import com.web.blog.dao.ParticipantDao;
@@ -40,7 +36,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,9 +68,6 @@ public class PostController {
     CommentDao commentDao;
 
     @Autowired
-    ArticleTagDao articleTagDao;
-
-    @Autowired
     TagDao tagDao;
 
     @Autowired
@@ -85,7 +77,6 @@ public class PostController {
     private JwtService jwtService;
 
 
-    private String imageFilename;
     // 게시물 만료시간 지나면 자동 비활성화
     @Scheduled(cron = "*/30 * * * * *")
     public void articleTimeOut() {
@@ -104,7 +95,7 @@ public class PostController {
     @PostMapping("/post/create/{temp}")
     @ApiOperation(value = "게시글 및 임시글 등록")
     public Object create(@Valid @RequestBody PostRequest req, @PathVariable int temp)
-            throws MessagingException, IOException {
+            throws  IOException {
         String token = req.getToken();
         String endDate = req.getEndDate();
         String endT = req.getEndTime();
@@ -168,12 +159,16 @@ public class PostController {
 
                 // 태그 등록
                 String[] tags = req.getTags();// 태그 내용
-                String ptag = "#";
-                for (int i = 0; i < tags.length; i++) {
-                    ptag += tags[i] + "#";
-
+                if(tags.length==0){
+                    post.setTag("태그");
+                }else{
+                    String ptag = "#";
+                    for (int i = 0; i < tags.length; i++) {
+                        ptag += tags[i] + "#";
+    
+                    }
+                    post.setTag(ptag.substring(0, ptag.length() - 1));
                 }
-                post.setTag(ptag.substring(0, ptag.length() - 1));
                 postDao.save(post);
                 int artiId = post.getArticleId();
                 System.out.println("게시물 등록!!");
@@ -546,13 +541,17 @@ public class PostController {
 
     @PostMapping("/file")
     public String fileTest(@RequestPart("file") MultipartFile ff) throws IllegalStateException, IOException {
-        File file = new File("C:\\imageTest\\" + ff.getOriginalFilename());
+        String forSaveImg = ff.getOriginalFilename().toLowerCase();
+        // File file = new File("C:\\Users\\multicampus\\Desktop\\PJT\\PJT1\\s03p13b203\\frontend\\src\\assets\\file\\" + forSaveImg);
+        File file = new File("C:\\Users\\multicampus\\Desktop\\image\\" + forSaveImg);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
         ff.transferTo(file);
+        System.out.println(file.getName());
         
         return file.getName();
+
     }
 
     private static String BeforeCreateTime(LocalDateTime createTime) {

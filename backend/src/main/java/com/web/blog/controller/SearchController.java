@@ -10,7 +10,6 @@ import java.util.StringTokenizer;
 
 import javax.mail.MessagingException;
 
-import com.web.blog.dao.ArticleTagDao;
 import com.web.blog.dao.CommentDao;
 import com.web.blog.dao.LikeDao;
 import com.web.blog.dao.ParticipantDao;
@@ -22,6 +21,8 @@ import com.web.blog.model.post.PostListResponse;
 import com.web.blog.model.post.PostResponse;
 import com.web.blog.model.post.PostSearchRequest;
 import com.web.blog.model.tag.Tag;
+import com.web.blog.model.comment.Comment;
+import com.web.blog.model.comment.CommentRes;
 import com.web.blog.model.post.Post;
 import com.web.blog.model.user.TokenRequest;
 import com.web.blog.model.user.User;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,9 +64,6 @@ public class SearchController {
     CommentDao commentDao;
 
     @Autowired
-    ArticleTagDao articleTagDao;
-
-    @Autowired
     TagDao tagDao;
 
     @Autowired
@@ -90,11 +89,12 @@ public class SearchController {
 
     }
 
+    @Transactional(readOnly = true)
     @PostMapping("/post/read/{temp}/{categoryId}/{pageNum}")
     @ApiOperation(value = "게시글 및 임시글 목록")
     public PostListResponse read(@RequestBody TokenRequest req, @PathVariable int temp, @PathVariable int categoryId,
             @PathVariable int pageNum) throws MessagingException, IOException {
-        PostListResponse result = null;
+        PostListResponse result = new PostListResponse();
         int scrollsize;
 
         if (temp == 0) {
@@ -119,7 +119,6 @@ public class SearchController {
                     taglist.add(st.nextToken());
                 }
 
-        
                 PostResponse presp = new PostResponse();
 
                 presp.articleId = p.getArticleId();
@@ -154,6 +153,7 @@ public class SearchController {
             List<Post> plist = new ArrayList<>();
             System.out.println("게시물 목록 출력!!");
             long before = System.currentTimeMillis();
+
             if (categoryId == 0) {// 전체 게시물 출력
                 // plist = postDao.findPostByTemp(temp);//다 뽑은 다음
                 list = postDao.findPostByTempOrderByCreateTimeDesc(temp);// 다 뽑은 다음
@@ -162,14 +162,10 @@ public class SearchController {
                     if (newend / scrollsize > 0) {// 적어도 6개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     }
                 }
@@ -181,22 +177,17 @@ public class SearchController {
                     if (newend / scrollsize > 0) {// 적어도 6개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     }
                 }
             }
-            result = new PostListResponse();
+
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
             System.out.println("리턴!!" + (System.currentTimeMillis() - before) + "초 ");
-
             return result;
         } else if (temp == 2) { // 자유게시판
             scrollsize = 10;
@@ -206,20 +197,16 @@ public class SearchController {
             List<Post> list;
             List<Post> plist = new ArrayList<>();
             if (categoryId == 100) {// 전체 게시물 출력
-                list = postDao.getPostByTempAndCategoryIdNotOrderByCategoryIdAscCreateTimeDesc(temp,102);
+                list = postDao.getPostByTempAndCategoryIdNotOrderByCategoryIdAscCreateTimeDesc(temp, 102);
                 if (list.size() >= start) {
                     int newend = list.size() - start;
                     if (newend / scrollsize > 0) {// 적어도 10개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     }
                 }
@@ -231,26 +218,25 @@ public class SearchController {
                     if (newend / scrollsize > 0) {// 적어도 6개는 있음
                         for (int i = start; i < end; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
-
                         }
                     } else {// 몫 없이 나머지만 있음
                         for (int i = start; i < start + newend; i++) {
                             plist.add(list.get(i));// 페이지에 맞는 게시물만 뽑아서 보내기
-                            System.out.println(list.get(i).getArticleId());
                         }
                     }
                 }
             }
 
-            result = new PostListResponse();
             result.postList = getPostList(plist, temp); // 게시물 목록 및 각 게시물의 좋아요 댓글 수
+            if (categoryId == 102) {
+                for (int i = 0; i < plist.size(); i++)
+                    CommentListAdd(result, i, plist.get(i));
+
+            }
 
             System.out.println("자유글 목록 출력!!");
             return result;
-        } else if (temp == 3)
-
-        {
+        } else if (temp == 3) {
             System.out.println("내 주변 게시물 목록 출력!!");
             String token = req.getToken();
             User jwtuser = jwtService.getUser(token);
@@ -276,14 +262,16 @@ public class SearchController {
             List<Post> locallist;
             List<Post> list = new ArrayList<>();
             List<Post> plist = new ArrayList<>();
-            locallist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(addList.get(0), addList.get(1),
-                    addList.get(2));
+            locallist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(addList.get(0),
+                    addList.get(1), addList.get(2));
 
-            for (int i = 0; i < locallist.size(); i++) {//우리동네에 맞는 지역리스트를 뽑아와서
-                if(locallist.get(i).getTemp()==1&&(locallist.get(i).getStatus()==1||locallist.get(i).getStatus()==2))//일반게시글이면서 status가 1또는2인것만
+            for (int i = 0; i < locallist.size(); i++) {// 우리동네에 맞는 지역리스트를 뽑아와서
+                if (locallist.get(i).getTemp() == 1
+                        && (locallist.get(i).getStatus() == 1 || locallist.get(i).getStatus() == 2))// 일반게시글이면서 status가
+                                                                                                    // 1또는2인것만
                     list.add(locallist.get(i));
-            } 
-            
+            }
+
             if (list.size() >= start) {
                 int newend = list.size() - start;
                 if (newend / scrollsize > 0) {// 적어도 6개는 있음
@@ -298,8 +286,7 @@ public class SearchController {
                     }
                 }
             }
-           
-            result = new PostListResponse();
+
             result.postList = getPostList(plist, temp);
 
             System.out.println("내 주변 게시물 검색 확인");
@@ -396,27 +383,32 @@ public class SearchController {
                 if (addList.size() == 1) {
                     plist = postDao.findPostByAddressLikeOrderByCreateTimeDesc(addList.get(0));
                 } else if (addList.size() == 2) {
-                    plist = postDao.findPostByAddressLikeAndAddressLikeOrderByCreateTimeDesc(addList.get(0), addList.get(1));
+                    plist = postDao.findPostByAddressLikeAndAddressLikeOrderByCreateTimeDesc(addList.get(0),
+                            addList.get(1));
                 } else if (addList.size() == 3) {
-                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(addList.get(0), addList.get(1),
-                            addList.get(2));
+                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(
+                            addList.get(0), addList.get(1), addList.get(2));
                 } else if (addList.size() == 4) {
-                    plist = postDao.findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(addList.get(0),
-                            addList.get(1), addList.get(2), addList.get(3));
+                    plist = postDao
+                            .findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(
+                                    addList.get(0), addList.get(1), addList.get(2), addList.get(3));
                 }
 
             } else {
                 if (addList.size() == 1) {
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeOrderByCreateTimeDesc(temp, categoryId, addList.get(0));
+                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeOrderByCreateTimeDesc(temp, categoryId,
+                            addList.get(0));
                 } else if (addList.size() == 2) {
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(temp, categoryId,
-                            addList.get(0), addList.get(1));
+                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(temp,
+                            categoryId, addList.get(0), addList.get(1));
                 } else if (addList.size() == 3) {
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(temp,
-                            categoryId, addList.get(0), addList.get(1), addList.get(2));
+                    plist = postDao
+                            .findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(
+                                    temp, categoryId, addList.get(0), addList.get(1), addList.get(2));
                 } else if (addList.size() == 4) {
-                    plist = postDao.findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(
-                            temp, categoryId, addList.get(0), addList.get(1), addList.get(2), addList.get(3));
+                    plist = postDao
+                            .findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(
+                                    temp, categoryId, addList.get(0), addList.get(1), addList.get(2), addList.get(3));
                 }
             }
             PostListResponse result = new PostListResponse();
@@ -444,7 +436,6 @@ public class SearchController {
                 }
             }
 
-  
             PostResponse presp = new PostResponse();
 
             presp.articleId = p.getArticleId();
@@ -471,6 +462,28 @@ public class SearchController {
         }
 
         return result;
+    }
+
+    private void CommentListAdd(PostListResponse result, int index, Post p) {
+
+        List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
+        List<CommentRes> crlist = new ArrayList<>();
+        for (int j = 0; j < clist.size(); j++) {
+            CommentRes cr = new CommentRes();
+            Comment c = clist.get(j);
+            cr.setArticleId(c.getArticleId());
+            cr.setCommentId(c.getCommentId());
+            cr.setUserId(c.getUserId());
+            cr.setContent(c.getContent());
+            cr.setNickname(c.getWriter());
+            cr.setStatus(c.getStatus());
+            cr.setTimeAgo(BeforeCreateTime(c.getCreateTime()));
+            cr.setCreateTime(c.getCreateTime());
+            crlist.add(cr);
+        }
+        result.postList.get(index).commentList = crlist;
+        return;
+
     }
 
     private static String BeforeCreateTime(LocalDateTime createTime) {

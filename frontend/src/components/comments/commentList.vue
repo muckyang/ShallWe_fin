@@ -41,6 +41,9 @@ export default {
   components: {
     commentListItem,
   },
+  props: {
+    // reviewId:
+  },
   data() {
     return {
       commentData: {
