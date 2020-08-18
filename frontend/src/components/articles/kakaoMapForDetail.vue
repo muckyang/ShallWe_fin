@@ -13,6 +13,18 @@ export default {
   computed: {
     ...mapState(["articleData"]),
   },
+  mounted(){
+    if (window.kakao && window.kakao.maps) {
+      this.initMap();
+    } else {
+      const script = document.createElement("script");
+      /* global kakao */
+      script.onload = () => kakao.maps.load(this.initMap);
+      script.src =
+        'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8500f9b4c8e3ef8075b8eeefaaae025f&libraries=services';
+      document.head.appendChild(script);
+    }
+  },
   updated() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
