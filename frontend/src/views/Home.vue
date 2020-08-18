@@ -45,7 +45,7 @@
 		<!-- 2. 실시간 게시물-->
 		<hr>
 		<div class="division-box homeMenu d-flex align-items-center justify-content-center ">
-			<h2 style="color: #fec9c9;">실시간 게시물</h2>
+			<h2 style="color: #ee6e9f;">실시간 게시물</h2>
 		</div>
 		<hr class="division-box-underline-1">
 
@@ -95,7 +95,7 @@
 		<!-- 3. 마감 임박 게시물-->
 		<hr>
 		<div class="division-box homeMenu d-flex align-items-center justify-content-center ">
-			<h2 style="color: #fec9c9;">마감 임박 게시물</h2>
+			<h2 style="color: #ee6e9f;">마감 임박 게시물</h2>
 		</div>
 		<hr class="division-box-underline-2">
 		
@@ -145,7 +145,7 @@
 		<!-- 4. 베스트 후기 -->
 		<hr>
 		<div class="division-box homeMenu d-flex align-items-center justify-content-center ">
-			<h2 style="color: #fec9c9;">베스트 후기</h2>
+			<h2 style="color: #ee6e9f;">베스트 후기</h2>
 		</div>
 		<hr class="division-box-underline-3">
 
@@ -153,8 +153,7 @@
 				<b-row>
 					<b-col cols="12" sm="4" v-for="review in bestReview" :key="review.keyVal">
 						<b-card class="text-center mt-3">
-							<b-card-text>{{review.title}}</b-card-text>
-							<b-card-text>{{review.description}}</b-card-text>
+							<b-card-text><i class="fas fa-quote-left"></i>　　　　{{review.description}}　　　　<i class="fas fa-quote-right"></i></b-card-text>
 						</b-card>
 					</b-col>
 				</b-row>
@@ -200,6 +199,7 @@
 				const auth = { token: this.$cookies.get("auth-token") };
 				axios.post(`${BACK_URL}/main/post`,auth)
 					.then((response)=>{
+						console.log(response.data)
 						for (let i=0;i<18;i++){
 							response.data.postList[i].keyVal=i
 							if(i<6){
@@ -284,5 +284,75 @@ font-family: BMJUA;
 font-weight: normal;
 font-style: normal;
 font-size: 1.2em;
+}
+</style>
+
+<style scoped lang="scss">
+$color-bg: #f8f8f8;
+$card-padding: 20px;
+$grid-gutter: 31px;
+
+// Media Queries breakpoints
+$small: 480px;
+$medium: 768px;
+$large: 992px;
+$x-large: 1200px;
+
+._card {
+  position: relative;
+  flex: 1 1 100%;
+  background: lighten($color-bg, 3%);
+
+  @media screen and (min-width: $medium) {
+    flex-basis: calc(33.33% - (#{$grid-gutter * 2} + #{$card-padding * 2}));
+    margin: 0 $grid-gutter;
+  }
+}
+.card__one {
+  transition: transform 0.3s;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.15);
+    content: "";
+    opacity: 0;
+    z-index: -1;
+  }
+
+  &:hover,
+  &:focus {
+    transform: scale3d(1.006, 1.006, 1);
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+// .card-end {
+  // background-color: #FFCBDB;
+  // opacity: 0.7;
+// }
+.navs {
+  // border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+}
+.main-tabs {
+  display: flex;
+}
+.write-btn {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #ee6e9f;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
 }
 </style>
