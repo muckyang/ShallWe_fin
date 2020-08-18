@@ -201,31 +201,30 @@ public class AccountController {
 
 
     @Transactional(readOnly = true)
-    @PostMapping("/account/read/{nickname}") // SWAGGER UI에 보이는 REQUEST명
+    @PostMapping("/account/read/{userId}") // SWAGGER UI에 보이는 REQUEST명
     @ApiOperation(value = "상대방 프로필 조회")
-    public Object infoUser(@RequestBody TokenRequest req, @PathVariable String nickname) {
+    public Object infoUser(@RequestBody TokenRequest req, @PathVariable int userId) {
         String token = req.getToken();
         ResponseEntity<Object> response = null;
         User jwtuser = jwtService.getUser(token);
         Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
-        Optional<User> profileOpt = userDao.findUserByNickname(nickname);
+        Optional<User> profileOpt = userDao.findUserByUserId(userId);
         
         if (userOpt.isPresent() && profileOpt.isPresent()) {
             System.out.println("상대방 프로필 조회 ! ");
             User user = profileOpt.get();
-            int userId = user.getUserId();
             UserResponse result = new UserResponse();
-            result.userId = profileOpt.get().getUserId();
-            result.address = profileOpt.get().getAddress();
-            result.nickname = profileOpt.get().getNickname();
-            result.email = profileOpt.get().getEmail();
-            result.userPoint = profileOpt.get().getUserPoint();
-            result.grade = profileOpt.get().getGrade();
+            result.userId = user.getUserId();
+            result.address = user.getAddress();
+            result.nickname = user.getNickname();
+            result.email = user.getEmail();
+            result.userPoint = user.getUserPoint();
+            result.grade = user.getGrade();
 
             result.articleList = new LinkedList<>();
             result.reviewList = new LinkedList<>();
             result.tempList = new LinkedList<>();
-
+            
             List<Post> plist = postDao.findPostByUserId(userId);
 
             for (int i = 0; i < plist.size(); i++) {
