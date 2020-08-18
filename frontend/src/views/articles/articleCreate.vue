@@ -50,10 +50,10 @@
         </div>
         <!-- 파일 업로드 -->
         <div class="imageInsert d-flex">
-          <label class="ml-3">사진 업로드</label>
+          <label>사진 업로드</label>
           <div class="d-flex">
-            <input type="file" id="file" name="file" ref="file" class="w-100 ml-1"/>
-            <button v-on:click="fileUpload" class="w-50 mr-2 _temp-form">업로드</button>
+            <input type="file" id="file" name="file" ref="file" class="w-100 ml-3"/>
+            <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button>
           </div>
         </div>
         <!--url-->
@@ -69,7 +69,13 @@
         <!--내용-->
         <div class="createContent">
           <label for="textarea-rows">내용</label>
-          <textarea name id="textarea-rows" cols="38" rows="6" v-model="articleData.description"></textarea>
+          <b-form-textarea
+              id="textarea-rows"
+              v-model="articleData.description"
+              placeholder="내용을 입력하세요..."
+              rows="3"
+              max-rows="6"
+            ></b-form-textarea>
         </div>
       </div>
     </div>
