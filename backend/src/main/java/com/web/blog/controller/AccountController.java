@@ -99,7 +99,7 @@ public class AccountController {
         System.out.println(user.toString());
         if (user.isPresent()) { // 이미 가입된 사용자
             System.out.println("이미 가입된 사용자입니다.");
-            User tuser = new User(user.get().getEmail(),user.get().getNickname());
+            User tuser = new User(user.get().getEmail(), user.get().getNickname());
 
             String token = jwtService.createLoginToken(tuser);
             redirectView.setUrl("http://localhost:8081/user/klogin");// 로그인 완료된 페이지
@@ -136,8 +136,8 @@ public class AccountController {
         user.setNickname(req.getNickname());
         userDao.save(user);
 
-        User tuser = new User(user.getEmail(),user.getNickname());
-   
+        User tuser = new User(user.getEmail(), user.getNickname());
+
         String token = jwtService.createLoginToken(tuser);
         System.out.println("가입하기 성공!");
         return new ResponseEntity<>(token, HttpStatus.OK);
@@ -168,6 +168,7 @@ public class AccountController {
             result.articleList = new LinkedList<>();
             result.reviewList = new LinkedList<>();
             result.tempList = new LinkedList<>();
+            result.freeList = new LinkedList<>();
 
             List<Post> plist = postDao.findPostByUserId(userId);
 
@@ -175,10 +176,14 @@ public class AccountController {
                 Post p = plist.get(i);
                 if (p.getTemp() == 1) {
                     result.articleList.add(p);
-                } else if (p.getTemp() == 102) {
-                    result.reviewList.add(p);
                 } else if (p.getTemp() == 0) {
                     result.tempList.add(p);
+                } else {
+                    if (p.getCategoryId() == 103) {
+                        result.freeList.add(p);
+                    } else if (p.getCategoryId() == 102) {
+                        result.reviewList.add(p);
+                    }
                 }
             }
             List<Like> llist = likeDao.findLikeByUserId(userId);
@@ -187,13 +192,10 @@ public class AccountController {
                 result.likeList.add(postDao.findPostByArticleId(llist.get(i).getArticleId()));
             }
 
-    
-          
-
             result.completeList = new LinkedList<>();
-            List<Participant> partlist = partDao.getParticipantByUserIdAndStatus(userId,1);// 참가 수락된 것 중 
-            for(int i = 0 ; i < partlist.size();i++){
-                result.completeList.add(postDao.getPostByArticleIdAndStatus(partlist.get(i).getArticleId(),4));
+            List<Participant> partlist = partDao.getParticipantByUserIdAndStatus(userId, 1);// 참가 수락된 것 중
+            for (int i = 0; i < partlist.size(); i++) {
+                result.completeList.add(postDao.getPostByArticleIdAndStatus(partlist.get(i).getArticleId(), 4));
             }
 
             result.joinList = new LinkedList<>();
@@ -201,11 +203,10 @@ public class AccountController {
             numlist.add(1);
             numlist.add(2);
             numlist.add(4);
-            List<Participant> partlist2 = partDao.getParticipantByUserIdAndStatus(userId,1);// 참가 수락된 것 중 
-            for(int i = 0 ; i < partlist2.size();i++){
-                result.joinList.add(postDao.getPostByArticleIdAndStatusIn(partlist2.get(i).getArticleId(),numlist));
+            List<Participant> partlist2 = partDao.getParticipantByUserIdAndStatus(userId, 1);// 참가 수락된 것 중
+            for (int i = 0; i < partlist2.size(); i++) {
+                result.joinList.add(postDao.getPostByArticleIdAndStatusIn(partlist2.get(i).getArticleId(), numlist));
             }
-
 
             result.articleCount = result.articleList.size();
             result.reviewCount = result.reviewList.size();
@@ -213,6 +214,8 @@ public class AccountController {
             result.tempCount = result.tempList.size();
             result.joinCount = result.joinList.size();
             result.completeCount = result.completeList.size();
+            result.freeCount = result.freeList.size();
+
             System.out.println("내 프로필 리턴 !!! ");
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
@@ -220,7 +223,6 @@ public class AccountController {
         }
         return response;
     }
-
 
     @Transactional(readOnly = true)
     @PostMapping("/account/read/{userId}") // SWAGGER UI에 보이는 REQUEST명
@@ -231,7 +233,7 @@ public class AccountController {
         User jwtuser = jwtService.getUser(token);
         Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         Optional<User> profileOpt = userDao.findUserByUserId(userId);
-        
+
         if (userOpt.isPresent() && profileOpt.isPresent()) {
             System.out.println("상대방 프로필 조회 ! ");
             User user = profileOpt.get();
@@ -242,7 +244,7 @@ public class AccountController {
             result.email = user.getEmail();
             result.userPoint = user.getUserPoint();
             result.grade = user.getGrade();
-         
+
             System.out.println("상대 프로필 리턴 !!! ");
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
