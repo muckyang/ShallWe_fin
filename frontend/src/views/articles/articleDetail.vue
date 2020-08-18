@@ -35,7 +35,7 @@
 
             <!-- 게시물 신고 -->
             <div v-else>
-              <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm">신고</b-button>
+              <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
               <b-modal id="modal-1" title="신고 접수">
                 <h6>신고 사유</h6>
@@ -211,11 +211,10 @@
         <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
           <div class="member">
             <div class="member-writer">
-              <router-link :to="{ name: 'userDetail', params: { ID: participant.userId }}">{{participant.writer}}</router-link>
-              <i
-                v-if="articleData.userId === participant.userId"
-                class="fas fa-crown"
-              ></i>
+              <router-link
+                :to="{ name: 'userDetail', params: { ID: participant.userId }}"
+              >{{participant.writer}}</router-link>
+              <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
             </div>
 
             <div v-if="participant.status === 0">
@@ -248,17 +247,17 @@
                     >수락</b-button>
                     <b-button @click="$bvModal.show('modal-scoped')">거절</b-button>
 
-                      <b-modal id="modal-scoped">
-                          <p>정말 거절하시겠습니까?</p>
-                        <template v-slot:modal-footer="{ ok }">
-                          <b-button size="sm" variant="danger" @click="denyParticpation(participant)">
-                            거절
-                          </b-button>
-                          <b-button size="sm" variant="success" @click="ok()">
-                            취소
-                          </b-button>
-                        </template>
-                      </b-modal>
+                    <b-modal id="modal-scoped">
+                      <p>정말 거절하시겠습니까?</p>
+                      <template v-slot:modal-footer="{ ok }">
+                        <b-button
+                          size="sm"
+                          variant="danger"
+                          @click="denyParticpation(participant)"
+                        >거절</b-button>
+                        <b-button size="sm" variant="success" @click="ok()">취소</b-button>
+                      </template>
+                    </b-modal>
                   </div>
                 </div>
               </div>
@@ -333,24 +332,34 @@ export default {
   },
   computed: {
     ...mapState(["articleData", "userData"]),
-    minPrice(){
-      return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(this.articleData.minPrice)
+    minPrice() {
+      return new Intl.NumberFormat("ko-KR", {
+        style: "currency",
+        currency: "KRW",
+      }).format(this.articleData.minPrice);
     },
-    sumPrice(){
-      return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(this.articleData.sumPrice)
+    sumPrice() {
+      return new Intl.NumberFormat("ko-KR", {
+        style: "currency",
+        currency: "KRW",
+      }).format(this.articleData.sumPrice);
     },
-    parPrice(){
-      return(price)=>{
-        return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(price)
-      }
+    parPrice() {
+      return (price) => {
+        return new Intl.NumberFormat("ko-KR", {
+          style: "currency",
+          currency: "KRW",
+        }).format(price);
+      };
     },
-    imageUrl(){
+    imageUrl() {
       // try{
       //   return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
       // }catch{
-        
+
       // }
-      return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
+      return require("C:/Users/multicampus/Desktop/image/" +
+        `${this.articleData.image}`);
     },
     joinFlag() {
       const tempList = [];
@@ -527,8 +536,7 @@ export default {
         content: {
           title: this.articleData.title,
           description: this.articleData.description,
-          imageUrl:
-            "https://ifh.cc/g/5VcUjM.png",
+          imageUrl: "https://ifh.cc/g/5VcUjM.png",
           link: {
             mobileWebUrl: "https://developers.kakao.com",
             androidExecParams: "test",
