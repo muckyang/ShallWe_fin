@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-5">
     <div class="dropdown mr-1">
       <!-- <button
         class="downBtn btn btn-secondary"
@@ -13,51 +13,112 @@
       </button> -->
       <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
       <div class="mainSearch">
-        <a class="main-select" href="#" @click="selectTemp(1)">구매글</a>
-        <a class="main-select" href="#" @click="selectTemp(2)">자유게시글</a>
+        <a
+          :class="{
+            beforeSelect: searchData.temp != 1,
+            colorChange: searchData.temp == 1,
+          }"
+          href="#"
+          @click="selectTemp(1)"
+          >게시글</a
+        >
+        <a
+          :class="{
+            beforeSelect: searchData.temp != 2,
+            colorChange: searchData.temp == 2,
+          }"
+          href="#"
+          @click="selectTemp(2)"
+          >커뮤니티</a
+        >
       </div>
       <!-- </div> -->
-    </div>
 
-    <div v-if="searchData.temp !== 0" class="dropdown mr-1">
-      <!-- <button
-        class="downBtn btn btn-secondary"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        {{ item2 }}<i class="down fas fa-sort-down"></i>
-      </button> -->
-      <div class="search-row">
+      <div v-if="searchData.temp !== 0" class="select-item-row">
         <div v-if="searchData.temp === 1">
-          <a class="second-select" href="#" @click="selectCategory(1)">배달</a>
-          <a class="second-select" href="#" @click="selectCategory(2)"
+          <a
+            :class="{
+              beforeSelect: searchData.categoryId != 1,
+              colorChange: searchData.categoryId == 1,
+            }"
+            href="#"
+            @click="selectCategory(1)"
+            >배달</a
+          >
+          <a
+            :class="{
+              beforeSelect: searchData.categoryId != 2,
+              colorChange: searchData.categoryId == 2,
+            }"
+            href="#"
+            @click="selectCategory(2)"
             >최저주문</a
           >
-          <a class="second-select" href="#" @click="selectCategory(3)"
+          <a
+            :class="{
+              beforeSelect: searchData.categoryId != 3,
+              colorChange: searchData.categoryId == 3,
+            }"
+            href="#"
+            @click="selectCategory(3)"
             >공동구매</a
           >
         </div>
         <div v-if="searchData.temp === 2">
-          <a class="second-select" href="#" @click="selectCategory(101)"
+          <a
+            :class="{
+              beforeSelect: searchData.categoryId != 101,
+              colorChange: searchData.categoryId == 101,
+            }"
+            href="#"
+            @click="selectCategory(101)"
             >공지</a
           >
-          <a class="second-select" href="#" @click="selectCategory(102)"
+          <a
+            :class="{
+              beforeSelect: searchData.categoryId != 102,
+              colorChange: searchData.categoryId == 102,
+            }"
+            href="#"
+            @click="selectCategory(102)"
             >후기</a
           >
-          <a class="second-select" href="#" @click="selectCategory(103)"
+          <a
+            :class="{
+              beforeSelect: searchData.categoryId != 103,
+              colorChange: searchData.categoryId == 103,
+            }"
+            href="#"
+            @click="selectCategory(103)"
             >자유</a
           >
         </div>
-        |
+        <div>|</div>
         <div v-if="searchData.temp !== 0" class="dropdown mr-1">
-          <a class="third-select" href="#" @click="selectSubject(0)">제목</a>
-          <a class="third-select" href="#" @click="selectSubject(1)">작성자</a>
+          <a
+            :class="{
+              beforeSelect: searchData.searchDataForSend.subject != 'title',
+              colorChange: searchData.searchDataForSend.subject == 'title',
+            }"
+            href="#"
+            @click="selectSubject(0)"
+            >제목</a
+          >
+          <a
+            :class="{
+              beforeSelect: searchData.searchDataForSend.subject != 'writer',
+              colorChange: searchData.searchDataForSend.subject == 'writer',
+            }"
+            href="#"
+            @click="selectSubject(1)"
+            >작성자</a
+          >
           <a
             v-if="searchData.temp === 1"
-            class="third-select"
+            :class="{
+              beforeSelect: searchData.searchDataForSend.subject != 'address',
+              colorChange: searchData.searchDataForSend.subject == 'address',
+            }"
             href="#"
             @click="selectSubject(2)"
             >주소</a
@@ -65,6 +126,7 @@
         </div>
       </div>
     </div>
+
     <input
       class="detail-search"
       style="font-family: FontAwesome;"
@@ -153,10 +215,10 @@ export default {
     selectTemp(num) {
       if (num === 1) {
         this.searchData.temp = 1;
-        this.item3 = "구매글";
+        this.item3 = "게시글";
       } else {
         this.searchData.temp = 2;
-        this.item3 = "자유게시글";
+        this.item3 = "커뮤니티";
       }
       this.item1 = "";
       this.item2 = "";
@@ -214,7 +276,27 @@ $small: 480px;
 $medium: 768px;
 $large: 992px;
 $x-large: 1200px;
-
+.select-item-row {
+  display: flex;
+  justify-content: center;
+}
+.mainSearch {
+  // border: 1px solid blue;
+}
+.beforeSelect {
+  text-decoration: none;
+  margin: 0 5px;
+}
+.beforeSelect:hover {
+  color: black;
+  cursor: pointer;
+}
+.colorChange {
+  color: #ee6e9f;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 5px;
+}
 ._card {
   position: relative;
   flex: 1 1 100%;
