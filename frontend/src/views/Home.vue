@@ -1,37 +1,59 @@
 <template>
 	<div>
 		<hr>
-		<!-- 1. Carousel -->
-		<div>
-			<b-carousel
-				id="carousel-1"
-				v-model="slide"
-				:interval="4000"
-				controls
-				indicators
-				background="#ababab"
-				img-width="1024"
-				img-height="480"
-				style="text-shadow: 1px 1px 2px #333;"
-				@sliding-start="onSlideStart"
-				@sliding-end="onSlideEnd"
-			>
-				<!-- Page1 -->
-				<b-carousel-slide
-					caption="First slide"
-					text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-					img-src="https://picsum.photos/1024/480/?image=52"
-				></b-carousel-slide>
+		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
 
-				<!-- Page2 -->
-				<b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-					<h1>Hello world!</h1>
-				</b-carousel-slide>
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+      <img class="carousel-img" src="@/assets/img/shallwe.png" alt="Chania">
+      <div class="caption">
+		<h5>지금 바로 쉘위 소개를 확인해보세요!</h5>
+		<p><router-link to="/introduce" class="ml-0" id="introduce"><button class="carouselBtn">확인 하러가기</button></router-link></p>
+      </div>
+    </div>
 
-				<!-- Page3 -->
-				<b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-			</b-carousel>
-		</div>
+    <div class="item">
+      <img class="carousel-img" src="@/assets/img/forNbbang.png" alt="Chicago">
+      <div class="carousel-caption">
+        <h3 style="font-color:black;">필요한 만큼만 사고 싶은데...</h3>
+        <p><router-link to="/introduce" class="ml-0" id="introduce"><button class="carouselBtn">N빵 하러가기</button></router-link></p>
+      </div>
+    </div>
+
+    <div class="item">
+      <img class="carousel-img" src="@/assets/img/forNbbang.png" alt="Chicago">
+      <div class="carousel-caption">
+        <h3 style="font-color:black;">필요한 만큼만 사고 싶은데...</h3>
+        <p><router-link to="/introduce" class="ml-0" id="introduce"><button class="carouselBtn">N빵 하러가기</button></router-link></p>
+      </div>
+    </div>
+	<div class="item">
+      <img class="carousel-img" src="@/assets/img/forNbbang.png" alt="Chicago">
+      <div class="carousel-caption">
+        <h3 style="font-color:black;">필요한 만큼만 사고 싶은데...</h3>
+        <p><router-link to="/introduce" class="ml-0" id="introduce"><button class="carouselBtn">N빵 하러가기</button></router-link></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
 
 		<!-- 2. 실시간 게시물-->
 		<hr>
@@ -376,24 +398,37 @@
 <script>
 	export default {
 		name:'Home',
-		data() {
-			return {
-				slide: 0,
-				sliding: null
-			}
-		},
-		methods: {
-			onSlideStart(slide) {
-				this.sliding = true
-			},
-			onSlideEnd(slide) {
-				this.sliding = false
-			}
-		}
+		
 	}
+	
 </script>
 
 <style>
+.carouselBtn{
+	border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #ee6e9f;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
+}
+.carousel-img{
+	display: flex;
+          
+            width: 100%;
+            
+}
+.carousel-inner{
+	height: 100%;
+	width: 50%;
+}
+.caption{
+  position: absolute;
+  bottom: 8px;
+  right: 100px;
+  font-size: 18px;
+}
 	.division-box {
 			height: 10%;
 			margin-top:4%;
