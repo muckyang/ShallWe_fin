@@ -275,10 +275,10 @@ export default new Vuex.Store({
     },
 
     // 이한솔 시작
-    getUserDatailData({ state, commit }, userNickname) {
+    getUserDatailData({ state, commit }, userId) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/account/read/${userNickname}`, auth)
+        .post(`${BACK_URL}/account/read/${userId}`, auth)
         .then((res) => {
           commit("GET_USER", res);
         })
