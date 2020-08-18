@@ -4,25 +4,7 @@
 			<div class="middle mt-5">
 				<h2 class="edit">개인정보 수정</h2>
 				<hr class="line">
-				<div class="form-wrap d-flex flex-column justify-content-center">                                    
-					<div class="input-wrap">
-						<div class="p-2"><label for="nickname">닉네임</label></div>
-						<input v-model="editData.nickname"
-							id="nickname"
-							class="editInput"
-							name="nickname"
-							placeholder="닉네임을 입력해주세요" 
-							type="text"/>
-					</div>
-					<div class="input-wrap birthday-warp">
-						<div class="p-2"><label for="birthday">생일</label></div>
-						<input v-model="editData.birthday" 
-							id="birthday"
-							class="editInput"
-							name="birthday"
-							placeholder="YYYY-MM-DD"
-							type="text"/>
-					</div>
+				<div class="form-wrap d-flex flex-column justify-content-center">    
 					<!-- 자기소개 -->
 					<div class="input-wrap birthday-warp">
 						<div class="p-2"><label for="introduce">자기소개</label></div>
@@ -31,6 +13,15 @@
 							class="editInput"
 							name="introduce"
 							placeholder="소개해주세요."
+							type="text"/>
+					</div>                                
+					<div class="input-wrap birthday-warp">
+						<div class="p-2"><label for="birthday">생일</label></div>
+						<input v-model="editData.birthday" 
+							id="birthday"
+							class="editInput"
+							name="birthday"
+							placeholder="YYYY-MM-DD"
 							type="text"/>
 					</div>
 					<div class="input-wrap address-warp">
@@ -45,19 +36,6 @@
 					<div>
 						<kakaoMap @setAddress="setAddress"/>
 					</div>
-					<!-- 프로필 사진 -->
-					<!-- <div class="input-wrap birthday-warp mt-3">
-						<div class="p-2"><label for="profileImage">프로필 사진</label></div>
-						<div class="">
-							<input
-								id="profileImage"
-								class="editInput"
-								name="profileImage"
-								ref="file"
-								type="file"/>
-							<button class="btn btn-secondary mt-1" v-on:click="fileUpload">업로드</button>
-						</div>
-					</div> -->
 				</div>
 				<hr class="line">
 				<button @click="editUser(editData)" class="submitButton"><span>작성완료</span></button>
