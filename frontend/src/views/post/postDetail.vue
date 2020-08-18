@@ -33,7 +33,7 @@
 
           <!-- 게시물 신고 -->
           <div v-else>
-            <b-button v-b-modal.modal-1 class="btn btn-danger btn-sm">신고</b-button>
+            <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
             <b-modal id="modal-1" title="신고 접수">
               <h6>신고 사유</h6>

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="tab-content" id="nav-tabContent" v-if="articles">
-      <router-link v-if="!articles" :to="{ name: 'articleCreate' }" class="ml-auto">
+    <div class="tab-content" id="nav-tabContent">
+      <router-link v-if="!articles.length" :to="{ name: 'articleCreate' }" class="ml-auto">
         <button class="article-create-btn">글쓰기</button>
       </router-link>
       <div
