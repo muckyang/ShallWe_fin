@@ -1,5 +1,5 @@
 <template>
-  <footer class="page-footer font-small unique-color-dark">
+  <footer class="page-footer font-small unique-color-dark text-white">
     <!-- Footer Links -->
     <div class="container text-center text-md-left mt-5" style="margin-top:10px;">
       <!-- Grid row -->
@@ -20,16 +20,16 @@
           <h6 class="text-uppercase font-weight-bold">Contents</h6>
           <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;" />
           <p>
-            <router-link to="/article" class="ml-0" id="article">쉘위 게시물</router-link>
+            <router-link to="/article" class="ml-0 text-white" id="article">쉘위 게시물</router-link>
           </p>
           <p>
-            <router-link to="/reviews" class="ml-0 text-dark" id="review">쉘위 후기</router-link>
+            <router-link to="/reviews" class="ml-0 text-white" id="review">쉘위 후기</router-link>
           </p>
           <p>
-            <router-link to="/posts" class="ml-0" id="community">쉣위 자유게시판</router-link>
+            <router-link to="/posts" class="ml-0 text-white" id="community">쉣위 자유게시판</router-link>
           </p>
           <p>
-            <router-link to="/localList" class="ml-0 text-dark" id="local">내 주변 게시물 찾기</router-link>
+            <router-link to="/localList" class="ml-0 text-white" id="local">내 주변 게시물 찾기</router-link>
           </p>
         </div>
         <!-- Grid column -->
@@ -40,16 +40,16 @@
           <h6 class="text-uppercase font-weight-bold">Useful links</h6>
           <hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;" />
           <p>
-            <a href="https://kr.bignox.com/appcenter/game_management/com-sampleapp-on-pc/" target="_blank">배달의 민족</a>
+            <a href="https://kr.bignox.com/appcenter/game_management/com-sampleapp-on-pc/" class="text-white" target="_blank">배달의 민족</a>
           </p>
           <p>
-            <a href="https://www.coupang.com/" target="_blank">쿠팡</a>
+            <a href="https://www.coupang.com/" target="_blank" class="text-white">쿠팡</a>
           </p>
           <p>
-            <a href="http://www.ssg.com/" target="_blank">SSG(쓱)</a>
+            <a href="http://www.ssg.com/" target="_blank" class="text-white">SSG(쓱)</a>
           </p>
           <p>
-            <router-link to="/introduce" class="ml-0 text-dark" id="introduce">도움말</router-link>
+            <router-link to="/introduce" class="ml-0 text-white" id="introduce">도움말</router-link>
           </p>
         </div>
         <!-- Grid column -->
@@ -81,7 +81,7 @@
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
       © 2020 Copyright:
-      <a href="http://i3b203.p.ssafy.io/">ShallWe.com</a>
+      <a href="http://i3b203.p.ssafy.io/" class="text-white">ShallWe.com</a>
     </div>
     <!-- Copyright -->
   </footer>

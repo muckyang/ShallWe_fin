@@ -8,7 +8,7 @@
     <div class="container">
       <router-view />
     </div>
-    <div style="background-color: #fec9c9;">
+    <div style="background-color: #f1bbba;">
       <div class="container">
         <Footer />
       </div>
