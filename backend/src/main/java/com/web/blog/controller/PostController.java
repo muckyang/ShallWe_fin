@@ -543,7 +543,7 @@ public class PostController {
     public String fileTest(@RequestPart("file") MultipartFile ff) throws IllegalStateException, IOException {
         String forSaveImg = ff.getOriginalFilename().toLowerCase();
         // File file = new File("C:\\Users\\multicampus\\Desktop\\PJT\\PJT1\\s03p13b203\\frontend\\src\\assets\\file\\" + forSaveImg);
-        File file = new File("C:\\Users\\multicampus\\Desktop\\image\\" + forSaveImg);
+        File file = new File("frontend\\src\\assets\\images\\" + forSaveImg);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
