@@ -24,7 +24,7 @@
     <div class="about-us-middle mt-5">
       <div class="col-4 col-6-medium col-12-small main-point">
         <section class="box style1 main-point-box p-3 _card card__one">
-          <img :src="imageUrl()/food1.png" class="foodIcon" />
+          <img :src="imageUrl()+food1.png" class="foodIcon" />
           <h2 class="font-change mb-4">쉘위 배민</h2>
           <!--배달음식의 최소주문금액을 같이 맞춰 최소의 금액으로 최대의 맛있는 음식을 나눠 보아요-->
           <h4 class="font-change">
@@ -141,7 +141,7 @@ export default {
   computed:{
     imageUrl(){
         return ()=>{
-          return require('../../assets/img')
+          return require('../../assets/img/')
         }
       },
   }
