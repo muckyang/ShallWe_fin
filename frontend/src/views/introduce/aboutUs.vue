@@ -87,7 +87,7 @@
             </span>
             </h4>
           </div>
-          <img src="../../assets/img/trust2.png" class="trustIcon" />
+          <img src="../../../assets/img/trust2.png" class="trustIcon" />
         </section>
       </div>
       <div class="col-2-small">
@@ -101,7 +101,7 @@
               </span>
             </h4>
           </div>
-          <img src="../../assets/img/Convenience2.png" class="ConIcon" />
+          <img src="../../../assets/img/Convenience2.png" class="ConIcon" />
         </section>
       </div>
     </div>
