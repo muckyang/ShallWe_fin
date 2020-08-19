@@ -172,7 +172,7 @@ export default {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
       formData.append("file", this.file);
-      formData.append("uid", 10);
+      console.log(this.file,">>>>>>>>>>>>>>>>")
       axios.post(`${BACK_URL}/file`
           ,formData
           , {
