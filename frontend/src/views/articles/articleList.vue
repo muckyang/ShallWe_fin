@@ -124,9 +124,9 @@
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}/{{
+                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
                       minPrice(article.minPrice)
-                      }}
+                      }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -134,12 +134,17 @@
                       class="d-flex justify-content-between"
                       style="font-family: 'Recipekorea', cursive; font-size:14.5px"
                     >
-                      <small>
-                        <b-icon-heart style="color: #ee6e9f"></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
+                      <div class="articleList-subInfo">
+                        <div class="articleList-heart">
+                          <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                          {{ article.likeNum }}
+                        </div>
+                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                        <div class="articleList-chat ml-2">
+                          <i class="far fa-comment-dots"></i>
+                          {{ article.commentNum }}
+                        </div>
+                      </div>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
                   </template>
@@ -209,9 +214,9 @@
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}/{{
+                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
                       minPrice(article.minPrice)
-                      }}
+                      }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -293,9 +298,9 @@
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}/{{
+                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
                       minPrice(article.minPrice)
-                      }}
+                      }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -377,9 +382,9 @@
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}/{{
+                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
                       minPrice(article.minPrice)
-                      }}
+                      }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -507,18 +512,24 @@ export default {
 
     minPrice() {
       return (price) => {
-        return new Intl.NumberFormat("ko-KR", {
+        var res = new Intl.NumberFormat("ko-KR", {
           style: "currency",
           currency: "KRW",
         }).format(price);
+        let result = res + "";
+        const real = result.substring(1, res.length);
+        return real;
       };
     },
     sumPrice() {
       return (price) => {
-        return new Intl.NumberFormat("ko-KR", {
+        var res = new Intl.NumberFormat("ko-KR", {
           style: "currency",
           currency: "KRW",
         }).format(price);
+        let result = res + "";
+        const real = result.substring(1, res.length);
+        return real;
       };
     },
   },
@@ -532,6 +543,11 @@ export default {
   border: 1px solid red;
   background-image: url("imageUrl(article)");
 } */
+.articleList-subInfo {
+  display: flex;
+  vertical-align: middle;
+  font-size: 13px;
+}
 .article-background-img {
   width: 100%;
   height: 60%;

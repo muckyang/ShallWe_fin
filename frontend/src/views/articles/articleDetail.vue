@@ -109,8 +109,8 @@
           <div class="detail-info">
             <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
             <div class="detail-price">
-              <div class="min-price">최소 주문 금액 : {{ minPrice }}</div>
-              <div class="min-price mt-2">모인 금액 : {{ sumPrice }}</div>
+              <div class="min-price">최소 주문 금액 : \{{ minPrice }}</div>
+              <div class="min-price mt-2">모인 금액 : \{{ sumPrice }}</div>
             </div>
             <div class="detail-endTime">마감 시간 : {{ cutDate(articleData.endTime) }}까지</div>
             <div class="article-url mt-2">사이트 url : {{articleData.urlLink}}</div>
@@ -361,16 +361,22 @@ export default {
   computed: {
     ...mapState(["articleData", "userData"]),
     minPrice() {
-      return new Intl.NumberFormat("ko-KR", {
+      var res = new Intl.NumberFormat("ko-KR", {
         style: "currency",
         currency: "KRW",
       }).format(this.articleData.minPrice);
+      let result = res + "";
+      const real = result.substring(1, res.length);
+      return real;
     },
     sumPrice() {
-      return new Intl.NumberFormat("ko-KR", {
+      var res = new Intl.NumberFormat("ko-KR", {
         style: "currency",
         currency: "KRW",
       }).format(this.articleData.sumPrice);
+      let result = res + "";
+      const real = result.substring(1, res.length);
+      return real;
     },
     parPrice() {
       return (price) => {
