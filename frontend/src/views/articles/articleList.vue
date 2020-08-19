@@ -330,7 +330,7 @@ export default {
     computed: {
       imageUrl(){
         return (article)=>{
-          return require('@/assets/images/'+`${article.image}`)
+          return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
         }
       },
       minPrice(){
