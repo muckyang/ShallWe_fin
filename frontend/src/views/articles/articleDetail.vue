@@ -17,6 +17,7 @@
               <div class="dropdown-menu">
                 <router-link
                   class="articleUpdate"
+                  style="text-decoration: none; color: black"
                   :to="{
                     name: 'articleUpdate',
                     params: { ID: this.$route.params.ID },
@@ -132,7 +133,11 @@
               </button>
             </a>
             <div v-if="articleData.status===4 && checkParticipant" class="like-content">
-              <router-link :to="{ name: 'reviewCreate' }" class="ml-auto routerLink">
+              <router-link
+                :to="{ name: 'reviewCreate' }"
+                class="ml-auto routerLink"
+                style="text-decoration: none; color: black"
+              >
                 <button class="review-create-button">
                   <i class="fas fa-pencil-alt"></i> 후기
                 </button>
@@ -232,6 +237,7 @@
             <div class="member-writer-info">
               <div class="member-writer mb-2" style="font-size:17px">
                 <router-link
+                  style="text-decoration: none; color: black"
                   :to="{ name: 'userDetail', params: { ID: participant.userId }}"
                 >{{participant.writer}}</router-link>
                 <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
@@ -302,7 +308,7 @@
           <div
             class="member-price py-1 mt-1"
             style="font-size:18px"
-          >가격: {{ parPrice(participant.price) }}</div>
+          >가격: \{{ parPrice(participant.price) }}</div>
         </div>
       </div>
     </div>
@@ -380,10 +386,13 @@ export default {
     },
     parPrice() {
       return (price) => {
-        return new Intl.NumberFormat("ko-KR", {
+        var res = new Intl.NumberFormat("ko-KR", {
           style: "currency",
           currency: "KRW",
         }).format(price);
+        let result = res + "";
+        const real = result.substring(1, res.length);
+        return real;
       };
     },
     imageUrl() {

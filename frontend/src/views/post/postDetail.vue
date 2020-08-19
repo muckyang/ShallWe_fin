@@ -15,6 +15,7 @@
             <div class="dropdown-menu">
               <router-link
                 class="postUpdate"
+                style="text-decoration: none; color: black"
                 :to="{
                   name: 'postUpdate',
                   params: { ID: this.$route.params.ID },
