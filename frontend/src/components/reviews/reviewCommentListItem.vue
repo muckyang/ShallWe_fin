@@ -186,7 +186,7 @@ export default {
 .siren-btn:hover {
   border: none;
   background-color: transparent;
-  color: black;
+  color: rgb(224, 34, 34);
 }
 .siren-btn:focus {
   border: none;

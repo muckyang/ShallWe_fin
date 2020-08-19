@@ -12,9 +12,9 @@
               v-if="articleData.userId === userData.userId"
             >
               <button type="button" class="article-btn" data-toggle="dropdown">
-                <i class="fas fa-ellipsis-v"></i>
+                <i class="fas fa-ellipsis-h"></i>
               </button>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu px-0 w-1 pr-0 control-width">
                 <router-link
                   class="articleUpdate"
                   style="text-decoration: none; color: black"
@@ -23,10 +23,10 @@
                     params: { ID: this.$route.params.ID },
                   }"
                 >
-                  <a class="dropdown-item articleUpdate">수정</a>
+                  <a class="dropdown-item pr-0 articleUpdate">수정</a>
                 </router-link>
                 <a
-                  class="dropdown-item"
+                  class="dropdown-item pr-0"
                   @click="deleteArticle({articleId: articleData.articleId, categoryId: articleData.categoryId})"
                 >삭제</a>
 
@@ -636,6 +636,9 @@ export default {
 </script>
 
 <style>
+.control-width {
+  width: 30px;
+}
 .member-writer-info {
   width: 100%;
   display: flex;
@@ -803,7 +806,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 990px) {
   .middle-row {
     display: flex;
     flex-direction: column;
@@ -914,6 +917,10 @@ a {
   border: none;
   cursor: pointer;
   width: 100%;
+  outline: none;
+}
+.article-btn:focus {
+  border: none;
   outline: none;
 }
 .article-drop:hover {

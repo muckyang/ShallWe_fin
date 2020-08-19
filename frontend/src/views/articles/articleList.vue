@@ -89,7 +89,7 @@
                   footer-class="card-end"
                 >
                   <div
-                    class="article-img-box"
+                    class="article-img-box m-0 p-0"
                     :style="{height: '200px',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
                   >
                     <img
@@ -117,11 +117,11 @@
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
                     >{{ article.title }}</h5>
                     <h6
-                      class="article-address py-2"
+                      class="article-address py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >{{ article.address }}</h6>
                     <h6
-                      class="article-price py-2"
+                      class="article-price py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
                       가격: {{ sumPrice(article.sumPrice) }}원 / {{
@@ -599,8 +599,9 @@ export default {
 
 <style scoped lang="scss">
 $color-bg: #f8f8f8;
+// $color-bg: #572e2e;
 $card-padding: 20px;
-$grid-gutter: 31px;
+$grid-gutter: 30px;
 
 // Media Queries breakpoints
 $small: 480px;
@@ -612,6 +613,7 @@ $x-large: 1200px;
   position: relative;
   flex: 1 1 100%;
   background: lighten($color-bg, 3%);
+  // background: #ee6e9f;
 
   @media screen and (min-width: $medium) {
     flex-basis: calc(33.33% - (#{$grid-gutter * 2} + #{$card-padding * 2}));
