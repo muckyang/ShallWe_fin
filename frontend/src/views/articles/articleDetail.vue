@@ -229,13 +229,20 @@
       <div class>
         <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
           <div class="member">
-            <div class="member-writer" style="font-size:18px">
-              <router-link
-                :to="{ name: 'userDetail', params: { ID: participant.userId }}"
-              >{{participant.writer}}</router-link>
-              <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
-            </div>
+            <div class="member-writer-info">
+              <div class="member-writer mb-2" style="font-size:17px">
+                <router-link
+                  :to="{ name: 'userDetail', params: { ID: participant.userId }}"
+                >{{participant.writer}}</router-link>
+                <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
+              </div>
 
+              <div class="article-participant-status" v-if="participant.userId != userData.userId">
+                <div v-if="participant.status===0">처리상태:수락 대기</div>
+                <div v-if="participant.status===1">처리상태:수락</div>
+                <div v-if="participant.status===2">처리상태:거절</div>
+              </div>
+            </div>
             <div v-if="participant.status === 0">
               <div
                 class="article-drop dropdown dropleft"
@@ -285,20 +292,17 @@
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-title"
-            style="font-size:17px"
-          >제목: {{ participant.title }}</div>
-          <div
-            class="member-price py-1"
-            style="font-size:17.5px"
-          >가격: {{ parPrice(participant.price) }}</div>
+            style="font-size:18px"
+          >{{ participant.title }}</div>
           <div
             v-if="articleData.userId !== participant.userId"
-            class="member-content"
+            class="member-content mt-1"
             style="font-size:18px"
           >요구사항: {{ participant.description }}</div>
-          <div v-if="participant.status===0">처리상태:수락 대기</div>
-          <div v-if="participant.status===1">처리상태:수락</div>
-          <div v-if="participant.status===2">처리상태:거절</div>
+          <div
+            class="member-price py-1 mt-1"
+            style="font-size:18px"
+          >가격: {{ parPrice(participant.price) }}</div>
         </div>
       </div>
     </div>
@@ -617,6 +621,11 @@ export default {
 </script>
 
 <style>
+.member-writer-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 .kakao-share-link {
   text-decoration: none;
 }
@@ -636,7 +645,8 @@ export default {
   color: #eee;
   border-radius: 3px;
   box-shadow: 0 10px 20px -8px #1d0622;
-  padding: 10px 12px;
+  /* padding: 10px 12px; */
+  padding: 12px 12px 7px 12px;
   -webkit-transition: 0.3s ease;
 }
 .review-create-button:hover {
@@ -840,7 +850,7 @@ a {
   background: rgb(250, 227, 1);
   border-radius: 3px;
   color: #ffffff;
-  padding: 10px 12px;
+  padding: 12px 12px 7px 12px;
   font-size: 17px;
   text-align: center;
   box-shadow: 0 10px 20px -8px rgb(202, 190, 21);
@@ -860,7 +870,8 @@ a {
   /* background-color: rgb(37, 7, 44); */
   background-color: #32093d;
   box-shadow: 0 10px 20px -8px rgb(5, 1, 7);
-  padding: 10px 11px;
+  /* padding: 10px 11px; */
+  padding: 12px 12px 7px 12px;
   border-radius: 3px;
   border: none;
   outline: none;

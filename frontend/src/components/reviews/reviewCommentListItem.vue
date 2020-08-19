@@ -5,8 +5,11 @@
       <div class="review-comment-container">
         <div class="comment-user">
           <router-link
+            class="comment-user-link"
             :to="{ name: 'userDetail', params: { ID: comment.userId }}"
-          >{{ comment.nickname }}</router-link>
+          >
+            <a class="comment-user-link">{{ comment.nickname }}</a>
+          </router-link>
           <div class="comment-drop dropdown dropleft" v-if="comment.userId === userData.userId">
             <button type="button" class="comment-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
@@ -176,8 +179,8 @@ export default {
 .siren-btn {
   border: none;
   background-color: transparent;
-  color: black;
-  font-size: 80%;
+  color: rgb(218, 37, 37);
+  font-size: 77%;
   font-weight: bold;
 }
 .siren-btn:hover {
@@ -201,10 +204,14 @@ export default {
 }
 .comment-user {
   text-align: left;
+  vertical-align: -webkit-baseline-middle;
   font-weight: bold;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.comment-user-link {
+  padding-top: 10px;
 }
 .comment-content {
   text-align: left;
