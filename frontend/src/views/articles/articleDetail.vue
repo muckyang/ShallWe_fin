@@ -359,7 +359,7 @@ export default {
       // }catch{
 
       // }
-      return require('frontend/src/assets/images'+`${article.image}`)
+      return require('@/assets/images'+`${article.image}`)
     },
     udflag(){
       var tmp = 0

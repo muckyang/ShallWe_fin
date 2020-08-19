@@ -183,7 +183,7 @@
 			imageUrl(){
         return (article)=>{
 					try{
-          	return require('frontend/src/assets/images'+`${article.image}`)
+          	return require('@/assets/images'+`${article.image}`)
 					}catch{}
 				}
       },
