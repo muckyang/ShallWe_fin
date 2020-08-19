@@ -183,7 +183,7 @@
 			imageUrl(){
         return (article)=>{
 					try{
-          	return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
+          	return require('frontend/src/assets/images'+`${article.image}`)
 					}catch{}
 				}
       },
