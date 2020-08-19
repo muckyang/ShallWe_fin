@@ -87,7 +87,7 @@
             </span>
             </h4>
           </div>
-          <img src="../../../assets/img/trust2.png" class="trustIcon" />
+          <img src="/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/img/trust2.png" class="trustIcon" />
         </section>
       </div>
       <div class="col-2-small">
@@ -101,7 +101,7 @@
               </span>
             </h4>
           </div>
-          <img src="../../../assets/img/Convenience2.png" class="ConIcon" />
+          <img src="@/assets/img/Convenience2.png" class="ConIcon" />
         </section>
       </div>
     </div>
@@ -111,7 +111,7 @@
           <h2 class="font-change">나의 동네에서 싸게 구매하자!!</h2>
           <p>회원가입 때 등록한 가장 가까운 편의점 주소로 같은 동네의 거래 상황을 알 수 있습니다.</p>
         </section>
-          <div class="about-us-map"><img src="/../../assets/img/about-us-map.png" class="mapIcon" /></div>
+          <div class="about-us-map"><img src="/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/img/about-us-map.png" class="mapIcon" /></div>
     </section>
   </div>
 </template>
