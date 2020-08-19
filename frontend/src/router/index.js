@@ -150,7 +150,7 @@ const routes = [
     component: postDetail,
   },
   {
-    path: "/pupdate",
+    path: "/pupdate/:ID",
     name: "postUpdate",
     component: postUpdate,
   },
