@@ -296,22 +296,22 @@ public class PostController {
             result.tags = tags;
             result.nameList=  new LinkedList<>();
             result.scoreList=  new LinkedList<>();
-            result.pgbCodeList=  new LinkedList<>();
+            result.rgbCodeList=  new LinkedList<>();
             int sum = 0;
             for(int i = 0 ; i < partlist.size(); i++){
                 sum += partlist.get(i).getPrice();
                 result.nameList.add(partlist.get(i).getWriter());
                 result.scoreList.add(partlist.get(i).getPrice());
                 if(i == 0){
-                    result.pgbCodeList.add("#FF6A89");
+                    result.rgbCodeList.add("#FF6A89");
                 }else if( i==1 ){
-                    result.pgbCodeList.add("#50B4FF");
+                    result.rgbCodeList.add("#50B4FF");
                 }else if( i==2 ){
-                    result.pgbCodeList.add("#FFE13C");
+                    result.rgbCodeList.add("#FFE13C");
                 }else if( i==3 ){
-                    result.pgbCodeList.add("#93FB93");
+                    result.rgbCodeList.add("#93FB93");
                 }else if( i==4 ){
-                    result.pgbCodeList.add("#DD78F6");
+                    result.rgbCodeList.add("#DD78F6");
                 }
             }
             if(sum >= p.getMinPrice()){// 이미 금액 충족 
@@ -319,7 +319,7 @@ public class PostController {
             }else{
                 result.nameList.add("남은금액");
                 result.scoreList.add(p.getMinPrice() - sum);               
-                result.pgbCodeList.add("#ADADAD");
+                result.rgbCodeList.add("#ADADAD");
             }
             if (userOpt.isPresent()) {// 로그인 상태일때
                 
