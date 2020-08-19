@@ -6,7 +6,7 @@
     <table class="table mt-1">
       <tbody>
         <tr>
-          <th scope="row">제목</th>
+          <th scope="row">제목<small style="font-size: 17px; color: red;">*</small></th>
           <td class="d-flex">
             <!-- <div class="btn-group">
               <button
@@ -30,7 +30,7 @@
           </td>
         </tr>
         <tr>
-          <th scope="row">내용</th>
+          <th scope="row">내용<small style="font-size: 17px; color: red;">*</small></th>
           <td>
             <div>
               <b-form-textarea

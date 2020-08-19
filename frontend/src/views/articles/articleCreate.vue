@@ -8,7 +8,7 @@
       <div class="right-items">
         <!--선택 장소-->
         <div class="selected-place">
-          <label for>어디서 만날까?</label>
+          <label for>어디서 만날까?<small style="font-size: 17px; color: red;">*</small></label>
           <input
             type="text"
             v-model="articleData.address"
@@ -19,7 +19,7 @@
         </div>
         <!--제목-->
         <div class="title">
-          <label for="title">제목</label>
+          <label for="title">제목<small style="font-size: 17px; color: red;">*</small></label>
           <div class="btn-group">
             <button
               type="button"
@@ -38,13 +38,13 @@
         </div>
         <!--시작금액/전체금액-->
         <div class="price">
-          <label for>시작금액 / 전체금액</label>
+          <label for>시작금액<small style="font-size: 17px; color: red;">*</small>/전체금액<small style="font-size: 17px; color: red;">*</small></label>
           <input type="number" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
           <input type="number" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
         </div>
         <!--종료일시-->
         <div class="endTime">
-          <label for>종료일자 / 종료시간</label>
+          <label for>종료일자<small style="font-size: 17px; color: red;">*</small>/종료시간<small style="font-size: 17px; color: red;">*</small></label>
           <input type="date" v-model="articleData.endDate" />
           <input type="time" id="form-endTime" v-model="articleData.endTime" />
         </div>
@@ -52,7 +52,7 @@
         <div class="imageInsert d-flex">
           <label>사진 업로드</label>
           <div class="d-flex">
-            <input type="file" id="file" name="file" ref="file" class="w-100 ml-3"/>
+            <input type="file" id="file" name="file" ref="file" style="width: 100%;"/>
             <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
           </div>
         </div>
@@ -68,7 +68,7 @@
         </div>
         <!--내용-->
         <div class="createContent">
-          <label for="textarea-rows">내용</label>
+          <label for="textarea-rows">내용<small style="font-size: 17px; color: red;">*</small></label>
           <b-form-textarea
               id="textarea-rows"
               v-model="articleData.description"
@@ -119,7 +119,6 @@
         <i class="fas fa-check"></i> 완료
       </button>
     </div>
-    <button @click="fileUpload">asd</button>
   </div>
 </template>
 
