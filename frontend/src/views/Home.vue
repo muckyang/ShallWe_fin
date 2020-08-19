@@ -183,7 +183,7 @@
 			imageUrl(){
         return (article)=>{
 					try{
-          	return require('@/assets/images/'+`${article.image}`)
+          	return require('/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/images/'+`${article.image}`)
 					}catch{}
 				}
       },
