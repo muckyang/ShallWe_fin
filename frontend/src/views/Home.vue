@@ -21,7 +21,7 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="@/assets/img/c2.png"
+            src="/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/img/c2.png"
             alt="image slot"
           >
         </template>
@@ -33,7 +33,7 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="@/assets/img/캐러셀1.jpg"
+            src="/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/img/캐러셀1.jpg"
             alt="image slot"
           >
         </template>
