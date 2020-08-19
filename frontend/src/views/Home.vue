@@ -64,7 +64,7 @@
 				align="left"
 				img-width="100%"
 				img-height="60%"
-				:img-src="imageUrl(article)"
+				:src="imageUrl(article)"
 				img-alt="Image"
 				img-top
 				footer-bg-variant="#ee6e9f"
@@ -114,7 +114,7 @@
 				align="left"
 				img-width="100%"
 				img-height="60%"
-				:img-src="imageUrl(article)"
+				:src="imageUrl(article)"
 				img-alt="Image"
 				img-top
 				footer-bg-variant="#ee6e9f"
@@ -183,7 +183,7 @@
 			imageUrl(){
         return (article)=>{
 					try{
-          	return require('/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/images/'+`${article.image}`)
+          	return '@/assets/images/'+`${article.image}`
 					}catch{}
 				}
       },

@@ -81,7 +81,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="imageUrl(article)"
+                  :src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -131,7 +131,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="imageUrl(article)"
+                  :src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -181,7 +181,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="imageUrl(article)"
+                  :src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -231,7 +231,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="imageUrl(article)"
+                  :src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -330,7 +330,7 @@ export default {
     computed: {
       imageUrl(){
         return (article)=>{
-          return require('@/assets/images/'+`${article.image}`)
+          return '@/assets/images/'+`${article.image}`
         }
       },
       minPrice(){
