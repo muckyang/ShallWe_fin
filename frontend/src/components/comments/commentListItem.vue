@@ -18,7 +18,7 @@
 
           <!-- 게시물 신고 -->
           <div v-else>
-            <b-button v-b-modal.modal-1 class="siren-btn" style="font-color:red;">신고</b-button>
+            <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
             <b-modal hide-footer="true" id="modal-1" title="신고 접수">
               <h6>신고 사유</h6>
@@ -183,6 +183,8 @@ export default {
 <style>
 /* @import '../node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'; */
 /* @import url('node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'); */
+.siren-btn {
+}
 .comment-box {
   border-bottom: 1px solid rgb(237, 237, 240);
   display: flex;
@@ -227,6 +229,10 @@ export default {
   outline: none;
 }
 .comment-btn:hover {
+  border: none;
+  outline: none;
+}
+.comment-btn:focus {
   border: none;
   outline: none;
 }

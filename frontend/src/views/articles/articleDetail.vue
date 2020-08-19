@@ -216,7 +216,7 @@
 
       <!--하단 부분. 내용,(지도) -->
       <div
-        class="detail-content mt-2 ml-1"
+        class="detail-content mt-2"
         id="item-1"
         style="font-size: 20px;"
       >{{ articleData.description }}</div>
@@ -747,7 +747,7 @@ b-modal.form-input {
 .MyImage {
   width: 45%;
   height: 300px;
-  margin: 10px;
+  margin: 10px 5px 10px 2px;
 }
 .totheContent {
   background-color: #676d74;
@@ -849,7 +849,7 @@ a {
 }
 .detail-content {
   margin: 30px 0;
-  padding: 0 15px;
+  padding: 0 2px;
   text-align: left;
 }
 .detail-btns {
