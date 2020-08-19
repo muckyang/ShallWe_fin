@@ -198,20 +198,20 @@
       <!--하단 부분. 내용,(지도) -->
       <div class="detail-content" id="item-1">{{ articleData.description }}</div>
     </div>
-    <div class="kakao-map">
+    <div class="kakao-map mt-5">
       <kakaoMapForDetail />
     </div>
 
     <!--참가자 리스트-->
-    <div class="members">
-      <div class="members-start">
+    <div class="members mt-5" style="font-family: 'Recipekorea', cursive;">
+      <div class="members-start" style="font-size:19px">
         <i class="fas fa-users"></i>
         참여 멤버 (총 {{ articleData.partList.length }}명)
       </div>
       <div class>
         <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
           <div class="member">
-            <div class="member-writer">
+            <div class="member-writer" style="font-size:18px">
               <router-link
                 :to="{ name: 'userDetail', params: { ID: participant.userId }}"
               >{{participant.writer}}</router-link>
@@ -267,11 +267,16 @@
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-title"
+            style="font-size:17px"
           >제목: {{ participant.title }}</div>
-          <div class="member-price">가격: {{ parPrice(participant.price) }}</div>
+          <div
+            class="member-price py-1"
+            style="font-size:17.5px"
+          >가격: {{ parPrice(participant.price) }}</div>
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-content"
+            style="font-size:18px"
           >요구사항: {{ participant.description }}</div>
           <div v-if="participant.status===0">처리상태:수락 대기</div>
           <div v-if="participant.status===1">처리상태:수락</div>
@@ -659,6 +664,7 @@ export default {
 .fa-crown {
   color: rgb(245, 230, 24);
   vertical-align: text-top;
+  margin-left: 4px;
 }
 .members-start {
   width: 100%;
