@@ -138,13 +138,13 @@ export default {
       this.categoryNum = num;
     },
   },
-  computed:{
-    imageUrl(){
-        return ()=>{
-          return require('../../assets/img/')
-        }
-      },
-  }
+  // computed:{
+  //   imageUrl(){
+  //       return ()=>{
+  //         return require('../../assets/img/')
+  //       }
+  //     },
+  // }
 };
 </script>
 
