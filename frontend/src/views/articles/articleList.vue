@@ -330,7 +330,7 @@ export default {
     computed: {
       imageUrl(){
         return (article)=>{
-          return require('@/assets/images/'+`${article.image}`)
+          return require('/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/images'+`${article.image}`)
         }
       },
       minPrice(){
