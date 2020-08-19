@@ -197,16 +197,28 @@
                   </div>
                   <!-- <img src alt /> -->
                   <b-card-text>
-                    <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address" style="font-size: 13.5px;">{{ article.address }}</h6>
-                    <h6 class="article-price">
+                    <h5
+                      class="article-title mt-3"
+                      style="font-family: 'Recipekorea', cursive; font-size:18px"
+                    >{{ article.title }}</h5>
+                    <h6
+                      class="article-address py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >{{ article.address }}</h6>
+                    <h6
+                      class="article-price py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
                       가격: {{ sumPrice(article.sumPrice) }}/{{
                       minPrice(article.minPrice)
                       }}
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
-                    <div class="d-flex justify-content-between">
+                    <div
+                      class="d-flex justify-content-between"
+                      style="font-family: 'Recipekorea', cursive; font-size:14.5px"
+                    >
                       <small>
                         <b-icon-heart></b-icon-heart>
                         {{ article.likeNum }}개
@@ -269,16 +281,28 @@
                     />
                   </div>
                   <b-card-text>
-                    <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address" style="font-size: 13.5px;">{{ article.address }}</h6>
-                    <h6 class="article-price">
+                    <h5
+                      class="article-title mt-3"
+                      style="font-family: 'Recipekorea', cursive; font-size:18px"
+                    >{{ article.title }}</h5>
+                    <h6
+                      class="article-address py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >{{ article.address }}</h6>
+                    <h6
+                      class="article-price py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
                       가격: {{ sumPrice(article.sumPrice) }}/{{
                       minPrice(article.minPrice)
                       }}
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
-                    <div class="d-flex justify-content-between">
+                    <div
+                      class="d-flex justify-content-between"
+                      style="font-family: 'Recipekorea', cursive; font-size:14.5px"
+                    >
                       <small>
                         <b-icon-heart></b-icon-heart>
                         {{ article.likeNum }}개
@@ -341,16 +365,28 @@
                     />
                   </div>
                   <b-card-text>
-                    <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address">{{ article.address }}</h6>
-                    <h6 class="article-price">
+                    <h5
+                      class="article-title mt-3"
+                      style="font-family: 'Recipekorea', cursive; font-size:18px"
+                    >{{ article.title }}</h5>
+                    <h6
+                      class="article-address py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >{{ article.address }}</h6>
+                    <h6
+                      class="article-price py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
                       가격: {{ sumPrice(article.sumPrice) }}/{{
                       minPrice(article.minPrice)
                       }}
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
-                    <div class="d-flex justify-content-between">
+                    <div
+                      class="d-flex justify-content-between"
+                      style="font-family: 'Recipekorea', cursive; font-size:14.5px"
+                    >
                       <small>
                         <b-icon-heart></b-icon-heart>
                         {{ article.likeNum }}개
