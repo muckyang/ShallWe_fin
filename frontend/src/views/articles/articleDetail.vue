@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <div class="container detail" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
+    <div class="container detail">
       <!--Top 부분. 제목, 작성자, create time -->
       <div class="top">
         <div class="top-row">
@@ -61,17 +61,9 @@
                   v-model="accuseArticleData.accuseReason"
                 ></b-form-textarea>
                 <h6 class="mt-3">신고할 게시물 URL</h6>
-                <b-form-input
-                  style="width: 400px"
-                  id="type-url"
-                  type="url"
-                  v-model="accuseArticleData.accuseUrl"
-                ></b-form-input>
-                <hr />
-                <button
-                  @click="createArticleAccuse({ accuseArticleData })"
-                  class="btn btn-danger btn-sm"
-                >신고접수</button>
+                <b-form-input style="width: 400px" id="type-url" type="url" v-model="accuseArticleData.accuseUrl"></b-form-input>
+                <hr>
+                <button @click="createArticleAccuse({ accuseArticleData })" class="btn btn-danger btn-sm">신고접수</button>
               </b-modal>
             </div>
           </div>
@@ -363,21 +355,22 @@ export default {
       };
     },
     imageUrl() {
-      try {
-        return require("C:/Users/multicampus/Desktop/image/" +
-          `${this.articleData.image}`);
-      } catch {}
-      //   return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
+      try{
+        return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
+      }catch{
+
+      }
+    //   return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
     },
-    udflag() {
-      var tmp = 0;
-      for (const t of this.articleData.partList) {
-        if (t.status === 1) {
-          tmp++;
+    udflag(){
+      var tmp = 0
+      for(const t of this.articleData.partList){
+        if(t.status===1){
+          tmp++
         }
       }
 
-      return tmp === 1 ? true : false;
+      return tmp===1 ? true : false
     },
     joinFlag() {
       const tempList = [];
@@ -459,7 +452,7 @@ export default {
         .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
         .then((response) => {
           alert("구매가 확정되었습니다.");
-          this.getArticle(this.$route.params.ID);
+          this.getArticle(this.$route.params.ID)
         })
         .catch((error) => {
           console.log(error);
@@ -803,7 +796,7 @@ a {
 }
 .detail-content {
   margin: 30px 0;
-  padding: 0 10px;
+  padding: 0 15px;
   text-align: left;
 }
 .detail-btns {
@@ -886,10 +879,6 @@ a {
 .articleUpdate {
   text-decoration: none;
   width: 100%;
-}
-.articleUpdate:hover {
-  text-decoration: none;
-  color: black;
 }
 .article:hover {
   text-decoration: none;
