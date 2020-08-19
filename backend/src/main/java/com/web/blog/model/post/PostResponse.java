@@ -93,6 +93,6 @@ public class PostResponse {
      public List<String> nameList;
      @ApiModelProperty(value = "scoreList", position = 25)
      public List<Integer> scoreList;
-     @ApiModelProperty(value = "pgbCodeList", position = 26)
-     public List<String> pgbCodeList;
+     @ApiModelProperty(value = "rgbCodeList", position = 26)
+     public List<String> rgbCodeList;
 }
