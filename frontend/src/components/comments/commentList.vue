@@ -120,6 +120,14 @@ export default {
   color: grey;
   font-size: 16.5px;
 }
+.comment-submit-btn:hover {
+  border: none;
+  outline: none;
+}
+.comment-submit-btn:focus {
+  border: none;
+  outline: none;
+}
 .comment-text {
   /* border: none;
   outline: none; */

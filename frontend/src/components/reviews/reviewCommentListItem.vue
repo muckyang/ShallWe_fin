@@ -251,6 +251,10 @@ export default {
   border: none;
   outline: none;
 }
+.comment-btn:focus {
+  border: none;
+  outline: none;
+}
 .comment-update-write {
   border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 6px;

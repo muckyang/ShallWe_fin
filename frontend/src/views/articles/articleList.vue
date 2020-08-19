@@ -661,7 +661,7 @@ $x-large: 1200px;
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
-  padding: 7px 7px 3px 7px;
+  padding: 7px 8px 3px 8px;
   color: white;
 }
 </style>
