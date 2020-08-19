@@ -1,5 +1,5 @@
 <template>
-  <div id="app" style="font-family: 'Recipekorea', cursive; font-size:16px">
+  <div id="app" style="font-family: 'Recipekorea', cursive; font-size:19px">
     <div id="map"></div>
     <div class="mt-3">{{articleData.address}}</div>
     <!--삭제하면 update 실행  안된다.-->

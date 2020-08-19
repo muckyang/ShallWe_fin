@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex">
       <div class="comment-box">
-        <div class="comment-user" style="font-size:14.5px">
+        <div class="comment-user" style="font-size:18px">
           <router-link
             :to="{ name: 'userDetail', params: { ID: comment.userId }}"
           >{{ comment.nickname }}</router-link>
@@ -55,8 +55,11 @@
           </div>
           <!-- 게시물 신고 -->
         </div>
-        <div class="comment-content" style="font-size:16px">{{ comment.content }}</div>
-        <div class="comment-create-time" style="font-size:11px">{{ cutDate(comment.createTime) }}</div>
+        <div class="comment-content mt-1" style="font-size:18px">{{ comment.content }}</div>
+        <div
+          class="comment-create-time mt-1"
+          style="font-size:12px"
+        >{{ cutDate(comment.createTime) }}</div>
       </div>
     </div>
 
