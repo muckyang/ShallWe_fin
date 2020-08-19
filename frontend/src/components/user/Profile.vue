@@ -29,7 +29,15 @@
           <b-card no-body class="overflow-hidden h-100">
             <b-row no-gutters>
               <b-col class="d-flex justify-content-center mt-5 mb-5">
-                <img class="mt-4 mb-4" style="width: 120px; height: 120px" src="https://picsum.photos/1024/480/?image=52" alt="">
+
+                <!-- 등급 이미지 -->
+                <img v-if="userData.grade === 0" class="mt-1 mb-4" style="width: 140px;" src="@/assets/userGrade/Level_0.png" alt="">
+                <img v-if="userData.grade === 1" class="mt-1 mb-4" style="width: 140px;" src="@/assets/userGrade/Level_1.png" alt="">
+                <img v-if="userData.grade === 2" class="mt-1 mb-4" style="width: 140px;" src="@/assets/userGrade/Level_2.png" alt="">
+                <img v-if="userData.grade === 3" class="mt-1 mb-4" style="width: 140px;" src="@/assets/userGrade/Level_3.png" alt="">
+                <img v-if="userData.grade === 4" class="mt-1 mb-4" style="width: 140px;" src="@/assets/userGrade/Level_4.png" alt="">
+                <img v-if="userData.grade === 5" class="mt-1 mb-4" style="width: 140px;" src="@/assets/userGrade/Level_5.png" alt="">
+                
                 <div class="ml-5 mt-4" style="border-left: solid 1px lightgray">
                   <h6 class="mb-5 mt-3 ml-5">등급: Level {{ userData.grade }}</h6>
                   <h6 class="ml-5">포인트: {{ userData.userPoint }}<small class="ml-1">Point</small></h6>
