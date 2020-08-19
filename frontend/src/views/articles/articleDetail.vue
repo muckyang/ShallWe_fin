@@ -4,7 +4,7 @@
       <!--Top 부분. 제목, 작성자, create time -->
       <div class="top">
         <div class="top-row">
-          <div class="detail-title">{{ articleData.title }}</div>
+          <div class="detail-title ml-1">{{ articleData.title }}</div>
           <!--게시글 수정,삭제,신고 버튼-->
           <div v-if="udflag">
             <div
@@ -84,12 +84,12 @@
             @click="putWord(tag)"
           >#{{ tag }}</button>
         </div>
-        <div class="in-the-top">
-          <div class="writer">
+        <div class="in-the-top ml-1">
+          <div class="writer mt-1">
             {{ articleData.writer }}
             <br />
           </div>
-          <div class="create-time">{{ articleData.timeAgo }}</div>
+          <div class="create-time" style="font-size:12px">{{ articleData.timeAgo }}</div>
         </div>
       </div>
       <hr class="top-line" />
@@ -101,17 +101,23 @@
           <div class="detail-info">
             <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
             <div class="detail-price">
-              <div class="min-price">최소 주문 금액: {{ minPrice }}</div>
-              <div class="min-price">모인 금액: {{ sumPrice }}</div>
+              <div class="min-price">최소 주문 금액 : {{ minPrice }}</div>
+              <div class="min-price mt-2">모인 금액 : {{ sumPrice }}</div>
             </div>
-            <div class="detail-endTime">마감 시간: {{ cutDate(articleData.endTime) }}까지</div>
-            <div v-if="checkedStatus">오픈 채팅방 url: {{articleData.openLink}}</div>
+            <div class="detail-endTime">마감 시간 : {{ cutDate(articleData.endTime) }}까지</div>
+            <div class="article-url mt-2">사이트 url : {{articleData.urlLink}}</div>
+            <div v-if="checkedStatus" class="mt-2">오픈 채팅방 url : {{articleData.openLink}}</div>
           </div>
           <div class="detail-btns">
             <!--좋아요 버튼-->
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
             <!--공유 버튼-->
-            <a href="javascript:;" class="mx-1" @click="shareContent" id="kakao-link">
+            <a
+              href="javascript:;"
+              class="mx-1 kakao-share-link"
+              @click="shareContent"
+              id="kakao-link"
+            >
               <button @click="shareContent" class="detail-share">
                 <!-- <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제" /> -->
                 <i class="fas fa-share-alt"></i> 공유
@@ -196,7 +202,11 @@
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
+      <div
+        class="detail-content mt-2 ml-1"
+        id="item-1"
+        style="font-size: 20px;"
+      >{{ articleData.description }}</div>
     </div>
     <div class="kakao-map mt-5">
       <kakaoMapForDetail />
@@ -285,7 +295,6 @@
       </div>
     </div>
     <commentList />
-    <div>{{udflag}}</div>
   </div>
 </template>
 
@@ -601,6 +610,12 @@ export default {
 </script>
 
 <style>
+.kakao-share-link {
+  text-decoration: none;
+}
+.kakao-share-link:hover {
+  text-decoration: none;
+}
 .routerLink {
   text-decoration: none;
 }
