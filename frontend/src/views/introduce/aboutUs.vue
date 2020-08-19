@@ -61,7 +61,7 @@
 
       <div class="col-4 col-6-medium col-12-small">
         <section class="box style1 main-point-box p-3 _card card__one">
-          <img src="/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/img/N1.png" class="nIcon" />
+          <img src="http://i3b203.p.ssafy.io/localImg/img/N1.png" class="nIcon" />
           <h2 class="font-change mb-4">쉘위 공구</h2>
           <h4 class="font-change">
             같은 물건을 대량구매하여 확
@@ -87,7 +87,7 @@
             </span>
             </h4>
           </div>
-          <img src="/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/img/trust2.png" class="trustIcon" />
+          <img src="http://i3b203.p.ssafy.io/localImg/trust2.png" class="trustIcon" />
         </section>
       </div>
       <div class="col-2-small">
@@ -101,7 +101,7 @@
               </span>
             </h4>
           </div>
-          <img src="../../assets/img/Convenience2.png" class="ConIcon" />
+          <img src="http://i3b203.p.ssafy.io/localImg/Convenience2.png" class="ConIcon" />
         </section>
       </div>
     </div>
@@ -111,7 +111,7 @@
           <h2 class="font-change">나의 동네에서 싸게 구매하자!!</h2>
           <p>회원가입 때 등록한 가장 가까운 편의점 주소로 같은 동네의 거래 상황을 알 수 있습니다.</p>
         </section>
-          <div class="about-us-map"><img src="@/assets/img/about-us-map.png" class="mapIcon" /></div>
+          <div class="about-us-map"><img src="http://i3b203.p.ssafy.io/localImg/about-us-map.png" class="mapIcon" /></div>
     </section>
   </div>
 </template>
