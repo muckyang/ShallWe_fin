@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" style="font-family: 'Recipekorea', cursive; font-size:19px">
     <div id="map"></div>
-    <div>{{articleData.address}}</div>
+    <div class="mt-3">{{articleData.address}}</div>
     <!--삭제하면 update 실행  안된다.-->
   </div>
 </template>
@@ -13,15 +13,14 @@ export default {
   computed: {
     ...mapState(["articleData"]),
   },
-  mounted(){
+  mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
     } else {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
       document.head.appendChild(script);
     }
   },
@@ -32,8 +31,7 @@ export default {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
       document.head.appendChild(script);
     }
   },

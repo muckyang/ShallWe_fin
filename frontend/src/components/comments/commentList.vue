@@ -1,6 +1,6 @@
 <template>
-  <div class="comments-box mt-4">
-    <div class="comment-start">
+  <div class="comments-box mt-4" style="font-family: 'Recipekorea', cursive;">
+    <div class="comment-start" style="font-size:19px">
       <i class="far fa-comment-dots"></i>
       댓글 {{comments.length}}
     </div>
@@ -114,11 +114,11 @@ export default {
   margin: 0 4px 3px 0;
 }
 .comment-submit-btn {
-  font-weight: bold;
   border: none;
   outline: none;
   background-color: transparent;
   color: grey;
+  font-size: 16.5px;
 }
 .comment-text {
   /* border: none;
@@ -129,6 +129,9 @@ export default {
   border: none;
   outline: none;
   width: 100%;
+}
+.comment-input::placeholder {
+  font-size: 16px;
 }
 .comment-input:focus::placeholder {
   color: transparent;
