@@ -52,7 +52,7 @@
         <div class="imageInsert d-flex">
           <label>사진 업로드</label>
           <div class="d-flex">
-            <input type="file" id="file" name="file" ref="file" class="w-100 ml-3"/>
+            <input type="file" id="file" name="file" ref="file" style="width: 100%;"/>
             <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
           </div>
         </div>
@@ -119,7 +119,6 @@
         <i class="fas fa-check"></i> 완료
       </button>
     </div>
-    <button @click="fileUpload">asd</button>
   </div>
 </template>
 
