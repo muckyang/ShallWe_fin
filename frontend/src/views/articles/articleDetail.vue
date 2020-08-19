@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <div class="container detail">
+    <div class="container detail" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
       <!--Top 부분. 제목, 작성자, create time -->
       <div class="top">
         <div class="top-row">
@@ -889,7 +889,7 @@ a {
 }
 .articleUpdate:hover {
   text-decoration: none;
-  color: red;
+  color: black;
 }
 .article:hover {
   text-decoration: none;
