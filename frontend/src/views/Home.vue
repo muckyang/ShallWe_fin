@@ -183,7 +183,7 @@
 			imageUrl(){
         return (article)=>{
 					try{
-          	return '@/assets/images/'+`${article.image}`
+          	return 'http://i3b203.p.ssafy.io/img/'+`${article.image}`
 					}catch{}
 				}
       },
