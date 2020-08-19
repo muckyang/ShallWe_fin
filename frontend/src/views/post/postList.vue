@@ -80,6 +80,7 @@
               </th>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none; color: black"
                   :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
                     name: 'postDetail',
@@ -89,6 +90,7 @@
               </td>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
@@ -129,6 +131,7 @@
               </th>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
                     name: 'postDetail',
@@ -138,6 +141,7 @@
               </td>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
@@ -178,6 +182,7 @@
               </th>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
                     name: 'postDetail',
@@ -187,6 +192,7 @@
               </td>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
