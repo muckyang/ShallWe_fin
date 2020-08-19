@@ -24,14 +24,14 @@
         </div>
         <div class="form-group mb-5 w-75 mx-auto">
           <p class="align-self-center m-1 mt-3 text-left">Image</p>
-          <input type="file" class="form-control form-control-lg" @change="imageChange" />
+          <input type="file" id="file" name="file" ref="file" style="width: 100%;"/>
         </div>
       </div>
     </div>
     <button
       class="btn btn-secondary"
       type="submit"
-      @click="updateArticle({ articleUpdateData, temp: 2 })"
+      @click="postUpdate"
     >수정</button>
     <button
       class="ml-1 btn btn-danger"
@@ -69,6 +69,36 @@ export default {
     },
     imageUpload() {
       this.$refs.imageInput.click();
+    },
+    fileUpload: function () {
+      var formData = new FormData();
+      this.file = this.$refs.file.files[0];
+      formData.append("file", this.file);
+      formData.append("uid", 10);
+      axios.post(`${BACK_URL}/file`
+          ,formData
+          , {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          })
+        .then((response) => {
+          this.path = response.data
+          this.articleData.image = this.path
+          var tmp=this.articleData.image.split('.')
+          tmp[1]=tmp[1].toLowerCase()
+          this.articleData.image = tmp[0]+'.'+tmp[1]
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    postUpdate(){
+      this.fileUpload()
+      setTimeout(() => {
+        var articleUpdateData=this.articleUpdateData
+        this.updateArticle({ articleUpdateData, temp: 2 })
+      }, 300);
     },
   },
   created: function () {

@@ -399,13 +399,15 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
-      if(!updateData.articleUpdateData.categoryId||!updateData.articleUpdateData.title||!updateData.articleUpdateData.address||!updateData.articleUpdateData.description||!updateData.articleUpdateData.minPrice||!updateData.articleUpdateData.myPrice||!updateData.articleUpdateData.endDate||!updateData.articleUpdateData.endTime){
+      if(updateData.temp===1&&(!updateData.articleUpdateData.categoryId||!updateData.articleUpdateData.title||!updateData.articleUpdateData.address||!updateData.articleUpdateData.description||!updateData.articleUpdateData.minPrice||!updateData.articleUpdateData.myPrice||!updateData.articleUpdateData.endDate||!updateData.articleUpdateData.endTime)){
         alert("필수 입력칸을 모두 채워 주세요")
       }else{
-        if (updateData.articleUpdateData.endTime) {
-          if (updateData.articleUpdateData.endTime.length < 8) {
-            updateData.articleUpdateData.endTime =
-              updateData.articleUpdateData.endTime + ":00";
+        if(updateData.temp==1){
+          if (updateData.articleUpdateData.endTime) {
+            if (updateData.articleUpdateData.endTime.length < 8) {
+              updateData.articleUpdateData.endTime =
+                updateData.articleUpdateData.endTime + ":00";
+            }
           }
         }
         updateData.articleUpdateData.token = state.authToken;

@@ -44,7 +44,7 @@
         <tr>
           <th scope="row">사진첨부</th>
           <td>
-            <b-form-file class="mt-3" @change="imageChange" plain></b-form-file>
+            <input type="file" id="file" name="file" ref="file" style="width: 100%;"/>
           </td>
         </tr>
       </tbody>
@@ -56,7 +56,7 @@
     <button
       class="complete-form"
       type="submit"
-      @click="createArticle({ articleData, temp: 2 })"
+      @click="postCreate"
       value="Submit"
     >
       <i class="fas fa-check"></i> 완료
@@ -82,6 +82,7 @@ export default {
       imageUrl: null, //다시 검토
       value: [],
       selectedTBG: "카테고리",
+      file: '',
     };
   },
   methods: {
@@ -110,6 +111,36 @@ export default {
     },
     imageUpload() {
       this.$refs.imageInput.click();
+    },
+    fileUpload: function () {
+      var formData = new FormData();
+      this.file = this.$refs.file.files[0];
+      console.log(this.file);
+      formData.append("file", this.file);
+      axios.post(`${BACK_URL}/file`
+          ,formData
+          , {
+              headers: {
+                  'Content-Type': 'multipart/form-data'
+              }
+          })
+        .then((response) => {
+          this.path = response.data
+          this.articleData.image = this.path
+          var tmp=this.articleData.image.split('.')
+          tmp[1]=tmp[1].toLowerCase()
+          this.articleData.image = tmp[0]+'.'+tmp[1]
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    postCreate(){
+      this.fileUpload()
+      setTimeout(() => {
+        var articleData=this.articleData 
+        this.createArticle({ articleData, temp: 2 })
+      }, 300);
     },
   },
 };

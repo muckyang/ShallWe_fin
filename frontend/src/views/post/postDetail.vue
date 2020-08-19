@@ -86,7 +86,7 @@
       <!-- {{isImage}}{{noImage}} -->
       <!--이미지-->
       <div v-if="articleData.image" class="middle-row">
-        <img class="post-img" :src="articleData.image" alt="..." />
+        <img class="post-img" :src="imageUrl" alt="..." />
       </div>
 
       <!--내용, 댓글-->
@@ -132,6 +132,13 @@ export default {
 
   computed: {
     ...mapState(["articleData", "userData"]),
+    imageUrl() {
+      try {
+        return require("C:/Users/multicampus/Desktop/image/" +
+          `${this.articleData.image}`);
+      } catch {}
+      //   return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
+    },
   },
 
   methods: {
