@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex">
       <div class="comment-box">
-        <div class="comment-user" style="font-size:18px">
+        <div class="comment-user" style="font-size:17px">
           <router-link
             :to="{ name: 'userDetail', params: { ID: comment.userId }}"
           >{{ comment.nickname }}</router-link>
@@ -18,7 +18,7 @@
 
           <!-- 게시물 신고 -->
           <div v-else>
-            <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
+            <b-button v-b-modal.modal-1 class="siren-btn" style="font-color:red;">신고</b-button>
 
             <b-modal hide-footer="true" id="modal-1" title="신고 접수">
               <h6>신고 사유</h6>
