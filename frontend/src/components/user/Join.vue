@@ -421,7 +421,7 @@ const BACK_URL = process.env.VUE_APP_BACK_URL
                     this.duCheck(this.signUpData.nickname)
                 }
             }   
-        }
+        },
     }
 
 </script>
