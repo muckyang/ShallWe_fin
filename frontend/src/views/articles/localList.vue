@@ -26,7 +26,7 @@
                   align="left"
                   img-width="100%"
                   img-height="60%"
-                  :img-src="article.image"
+                  :img-src="imageUrl(article)"
                   img-alt="Image"
                   img-top
                   footer-bg-variant="#ee6e9f"
@@ -114,6 +114,13 @@ export default {
       this.onlyOne = true;
       this.infiniteId += 1;
     },
+  },
+  computed: {
+      imageUrl(){
+        return (article)=>{
+          return 'http://i3b203.p.ssafy.io/img/'+`${article.image}`
+        }
+      },
   },
   // computed: {
   //   ...mapState(["articles"]),

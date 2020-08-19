@@ -21,7 +21,7 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/img/c2.png"
+            src="http://i3b203.p.ssafy.io/localImg/c2.png"
             alt="image slot"
           >
         </template>
@@ -33,7 +33,31 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/img/캐러셀1.jpg"
+            src="http://i3b203.p.ssafy.io/localImg/캐러셀1.jpg"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide></router-link>
+			<router-link to="/introduce" class="ml-0" id="introduce">
+      <b-carousel-slide background="white">
+        <template v-slot:img>
+          <img
+            class="d-block img-fluid w-100"
+            width="1024"
+            height="480"
+            src="http://i3b203.p.ssafy.io/localImg/캐러셀1.jpg"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide></router-link>
+			<router-link to="/introduce" class="ml-0" id="introduce">
+      <b-carousel-slide background="white">
+        <template v-slot:img>
+          <img
+            class="d-block img-fluid w-100"
+            width="1024"
+            height="480"
+            src="http://i3b203.p.ssafy.io/localImg/캐러셀1.jpg"
             alt="image slot"
           >
         </template>

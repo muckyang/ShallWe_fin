@@ -44,7 +44,9 @@
           <!-- <div class="infinite">
             <img src="@/assets/img/truck1.png" class="truckIcon" />
           </div>-->
+          <div class="infinite">
           <img src="http://i3b203.p.ssafy.io/localImg/truck1.png" class="truckIcon" />
+          </div>
           <div class="infinite-bottom">
             <h2 class="font-change mb-4">쉘위 택배</h2>
             <h4 class="font-change">
@@ -138,13 +140,6 @@ export default {
       this.categoryNum = num;
     },
   },
-  // computed:{
-  //   imageUrl(){
-  //       return ()=>{
-  //         return require('../../assets/img/')
-  //       }
-  //     },
-  // }
 };
 </script>
 
