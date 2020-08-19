@@ -5,7 +5,7 @@
         class="nav nav-tabs d-flex"
         id="nav-tab"
         role="tablist"
-        style="font-family: 'Recipekorea', cursive; font-size:18px"
+        style="font-family: 'Recipekorea', cursive; font-size:16.5px"
       >
         <a
           @click="changeCategory(100)"
@@ -45,7 +45,7 @@
     <div
       class="tab-content"
       id="nav-tabContent"
-      style="font-family: 'Recipekorea', cursive; font-size:16px"
+      style="font-family: 'Recipekorea', cursive; font-size:14px"
     >
       <div
         v-if="categoryNum === 100"
@@ -78,7 +78,7 @@
               <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-free">자유</span>
               </th>
-              <td>
+              <td style="font-size:14px">
                 <router-link
                   :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
@@ -87,7 +87,7 @@
                   }"
                 >{{ article.title }}</router-link>
               </td>
-              <td style="font-size:14.5px">
+              <td style="font-size:14px">
                 <router-link
                   :to="{
                     name: 'postDetail',
@@ -127,7 +127,7 @@
               <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-free">자유</span>
               </th>
-              <td>
+              <td style="font-size:14px">
                 <router-link
                   :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
@@ -136,7 +136,7 @@
                   }"
                 >{{ article.title }}</router-link>
               </td>
-              <td style="font-size:14.5px">
+              <td style="font-size:14px">
                 <router-link
                   :to="{
                     name: 'postDetail',
@@ -176,7 +176,7 @@
               <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-free">자유</span>
               </th>
-              <td>
+              <td style="font-size:14px">
                 <router-link
                   :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
@@ -185,7 +185,7 @@
                   }"
                 >{{ article.title }}</router-link>
               </td>
-              <td style="font-size:14.5px">
+              <td style="font-size:14px">
                 <router-link
                   :to="{
                     name: 'postDetail',
