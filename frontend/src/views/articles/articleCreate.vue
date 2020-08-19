@@ -172,16 +172,15 @@ export default {
     fileUpload: function () {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
+      console.log(this.file);
       formData.append("file", this.file);
-      formData.file =this.file;
-       console.log(formData , "<<<<<<<<<<<<<<<<,")
-       console.log(formData.file , "<<<<<<<<<<<<<<<<,")
-      for (var key of formData.keys()) {
-        console.log(key);
-      }
-      for (var value of formData.values()) {
-        console.log(value);
-      }
+      // formData.file =this.file;
+      // for (var key of formData.keys()) {
+      //   console.log(key);
+      // }
+      // for (var value of formData.values()) {
+      //   console.log(value);
+      // }
        axios.post(`${BACK_URL}/file`
           ,formData
           , {
