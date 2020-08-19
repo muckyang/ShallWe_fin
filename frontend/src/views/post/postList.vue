@@ -1,7 +1,12 @@
 <template>
   <div class="article-list-box mt-5 mx-auto">
     <nav class="mt-4 mb-3 mx-1">
-      <div class="nav nav-tabs d-flex" id="nav-tab" role="tablist">
+      <div
+        class="nav nav-tabs d-flex"
+        id="nav-tab"
+        role="tablist"
+        style="font-family: 'Recipekorea', cursive; font-size:18px"
+      >
         <a
           @click="changeCategory(100)"
           class="nav-item nav-link active text-dark"
@@ -11,8 +16,7 @@
           role="tab"
           aria-controls="nav-home"
           aria-selected="true"
-          >전체</a
-        >
+        >전체</a>
         <a
           @click="changeCategory(101)"
           class="nav-item nav-link text-dark"
@@ -22,8 +26,7 @@
           role="tab"
           aria-controls="nav-contact"
           aria-selected="false"
-          >공지</a
-        >
+        >공지</a>
         <a
           @click="changeCategory(103)"
           class="nav-item nav-link text-dark"
@@ -33,14 +36,17 @@
           role="tab"
           aria-controls="nav-contact"
           aria-selected="false"
-          >자유</a
-        >
+        >자유</a>
         <router-link :to="{ name: 'postCreate' }" class="ml-auto">
-          <button class="post-write-btn">글쓰기</button>
+          <button class="post-write-btn" style="font-size: 16px">글쓰기</button>
         </router-link>
       </div>
     </nav>
-    <div class="tab-content" id="nav-tabContent">
+    <div
+      class="tab-content"
+      id="nav-tabContent"
+      style="font-family: 'Recipekorea', cursive; font-size:16px"
+    >
       <div
         v-if="categoryNum === 100"
         class="tab-pane fade show active"
@@ -57,7 +63,7 @@
               <th scope="col">작성일</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style="font-size:15px">
             <tr
               v-for="article in articles"
               :key="article.articleId"
@@ -68,7 +74,7 @@
               </th>
               <!-- <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-id">{{ article.articleId }}</span>
-              </th> -->
+              </th>-->
               <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-free">자유</span>
               </th>
@@ -79,19 +85,17 @@
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                  >{{ article.title }}</router-link
-                >
+                >{{ article.title }}</router-link>
               </td>
-              <td>
+              <td style="font-size:14.5px">
                 <router-link
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                  >{{ article.writer }}</router-link
-                >
+                >{{ article.writer }}</router-link>
               </td>
-              <td>{{ cutDate(article.createTime) }}</td>
+              <td style="font-size:13px">{{ cutDate(article.createTime) }}</td>
             </tr>
           </tbody>
         </table>
@@ -119,7 +123,7 @@
               </th>
               <!-- <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-id">{{ article.articleId }}</span>
-              </th> -->
+              </th>-->
               <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-free">자유</span>
               </th>
@@ -130,19 +134,17 @@
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                  >{{ article.title }}</router-link
-                >
+                >{{ article.title }}</router-link>
               </td>
-              <td>
+              <td style="font-size:14.5px">
                 <router-link
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                  >{{ article.writer }}</router-link
-                >
+                >{{ article.writer }}</router-link>
               </td>
-              <td>{{ cutDate(article.createTime) }}</td>
+              <td style="font-size:13px">{{ cutDate(article.createTime) }}</td>
             </tr>
           </tbody>
         </table>
@@ -170,7 +172,7 @@
               </th>
               <!-- <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-id">{{ article.articleId }}</span>
-              </th> -->
+              </th>-->
               <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-free">자유</span>
               </th>
@@ -181,35 +183,27 @@
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                  >{{ article.title }}</router-link
-                >
+                >{{ article.title }}</router-link>
               </td>
-              <td>
+              <td style="font-size:14.5px">
                 <router-link
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
                   }"
-                  >{{ article.writer }}</router-link
-                >
+                >{{ article.writer }}</router-link>
               </td>
-              <td>{{ cutDate(article.createTime) }}</td>
+              <td style="font-size:13px">{{ cutDate(article.createTime) }}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <infinite-loading
-      @infinite="infiniteHandler"
-      :identifier="infiniteId"
-      spinner="waveDots"
-    >
+    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
       <div
         slot="no-more"
-        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >
-        더이상 게시물이 존재하지 않습니다!
-      </div>
+        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px; font-family: 'Recipekorea', cursive; font-size:14.5px"
+      >더이상 게시물이 존재하지 않습니다!</div>
     </infinite-loading>
   </div>
 </template>
@@ -307,9 +301,8 @@ export default {
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
-  padding: 5px 10px;
+  padding: 7px 7px 3px 7px;
   color: white;
-  font-weight: bold;
 }
 .post-id {
   font-size: 85%;
