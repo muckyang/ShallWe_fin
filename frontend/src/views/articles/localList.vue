@@ -1,5 +1,6 @@
 <template>
   <div class="mt-4">
+    <kakaoMapForLocal :articles="articles" @setAddress="setAddress"/>
     <div class="tab-content" id="nav-tabContent">
       <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
         <button class="article-create-btn">글쓰기</button>
@@ -14,43 +15,45 @@
         <b-container class="bv-example-row">
           <b-row align-h="start">
             <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
-              <router-link
-                :to="{
-                  name: 'articleDetail',
-                  params: { ID: `${article.articleId}` },
-                }"
-                class="text-decoration-none text-dark"
-              >
-                <b-card
-                  class="article-card m-4 _card card__one"
-                  align="left"
-                  img-width="100%"
-                  img-height="60%"
-                  :img-src="article.image"
-                  img-alt="Image"
-                  img-top
-                  footer-bg-variant="#ee6e9f"
-                  footer-class="card-end"
+              <div v-if="article.address===address||flag">
+                <router-link
+                  :to="{
+                    name: 'articleDetail',
+                    params: { ID: `${article.articleId}` },
+                  }"
+                  class="text-decoration-none text-dark"
                 >
-                  <b-card-text>
-                    <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address">{{ article.address }}</h6>
-                    <br />
-                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
-                  </b-card-text>
-                  <template v-slot:footer>
-                    <div class="d-flex justify-content-between">
-                      <small>
-                        <b-icon-heart></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
-                      <small class="text-muted">{{ article.timeAgo }}</small>
-                    </div>
-                  </template>
-                </b-card>
-              </router-link>
+                  <b-card
+                    class="article-card m-4 _card card__one"
+                    align="left"
+                    img-width="100%"
+                    img-height="60%"
+                    :img-src="imageUrl(article)"
+                    img-alt="Image"
+                    img-top
+                    footer-bg-variant="#ee6e9f"
+                    footer-class="card-end"
+                  >
+                    <b-card-text>
+                      <h5 class="article-title">{{ article.title }}</h5>
+                      <h6 class="article-address">{{ article.address }}</h6>
+                      <br />
+                      <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                    </b-card-text>
+                    <template v-slot:footer>
+                      <div class="d-flex justify-content-between">
+                        <small>
+                          <b-icon-heart></b-icon-heart>
+                          {{ article.likeNum }}개
+                          <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
+                          {{ article.commentNum }}개
+                        </small>
+                        <small class="text-muted">{{ article.timeAgo }}</small>
+                      </div>
+                    </template>
+                  </b-card>
+                </router-link>
+              </div>
             </b-col>
           </b-row>
         </b-container>
@@ -72,6 +75,7 @@ import { mapState, mapActions } from "vuex";
 import InfiniteLoading from "vue-infinite-loading";
 import cookies from "vue-cookies";
 import axios from "axios";
+import kakaoMapForLocal from '@/components/articles/kakaoMapForLocal.vue'
 
 export default {
   name: "articleList",
@@ -81,10 +85,20 @@ export default {
       page: 0,
       onlyOne: true,
       articles: [],
+      address:'default',
+      flag:true,
     };
   },
   components: {
     InfiniteLoading,
+    kakaoMapForLocal
+  },
+  computed: {
+    imageUrl(){
+      return (article)=>{
+        return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
+      }
+    },
   },
   methods: {
     ...mapActions(["getArticles", "search"]),
@@ -114,13 +128,11 @@ export default {
       this.onlyOne = true;
       this.infiniteId += 1;
     },
+    setAddress(address){
+      this.address=address
+      this.flag=false
+    }
   },
-  // computed: {
-  //   ...mapState(["articles"]),
-  // },
-  // created() {
-  //   this.getArticles({ temp: 3, categoryId: this.categoryNum });
-  // },
 };
 </script>
 

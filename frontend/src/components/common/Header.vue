@@ -21,7 +21,7 @@
 
         <li class="nav-item mr-1">
           <router-link
-            v-if="isLoggedin"
+            v-if="isLoggedin&&!isAdmin"
             v-bind:to="{ name: constants.URL_TYPE.USER.PROFILE }"
             class="nav-link navbar1-item"
           >마이페이지</router-link>
@@ -31,7 +31,7 @@
       <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
 
       <!-- 유저관리 -->
-      <div v-if="userData.grade === 0" class="d-flex align-items-starts mr-1">
+      <div v-if="isAdmin" class="d-flex align-items-starts mr-1">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="/user/userlist" class="nav-link navbar1-item">유저관리</a>
@@ -39,10 +39,10 @@
         </ul>
       </div>
 
-      <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
+      <div class="wall" v-show="isAdmin">|</div>
 
       <!-- 신고관리 -->
-      <div v-if="userData.grade === 0" class="d-flex align-items-starts">
+      <div v-if="isAdmin" class="d-flex align-items-starts">
         <ul class="navbar-nav">
           <li class="nav-item">
             <a href="/user/accuselist" class="nav-link navbar1-item">신고관리</a>
@@ -149,7 +149,7 @@ export default {
     ...mapActions(["search", "login", "getUserData"]),
   },
   computed: {
-    ...mapState(["isLoggedin", "userData"]),
+    ...mapState(["isLoggedin", "userData","isAdmin"]),
   },
   created: function () {
     this.loginCheck();

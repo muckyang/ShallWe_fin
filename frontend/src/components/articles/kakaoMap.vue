@@ -62,9 +62,6 @@ export default {
   computed:{
     ...mapState(['userData'])
   },
-  updated(){
-    this.searchPlaces()
-  },
   methods: {
     initMap() {
       var mapContainer = document.getElementById("map");
