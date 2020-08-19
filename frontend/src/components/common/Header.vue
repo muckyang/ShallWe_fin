@@ -1,7 +1,10 @@
 <template>
   <div>
     <!-- Navbar1 -->
-    <nav class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar">
+    <nav
+      class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar"
+      style="font-family: 'Recipekorea', cursive;"
+    >
       <ul class="navbar-nav d-flex flex-row">
         <!-- 로그인 X -->
         <li class="nav-item mr-1">
@@ -102,7 +105,7 @@
           class="searchInput"
           type="search"
           style="font-family: FontAwesome;"
-          placeholder="Search"
+          :placeholder="placeholderMessage"
           v-model="searchData.searchDataForSend.word"
           @keypress.enter="search(searchData)"
         />
@@ -131,6 +134,7 @@ export default {
     return {
       email: " \uf0e0" + "  이메일",
       pw: " \uf084" + "  비밀번호",
+      placeholderMessage: "검색",
       constants,
       searchData: {
         searchDataForSend: {
@@ -258,6 +262,12 @@ export default {
 }
 .searchInput:focus::placeholder {
   color: transparent;
+}
+.searchInput::placeholder {
+  font-family: "Recipekorea";
+  font-size: 15px;
+  /* font-size: 5px; */
+  /* font-size: 4px;  */
 }
 .searchBtn {
   height: 35px;
