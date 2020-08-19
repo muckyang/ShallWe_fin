@@ -359,7 +359,7 @@ export default {
       // }catch{
 
       // }
-      return require('@/assets/images/'+`${article.image}`)
+      return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
     },
     udflag(){
       var tmp = 0
