@@ -172,6 +172,7 @@ export default {
     fileUpload: function () {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
+      formData.append("file", this.file);
        formData.file=this.file;
        console.log(formData , "<<<<<<<<<<<<<<<<,")
        console.log(formData.file , "<<<<<<<<<<<<<<<<,")
