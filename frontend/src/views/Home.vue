@@ -64,7 +64,7 @@
 				align="left"
 				img-width="100%"
 				img-height="60%"
-				:src="imageUrl(article)"
+				:img-src="imageUrl(article)"
 				img-alt="Image"
 				img-top
 				footer-bg-variant="#ee6e9f"
@@ -114,7 +114,7 @@
 				align="left"
 				img-width="100%"
 				img-height="60%"
-				:src="imageUrl(article)"
+				:img-src="imageUrl(article)"
 				img-alt="Image"
 				img-top
 				footer-bg-variant="#ee6e9f"
@@ -180,9 +180,11 @@
 			}
 		},
 		computed:{
+
 			imageUrl(){
         return (article)=>{
 					try{
+						console.log(article.image)
           	return 'http://i3b203.p.ssafy.io/img/'+`${article.image}`
 					}catch{}
 				}
