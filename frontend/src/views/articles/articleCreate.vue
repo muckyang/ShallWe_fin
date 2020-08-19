@@ -172,8 +172,9 @@ export default {
     fileUpload: function () {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
-
-       formData.file=this.file
+       formData.file=this.file;
+       console.log(formData , "<<<<<<<<<<<<<<<<,")
+       console.log(formData.file , "<<<<<<<<<<<<<<<<,")
        axios.post(`${BACK_URL}/file`
           ,formData
           , {
