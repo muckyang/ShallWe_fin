@@ -102,7 +102,7 @@ public class AccountController {
             User tuser = new User(user.get().getEmail(), user.get().getNickname());
 
             String token = jwtService.createLoginToken(tuser);
-            // redirectView.setUrl("http://localhost:8081/user/klogin");// 로그인 완료된 페이지
+            // // redirectView.setUrl("http://localhost:8081/user/klogin");// 로그인 완료된 페이지
             redirectView.setUrl("http://i3b203.p.ssafy.io/user/klogin");// 로그인 완료된 페이지
             redirectView.addStaticAttribute("token", token);
         } else {// 가입전 사용자
