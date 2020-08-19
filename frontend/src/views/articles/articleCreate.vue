@@ -119,6 +119,7 @@
         <i class="fas fa-check"></i> 완료
       </button>
     </div>
+    <button @click="fileUpload">asd</button>
   </div>
 </template>
 
@@ -171,11 +172,9 @@ export default {
     fileUpload: function () {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
-      console.log(this.$refs.file.files[0],'파일에 갖다붙이는거')
-      console.log(this.file,'파일')
-      formData.append("file", this.file);
-      console.log(formData,">>>>>>>>>>>>>>>>")
-      axios.post(`${BACK_URL}/file`
+
+       formData.file=this.file
+       axios.post(`${BACK_URL}/file`
           ,formData
           , {
               headers: {
