@@ -95,7 +95,7 @@
 
       <!--중간 부분. 이미지, 주요 정보들 -->
       <div class="middle-row">
-        <img class="MyImage" :src="imageUrl" alt="..." />
+        <img class="MyImage" :src=imageUrl() alt="..." />
         <div class="articleInfo">
           <div class="detail-info">
             <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
@@ -353,14 +353,19 @@ export default {
         }).format(price);
       };
     },
-    imageUrl() {
-      // try{
-      //   return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
-      // }catch{
+    imageUrl(){
+        return (articleData)=> {
+          return 'http://i3b203.p.ssafy.io/img/'+`${articleData.image}`
+        }
+      },
+    // imageUrl() {
+    //   try{
+    //     return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
+    //   }catch{
 
-      // }
-      return require('@/assets/images/'+`${article.image}`)
-    },
+    //   }
+    //   return require('@/assets/images/'+`${article.image}`)
+    // },
     udflag(){
       var tmp = 0
       for(const t of this.articleData.partList){
