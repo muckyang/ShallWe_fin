@@ -87,7 +87,7 @@
           }"
         >
           <button
-            class="tag"
+            class="tag-btn"
             v-for="tag in articleData.tags"
             :key="tag.no"
             @click="putWord(tag)"
@@ -215,14 +215,18 @@
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div
-        class="detail-content mt-2"
-        id="item-1"
-        style="font-size: 20px;"
-      >{{ articleData.description }}</div>
+      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
     </div>
-    <div class="kakao-map mt-5">
-      <kakaoMapForDetail />
+    <div class="container">
+      <div class="row">
+        <div class="kakao-map col-6">
+          <kakaoMapForDetail />
+        </div>
+        <!-- 차트 -->
+        <div class="col-6">
+          <DoughnutChart />
+        </div>
+      </div>
     </div>
 
     <!--참가자 리스트-->
@@ -243,10 +247,19 @@
                 <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
               </div>
 
-              <div class="article-participant-status" v-if="participant.userId != userData.userId">
-                <div v-if="participant.status===0">처리상태:수락 대기</div>
-                <div v-if="participant.status===1">처리상태:수락</div>
-                <div v-if="participant.status===2">처리상태:거절</div>
+              <div
+                class="article-participant-status"
+                v-if="participant.userId != userData.userId && participant.userId != articleData.userId"
+              >
+                <div v-if="participant.status===0">
+                  <button class="waiting-btn">대기중</button>
+                </div>
+                <div v-if="participant.status===1">
+                  <button class="accepted-btn">수락됨</button>
+                </div>
+                <div v-if="participant.status===2">
+                  <button class="denied-btn">거절됨</button>
+                </div>
               </div>
             </div>
             <div v-if="participant.status === 0">
@@ -675,6 +688,13 @@ export default {
 </script>
 
 <style>
+.waiting-btn,
+.accepted-btn,
+.denied-btn {
+  border: red;
+  outline: none;
+  border-radius: 4px;
+}
 .control-width {
   width: 30px;
 }
@@ -1010,10 +1030,12 @@ a {
 .nomargin {
   margin: 0;
 }
-.tag {
+.tag-btn {
   margin-right: 1%;
-  border: none;
+  border: 3px solid #ee6e9f;
   outline: none;
-  border-radius: 3px;
+  border-radius: 20px;
+  background-color: transparent;
+  padding: 5px 6px 2px 4px;
 }
 </style>

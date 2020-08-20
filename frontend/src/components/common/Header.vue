@@ -13,11 +13,18 @@
             class="nav-link navbar1-item loginBtn"
             v-if="!isLoggedin"
             @click="REMOVE_TOKEN"
+            style="font-size: 13.5px"
           >카카오 로그인</a>
         </li>
         <!-- 로그인 O -->
         <li class="nav-item mr-1">
-          <a href="#" v-if="isLoggedin" @click="REMOVE_TOKEN" class="nav-link navbar1-item">로그아웃</a>
+          <a
+            href="#"
+            v-if="isLoggedin"
+            @click="REMOVE_TOKEN"
+            class="nav-link navbar1-item"
+            style="font-size: 13.5px"
+          >로그아웃</a>
         </li>
 
         <div class="wall" v-show="isLoggedin">|</div>
@@ -27,6 +34,7 @@
             v-if="isLoggedin&&!isAdmin"
             v-bind:to="{ name: constants.URL_TYPE.USER.PROFILE }"
             class="nav-link navbar1-item"
+            style="font-size: 13.5px"
           >마이페이지</router-link>
         </li>
       </ul>
@@ -63,7 +71,7 @@
       >Shall we?</a>
     </nav>
     <!-- Navbar3 -->
-    <nav class="navbar navbar-expand-lg navbar-light p-0">
+    <nav class="navbar navbar-expand-lg navbar-light p-0 mt-4" style="font-size: 18px">
       <!--페이지 줄일때 네브바 햄버거로 만들어주는거-->
       <button
         class="navbar-toggler"
@@ -153,7 +161,7 @@ export default {
     ...mapActions(["search", "login", "getUserData"]),
   },
   computed: {
-    ...mapState(["isLoggedin", "userData","isAdmin"]),
+    ...mapState(["isLoggedin", "userData", "isAdmin"]),
   },
   created: function () {
     this.loginCheck();
@@ -256,6 +264,7 @@ export default {
   border-width: 1.5px;
   border-color: #000;
   padding-left: 1.3%;
+  padding-bottom: 0.6%;
 }
 .searchInput:focus {
   outline: none;

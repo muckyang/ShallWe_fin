@@ -38,6 +38,7 @@
       type="submit"
       @click="deleteArticle({ id: articleUpdateData.articleId, temp: 2 })"
     >삭제</button>
+    <button @click="fileUpload">asdsadas</button>
   </div>
 </template>
 

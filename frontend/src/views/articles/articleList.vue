@@ -114,7 +114,7 @@
                   </div>
                   <b-card-text class="p-2">
                     <h5
-                      class="article-title mt-3"
+                      class="article-title mt-3 pt-1"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
                     >{{ article.title }}</h5>
                     <h6
@@ -203,9 +203,9 @@
                     />
                   </div>
                   <!-- <img src alt /> -->
-                  <b-card-text>
+                  <b-card-text class="p-2">
                     <h5
-                      class="article-title mt-3"
+                      class="article-title mt-3 pt-1"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
                     >{{ article.title }}</h5>
                     <h6
@@ -288,9 +288,9 @@
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
-                  <b-card-text>
+                  <b-card-text class="p-2">
                     <h5
-                      class="article-title mt-3"
+                      class="article-title mt-3 pt-1"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
                     >{{ article.title }}</h5>
                     <h6
@@ -373,9 +373,9 @@
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
-                  <b-card-text>
+                  <b-card-text class="p-2">
                     <h5
-                      class="article-title mt-3"
+                      class="article-title mt-3 pt-1"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
                     >{{ article.title }}</h5>
                     <h6
