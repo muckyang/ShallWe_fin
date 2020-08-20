@@ -1,16 +1,5 @@
 <template>
   <div class="article-list-box mt-5 mx-auto">
-    <!-- <input class="searchInput" type="search" 
-    v-model="searchData.searchDataForSend.word"
-    @keypress.enter="search(searchData)"
-    style="font-family: FontAwesome;" 
-    placeholder="Search" 
-    >
-    <button class="searchBtn 
-    my-2 my-sm-0" 
-    type="submit" @click="search(searchData)">
-    <i class="fas fa-search"></i></button>-->
-
     <nav class="mt-4 mb-3 mx-1">
       <div
         class="nav nav-tabs navs"
@@ -270,7 +259,7 @@
                     />
                     <img
                       v-if="article.categoryId == 3"
-                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg//type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -672,12 +661,6 @@ export default {
 </script>
 
 <style>
-/* .article-img-box {
-  width: 100%;
-  height: 60%;
-  border: 1px solid red;
-  background-image: url("imageUrl(article)");
-} */
 .articleList-subInfo {
   display: flex;
   vertical-align: middle;

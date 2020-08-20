@@ -173,31 +173,6 @@ export default new Vuex.Store({
   },
 
   actions: {
-    //사용자 인증
-    // sendEmail({ state }, data) {
-    //   if (Object.values(data.signUpDataForSend).indexOf("") === -1) {
-    //     if (state.isTerm) {
-    //       if (data.signUpDataForSend.password === data.password2) {
-    //         alert("메일로 인증 코드가 발송되었습니다.");
-    //         this.commit("sendCheck");
-    //         axios
-    //           .post(`${BACK_URL}/account/sendmail`, data.signUpDataForSend)
-    //           .then((res) => {
-    //             // this.commit('sendCheck')
-    //           })
-    //           .catch((err) => {
-    //             console.log(err);
-    //           });
-    //       } else {
-    //         alert("비밀번호를 다시 설정해주세요");
-    //       }
-    //     } else {
-    //       alert("약관에 동의해주세요");
-    //     }
-    //   } else {
-    //     alert("빈 칸을 채워 주세요");
-    //   }
-    // },
     duCheck({ commit }, nickname) {
       axios
         .get(`${BACK_URL}/account/nicknamecheck/${nickname}`)
@@ -247,7 +222,6 @@ export default new Vuex.Store({
                 '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
               confirmButtonColor: "#ee6e9f",
             });
-            // alert("약관에 동의해 주세요");
           }
         } else {
           swal.fire({
@@ -274,17 +248,6 @@ export default new Vuex.Store({
         });
       }
     },
-    // login({ commit }, loginData) {
-    // axios
-    //   .post(`${BACK_URL}/account/login`, loginData)
-    //   .then((response) => {
-    //     commit("SET_TOKEN", response.data);
-    //     alert("환영합니다.");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-    // },
     adminLogin({ commit }, loginData) {
       console.log(loginData);
       axios
@@ -312,7 +275,6 @@ export default new Vuex.Store({
         });
     },
 
-    // 이한솔 시작
     getUserDatailData({ state, commit }, userId) {
       const auth = { token: state.authToken };
       axios
@@ -324,7 +286,6 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    // 이한솔 끝
 
     editUser({ state, commit }, editData) {
       editData.token = state.authToken;
@@ -591,7 +552,6 @@ export default new Vuex.Store({
             '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
           confirmButtonColor: "#ee6e9f",
         });
-        // alert("게시글 종류를 선택해 주세요!");
       } else if (!searchData.categoryId) {
         Swal.fire({
           icon: "warning",
@@ -603,7 +563,6 @@ export default new Vuex.Store({
             '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
           confirmButtonColor: "#ee6e9f",
         });
-        // alert("카테고리를 선택해 주세요!");
       } else if (!searchData.searchDataForSend.subject) {
         Swal.fire({
           icon: "warning",
@@ -615,7 +574,6 @@ export default new Vuex.Store({
             '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
           confirmButtonColor: "#ee6e9f",
         });
-        // alert("분류를 선택해 주세요!");
       } else if (!searchData.searchDataForSend.word) {
         Swal.fire({
           icon: "warning",
@@ -627,7 +585,6 @@ export default new Vuex.Store({
             '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
           confirmButtonColor: "#ee6e9f",
         });
-        // alert("검색어를 입력해 주세요!");
       }
     },
 
