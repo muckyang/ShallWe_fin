@@ -1,9 +1,6 @@
 <template>
   <div class="mt-5">
-    <div
-      class="container detail"
-      style="font-family: 'Recipekorea', cursive; font-size:16.5px"
-    >
+    <div class="container detail" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
       <!--Top 부분. 제목, 작성자, create time -->
       <div class="top">
         <div class="top-row">
@@ -36,71 +33,48 @@
                       categoryId: articleData.categoryId,
                     })
                   "
-                  >삭제</a
-                >
-            </div>
-                <!--다시 보기!!!!!!!1 -->
+                >삭제</a>
               </div>
+              <!--다시 보기!!!!!!!1 -->
             </div>
+          </div>
 
-            <!-- 게시물 신고 -->
-            <div v-if="articleData.userId !== userData.userId">
-              <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
+          <!-- 게시물 신고 -->
+          <div v-if="articleData.userId !== userData.userId">
+            <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
-              <b-modal :hide-footer="true" id="modal-1" title="신고 접수">
-                <h6>신고 사유</h6>
-                <div class="dropdown">
-                  <button
-                    class="btn btn-secondary btn-sm dropdown-toggle"
-                    type="button"
-                    id="dropdownMenuButton"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    {{ kind }}
-                  </button>
-                  <div
-                    class="dropdown-menu"
-                    aria-labelledby="dropdownMenuButton"
-                  >
-                    <a
-                      class="dropdown-item"
-                      href="#"
-                      @click="changeAccuseKind(1)"
-                      >욕설, 비난을 했어요!</a
-                    >
-                    <a
-                      class="dropdown-item"
-                      href="#"
-                      @click="changeAccuseKind(2)"
-                      >약속 장소에 나오지 않았어요!</a
-                    >
-                    <a
-                      class="dropdown-item"
-                      href="#"
-                      @click="changeAccuseKind(3)"
-                      >광고를 하고 있어요!</a
-                    >
-                  </div>
-                </div>
-                <h6 class="mt-3">사유 상세</h6>
-                <b-form-textarea
-                  id="textarea-rows"
-                  rows="8"
-                  style="width: 400px"
-                  v-model="accuseArticleData.accuseReason"
-                ></b-form-textarea>
-                <hr />
+            <b-modal :hide-footer="true" id="modal-1" title="신고 접수">
+              <h6>신고 사유</h6>
+              <div class="dropdown">
                 <button
-                  @click="createArticleAccuse({ accuseArticleData })"
-                  class="btn btn-danger btn-sm"
-                >
-                  신고접수
-                </button>
-              </b-modal>
-            </div>
-          
+                  class="btn btn-secondary btn-sm dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >{{ kind }}</button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설, 비난을 했어요!</a>
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">약속 장소에 나오지 않았어요!</a>
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고를 하고 있어요!</a>
+                </div>
+              </div>
+              <h6 class="mt-3">사유 상세</h6>
+              <b-form-textarea
+                id="textarea-rows"
+                rows="8"
+                style="width: 400px"
+                v-model="accuseArticleData.accuseReason"
+              ></b-form-textarea>
+              <hr />
+              <button
+                @click="createArticleAccuse({ accuseArticleData })"
+                class="btn btn-danger btn-sm"
+              >신고접수</button>
+            </b-modal>
+          </div>
+
           <!-- 게시물 신고 -->
           <br />
         </div>
@@ -115,9 +89,7 @@
             v-for="tag in articleData.tags"
             :key="tag.no"
             @click="putWord(tag)"
-          >
-            #{{ tag }}
-          </button>
+          >#{{ tag }}</button>
         </div>
         <div class="in-the-top ml-1">
           <div class="writer mt-1">
@@ -127,40 +99,28 @@
                 name: 'userDetail',
                 params: { ID: articleData.userId },
               }"
-              >{{ articleData.writer }}</router-link
-            >
+            >{{ articleData.writer }}</router-link>
             <br />
           </div>
-          <div class="create-time" style="font-size:12px">
-            {{ articleData.timeAgo }}
-          </div>
+          <div class="create-time" style="font-size:12px">{{ articleData.timeAgo }}</div>
         </div>
       </div>
       <hr class="top-line" />
 
       <!--중간 부분. 이미지, 주요 정보들 -->
       <div class="middle-row">
-        <img class="MyImage" :src=imageUrl(articleData) alt="..." />
+        <img class="MyImage" :src="imageUrl(articleData)" alt="..." />
         <div class="articleInfo">
           <div class="detail-info">
-            <div class="detail-address">
-              만남의 장소: {{ articleData.address }}
-            </div>
+            <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
             <div class="detail-price">
               <div class="min-price">최소 주문 금액 : \{{ minPrice }}</div>
               <div class="min-price mt-2">모인 금액 : \{{ sumPrice }}</div>
             </div>
-            <div class="detail-endTime">
-              마감 시간 : {{ cutDate(articleData.endTime) }}까지
-            </div>
-            <div
-              class="article-url mt-2"
-              style="overflow:hidden; word-wrap:break-word;"
-            >
+            <div class="detail-endTime">마감 시간 : {{ cutDate(articleData.endTime) }}까지</div>
+            <div class="article-url mt-2" style="overflow:hidden; word-wrap:break-word;">
               사이트 url :
-              <div>
-                {{ articleData.urlLink }}
-              </div>
+              <div>{{ articleData.urlLink }}</div>
             </div>
             <div v-if="checkedStatus" class="mt-2">
               오픈 채팅방 url :
@@ -182,10 +142,7 @@
                 <i class="fas fa-share-alt"></i> 공유
               </button>
             </a>
-            <div
-              v-if="articleData.status === 4 && checkParticipant"
-              class="like-content"
-            >
+            <div v-if="articleData.status === 4 && checkParticipant" class="like-content">
               <router-link
                 :to="{ name: 'reviewCreate' }"
                 class="ml-auto routerLink"
@@ -197,12 +154,7 @@
               </router-link>
             </div>
             <div v-if="articleData.status < 4">
-              <b-button
-                id="show-btn"
-                v-b-modal.join-modal
-                class="participate-btn"
-                v-if="joinFlag"
-              >
+              <b-button id="show-btn" v-b-modal.join-modal class="participate-btn" v-if="joinFlag">
                 <i class="fas fa-user-plus"></i> 참여
               </b-button>
               <!-- <b-button id="show-btn" v-b-modal.join-modal class="detail-join" v-if="joinFlag">
@@ -229,16 +181,8 @@
               class="form-input"
               @ok="sendJoinData"
             >
-              <form
-                ref="form"
-                class="form-input"
-                @submit.stop.prevent="handleSubmit"
-              >
-                <b-form-group
-                  label="제목"
-                  label-for="title-input"
-                  class="our-main-font"
-                >
+              <form ref="form" class="form-input" @submit.stop.prevent="handleSubmit">
+                <b-form-group label="제목" label-for="title-input" class="our-main-font">
                   <b-form-input
                     style="width: 400px;"
                     id="title-input"
@@ -247,11 +191,7 @@
                   ></b-form-input>
                 </b-form-group>
 
-                <b-form-group
-                  label="url"
-                  label-for="url-input"
-                  class="our-main-font"
-                >
+                <b-form-group label="url" label-for="url-input" class="our-main-font">
                   <b-form-input
                     style="width: 400px;"
                     id="url-input"
@@ -260,11 +200,7 @@
                   ></b-form-input>
                 </b-form-group>
 
-                <b-form-group
-                  label="가격(숫자만 입력하세요.)"
-                  label-for="price-input"
-                  class="our-main-font"
-                >
+                <b-form-group label="가격(숫자만 입력하세요.)" label-for="price-input" class="our-main-font">
                   <b-form-input
                     style="width: 400px;"
                     id="price-input"
@@ -273,11 +209,7 @@
                   ></b-form-input>
                 </b-form-group>
 
-                <b-form-group
-                  label="요구사항"
-                  label-for="order-input"
-                  class="our-main-font"
-                >
+                <b-form-group label="요구사항" label-for="order-input" class="our-main-font">
                   <b-form-input
                     style="width: 400px;"
                     id="order-input"
@@ -289,57 +221,22 @@
             </b-modal>
 
             <!--임시modal-->
-            <b-modal
-              id="update-modal"
-              size="xl"
-              ref="modal"
-              title="수정하기"
-              @ok="updateJoinData"
-            >
+            <b-modal id="update-modal" size="xl" ref="modal" title="수정하기" @ok="updateJoinData">
               <form ref="form" @submit.stop.prevent="handleSubmit">
-                <b-form-group
-                  label="제목"
-                  label-for="title-input"
-                  class="our-main-font"
-                >
-                  <b-form-input
-                    id="title-input"
-                    v-model="joinData.title"
-                  ></b-form-input>
+                <b-form-group label="제목" label-for="title-input" class="our-main-font">
+                  <b-form-input id="title-input" v-model="joinData.title"></b-form-input>
                 </b-form-group>
 
-                <b-form-group
-                  label="url"
-                  label-for="url-input"
-                  class="our-main-font"
-                >
-                  <b-form-input
-                    id="url-input"
-                    v-model="joinData.url"
-                  ></b-form-input>
+                <b-form-group label="url" label-for="url-input" class="our-main-font">
+                  <b-form-input id="url-input" v-model="joinData.url"></b-form-input>
                 </b-form-group>
 
-                <b-form-group
-                  label="가격"
-                  label-for="price-input"
-                  class="our-main-font"
-                >
-                  <b-form-input
-                    id="price-input"
-                    v-model="joinData.price"
-                  ></b-form-input
-                  >원
+                <b-form-group label="가격" label-for="price-input" class="our-main-font">
+                  <b-form-input id="price-input" v-model="joinData.price"></b-form-input>원
                 </b-form-group>
 
-                <b-form-group
-                  label="요구사항"
-                  label-for="order-input"
-                  class="our-main-font"
-                >
-                  <b-form-input
-                    id="order-input"
-                    v-model="joinData.description"
-                  ></b-form-input>
+                <b-form-group label="요구사항" label-for="order-input" class="our-main-font">
+                  <b-form-input id="order-input" v-model="joinData.description"></b-form-input>
                 </b-form-group>
               </form>
             </b-modal>
@@ -348,16 +245,13 @@
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div class="detail-content" id="item-1">
-        {{ articleData.description }}
+      <div class="detail-content" id="item-1" style="overflow:hidden; word-wrap:break-word;">
+        <div>{{ articleData.description }}</div>
       </div>
     </div>
     <div class="container">
       <div class="row">
-        <div
-          class="col-5 d-flex justify-content-end mt-5"
-          style="margin-left: 8%;"
-        >
+        <div class="col-5 d-flex justify-content-end mt-5" style="margin-left: 8%;">
           <kakaoMapForDetail />
         </div>
         <!-- 차트 -->
@@ -377,11 +271,7 @@
         참여 멤버 (총 {{ articleData.partList.length }}명)
       </div>
       <div class>
-        <div
-          class="member-list"
-          v-for="participant in articleData.partList"
-          :key="participant.no"
-        >
+        <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
           <div class="member">
             <div class="member-writer-info">
               <div class="members-status">
@@ -392,26 +282,16 @@
                       name: 'userDetail',
                       params: { ID: participant.userId },
                     }"
-                    >{{ participant.writer }}</router-link
-                  >
-                  <i
-                    v-if="articleData.userId === participant.userId"
-                    class="fas fa-crown"
-                  ></i>
+                  >{{ participant.writer }}</router-link>
+                  <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
                 </div>
                 <div
                   class="article-participant-status"
                   v-if="participant.userId != articleData.userId"
                 >
-                  <button v-if="participant.status === 0" class="waiting-btn">
-                    대기중
-                  </button>
-                  <button v-if="participant.status === 1" class="accepted-btn">
-                    수락됨
-                  </button>
-                  <button v-if="participant.status === 2" class="denied-btn">
-                    거절됨
-                  </button>
+                  <button v-if="participant.status === 0" class="waiting-btn">대기중</button>
+                  <button v-if="participant.status === 1" class="accepted-btn">수락됨</button>
+                  <button v-if="participant.status === 2" class="denied-btn">거절됨</button>
                 </div>
               </div>
             </div>
@@ -420,23 +300,12 @@
                 class="article-drop dropdown dropleft"
                 v-if="participant.userId === userData.userId"
               >
-                <button
-                  type="button"
-                  class="article-btn"
-                  data-toggle="dropdown"
-                >
+                <button type="button" class="article-btn" data-toggle="dropdown">
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <b-button variant="light" size="sm" v-b-modal.update-modal
-                    >수정</b-button
-                  >
-                  <b-button
-                    variant="light"
-                    size="sm"
-                    @click="cancel(participant.no)"
-                    >삭제</b-button
-                  >
+                  <b-button variant="light" size="sm" v-b-modal.update-modal>수정</b-button>
+                  <b-button variant="light" size="sm" @click="cancel(participant.no)">삭제</b-button>
                 </div>
               </div>
 
@@ -445,11 +314,7 @@
                 v-if="articleData.writer === userData.nickname"
               >
                 <div v-if="participant.status === 0">
-                  <button
-                    type="button"
-                    class="article-btn"
-                    data-toggle="dropdown"
-                  >
+                  <button type="button" class="article-btn" data-toggle="dropdown">
                     <i class="fas fa-ellipsis-v"></i>
                   </button>
                   <div class="dropdown-menu dropleft">
@@ -458,15 +323,13 @@
                       size="sm"
                       variant="light"
                       @click="acceptParticpation(participant.writer)"
-                      >수락</b-button
-                    >
+                    >수락</b-button>
                     <b-button
                       class="dropdown-item"
                       size="sm"
                       variant="light"
                       @click="$bvModal.show('modal-scoped')"
-                      >거절</b-button
-                    >
+                    >거절</b-button>
 
                     <b-modal id="modal-scoped">
                       <p>정말 거절하시겠습니까?</p>
@@ -475,11 +338,8 @@
                           size="sm"
                           variant="danger"
                           @click="denyParticpation(participant)"
-                          >거절</b-button
-                        >
-                        <b-button size="sm" variant="success" @click="ok()"
-                          >취소</b-button
-                        >
+                        >거절</b-button>
+                        <b-button size="sm" variant="success" @click="ok()">취소</b-button>
                       </template>
                     </b-modal>
                   </div>
@@ -491,19 +351,16 @@
             v-if="articleData.userId !== participant.userId"
             class="member-title"
             style="font-size:18px"
-          >
-            {{ participant.title }}
-          </div>
+          >{{ participant.title }}</div>
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-content mt-1"
             style="font-size:17.5px"
-          >
-            요구사항: {{ participant.description }}
-          </div>
-          <div class="member-price py-1 mt-1" style="font-size:17.5px">
-            가격: \{{ parPrice(participant.price) }}
-          </div>
+          >요구사항: {{ participant.description }}</div>
+          <div
+            class="member-price py-1 mt-1"
+            style="font-size:17.5px"
+          >가격: \{{ parPrice(participant.price) }}</div>
         </div>
       </div>
     </div>
@@ -595,8 +452,7 @@ export default {
     },
     imageUrl() {
       try {
-        return "http://i3b203.p.ssafy.io/img/" +
-          `${this.articleData.image}`;
+        return "http://i3b203.p.ssafy.io/img/" + `${this.articleData.image}`;
       } catch {}
     },
     udflag() {
@@ -868,15 +724,15 @@ export default {
             },
           },
         ],
-        success: function(response) {
+        success: function (response) {
           console.log(response);
         },
-        fail: function(error) {
+        fail: function (error) {
           console.log(error);
         },
       });
     },
-    
+
     likeCheck() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios
@@ -891,7 +747,7 @@ export default {
       this.likeCheck();
     },
   },
-  created: function() {
+  created: function () {
     this.getArticle(this.$route.params.ID);
     this.likeCheck();
   },
