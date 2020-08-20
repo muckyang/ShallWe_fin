@@ -9,7 +9,7 @@
       <router-view />
     </div>
 
-    <div style="background-color: #f1bbba;">
+    <div class="footer-background">
       <div class="container">
         <Footer />
       </div>
