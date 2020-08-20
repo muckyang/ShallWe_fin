@@ -13,20 +13,20 @@
         <tr>
           <th scope="row" class="our-main-font">제목<small style="font-size: 15.5px; color: #ee6e9f;" class="our-main-font">*</small></th>
           <td class="d-flex">
-            <b-form-input type="text" v-model="articleData.title"></b-form-input>
+            <b-form-input class="our-main-font" type="text" v-model="articleData.title"></b-form-input>
           </td>
         </tr>
         <tr>
           <th scope="row" class="our-main-font">내용<small style="font-size: 15.5px; color: #ee6e9f;" class="our-main-font">*</small></th>
           <td>
-            <div>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="articleData.description"></b-form-textarea>
+            <div class="our-main-font">
+              <b-form-textarea class="our-main-font" id="textarea-rows" rows="8" v-model="articleData.description"></b-form-textarea>
             </div>
           </td>
         </tr>
         <tr>
           <th scope="row" class="our-main-font">사진첨부</th>
-          <td>
+          <td class="our-main-font">
             <b-form-file class="mt-3 our-main-font" @change="imageChange" plain></b-form-file>
           </td>
         </tr>
