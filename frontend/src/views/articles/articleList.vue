@@ -119,7 +119,7 @@
                           article.status != 4 &&
                           article.status != 5
                       "
-                      src="@/assets/img/type2.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -129,7 +129,7 @@
                           article.status != 4 &&
                           article.status != 5
                       "
-                      src="@/assets/img/type1.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -139,7 +139,7 @@
                           article.status != 4 &&
                           article.status != 5
                       "
-                      src="@/assets/img/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -151,7 +151,7 @@
                       height: '100%',
                       width: '100%',
                       backgroundImage:
-                        'url(' + require('@/assets/img/DealEnd2.png') + ')',
+                        'url(' + require('http://i3b203.p.ssafy.io/localImg/DealEnd2.png') + ')',
                       backgroundSize: 'cover',
                     }"
                   ></div>
@@ -162,7 +162,7 @@
                       height: '100%',
                       width: '100%',
                       backgroundImage:
-                        'url(' + require('@/assets/img/TimeOver2.png') + ')',
+                        'url(' + require('http://i3b203.p.ssafy.io/localImg/TimeOver2.png') + ')',
                       backgroundSize: 'cover',
                     }"
                   ></div>
@@ -258,19 +258,19 @@
                   >
                     <img
                       v-if="article.categoryId == 1"
-                      src="@/assets/img/type2.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 2"
-                      src="@/assets/img/type1.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 3"
-                      src="@/assets/img/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -367,19 +367,19 @@
                   >
                     <img
                       v-if="article.categoryId == 1"
-                      src="@/assets/img/type2.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 2"
-                      src="@/assets/img/type1.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 3"
-                      src="@/assets/img/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -475,19 +475,19 @@
                   >
                     <img
                       v-if="article.categoryId == 1"
-                      src="@/assets/img/type2.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 2"
-                      src="@/assets/img/type1.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 3"
-                      src="@/assets/img/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -566,7 +566,7 @@ export default {
   data() {
     return {
       articleImg: {
-        backgroundImage: `url(${require("@/assets/img/food1.png")})`,
+        backgroundImage: `url(${require("http://i3b203.p.ssafy.io/localImg/food1.png")})`,
       },
       categoryNum: 0,
       page: 0,
@@ -599,7 +599,7 @@ export default {
     },
     LabelImg(article) {
       if (article.categoryId == 1) {
-        var imgHome = "@/assets/img/food1.png";
+        var imgHome = "http://i3b203.p.ssafy.io/localImg/food1.png";
         console.log(imgHome);
         return imgHome;
       }

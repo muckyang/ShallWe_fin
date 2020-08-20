@@ -144,19 +144,19 @@
               >
                 <img
                   v-if="article.categoryId==1"
-                  src="@/assets/img/type2.png"
+                  src="http://i3b203.p.ssafy.io/localImg/type2.png"
                   class="article-type-img"
                   style="max-width: 100%; height: auto;"
                 />
                 <img
                   v-if="article.categoryId==2"
-                  src="@/assets/img/type1.png"
+                  src="http://i3b203.p.ssafy.io/localImg/type1.png"
                   class="article-type-img"
                   style="max-width: 100%; height: auto;"
                 />
                 <img
                   v-if="article.categoryId==3"
-                  src="@/assets/img/type3.png"
+                  src="http://i3b203.p.ssafy.io/localImg/type3.png"
                   class="article-type-img"
                   style="max-width: 100%; height: auto;"
                 />
