@@ -1,5 +1,5 @@
 <template>
-  <div class="post-container" style="font-family: 'Recipekorea', cursive;">
+  <div class="post-container" style="font-family: 'Recipekorea', cursive; margin-left: 10%; margin-right: 10%;">
     <div class="d-flex justify-content-between">
       <div class="ml-1" style="font-size:19px">자유게시판 글쓰기</div>
       <div class="alert-msg">
