@@ -60,7 +60,7 @@
 		methods:{
 			...mapActions(['editUser','getUserData']),
 			setAddress(address){
-					this.editData.address=address
+				this.editData.address=address
 			},
 		},
 		created: function(){

@@ -20,7 +20,7 @@
                       <div
                         class="mb-5"
                         style="border: solid 1px lightgray; height: 100px;"
-                      ></div>
+                      >{{userData.introduce}}</div>
                     </div>
                   </b-card-text>
                 </b-card-body>
@@ -543,7 +543,6 @@ export default {
 .change-main-color:focus {
   background-color: #ee6e9f;
   border: 0.5px solid #ee6e9f;
-  /*color: black;*/
 }
 .see-detail {
   transition: all 0.2s ease;
