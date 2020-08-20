@@ -26,7 +26,7 @@
           >
         </template>
       </b-carousel-slide></router-link>
-			
+			<router-link to="/article" class="ml-0" id="article">
       <b-carousel-slide background="white">
         <template v-slot:img>
           <img
@@ -37,8 +37,8 @@
             alt="image slot"
           >
         </template>
-      </b-carousel-slide>
-	 
+      </b-carousel-slide></router-link>
+	 <router-link to="/article" class="ml-0" id="article">
       <b-carousel-slide background="white">
         <template v-slot:img>
           <img
@@ -49,7 +49,7 @@
             alt="image slot"
           >
         </template>
-      </b-carousel-slide>
+      </b-carousel-slide></router-link>
 	  <router-link to="/article" class="ml-0" id="article">
       <b-carousel-slide background="white">
         <template v-slot:img>
