@@ -136,10 +136,10 @@ export default {
     ...mapState(["articleData", "userData"]),
     imageUrl() {
       try {
-        return require("C:/Users/multicampus/Desktop/image/" +
+        return require("@/assets/images/" +
           `${this.review.image}`);
       } catch {}
-      //   return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
+      //   return require('@/assets/images/'+`${article.image}`)
     },
   },
   methods: {

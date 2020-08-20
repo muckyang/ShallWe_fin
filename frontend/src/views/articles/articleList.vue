@@ -107,7 +107,7 @@
                       width: '100%',
                       backgroundImage:
                         'url(' +
-                        require('C:/Users/multicampus/Desktop/image/' +
+                        require('@/assets/images/' +
                           article.image) +
                         ')',
                       backgroundSize: 'cover',
@@ -250,7 +250,7 @@
                       width: '100%',
                       backgroundImage:
                         'url(' +
-                        require('C:/Users/multicampus/Desktop/image/' +
+                        require('@/assets/images/' +
                           article.image) +
                         ')',
                       backgroundSize: 'cover',
@@ -359,7 +359,7 @@
                       width: '100%',
                       backgroundImage:
                         'url(' +
-                        require('C:/Users/multicampus/Desktop/image/' +
+                        require('@/assets/images/' +
                           article.image) +
                         ')',
                       backgroundSize: 'cover',
@@ -467,7 +467,7 @@
                       width: '100%',
                       backgroundImage:
                         'url(' +
-                        require('C:/Users/multicampus/Desktop/image/' +
+                        require('@/assets/images/' +
                           article.image) +
                         ')',
                       backgroundSize: 'cover',
@@ -636,13 +636,13 @@ export default {
     imageUrl() {
       return (article) => {
         var arImg = article.image;
-        var result = "C:/Users/multicampus/Desktop/image/" + arImg;
+        var result = "@/assets/images/" + arImg;
         console.log(result);
         return {
           background: "url(" + result + ")",
         };
-        ("{backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/')+')'}");
-        // require("C:/Users/multicampus/Desktop/image/" +
+        ("{backgroundImage: 'url('+require('@/assets/images/')+')'}");
+        // require("@/assets/images/" +
         //   `${article.image}`);
       };
     },

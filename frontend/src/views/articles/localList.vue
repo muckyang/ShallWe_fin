@@ -118,7 +118,7 @@ export default {
   computed: {
     imageUrl() {
       return (article) => {
-        return require("C:/Users/multicampus/Desktop/image/" +
+        return require("@/assets/images/" +
           `${article.image}`);
       };
     },

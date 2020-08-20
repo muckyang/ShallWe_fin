@@ -140,7 +140,7 @@
             <b-card no-body="true" class="article-card m-4 _card card__one" align="left">
               <div
                 class="article-img-box m-0 p-0"
-                :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('@/assets/images/'+article.image)+')',backgroundSize: 'cover'}"
               >
                 <img
                   v-if="article.categoryId==1"
