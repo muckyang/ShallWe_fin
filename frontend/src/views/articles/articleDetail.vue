@@ -173,19 +173,19 @@
             >
               <form ref="form" class="form-input" @submit.stop.prevent="handleSubmit">
                 <b-form-group label="제목" label-for="title-input">
-                  <b-form-input id="title-input" v-model="joinData.title" class="form-input"></b-form-input>
+                  <b-form-input style="width: 400px;" id="title-input" v-model="joinData.title" class="form-input"></b-form-input>
                 </b-form-group>
 
                 <b-form-group label="url" label-for="url-input">
-                  <b-form-input id="url-input" v-model="joinData.url" class="form-input"></b-form-input>
+                  <b-form-input style="width: 400px;" id="url-input" v-model="joinData.url" class="form-input"></b-form-input>
                 </b-form-group>
 
                 <b-form-group label="가격(숫자만 입력하세요.)" label-for="price-input">
-                  <b-form-input id="price-input" v-model="joinData.price" class="form-input"></b-form-input>
+                  <b-form-input style="width: 400px;" id="price-input" v-model="joinData.price" class="form-input"></b-form-input>
                 </b-form-group>
 
                 <b-form-group label="요구사항" label-for="order-input">
-                  <b-form-input id="order-input" v-model="joinData.description" class="form-input"></b-form-input>
+                  <b-form-input style="width: 400px;" id="order-input" v-model="joinData.description" class="form-input"></b-form-input>
                 </b-form-group>
               </form>
             </b-modal>
