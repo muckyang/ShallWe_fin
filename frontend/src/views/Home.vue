@@ -1,31 +1,45 @@
 <template>
-  <div style="font-family: 'Recipekorea', cursive;">
-    <hr />
-    <div>
-      <b-carousel
-        id="carousel-1"
-        v-model="slide"
-        :interval="4000"
-        controls
-        indicators
-        background="#ababab"
-        img-width="1024"
-        img-height="480"
-        style="text-shadow: 1px 1px 2px #333;"
-        @sliding-start="onSlideStart"
-        @sliding-end="onSlideEnd"
-        ><router-link to="/introduce" class="ml-0" id="introduce">
-          <b-carousel-slide>
-            <template v-slot:img>
-              <img
-                class="d-block img-fluid w-100"
-                width="1024"
-                height="480"
-                src="@/assets/img/c2.png"
-                alt="image slot"
-              />
-            </template> </b-carousel-slide
-        ></router-link>
+	<div>
+		<hr>
+		  <div>
+    <b-carousel
+      id="carousel-1"
+      v-model="slide"
+      :interval="4000"
+      controls
+      indicators
+      background="#ababab"
+      img-width="1024"
+      img-height="480"
+      style="text-shadow: 1px 1px 2px #333;"
+      @sliding-start="onSlideStart"
+      @sliding-end="onSlideEnd"
+    >
+			<b-carousel-slide>
+        <template v-slot:img>
+          <img
+            class="d-block img-fluid w-100"
+            width="1024"
+            height="480"
+            src="@/assets/img/c2.png"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide>
+			<router-link to="/introduce" class="ml-0" id="introduce">
+      <b-carousel-slide background="white">
+        <template v-slot:img>
+          <img
+            class="d-block img-fluid w-100"
+            width="1024"
+            height="480"
+            src="@/assets/img/캐러셀1.jpg"
+            alt="image slot"
+          >
+        </template>
+      </b-carousel-slide></router-link>
+    </b-carousel>
+  </div>
 
         <b-carousel-slide background="white">
           <template v-slot:img>
@@ -286,8 +300,8 @@ export default {
 </script>
 
 <style scoped>
-.carouselBtn {
-  border: none;
+.carouselBtn{
+	border: none;
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;

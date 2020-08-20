@@ -254,11 +254,28 @@ export default {
       handler() {
         try {
           if (this.articleData.minPrice < 0) {
-            alert("1이상의 정수만 입력이 가능합니다.");
+               Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 350,
+          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
+          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: '#ee6e9f'
+             })
+            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.minPrice = null;
           }
           if (this.articleData.myPrice < 0) {
-            alert("1이상의 정수만 입력이 가능합니다.");
+                    Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 350,
+          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
+          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: '#ee6e9f'
+      
+      })
+            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.myPrice = null;
           }
         } catch {}
