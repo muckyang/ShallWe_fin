@@ -43,7 +43,7 @@
       <div v-if="isAdmin" class="d-flex align-items-starts mr-1">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/user/userlist" class="nav-link navbar1-item">유저관리</a>
+            <a href="/user/userlist" class="nav-link navbar1-item" style="font-size: 13.5px">유저관리</a>
           </li>
         </ul>
       </div>
@@ -54,7 +54,7 @@
       <div v-if="isAdmin" class="d-flex align-items-starts">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/user/accuselist" class="nav-link navbar1-item">신고관리</a>
+            <a href="/user/accuselist" class="nav-link navbar1-item" style="font-size: 13.5px">신고관리</a>
           </li>
         </ul>
       </div>

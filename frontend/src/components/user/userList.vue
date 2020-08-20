@@ -1,29 +1,36 @@
 <template>
   <div class="mt-5">
-    <h3 class="mb-3">유저관리</h3>
+    <h3 class="mb-3 our-main-font">유저관리</h3>
     <table class="table">
-      <thead class="">
+      <thead class="table-dark">
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">이메일</th>
-          <th scope="col">닉네임</th>
-          <th scope="col">지역</th>
-          <th scope="col">등급</th>
-          <th scope="col">포인트</th>
-          <th scope="col">회원관리</th>
+          <th scope="col" class="our-main-font">#</th>
+          <th scope="col" class="our-main-font">이메일</th>
+          <th scope="col" class="our-main-font">닉네임</th>
+          <th scope="col" class="our-main-font">지역</th>
+          <th scope="col" class="our-main-font">레벨</th>
+          <th scope="col" class="our-main-font">포인트</th>
+          <th scope="col" class="our-main-font">회원관리</th>
         </tr>
       </thead>
       <tbody v-for="user in users" :key="user.userId">
         <tr>
-          <td>{{ user.userId }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.nickname }}</td>
-          <td>{{ user.address }}</td>
-          <td>{{ user.grade }}</td>
-          <td>{{ user.userPoint }}</td>
+          <td class="our-main-font" style="font-size: 13px;">{{ user.userId }}</td>
+          <td class="our-main-font" style="font-size: 13px;">{{ user.email }}</td>
+          <td class="our-main-font" style="font-size: 13px;">{{ user.nickname }}</td>
+          <td class="our-main-font" style="font-size: 13px;">{{ user.address }}</td>
+          <td class="our-main-font" style="font-size: 13px;">{{ user.grade }}</td>
+          <td class="our-main-font" style="font-size: 13px;">{{ user.userPoint }}</td>
           <td>
-            <router-link :to="{name: 'userDetail', params: { ID: `${user.userId}` }}"
-            ><button class="info-btn">회원정보</button></router-link>
+            <router-link :to="{name: 'userDetail', params: { ID: `${user.userId}` }}">
+              <button class="see-detail">
+                <span class="our-main-font" style="font-size: 13px;">보러가기</span>
+                <svg class="arrow-effect" width="13px" height="10px" viewBox="0 0 13 10">
+                <path d="M1,5 L11,5"></path>
+                <polyline points="8 1 12 5 8 9"></polyline>
+                </svg>
+              </button>
+            </router-link>
           </td>
         </tr>
       </tbody>

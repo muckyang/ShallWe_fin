@@ -2,7 +2,7 @@
   <div>
     <div class="login-input">
       <form>
-        <h4 class="mb-4">관리자 로그인</h4>
+        <h4 class="mb-4 our-main-font">관리자 로그인</h4>
         <div class="form-group mb-1">
           <div class="container">
             <input

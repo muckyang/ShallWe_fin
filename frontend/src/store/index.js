@@ -637,6 +637,7 @@ export default new Vuex.Store({
         .post(`${BACK_URL}/account/readAll`, auth)
         .then((res) => {
           commit("GET_USERS", res.data);
+          console.log(res)
         })
         .catch((err) => {
           console.log(err);
