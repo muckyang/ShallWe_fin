@@ -5,10 +5,12 @@
       <div class="review-comment-container">
         <div class="comment-user">
           <router-link
-            class="comment-user-link our-main-font" 
+            class="comment-user-link our-main-font"
             :to="{ name: 'userDetail', params: { ID: comment.userId } }"
           >
-            <a class="comment-user-link our-main-font">{{ comment.nickname }}</a>
+            <a class="comment-user-link our-main-font">{{
+              comment.nickname
+            }}</a>
           </router-link>
           <div
             class="comment-drop dropdown dropleft"
@@ -18,8 +20,15 @@
               <i class="fas fa-ellipsis-v"></i>
             </button>
             <div class="dropdown-menu our-main-font">
-              <a class="dropdown-item our-main-font" @click="showInput" v-if="!flag">수정</a>
-              <a class="dropdown-item our-main-font" @click="deleteComment">삭제</a>
+              <a
+                class="dropdown-item our-main-font"
+                @click="showInput"
+                v-if="!flag"
+                >수정</a
+              >
+              <a class="dropdown-item our-main-font" @click="deleteComment"
+                >삭제</a
+              >
             </div>
           </div>
 
@@ -29,14 +38,14 @@
               type="button"
               class="siren-btn our-main-font"
               data-toggle="modal"
-              :data-target="'#exampleModal' + commentId"
+              :data-target="'#exampleModal' + comment.commentId"
             >
               신고
             </button>
 
             <div
               class="modal fade"
-              :id="'exampleModal' + commentId"
+              :id="'exampleModal' + comment.commentId"
               tabindex="-1"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
@@ -44,7 +53,10 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title our-main-font" id="exampleModalLabel">
+                    <h5
+                      class="modal-title our-main-font"
+                      id="exampleModalLabel"
+                    >
                       신고 접수
                     </h5>
                     <button
@@ -74,7 +86,7 @@
                         aria-labelledby="dropdownMenuButton"
                       >
                         <a
-                          class="dropdown-item our-main-font" 
+                          class="dropdown-item our-main-font"
                           href="#"
                           @click="changeAccuseKind(1)"
                           >욕설, 비난을 했어요!</a
@@ -121,7 +133,9 @@
           <!-- 게시물 신고 -->
         </div>
         <div class="comment-content our-main-font">{{ comment.content }}</div>
-        <div class="comment-create-time our-main-font">{{ cutDate(comment.createTime) }}</div>
+        <div class="comment-create-time our-main-font">
+          {{ cutDate(comment.createTime) }}
+        </div>
       </div>
     </div>
 
