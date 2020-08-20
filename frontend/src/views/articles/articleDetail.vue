@@ -219,13 +219,13 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="kakao-map col-6">
-          <kakaoMapForDetail />
-        </div>
-        <!-- 차트 -->
-        <div class="col-6">
-          <DoughnutChart />
-        </div>
+          <div class="col-5 d-flex justify-content-end mt-5" style="margin-left: 8%;">
+            <kakaoMapForDetail />
+          </div>
+          <!-- 차트 -->
+          <div class="col-5 d-flex justify-content-start" style="margin-top: 7%; margin-left: 7%; font-family: 'Recipekorea', cursive;">
+            <DoughnutChart />
+          </div>
       </div>
     </div>
 
@@ -697,9 +697,9 @@ export default {
 }
 .kakao-map {
   display: flex;
-  width: 100%;
+  width: 700px;
   margin: 3% 0 0 0;
-  padding: auto;
+  /* padding: auto; */
   justify-content: center;
   text-align: center;
 }
