@@ -223,29 +223,111 @@
               class="text-decoration-none text-dark"
             >
               <b-card
+                :no-body="true"
                 class="article-card m-4 _card card__one"
                 align="left"
-                img-width="100%"
-                img-height="60%"
-                :img-src="imageUrl(article)"
-                img-alt="Image"
-                img-top
                 footer-bg-variant="#ee6e9f"
                 footer-class="card-end"
               >
-                <b-card-text>
-                  <h5 class="article-title">{{ article.title }}</h5>
-                  <h6 class="article-address">{{ article.address }}</h6>
-                  <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                <div
+                  v-if="article.status != 4 && article.status != 5"
+                  class="article-img-box m-0 p-0"
+                  :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        'http://i3b203.p.ssafy.io/img/' +
+                          article.image +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
+                >
+                  <img
+                    v-if="
+                        article.categoryId == 1 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                    src="http://i3b203.p.ssafy.io/localImg/type2.png"
+                    class="article-type-img"
+                    style="max-width: 100%; height: auto;"
+                  />
+                  <img
+                    v-if="
+                        article.categoryId == 2 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                    src="http://i3b203.p.ssafy.io/localImg/type1.png"
+                    class="article-type-img"
+                    style="max-width: 100%; height: auto;"
+                  />
+                  <img
+                    v-if="
+                        article.categoryId == 3 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                    src="http://i3b203.p.ssafy.io/localImg/type3.png"
+                    class="article-type-img"
+                    style="max-width: 100%; height: auto;"
+                  />
+                </div>
+                <div
+                  v-else-if="article.status == 4"
+                  class="article-img-box m-0 p-0"
+                  :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' + 'http://i3b203.p.ssafy.io/localImg/DealEnd2.png' + ')',
+                      backgroundSize: 'cover',
+                    }"
+                ></div>
+                <div
+                  v-else-if="article.status === 5"
+                  class="article-img-box m-0 p-0"
+                  :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' + 'http://i3b203.p.ssafy.io/localImg/TimeOver2.png' + ')',
+                      backgroundSize: 'cover',
+                    }"
+                ></div>
+
+                <b-card-text class="p-2">
+                  <h5
+                    class="article-title mt-3 pt-1"
+                    style="font-family: 'Recipekorea', cursive; font-size:18px"
+                  >{{ article.title }}</h5>
+                  <h6
+                    class="article-address py-1"
+                    style="font-family: 'Recipekorea', cursive; font-size:16px"
+                  >{{ article.address }}</h6>
+                  <br />
+                  <h6
+                    class="article-price py-1"
+                    style="font-family: 'Recipekorea', cursive; font-size:16px"
+                  >가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
                 </b-card-text>
                 <template v-slot:footer>
-                  <div class="d-flex justify-content-between">
-                    <small>
-                      <b-icon-heart></b-icon-heart>
-                      {{ article.likeNum }}개
-                      <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                      {{ article.commentNum }}개
-                    </small>
+                  <div
+                    class="d-flex justify-content-between"
+                    style="font-family: 'Recipekorea', cursive; font-size:14.5px"
+                  >
+                    <div class="articleList-subInfo">
+                      <div class="articleList-heart">
+                        <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                        {{ article.likeNum }}
+                      </div>
+                      <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                      <div class="articleList-chat ml-2">
+                        <i class="far fa-comment-dots"></i>
+                        {{ article.commentNum }}
+                      </div>
+                    </div>
                     <small class="text-muted">{{ article.timeAgo }}</small>
                   </div>
                 </template>
