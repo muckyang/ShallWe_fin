@@ -44,7 +44,7 @@ public interface PostDao extends JpaRepository<Post, String> {
     List<Post> findPostByStatusNotTempAndCategoryIdAndWriterLikeOrderByCreateTimeDesc(int status , int temp ,int categoryId, String word);
 
     // 리스트 출력 
-    List<Post> findPostByTempOrderByCreateTimeDesc(int temp);
+    List<Post> findPostByStatusNotTempOrderByCreateTimeDesc(int status , int temp);
     
     List<Post> findPostByTempAndCategoryIdOrderByCreateTimeDesc(int temp,int categoryId);
     
@@ -68,6 +68,6 @@ public interface PostDao extends JpaRepository<Post, String> {
     // 메인
     // List<Post> findPostByTempOrderByCreateTimeDesc(int temp);
     List<Post> findPostByStatusNotTitleLikeOrderByCreateTimeDesc(int status,String title);
-    List<Post> findPostByTempOrderByEndTimeAsc(int temp);
-    List<Post> findPostByTempAndCategoryIdOrderByLikeNumDesc(int temp, int categoryId);;
+    List<Post> findPostByStatusNotTempOrderByEndTimeAsc(int status, int temp);
+    List<Post> findPostByStatusNotTempAndCategoryIdOrderByLikeNumDesc(int status , int temp, int categoryId);;
 }
