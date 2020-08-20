@@ -849,7 +849,7 @@ export default {
 }
 .member-writer {
   text-align: center;
-  padding-top: 4.5px;
+  padding-top: 3px;
 }
 .article-participant-status {
   vertical-align: 4px;
@@ -860,18 +860,19 @@ export default {
   outline: none;
   border-radius: 5px;
   background-color: transparent;
-  padding-top: 5px;
+  padding-top: 4px;
   font-size: 14px;
   margin-left: 5px;
   vertical-align: text-bottom;
+  height: 27px;
 }
 .waiting-btn {
   border: 2px solid rgb(240, 219, 31);
   color: rgb(240, 219, 31);
 }
 .accepted-btn {
-  border: 2px solid rgb(75, 75, 221);
-  color: rgb(75, 75, 221);
+  border: 2px solid rgb(102, 102, 247);
+  color: rgb(102, 102, 247);
 }
 .denied-btn {
   border: 2px solid rgb(218, 37, 37);

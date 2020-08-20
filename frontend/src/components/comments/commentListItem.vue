@@ -4,25 +4,49 @@
       <div class="comment-box">
         <div class="comment-user" style="font-size:17px">
           <router-link
-            :to="{ name: 'userDetail', params: { ID: comment.userId }}"
-          >{{ comment.nickname }}</router-link>
-          <div class="comment-drop dropdown dropleft" v-if="comment.userId === userData.userId">
+            :to="{ name: 'userDetail', params: { ID: comment.userId } }"
+            >{{ comment.nickname }}</router-link
+          >
+          <div
+            class="comment-drop dropdown dropleft"
+            v-if="comment.userId === userData.userId"
+          >
             <button type="button" class="comment-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" @click="showInput" v-if="!flag">수정</a>
+              <a
+                class="dropdown-item comment-update-btn"
+                @click="showInput"
+                v-if="!flag"
+                >수정</a
+              >
               <a class="dropdown-item" @click="deleteComment">삭제</a>
             </div>
           </div>
 
-           <!-- 게시물 신고 -->
-            <div v-else>
-              <b-button v-if="comment.status===1" v-b-modal="'modal-'+`${this.comment.commentId}`" class="siren-btn">신고</b-button>
-
-              <b-modal :hide-footer="true" :id="'modal-'+this.comment.commentId" title="신고 접수">
-                <h6>신고 사유</h6>
-                <div class="dropdown">
+          <!-- 게시물 신고 -->
+          <div v-else>
+            <b-button
+              v-if="comment.status === 1"
+              v-b-modal="'modal-' + `${this.comment.commentId}`"
+              class="siren-btn"
+              >신고</b-button
+            >
+            <div style="font-family: 'Recipekorea', cursive; font-size:18px">
+              <b-modal
+                :hide-footer="true"
+                :id="'modal-' + this.comment.commentId"
+                title="신고 접수"
+                style="font-family: 'Recipekorea', cursive; font-size:18px"
+              >
+                <h6 style="font-family: 'Recipekorea', cursive; font-size:18px">
+                  신고 사유
+                </h6>
+                <div
+                  class="dropdown"
+                  style="font-family: 'Recipekorea', cursive; font-size:18px"
+                >
                   <button
                     class="btn btn-secondary btn-sm dropdown-toggle"
                     type="button"
@@ -30,17 +54,42 @@
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
-                  >{{selectedKind}}</button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설, 비난을 했어요!</a>
-                    <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">약속 장소에 나오지 않았어요!</a>
-                    <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고를 하고 있어요!</a>
+                  >
+                    {{ selectedKind }}
+                  </button>
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      @click="changeAccuseKind(1)"
+                      >욕설, 비난을 했어요!</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      @click="changeAccuseKind(2)"
+                      >약속 장소에 나오지 않았어요!</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      @click="changeAccuseKind(3)"
+                      >광고를 하고 있어요!</a
+                    >
                   </div>
                 </div>
-                <h6 class="mt-3">사유 상세</h6>
+                <h6
+                  class="mt-3"
+                  style="font-family: 'Recipekorea', cursive; font-size:18px"
+                >
+                  사유 상세
+                </h6>
                 <b-form-textarea
                   id="textarea-rows"
-                  style="width: 400px"
+                  style="font-family: 'Recipekorea', cursive; width: 400px; font-size:18px"
                   rows="8"
                   v-model="accuseCommentData.accuseReason"
                 ></b-form-textarea>
@@ -48,16 +97,21 @@
                 <button
                   @click="createCommentAccuse({ accuseCommentData })"
                   class="btn btn-danger btn-sm"
-                >신고접수</button>
+                  style="font-family: 'Recipekorea', cursive; font-size:18px"
+                >
+                  신고접수
+                </button>
               </b-modal>
             </div>
+          </div>
           <!-- 게시물 신고 -->
         </div>
-        <div class="comment-content mt-1" style="font-size:18px">{{ comment.content }}</div>
-        <div
-          class="comment-create-time mt-1"
-          style="font-size:12px"
-        >{{ cutDate(comment.createTime) }}</div>
+        <div class="comment-content mt-1" style="font-size:18px">
+          {{ comment.content }}
+        </div>
+        <div class="comment-create-time mt-1" style="font-size:12px">
+          {{ cutDate(comment.createTime) }}
+        </div>
       </div>
     </div>
 
@@ -68,8 +122,22 @@
         <input class="comment-input" type="text" v-model="comment.content" />
       </div>
       <div class="comment-update-submit">
-        <button type="button" v-if="flag" class="comment-update-btn" @click="updateCancel">취소</button>
-        <button type="button" v-if="flag" class="comment-update-btn" @click="updateComment">수정</button>
+        <button
+          type="button"
+          v-if="flag"
+          class="comment-update-btn"
+          @click="updateCancel"
+        >
+          취소
+        </button>
+        <button
+          type="button"
+          v-if="flag"
+          class="comment-update-btn"
+          @click="updateComment"
+        >
+          수정
+        </button>
       </div>
     </div>
   </div>
@@ -109,7 +177,7 @@ export default {
         accuseConfirm: 0,
         token: this.$cookies.get("auth-token"),
       },
-      selectedKind:'선택'
+      selectedKind: "선택",
     };
   },
   computed: {
@@ -132,12 +200,12 @@ export default {
     },
     // 신고 유형 변경
     changeAccuseKind(kind) {
-      if(kind===1){
-        this.selectedKind="욕설, 비난을 했어요!"
-      }else if(kind===2){
-        this.selectedKind="약속 장소에 나오지 않았어요!"
-      }else{
-        this.selectedKind="광고를 하고 있어요!"
+      if (kind === 1) {
+        this.selectedKind = "욕설, 비난을 했어요!";
+      } else if (kind === 2) {
+        this.selectedKind = "약속 장소에 나오지 않았어요!";
+      } else {
+        this.selectedKind = "광고를 하고 있어요!";
       }
       this.accuseCommentData.accuseKind = kind;
       this.linkUserData();
@@ -189,8 +257,9 @@ export default {
 <style>
 /* @import '../node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'; */
 /* @import url('node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'); */
-.siren-btn {
-}
+/* .comment-update-btn:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+} */
 .comment-box {
   border-bottom: 1px solid rgb(237, 237, 240);
   display: flex;
