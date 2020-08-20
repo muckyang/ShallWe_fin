@@ -19,7 +19,7 @@ export default new Vuex.Store({
     isLoggedin: false,
     isTerm: false,
     isChecked: false,
-    isAdmin:false,
+    isAdmin: false,
 
     userData: {
       name: "",
@@ -88,24 +88,25 @@ export default new Vuex.Store({
       state.authToken = token;
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
-    
-        Swal.fire({
-          icon: 'success',
-          height: 300,
-          width: 280,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">로그인 되었습니다!</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-        })
-     
+
+      Swal.fire({
+        icon: "success",
+        height: 300,
+        width: 280,
+        title:
+          '<a style="font-size:20px; font-family: Recipekorea; color:black">로그인 되었습니다!</a>',
+        confirmButtonText:
+          '<a style="font-size:20px; font-family: Recipekorea; color:black; border: none; outline: none;">확인</a>',
+        confirmButtonColor: "#ee6e9f",
+      });
     },
-    adminCheck(state){
-      state.adminToken = cookies.get('admin-token')
-      state.isAdmin=true
+    adminCheck(state) {
+      state.adminToken = cookies.get("admin-token");
+      state.isAdmin = true;
     },
     SET_ADMIN_TOKEN(state, token) {
       state.adminToken = token;
-      state.isAdmin=true
+      state.isAdmin = true;
       cookies.set("admin-token", token, 0);
     },
     REMOVE_TOKEN(state) {
@@ -113,19 +114,21 @@ export default new Vuex.Store({
         cookies.remove("admin-token");
 
         Swal.fire({
-          icon: 'success',
+          icon: "success",
           height: 300,
           width: 290,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">로그아웃 되었습니다.</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-        })
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">로그아웃 되었습니다.</a>',
+          confirmButtonText:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: "#ee6e9f",
+        });
         state.adminToken = null;
       }
       state.authToken = null;
       cookies.remove("auth-token");
       state.isLoggedin = false;
-      state.isAdmin=false
+      state.isAdmin = false;
       state.modal = true;
       router.push("/");
     },
@@ -219,11 +222,13 @@ export default new Vuex.Store({
                 Swal.fire({
                   height: 300,
                   width: 350,
-                  icon : 'success',
-                  title: '<a style="font-size:20px; font-family: Recipekorea; color:black">Shall We 에 가입되신걸 축하합니다.</a>',
-                  confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-                  confirmButtonColor: '#ee6e9f'
-                 } )
+                  icon: "success",
+                  title:
+                    '<a style="font-size:20px; font-family: Recipekorea; color:black">Shall We 에 가입되신걸 축하합니다.</a>',
+                  confirmButtonText:
+                    '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+                  confirmButtonColor: "#ee6e9f",
+                });
                 commit("SET_TOKEN", response.data);
                 this.commit("termCheck");
                 router.push("/");
@@ -235,32 +240,38 @@ export default new Vuex.Store({
             swal.fire({
               height: 300,
               width: 300,
-              icon : "warning",
-              title: '<a style="font-size:20px; font-family: Recipekorea; color:black">약관에 동의해 주세요.</a>',
-              confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-              confirmButtonColor: '#ee6e9f'
-            })
+              icon: "warning",
+              title:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">약관에 동의해 주세요.</a>',
+              confirmButtonText:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+              confirmButtonColor: "#ee6e9f",
+            });
             // alert("약관에 동의해 주세요");
           }
         } else {
           swal.fire({
             height: 300,
             width: 300,
-            icon : "warning", 
-            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">닉네임을 입력해 주세요.</a>',
-            confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-            confirmButtonColor: '#ee6e9f'
-          })
+            icon: "warning",
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">닉네임을 입력해 주세요.</a>',
+            confirmButtonText:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+            confirmButtonColor: "#ee6e9f",
+          });
         }
       } else {
         swal.fire({
           height: 300,
           width: 300,
-          icon : "warning",
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">빈 칸을 모두 채워주세요.</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-        })
+          icon: "warning",
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">빈 칸을 모두 채워주세요.</a>',
+          confirmButtonText:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: "#ee6e9f",
+        });
       }
     },
     // login({ commit }, loginData) {
@@ -287,7 +298,6 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-
 
     //profile
     getUserData({ state, commit }) {
@@ -321,16 +331,17 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/account/update`, editData)
         .then(() => {
-
           Swal.fire({
-            icon: 'success',
+            icon: "success",
             height: 300,
             width: 350,
-            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">수정이 완료되었습니다!</a>',
-            text: '다시 로그인 해주세요!',
-            confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-            confirmButtonColor: '#ee6e9f',
-          })
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">수정이 완료되었습니다!</a>',
+            text: "다시 로그인 해주세요!",
+            confirmButtonText:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+            confirmButtonColor: "#ee6e9f",
+          });
           commit("REMOVE_TOKEN");
         })
         .catch((err) => {
@@ -344,13 +355,15 @@ export default new Vuex.Store({
         .then(() => {
           commit("REMOVE_TOKEN");
           Swal.fire({
-            icon: 'success',
+            icon: "success",
             height: 300,
             width: 350,
-            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">회원탈퇴가 완료되었습니다.</a>',
-            confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-            confirmButtonColor: '#ee6e9f'
-          })
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">회원탈퇴가 완료되었습니다.</a>',
+            confirmButtonText:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+            confirmButtonColor: "#ee6e9f",
+          });
           router.push("/");
         })
         .catch((err) => {
@@ -387,28 +400,39 @@ export default new Vuex.Store({
     },
     //게시글 생성
     createArticle(context, articleData) {
-      if(articleData.temp===1&&(!articleData.articleData.categoryId||!articleData.articleData.title||!articleData.articleData.address||!articleData.articleData.description||!articleData.articleData.minPrice||!articleData.articleData.myPrice||!articleData.articleData.endDate||!articleData.articleData.endTime)){
+      if (
+        articleData.temp === 1 &&
+        (!articleData.articleData.categoryId ||
+          !articleData.articleData.title ||
+          !articleData.articleData.address ||
+          !articleData.articleData.description ||
+          !articleData.articleData.minPrice ||
+          !articleData.articleData.myPrice ||
+          !articleData.articleData.endDate ||
+          !articleData.articleData.endTime)
+      ) {
         Swal.fire({
-          icon: 'warning',
+          icon: "warning",
           height: 300,
           width: 400,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">필수 입력칸을 모두 채워주세요</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-
-        })
-      }else{
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">필수 입력칸을 모두 채워주세요</a>',
+          confirmButtonText:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: "#ee6e9f",
+        });
+      } else {
         if (articleData.temp === 1 || articleData.temp === 0) {
           if (articleData.articleData.endTime.length < 8) {
             articleData.articleData.endTime =
               articleData.articleData.endTime + ":00";
           }
         }
-        if(!articleData.articleData.image){
-          articleData.articleData.image="default.jpg"
+        if (!articleData.articleData.image) {
+          articleData.articleData.image = "default.jpg";
         }
-        if(cookies.get('admin-token')){
-          articleData.articleData.categoryId=101
+        if (cookies.get("admin-token")) {
+          articleData.articleData.categoryId = 101;
         }
         axios
           .post(
@@ -431,17 +455,29 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
-      if(updateData.temp===1&&(!updateData.articleUpdateData.categoryId||!updateData.articleUpdateData.title||!updateData.articleUpdateData.address||!updateData.articleUpdateData.description||!updateData.articleUpdateData.minPrice||!updateData.articleUpdateData.myPrice||!updateData.articleUpdateData.endDate||!updateData.articleUpdateData.endTime)){
+      if (
+        updateData.temp === 1 &&
+        (!updateData.articleUpdateData.categoryId ||
+          !updateData.articleUpdateData.title ||
+          !updateData.articleUpdateData.address ||
+          !updateData.articleUpdateData.description ||
+          !updateData.articleUpdateData.minPrice ||
+          !updateData.articleUpdateData.myPrice ||
+          !updateData.articleUpdateData.endDate ||
+          !updateData.articleUpdateData.endTime)
+      ) {
         Swal.fire({
-          icon: 'warning',
+          icon: "warning",
           height: 300,
           width: 400,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">필수 입력칸을 모두 채워주세요</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-        })
-      }else{
-        if(updateData.temp==1){
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">필수 입력칸을 모두 채워주세요</a>',
+          confirmButtonText:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: "#ee6e9f",
+        });
+      } else {
+        if (updateData.temp == 1) {
           if (updateData.articleUpdateData.endTime) {
             if (updateData.articleUpdateData.endTime.length < 8) {
               updateData.articleUpdateData.endTime =
@@ -449,11 +485,11 @@ export default new Vuex.Store({
             }
           }
         }
-        if(!updateData.articleUpdateData.image){
-          updateData.articleUpdateData.image="default.jpg"
+        if (!updateData.articleUpdateData.image) {
+          updateData.articleUpdateData.image = "default.jpg";
         }
         updateData.articleUpdateData.token = state.authToken;
-        console.log(updateData.articleUpdateData)
+        console.log(updateData.articleUpdateData);
         axios
           .post(
             `${BACK_URL}/post/update/${updateData.temp}`,
@@ -464,7 +500,9 @@ export default new Vuex.Store({
               if (updateData.articleUpdateData.categoryId === 102) {
                 router.push(`/reviews`);
               } else {
-                router.push(`/pdetail/${updateData.articleUpdateData.articleId}`);
+                router.push(
+                  `/pdetail/${updateData.articleUpdateData.articleId}`
+                );
               }
             } else {
               router.push(`/detail/${updateData.articleUpdateData.articleId}`);
@@ -493,9 +531,9 @@ export default new Vuex.Store({
     },
     //전체 게시글 검색
     search({ commit }, searchData) {
-      if(!searchData.searchDataForSend.word){
-        alert("검색어를 입력해 주세요")
-      }else{
+      if (!searchData.searchDataForSend.word) {
+        alert("검색어를 입력해 주세요");
+      } else {
         cookies.set("searchData", searchData, 0);
         searchData.categoryId = 0;
         cookies.set('searchData',searchData, 0)
@@ -506,13 +544,13 @@ export default new Vuex.Store({
           )
           .then((res) => {
             commit("GET_ARTICLES", res.data.postList);
-            cookies.set('searchKeyword', searchData.searchDataForSend.word,0)
+            cookies.set("searchKeyword", searchData.searchDataForSend.word, 0);
             router.push({ name: "searchList" });
           })
           .catch((err) => {
             console.log(err);
           });
-      } 
+      }
     },
     detailSearch({ commit }, searchData) {
       if (searchData.categoryId === 0) {
@@ -543,43 +581,51 @@ export default new Vuex.Store({
           });
       } else if (!searchData.temp) {
         Swal.fire({
-          icon: 'warning',
+          icon: "warning",
           height: 300,
           width: 350,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">게시글 종류를 선택해 주세요!</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-        })
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">게시글 종류를 선택해 주세요!</a>',
+          confirmButtonText:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: "#ee6e9f",
+        });
         // alert("게시글 종류를 선택해 주세요!");
       } else if (!searchData.categoryId) {
         Swal.fire({
-          icon: 'warning',
+          icon: "warning",
           height: 300,
           width: 350,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">카테고리를 선택해 주세요!</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-        })
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">카테고리를 선택해 주세요!</a>',
+          confirmButtonText:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: "#ee6e9f",
+        });
         // alert("카테고리를 선택해 주세요!");
       } else if (!searchData.searchDataForSend.subject) {
         Swal.fire({
-          icon: 'warning',
+          icon: "warning",
           height: 300,
           width: 350,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">분류를 선택해 주세요!</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-      })
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">분류를 선택해 주세요!</a>',
+          confirmButtonText:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: "#ee6e9f",
+        });
         // alert("분류를 선택해 주세요!");
       } else if (!searchData.searchDataForSend.word) {
         Swal.fire({
-          icon: 'warning',
+          icon: "warning",
           height: 300,
           width: 350,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">검색어를 입력해 주세요!</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-        })
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">검색어를 입력해 주세요!</a>',
+          confirmButtonText:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: "#ee6e9f",
+        });
         // alert("검색어를 입력해 주세요!");
       }
     },
@@ -628,7 +674,7 @@ export default new Vuex.Store({
     },
     // 댓글 신고 접수
     createCommentAccuse(context, accuseCommentData) {
-      console.log(accuseCommentData.accuseCommentData)
+      console.log(accuseCommentData.accuseCommentData);
       axios
         .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
         .then(() => {

@@ -44,9 +44,9 @@
               {{ selectedTBG }}
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" @click="selectCategory(1)">쉘위배달</a>
+              <a class="dropdown-item" @click="selectCategory(1)">쉘위배민</a>
               <a class="dropdown-item" @click="selectCategory(2)">쉘위택배</a>
-              <a class="dropdown-item" @click="selectCategory(3)">쉘위공구</a>
+              <a class="dropdown-item" @click="selectCategory(3)">쉘위N빵</a>
             </div>
           </div>
           <input

@@ -1,5 +1,8 @@
 <template>
-  <div class="mt-5 create-container">
+  <div
+    class="mt-5 create-container"
+    style="font-family: 'Recipekorea', cursive; font-size:16.5px"
+  >
     <div class="create-form">
       <!-- 지도 -->
       <div class="kakao-map-select">
@@ -7,19 +10,31 @@
       </div>
       <div class="right-items">
         <!--선택 장소-->
+        <div class="create-alert-msg">
+          <small style="font-size: 15.5px; color: #ee6e9f;">*</small>
+          <small style="font-size: 15.5px;">표시는 필수값입니다.</small>
+        </div>
         <div class="selected-place">
-          <label for>어디서 만날까?</label>
+          <label style="font-size:16px"
+            >어디서 만날까?<small style="font-size: 17px; color: #ee6e9f;"
+              >*</small
+            ></label
+          >
           <input
             type="text"
             v-model="articleData.address"
             :placeholder="articleData.address"
-            style="font-family: FontAwesome;"
+            style="font-family: Recipekorea;"
             readonly
           />
         </div>
         <!--제목-->
         <div class="title">
-          <label for="title">제목</label>
+          <label for="title" style="font-size:16px"
+            >제목<small style="font-size: 17px; color: #ee6e9f;"
+              >*</small
+            ></label
+          >
           <div class="btn-group">
             <button
               type="button"
@@ -27,54 +42,95 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-            >{{ selectedTBG }}</button>
+            >
+              {{ selectedTBG }}
+            </button>
             <div class="dropdown-menu">
               <a class="dropdown-item" @click="selectCategory(1)">쉘위배달</a>
               <a class="dropdown-item" @click="selectCategory(2)">쉘위택배</a>
               <a class="dropdown-item" @click="selectCategory(3)">쉘위공구</a>
             </div>
           </div>
-          <input type="text" id="title" v-model="articleData.title" placeholder=" 제목을 입력하세요" />
+          <input
+            type="text"
+            id="title"
+            v-model="articleData.title"
+            placeholder=" 제목을 입력하세요"
+          />
         </div>
         <!--시작금액/전체금액-->
         <div class="price">
-          <label for>시작금액 / 전체금액</label>
-          <input type="number" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
-          <input type="number" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
+          <label style="font-size:16px"
+            >시작금액 <small style="font-size: 17px; color: #ee6e9f;">*</small>/
+            전체금액<small style="font-size: 17px; color: #ee6e9f;"
+              >*</small
+            ></label
+          >
+          <input
+            type="number"
+            id="myPrice"
+            v-model="articleData.myPrice"
+            placeholder=" 시작금액"
+          />
+          <input
+            type="number"
+            id="minPrice"
+            v-model="articleData.minPrice"
+            placeholder=" 전체금액"
+          />
         </div>
         <!--종료일시-->
         <div class="endTime">
-          <label for>종료일자 / 종료시간</label>
+          <label style="font-size:16px"
+            >종료일자 <small style="font-size: 17px; color: #ee6e9f;">*</small>/
+            종료시간<small style="font-size: 17px; color: #ee6e9f;"
+              >*</small
+            ></label
+          >
           <input type="date" v-model="articleData.endDate" />
           <input type="time" id="form-endTime" v-model="articleData.endTime" />
         </div>
         <!-- 파일 업로드 -->
         <div class="imageInsert d-flex">
-          <label>사진 업로드</label>
-          <div class="d-flex">
-            <input type="file" id="file" name="file" ref="file" class="w-100 ml-3"/>
-          </div>
+          <label style="font-size:16px">사진 업로드</label>
+          <input type="file" id="file" name="file" ref="file" />
         </div>
         <!--url-->
         <div class="url">
-          <label for="url">URL</label>
-          <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" required/>
+          <label for="url" style="font-size:16px">URL</label>
+          <input
+            type="url"
+            id="url"
+            v-model="articleData.urlLink"
+            placeholder=" url을 입력하세요"
+            required
+          />
         </div>
         <!--오픈톡방url-->
         <div class="url">
-          <label for="url">오픈 카카오톡 URL</label>
-          <input type="url" id="url" v-model="articleData.openLink" placeholder=" url을 입력하세요" />
+          <label for="url" style="font-size:16px">오픈 카카오톡 URL</label>
+          <input
+            type="url"
+            id="url"
+            v-model="articleData.openLink"
+            placeholder=" url을 입력하세요"
+          />
         </div>
         <!--내용-->
         <div class="createContent">
-          <label for="textarea-rows">내용</label>
-          <b-form-textarea
+          <label for="textarea-rows" style="font-size:16px"
+            >내용
+            <small style="font-size: 17px; color: #ee6e9f;">*</small>
+          </label>
+          <div class="article-text-area">
+            <b-form-textarea
               id="textarea-rows"
               v-model="articleData.description"
               placeholder="내용을 입력하세요..."
               rows="3"
               max-rows="6"
             ></b-form-textarea>
+          </div>
         </div>
       </div>
     </div>
@@ -82,31 +138,45 @@
     <!--태그-->
     <div class="tags">
       <label for>태그</label>
-      <b-form-tags v-model="articleData.tags" no-outer-focus class="mb-2">
-        <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
+      <b-form-tags
+        v-model="articleData.tags"
+        no-outer-focus
+        class="tag-input-box mb-2"
+      >
+        <template
+          v-slot="{
+            tags,
+            inputAttrs,
+            inputHandlers,
+            tagVariant,
+            addTag,
+            removeTag,
+          }"
+        >
           <b-input-group class="mb-2">
             <b-form-input
               v-bind="inputAttrs"
               v-on="inputHandlers"
-              placeholder="엔터를 누르면 태그가 추가돼요! :)"
+              placeholder="엔터를 누르면 태그가 추가돼요!"
               id="tag-input"
-              class="form-control"
+              class="form-control tag-submit-input"
             ></b-form-input>
             <b-input-group-append>
-              <div class="tag-btn">
-                <b-button @click="addTag()" class="tag-btn" variant="dark">등록</b-button>
+              <div>
+                <b-button @click="addTag()" class="tag-submit">등록</b-button>
               </div>
             </b-input-group-append>
           </b-input-group>
-          <div class="d-inline-block" style="font-size: 1.5rem;">
+          <div class="mt-2" style="font-size: 20px;">
             <b-form-tag
               v-for="tag in tags"
               @remove="removeTag(tag)"
               :key="tag"
               :title="tag"
               :variant="tagVariant"
-              class="mr-1"
-            >{{ tag }}</b-form-tag>
+              class="tag-btns mr-2"
+              ><div class="tag-name mt-1">{{ tag }}</div></b-form-tag
+            >
           </div>
         </template>
       </b-form-tags>
@@ -140,34 +210,33 @@ export default {
   },
   methods: {
     ...mapActions(["getArticle", "deleteArticle", "updateArticle"]),
-     fileUpload: function () {
+    fileUpload: function() {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
       formData.append("file", this.file);
       formData.append("uid", 10);
-      axios.post(`${BACK_URL}/file`
-          ,formData
-          , {
-              headers: {
-                  'Content-Type': 'multipart/form-data'
-              }
-          })
+      axios
+        .post(`${BACK_URL}/file`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
-          this.path = response.data
-          this.articleData.image = this.path
-          var tmp=this.articleData.image.split('.')
-          tmp[1]=tmp[1].toLowerCase()
-          this.articleData.image = tmp[0]+'.'+tmp[1]
+          this.path = response.data;
+          this.articleData.image = this.path;
+          var tmp = this.articleData.image.split(".");
+          tmp[1] = tmp[1].toLowerCase();
+          this.articleData.image = tmp[0] + "." + tmp[1];
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    articleUpdate(){
-      this.fileUpload()
+    articleUpdate() {
+      this.fileUpload();
       setTimeout(() => {
-        var articleUpdateData=this.articleData
-        this.updateArticle({articleUpdateData,temp:1})
+        var articleUpdateData = this.articleData;
+        this.updateArticle({ articleUpdateData, temp: 1 });
       }, 300);
     },
     selectCategory(num) {
@@ -199,7 +268,7 @@ export default {
       this.articleData.address = address;
     },
   },
-  created: function () {
+  created: function() {
     this.getArticle(this.$route.params.ID);
     this.articleUpdateData = this.articleData;
     if (this.articleUpdateData.categoryId === 1) {
@@ -209,13 +278,12 @@ export default {
     } else {
       this.selectedTBG = "쉘위공구";
     }
-    this.articleData.endDate=''
-    this.articleData.endTime=''
+    this.articleData.endDate = "";
+    this.articleData.endTime = "";
   },
   computed: {
     ...mapState(["articleData"]),
   },
 };
 </script>
-<style>
-</style>
+<style></style>
