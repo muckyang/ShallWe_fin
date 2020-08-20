@@ -682,7 +682,7 @@ export default {
     imageUrl() {
       try {
         return "http://i3b203.p.ssafy.io/img/" +
-          `${this.articleData.image}`);
+          `${this.articleData.image}`
       } catch {}
       //   return require('http://i3b203.p.ssafy.io/img/'+`${article.image}`)
     },
