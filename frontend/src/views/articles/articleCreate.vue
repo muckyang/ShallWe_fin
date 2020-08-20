@@ -69,10 +69,8 @@
         <!-- 파일 업로드 -->
         <div class="imageInsert d-flex">
           <label>사진 업로드</label>
-          <div class="d-flex">
-            <input type="file" id="file" name="file" ref="file" style="width: 100%;" />
-            <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
-          </div>
+          <input type="file" id="file" name="file" ref="file" />
+          <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
         </div>
         <!--url-->
         <div class="url">
@@ -96,48 +94,52 @@
             내용
             <small style="font-size: 17px; color: #ee6e9f;">*</small>
           </label>
-          <b-form-textarea
-            id="textarea-rows"
-            v-model="articleData.description"
-            placeholder="내용을 입력하세요..."
-            rows="3"
-            max-rows="6"
-          ></b-form-textarea>
+          <div class="article-text-area">
+            <b-form-textarea
+              id="textarea-rows"
+              v-model="articleData.description"
+              placeholder="내용을 입력하세요..."
+              rows="3"
+              max-rows="6"
+            ></b-form-textarea>
+          </div>
         </div>
       </div>
     </div>
 
     <!--태그-->
     <div class="tags">
-      <label for>태그</label>
-      <b-form-tags v-model="articleData.tags" no-outer-focus class="mb-2">
-        <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
-          <b-input-group class="mb-2">
-            <b-form-input
-              v-bind="inputAttrs"
-              v-on="inputHandlers"
-              placeholder="엔터를 누르면 태그가 추가돼요! :)"
-              id="tag-input"
-              class="form-control"
-            ></b-form-input>
-            <b-input-group-append>
-              <div class="tag-btn">
-                <b-button @click="addTag()" class="tag-btn" variant="dark">등록</b-button>
-              </div>
-            </b-input-group-append>
-          </b-input-group>
-          <div class="d-inline-block" style="font-size: 1.5rem;">
-            <b-form-tag
-              v-for="tag in tags"
-              @remove="removeTag(tag)"
-              :key="tag"
-              :title="tag"
-              :variant="tagVariant"
-              class="mr-1"
-            >{{ tag }}</b-form-tag>
-          </div>
-        </template>
-      </b-form-tags>
+      <label>태그</label>
+      <div class="tag-input-box">
+        <b-form-tags v-model="articleData.tags" no-outer-focus class="mb-2">
+          <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
+            <b-input-group class="mb-2">
+              <b-form-input
+                v-bind="inputAttrs"
+                v-on="inputHandlers"
+                placeholder="엔터를 누르면 태그가 추가돼요! :)"
+                id="tag-input"
+                class="form-control"
+              ></b-form-input>
+              <b-input-group-append>
+                <div class="tag-btn">
+                  <b-button @click="addTag()" class="tag-btn" variant="dark">등록</b-button>
+                </div>
+              </b-input-group-append>
+            </b-input-group>
+            <div class="d-inline-block" style="font-size: 1.5rem;">
+              <b-form-tag
+                v-for="tag in tags"
+                @remove="removeTag(tag)"
+                :key="tag"
+                :title="tag"
+                :variant="tagVariant"
+                class="mr-1"
+              >{{ tag }}</b-form-tag>
+            </div>
+          </template>
+        </b-form-tags>
+      </div>
     </div>
 
     <div class="create-submit">
@@ -268,12 +270,12 @@ export default {
 
 <style>
 .create-alert-msg {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   justify-content: flex-end;
 }
 .kakao-map-select {
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 .create-container {
   padding-left: 8px;
@@ -283,7 +285,7 @@ export default {
   flex-direction: row;
 }
 .right-items {
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   text-align: left;
   margin: 0 0 0 1.5vw;
   width: 55vw;
@@ -428,24 +430,46 @@ input:focus::placeholder {
     transition: all 0.3s;
     background-color: rgba(255,255,255,0.25);
 } */
-@media screen and (max-width: 790px) {
+@media screen and (max-width: 991px) {
   .create-form {
     display: flex;
     flex-direction: column;
   }
+  .create-alert-msg {
+    padding-right: 8vw;
+  }
   .selected-place {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 80vw;
     display: flex;
   }
   .selected-place > input,
   .imageInsert > input,
   .url > input {
-    width: 50vw;
+    width: 60.5vw;
+  }
+  .title > input {
+    width: 51vw;
+  }
+  .price > input,
+  .endTime > input {
+    width: 30vw;
   }
   .right-items {
-    width: 90vw;
+    width: 87vw;
     margin: 5vh 0 0 0;
+  }
+  .createContent > .article-text-area {
+    /* border: 1px solid red; */
+    width: 77.3vw;
+  }
+  .tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tags .tag-input-box {
+    width: 50vw;
   }
 }
 </style>
