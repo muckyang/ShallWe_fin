@@ -22,8 +22,8 @@
             </button>
             <div class="dropdown-menu">
               <a :href="accuse.accuseUrl" class="dropdown-item">신고상세</a>
-              <a :href="accuse.accuseUrl" @click="yesAccuse()" class="dropdown-item">신고접수</a>
-              <a :href="accuse.accuseUrl" @click="noAccuse()" class="dropdown-item">허위신고</a>
+              <a  @click="yesAccuse()" class="dropdown-item">신고접수</a>
+              <a  @click="noAccuse()" class="dropdown-item">허위신고</a>
             </div>
           </div>
         </div>
@@ -68,7 +68,7 @@ export default {
       console.log(this.accuse, "BBBBB");
     },
     noAccuse() {
-      this.accuse.accuseConfirm = 1;
+      this.accuse.accuseConfirm = 2;
       this.decideAccuse();
       console.log(this.accuse, "BBBBB");
     },
