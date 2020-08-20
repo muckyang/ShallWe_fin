@@ -16,35 +16,48 @@
             </div>
           </div>
 
-           <!-- 댓글 신고 -->
-          <div v-else>
-            <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
+           <!-- 게시물 신고 -->
+            <div v-else>
+              <b-button v-b-modal="'modal-'+`${this.comment.commentId}`" class="siren-btn">신고</b-button>
 
-            <b-modal id="modal-1" title="신고 접수">
-              <h6>신고 사유</h6>
-              <div class="dropdown">
-                <button
-                  class="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >선택</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">노쇼</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고</a>
+              <b-modal :hide-footer="true" :id="'modal-'+this.comment.commentId" title="신고 접수">
+                <h6>신고 사유</h6>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-secondary btn-sm dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >선택</button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설, 비난을 했어요!</a>
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">약속 장소에 나오지 않았어요!</a>
+                    <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고를 하고 있어요!</a>
+                  </div>
                 </div>
-              </div>
-              <h6>신고할 댓글의 게시물 URL</h6>
-              <b-form-input id="type-url" type="url" v-model="accuseCommentData.accuseUrl"></b-form-input>
-              <h6>사유 상세</h6>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="accuseCommentData.accuseReason"></b-form-textarea>
-              <button @click="createCommentAccuse({ accuseCommentData })">신고접수</button>
-            </b-modal>
-          </div>
-          <!-- 댓글 신고 -->
+                <h6 class="mt-3">사유 상세</h6>
+                <b-form-textarea
+                  id="textarea-rows"
+                  rows="8"
+                  v-model="accuseCommentData.accuseReason"
+                ></b-form-textarea>
+                <h6 class="mt-3">신고할 게시물 URL</h6>
+                <b-form-input
+                  style="width: 400px"
+                  id="type-url"
+                  type="url"
+                  v-model="accuseCommentData.accuseUrl"
+                ></b-form-input>
+                <hr />
+                <button
+                  @click="createCommentAccuse({ accuseCommentData })"
+                  class="btn btn-danger btn-sm"
+                >신고접수</button>
+              </b-modal>
+            </div>
+          <!-- 게시물 신고 -->
         </div>
         <div class="comment-content mt-1" style="font-size:18px">{{ comment.content }}</div>
         <div
