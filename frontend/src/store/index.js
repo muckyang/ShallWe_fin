@@ -493,20 +493,25 @@ export default new Vuex.Store({
     },
     //전체 게시글 검색
     search({ commit }, searchData) {
-      cookies.set("searchData", searchData, 0);
-      searchData.categoryId = 0;
-      axios
-        .post(
-          `${BACK_URL}/post/search/1/${searchData.categoryId}`,
-          searchData.searchDataForSend
-        )
-        .then((res) => {
-          commit("GET_ARTICLES", res.data.postList);
-          router.push({ name: "searchList" });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if(!searchData.searchDataForSend.word){
+        alert("검색어를 입력해 주세요")
+      }else{
+        cookies.set("searchData", searchData, 0);
+        searchData.categoryId = 0;
+        axios
+          .post(
+            `${BACK_URL}/post/search/1/${searchData.categoryId}`,
+            searchData.searchDataForSend
+          )
+          .then((res) => {
+            commit("GET_ARTICLES", res.data.postList);
+            cookies.set('searchKeyword', searchData.searchDataForSend.word,0)
+            router.push({ name: "searchList" });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } 
     },
     detailSearch({ commit }, searchData) {
       cookies.set("searchData", searchData, 0);
