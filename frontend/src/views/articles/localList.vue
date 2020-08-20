@@ -118,8 +118,10 @@ export default {
   computed: {
     imageUrl() {
       return (article) => {
-        return require("http://i3b203.p.ssafy.io/img/" +
-          `${article.image}`);
+        try {
+          return require("http://i3b203.p.ssafy.io/img/" +
+            `${article.image}`);
+        } catch {}
       };
     },
   },
