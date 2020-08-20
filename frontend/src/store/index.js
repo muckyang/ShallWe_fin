@@ -275,6 +275,7 @@ export default new Vuex.Store({
         });
     },
 
+
     //profile
     getUserData({ state, commit }) {
       const auth = { token: state.authToken };
