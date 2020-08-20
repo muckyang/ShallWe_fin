@@ -2,7 +2,7 @@
   <div class="comments-box mt-4" style="font-family: 'Recipekorea', cursive;">
     <div class="comment-start" style="font-size:19px">
       <i class="far fa-comment-dots"></i>
-      댓글 {{comments.length}}
+      댓글 {{ comments.length }}
     </div>
 
     <!--댓글 보여주는 공간-->
@@ -24,7 +24,9 @@
         />
       </div>
       <div class="comment-submit">
-        <button type="button" class="comment-submit-btn" @click="createComment">등록</button>
+        <button type="button" class="comment-submit-btn" @click="createComment">
+          등록
+        </button>
       </div>
     </div>
   </div>
@@ -60,15 +62,19 @@ export default {
     ...mapActions(["getArticle"]),
     ...mapMutations(["GET_COMMENTS"]),
     createComment() {
-      axios
-        .post(`${BACK_URL}/comment/create`, this.commentData)
-        .then(() => {
-          this.commentData.content = "";
-          this.getArticle(this.$route.params.ID); //다시 보기
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      if (this.commentData.content) {
+        axios
+          .post(`${BACK_URL}/comment/create`, this.commentData)
+          .then(() => {
+            this.commentData.content = "";
+            this.getArticle(this.$route.params.ID); //다시 보기
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        alert("댓글을 입력해주세요!");
+      }
     },
     // getComments(){
     //   axios.get(`${BACK_URL}/comment/read/${this.$route.params.ID}`)
