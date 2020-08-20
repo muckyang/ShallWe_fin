@@ -85,10 +85,10 @@ export default {
           })
         .then((response) => {
           this.path = response.data
-          this.articleData.image = this.path
-          var tmp=this.articleData.image.split('.')
+          this.articleUpdateData.image = this.path
+          var tmp=this.articleUpdateData.image.split('.')
           tmp[1]=tmp[1].toLowerCase()
-          this.articleData.image = tmp[0]+'.'+tmp[1]
+          this.articleUpdateData.image = tmp[0]+'.'+tmp[1]
         })
         .catch((error) => {
           console.log(error);

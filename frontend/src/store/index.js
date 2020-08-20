@@ -372,7 +372,7 @@ export default new Vuex.Store({
               articleData.articleData.endTime + ":00";
           }
         }
-        if(!articleData.articleData.image&&articleData.temp===1){
+        if(!articleData.articleData.image){
           articleData.articleData.image="default.jpg"
         }
         if(cookies.get('admin-token')){
@@ -410,7 +410,11 @@ export default new Vuex.Store({
             }
           }
         }
+        if(!updateData.articleUpdateData.image){
+          updateData.articleUpdateData.image="default.jpg"
+        }
         updateData.articleUpdateData.token = state.authToken;
+        console.log(updateData.articleUpdateData)
         axios
           .post(
             `${BACK_URL}/post/update/${updateData.temp}`,
