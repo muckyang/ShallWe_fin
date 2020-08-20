@@ -103,7 +103,14 @@ export default {
             console.error(err);
           });
       } else {
-        alert("댓글을 써주세요!");
+         Swal.fire({
+            icon: 'success',
+            height: 300,
+            width: 250,  
+             title: '<a style="font-size:20px; font-family: Recipekorea; color:black">댓글을 작성해주세요.</a>',
+            showConfirmButton: false,
+            timer: 1500
+          })
       }
     },
     // getComments(){

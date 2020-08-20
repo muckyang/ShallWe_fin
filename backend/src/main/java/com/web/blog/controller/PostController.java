@@ -464,15 +464,12 @@ public class PostController {
                 return new ResponseEntity<>("수정이 불가능한 게시물 입니다.", HttpStatus.OK);
             }
         } else if (temp == 2) { // 자유게시판
-
+            
             Post post = postDao.getPostByArticleId(req.getArticleId());
-            post.setUserId(userOpt.get().getUserId());
-            post.setCategoryId(req.getCategoryId());
+
             post.setTitle(req.getTitle());
-            post.setWriter(userOpt.get().getNickname());
             post.setDescription(req.getDescription());
             post.setImage(req.getImage());
-            post.setTemp(temp);
             postDao.save(post);
 
             // 태그 삭제
