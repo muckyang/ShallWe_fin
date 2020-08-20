@@ -18,10 +18,21 @@
 
           <!-- 게시물 신고 -->
           <div v-else>
-            <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
+            <button type="button" class="siren-btn" data-toggle="modal" :data-target="'#exampleModal' + commentId ">
+              신고
+            </button>
 
-            <b-modal hide-footer="true" id="modal-1" title="신고 접수">
-              <h6>신고 사유</h6>
+            <div class="modal fade" :id="'exampleModal' + commentId " tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">신고 접수</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <h6>신고 사유</h6>
               <div class="dropdown">
                 <button
                   class="btn btn-secondary btn-sm dropdown-toggle"
@@ -51,7 +62,10 @@
                 @click="createCommentAccuse({ accuseCommentData })"
                 class="btn btn-danger btn-sm"
               >신고접수</button>
-            </b-modal>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <!-- 게시물 신고 -->
         </div>
