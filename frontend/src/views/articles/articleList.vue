@@ -270,7 +270,7 @@
                     />
                     <img
                       v-if="article.categoryId == 3"
-                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg//type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
