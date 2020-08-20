@@ -7,6 +7,10 @@
       </div>
       <div class="right-items">
         <!--선택 장소-->
+        <div class="create-alert-msg">
+          <small style="font-size: 15px; color: #ee6e9f;">*</small>
+          <small style="font-size: 15px;">표시는 필수값입니다.</small>
+        </div>
         <div class="selected-place">
           <label for>
             어디서 만날까?
@@ -263,6 +267,11 @@ export default {
 </script>
 
 <style>
+.create-alert-msg {
+  border: 1px solid red;
+  display: flex;
+  justify-content: flex-end;
+}
 .kakao-map-select {
   border: 1px solid red;
 }
