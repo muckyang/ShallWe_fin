@@ -132,12 +132,11 @@
 						src="@/assets/img/캐러셀3.png"
 						alt="image slot"
 					/>
-					</template> </b-carousel-slide
+          
+					</template>
+          </b-carousel-slide
 				></router-link>
-
-		    
-
-  			</b-carousel>
+      </b-carousel>
     </div>
 
     <!-- 2. 실시간 게시물-->

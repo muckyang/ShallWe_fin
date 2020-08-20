@@ -16,7 +16,7 @@
                 <b-card-body>
                   <b-card-text>
                     <div class="text-left">
-                      <h6 class="text-center mt-5">자기소개</h6>
+                      <h6 class="text-center mt-5">자기소개</h6>z
                       <div
                         class="mb-5"
                         style="border: solid 1px lightgray; height: 100px;"
