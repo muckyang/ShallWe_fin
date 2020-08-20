@@ -58,7 +58,7 @@
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    {{kind}}
+                    {{ kind }}
                   </button>
                   <div
                     class="dropdown-menu"
@@ -129,13 +129,13 @@
         <div class="in-the-top ml-1">
           <div class="writer mt-1">
             <router-link
-                    style="text-decoration: none; color: black"
-                    :to="{
-                      name: 'userDetail',
-                      params: { ID: articleData.userId },
-                    }"
-                    >{{ articleData.writer }}</router-link
-                  >
+              style="text-decoration: none; color: black"
+              :to="{
+                name: 'userDetail',
+                params: { ID: articleData.userId },
+              }"
+              >{{ articleData.writer }}</router-link
+            >
             <br />
           </div>
           <div class="create-time" style="font-size:12px">
@@ -566,7 +566,7 @@ export default {
         categoryId: 0,
         temp: 1,
       },
-      kind:'선택',
+      kind: "선택",
     };
   },
   computed: {
@@ -719,12 +719,12 @@ export default {
 
     // 신고 유형 변경
     changeAccuseKind(kind) {
-      if(kind===1){
-        this.kind="욕설, 비난을 했어요!"
-      }else if(kind===2){
-        this.kind="약속 장소에 나오지 않았어요!"
-      }else{
-        this.kind="광고를 하고 있어요!"
+      if (kind === 1) {
+        this.kind = "욕설, 비난을 했어요!";
+      } else if (kind === 2) {
+        this.kind = "약속 장소에 나오지 않았어요!";
+      } else {
+        this.kind = "광고를 하고 있어요!";
       }
       this.accuseArticleData.accuseKind = kind;
       this.linkArticleData();

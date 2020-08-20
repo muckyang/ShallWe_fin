@@ -1,13 +1,19 @@
 <template>
-  <div class="mt-4">
-    <hr>
+  <div class="mt-4 our-main-font">
+    <hr />
     <div class="d-flex mb-2 justify-content-end">
-      <button class="mr-2 view-all-btn" @click="resetArticles">전체 보기</button>
+      <button
+        class="mr-2 view-all-btn"
+        @click="resetArticles"
+        style="paddin-top:10px;"
+      >
+        전체 보기
+      </button>
       <router-link type="button" :to="{ name: 'articleCreate' }">
         <button class="article-create-btn">글 쓰기</button>
       </router-link>
     </div>
-    <kakaoMapForLocal :articles="articles" @setAddress="setAddress"/>
+    <kakaoMapForLocal :articles="articles" @setAddress="setAddress" />
     <div class="tab-content" id="nav-tabContent">
       <div
         v-if="categoryNum === 0"
@@ -18,12 +24,17 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
-              <div v-if="article.address===address||!flag">
+            <b-col
+              cols="12"
+              sm="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
+              <div v-if="article.address === address || !flag">
                 <router-link
                   :to="{
                     name: 'articleDetail',
-                    params: { ID: `${article.articleId}`},
+                    params: { ID: `${article.articleId}` },
                   }"
                   class="text-decoration-none text-dark"
                 >
@@ -42,7 +53,9 @@
                       <h5 class="article-title">{{ article.title }}</h5>
                       <h6 class="article-address">{{ article.address }}</h6>
                       <br />
-                      <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                      <h6 class="article-price">
+                        가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
+                      </h6>
                     </b-card-text>
                     <template v-slot:footer>
                       <div class="d-flex justify-content-between">
@@ -85,7 +98,7 @@ import { mapState, mapActions } from "vuex";
 import InfiniteLoading from "vue-infinite-loading";
 import cookies from "vue-cookies";
 import axios from "axios";
-import kakaoMapForLocal from '@/components/articles/kakaoMapForLocal.vue'
+import kakaoMapForLocal from "@/components/articles/kakaoMapForLocal.vue";
 
 export default {
   name: "articleList",
@@ -95,22 +108,23 @@ export default {
       page: 0,
       onlyOne: true,
       articles: [],
-      duarticles:[],
-      allArticles:[],
-      address:'default',
-      flag:false,
+      duarticles: [],
+      allArticles: [],
+      address: "default",
+      flag: false,
       infiniteId: +new Date(),
     };
   },
   components: {
     InfiniteLoading,
-    kakaoMapForLocal
+    kakaoMapForLocal,
   },
   computed: {
-    imageUrl(){
-      return (article)=>{
-        return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
-      }
+    imageUrl() {
+      return (article) => {
+        return require("C:/Users/multicampus/Desktop/image/" +
+          `${article.image}`);
+      };
     },
   },
   methods: {
@@ -142,20 +156,20 @@ export default {
       this.onlyOne = true;
       this.infiniteId += 1;
     },
-    setAddress(address){
-      this.address=address
-      this.flag=true
-      var tempArticles=[]
-      for(const a of this.articles){
-        if(a.address===address){
-          tempArticles.push(a)
+    setAddress(address) {
+      this.address = address;
+      this.flag = true;
+      var tempArticles = [];
+      for (const a of this.articles) {
+        if (a.address === address) {
+          tempArticles.push(a);
         }
       }
-      this.articles=tempArticles
+      this.articles = tempArticles;
     },
-    resetArticles(){
-      this.articles=this.allArticles
-      this.flag=false
+    resetArticles() {
+      this.articles = this.allArticles;
+      this.flag = false;
     },
   },
 };
@@ -246,7 +260,7 @@ $x-large: 1200px;
     }
   }
 }
-.disable{
-  display:none
+.disable {
+  display: none;
 }
 </style>
