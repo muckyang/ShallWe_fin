@@ -67,18 +67,6 @@ export default {
   },
   methods: {
     ...mapActions(["createArticle", "tempSaveArticle"]),
-    imageChange(e) {
-      const selectedImage = e.target.files[0];
-      this.createBase64Image(selectedImage);
-    },
-    createBase64Image(fileObject) {
-      this.articleData.image = new Image();
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.articleData.image = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
-    },
     imageUpload() {
       this.$refs.imageInput.click();
     },
