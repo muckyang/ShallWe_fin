@@ -24,7 +24,7 @@
     <div class="about-us-middle mt-5">
       <div class="col-4 col-6-medium col-12-small main-point">
         <section class="box style1 main-point-box p-3 _card card__one">
-          <img src="@/assets/img/food1.png" class="foodIcon" />
+          <img src="http://i3b203.p.ssafy.io/localImg/food1.png" class="foodIcon" />
           <h2 class="font-change mb-4">쉘위 배민</h2>
           <!--배달음식의 최소주문금액을 같이 맞춰 최소의 금액으로 최대의 맛있는 음식을 나눠 보아요-->
           <h4 class="font-change">
@@ -44,7 +44,9 @@
           <!-- <div class="infinite">
             <img src="@/assets/img/truck1.png" class="truckIcon" />
           </div>-->
-          <img src="@/assets/img/truck1.png" class="truckIcon" />
+          <div class="infinite">
+          <img src="http://i3b203.p.ssafy.io/localImg/truck1.png" class="truckIcon" />
+          </div>
           <div class="infinite-bottom">
             <h2 class="font-change mb-4">쉘위 택배</h2>
             <h4 class="font-change">
@@ -61,7 +63,7 @@
 
       <div class="col-4 col-6-medium col-12-small">
         <section class="box style1 main-point-box p-3 _card card__one">
-          <img src="@/assets/img/N1.png" class="nIcon" />
+          <img src="http://i3b203.p.ssafy.io/localImg/N1.png" class="nIcon" />
           <h2 class="font-change mb-4">쉘위 공구</h2>
           <h4 class="font-change">
             같은 물건을 대량구매하여 확
@@ -82,12 +84,12 @@
             <h4>
               <span class="font-change" style="color: #000">
                 회원관리에 있어 점수 또는 등급을 부여
-                <br />
+                <br/>
                 <div class="mt-1 font-change" style="color: #000">카카오 로그인으로 1인 1계정으로 신뢰점수 ↑</div>
               </span>
             </h4>
           </div>
-          <img src="@/assets/img/trust2.png" class="trustIcon" />
+          <img src="http://i3b203.p.ssafy.io/localImg/trust2.png" class="trustIcon" />
         </section>
       </div>
       <div class="col-2-small">
@@ -102,7 +104,7 @@
               </span>
             </h4>
           </div>
-          <img src="@/assets/img/Convenience2.png" class="ConIcon" />
+          <img src="http://i3b203.p.ssafy.io/localImg/Convenience2.png" class="ConIcon" />
         </section>
       </div>
     </div>

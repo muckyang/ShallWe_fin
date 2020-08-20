@@ -24,7 +24,7 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="@/assets/img/c2.png"
+            src="http://i3b203.p.ssafy.io/localImg/c2.png"
             alt="image slot"
           >
         </template>
@@ -251,7 +251,7 @@ export default {
     imageUrl() {
       return (article) => {
         try {
-          return require("C:/Users/multicampus/Desktop/image/" +
+          return require("http://i3b203.p.ssafy.io/img/" +
          `${article.image}`);
         } catch {}
       };

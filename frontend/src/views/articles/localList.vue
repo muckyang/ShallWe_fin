@@ -118,7 +118,7 @@ export default {
   computed: {
     imageUrl() {
       return (article) => {
-        return require("C:/Users/multicampus/Desktop/image/" +
+        return require("http://i3b203.p.ssafy.io/img/" +
           `${article.image}`);
       };
     },
