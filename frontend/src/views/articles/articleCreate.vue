@@ -55,59 +55,48 @@
       </div>
     </div>
   </div>
+  <div class="tags">
+    <label>태그</label>
+    <b-form-tags v-model="articleData.tags" no-outer-focus class="tag-input-box mb-2">
+      <template
+        v-slot="{
+          tags,
+          inputAttrs,
+          inputHandlers,
+          tagVariant,
+          addTag,
+          removeTag
+        }">
+        <b-input-group class="mb-2">
+          <b-form-input
+            v-bind="inputAttrs"
+            v-on="inputHandlers"
+            placeholder="엔터를 누르면 태그가 추가돼요!"
+            id="tag-input"
+            class="form-control tag-submit-input"
+          ></b-form-input>
+          <b-input-group-append>
+            <b-button @click="addTag()" class="tag-submit">등록</b-button>
+          </b-input-group-append>
+        </b-input-group>
+        <div class="mt-2" style="font-size: 20px;">
+          <b-form-tag
+            v-for="tag in tags"
+            @remove="removeTag(tag)"
+            :key="tag"
+            :title="tag"
+            :variant="tagVariant"
+            class="tag-btns mr-2">
+            <div class="tag-name mt-1">{{ tag }}</div>
+          </b-form-tag>
+        </div>
+      </template>
+    </b-form-tags>
+  </div>
 
-    <div class="tags">
-      <label>태그</label>
-      <b-form-tags
-        v-model="articleData.tags"
-        no-outer-focus
-        class="tag-input-box mb-2"
-      >
-        <template
-          v-slot="{
-            tags,
-            inputAttrs,
-            inputHandlers,
-            tagVariant,
-            addTag,
-            removeTag,
-          }"
-        >
-          <b-input-group class="mb-2">
-            <b-form-input
-              v-bind="inputAttrs"
-              v-on="inputHandlers"
-              placeholder="엔터를 누르면 태그가 추가돼요!"
-              id="tag-input"
-              class="form-control tag-submit-input"
-            ></b-form-input>
-            <b-input-group-append>
-              <div>
-                <b-button @click="addTag()" class="tag-submit">등록</b-button>
-              </div>
-            </b-input-group-append>
-          </b-input-group>
-          <div class="mt-2" style="font-size: 20px;">
-            <b-form-tag
-              v-for="tag in tags"
-              @remove="removeTag(tag)"
-              :key="tag"
-              :title="tag"
-              :variant="tagVariant"
-              class="tag-btns mr-2"
-            >
-              <div class="tag-name mt-1">{{ tag }}</div>
-            </b-form-tag>
-          </div>
-        </template>
-      </b-form-tags>
-    </div>
-
-    <div class="create-submit">
-      <button class="temp-form" @click="articleCreate(0)">임시저장</button>
-      <button class="complete-form" @click="articleCreate(1)">
-        <i class="fas fa-check"></i> 완료
-      </button>
+  <div class="create-submit">
+    <button class="temp-form" @click="articleCreate(0)">임시저장</button>
+    <button class="complete-form" @click="articleCreate(1)"><i class="fas fa-check"></i> 완료</button>
     </div>
   </div>
 </template>
@@ -140,10 +129,9 @@ export default {
         tags: [],
         token: this.$cookies.get("auth-token"),
       },
-      imageUrl: null, //다시 검토
+      imageUrl: null,
       selectedTBG: "카테고리",
       coNum: "1",
-      // address: " \uf060" + " 지도에서 만남의 장소를 설정하세요",
       address: "<-  지도에서 만남의 장소를 설정하세요",
       file: "",
       path: "",
