@@ -8,11 +8,11 @@
       <div class="right-items">
         <!--선택 장소-->
         <div class="create-alert-msg">
-          <small style="font-size: 15px; color: #ee6e9f;">*</small>
-          <small style="font-size: 15px;">표시는 필수값입니다.</small>
+          <small style="font-size: 15.5px; color: #ee6e9f;">*</small>
+          <small style="font-size: 15.5px;">표시는 필수값입니다.</small>
         </div>
         <div class="selected-place">
-          <label for>
+          <label style="font-size:16px">
             어디서 만날까?
             <small style="font-size: 17px; color: #ee6e9f;">*</small>
           </label>
@@ -26,7 +26,7 @@
         </div>
         <!--제목-->
         <div class="title">
-          <label for="title">
+          <label for="title" style="font-size:16px">
             제목
             <small style="font-size: 17px; color: #ee6e9f;">*</small>
           </label>
@@ -48,7 +48,7 @@
         </div>
         <!--시작금액/전체금액-->
         <div class="price">
-          <label for>
+          <label for style="font-size:16px">
             시작금액
             <small style="font-size: 17px; color: #ee6e9f;">*</small>/전체금액
             <small style="font-size: 17px; color: #ee6e9f;">*</small>
@@ -58,7 +58,7 @@
         </div>
         <!--종료일시-->
         <div class="endTime">
-          <label for>
+          <label for style="font-size:16px">
             종료일자
             <small style="font-size: 17px; color: #ee6e9f;">*</small>/종료시간
             <small style="font-size: 17px; color: #ee6e9f;">*</small>
@@ -68,13 +68,13 @@
         </div>
         <!-- 파일 업로드 -->
         <div class="imageInsert d-flex">
-          <label>사진 업로드</label>
+          <label style="font-size:16px">사진 업로드</label>
           <input type="file" id="file" name="file" ref="file" />
           <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
         </div>
         <!--url-->
         <div class="url">
-          <label for="url">URL</label>
+          <label for="url" style="font-size:16px">URL</label>
           <input
             type="url"
             id="url"
@@ -85,12 +85,12 @@
         </div>
         <!--오픈톡방url-->
         <div class="url">
-          <label for="url">오픈 카카오톡 URL</label>
+          <label for="url" style="font-size:16px">오픈 카카오톡 URL</label>
           <input type="url" id="url" v-model="articleData.openLink" placeholder=" url을 입력하세요" />
         </div>
         <!--내용-->
         <div class="createContent">
-          <label for="textarea-rows">
+          <label for="textarea-rows" style="font-size:16px">
             내용
             <small style="font-size: 17px; color: #ee6e9f;">*</small>
           </label>
@@ -110,36 +110,36 @@
     <!--태그-->
     <div class="tags">
       <label>태그</label>
-      <div class="tag-input-box">
-        <b-form-tags v-model="articleData.tags" no-outer-focus class="mb-2">
-          <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
-            <b-input-group class="mb-2">
-              <b-form-input
-                v-bind="inputAttrs"
-                v-on="inputHandlers"
-                placeholder="엔터를 누르면 태그가 추가돼요! :)"
-                id="tag-input"
-                class="form-control"
-              ></b-form-input>
-              <b-input-group-append>
-                <div class="tag-btn">
-                  <b-button @click="addTag()" class="tag-btn" variant="dark">등록</b-button>
-                </div>
-              </b-input-group-append>
-            </b-input-group>
-            <div class="d-inline-block" style="font-size: 1.5rem;">
-              <b-form-tag
-                v-for="tag in tags"
-                @remove="removeTag(tag)"
-                :key="tag"
-                :title="tag"
-                :variant="tagVariant"
-                class="mr-1"
-              >{{ tag }}</b-form-tag>
-            </div>
-          </template>
-        </b-form-tags>
-      </div>
+      <b-form-tags v-model="articleData.tags" no-outer-focus class="tag-input-box mb-2">
+        <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
+          <b-input-group class="mb-2">
+            <b-form-input
+              v-bind="inputAttrs"
+              v-on="inputHandlers"
+              placeholder="엔터를 누르면 태그가 추가돼요!"
+              id="tag-input"
+              class="form-control tag-submit-input"
+            ></b-form-input>
+            <b-input-group-append>
+              <div>
+                <b-button @click="addTag()" class="tag-submit">등록</b-button>
+              </div>
+            </b-input-group-append>
+          </b-input-group>
+          <div class="mt-2" style="font-size: 20px;">
+            <b-form-tag
+              v-for="tag in tags"
+              @remove="removeTag(tag)"
+              :key="tag"
+              :title="tag"
+              :variant="tagVariant"
+              class="tag-btns mr-2"
+            >
+              <div class="tag-name mt-1">{{ tag }}</div>
+            </b-form-tag>
+          </div>
+        </template>
+      </b-form-tags>
     </div>
 
     <div class="create-submit">
@@ -254,11 +254,28 @@ export default {
       handler() {
         try {
           if (this.articleData.minPrice < 0) {
-            alert("1이상의 정수만 입력이 가능합니다.");
+               Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 350,
+          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
+          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: '#ee6e9f'
+             })
+            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.minPrice = null;
           }
           if (this.articleData.myPrice < 0) {
-            alert("1이상의 정수만 입력이 가능합니다.");
+                    Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 350,
+          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
+          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: '#ee6e9f'
+      
+      })
+            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.myPrice = null;
           }
         } catch {}
@@ -273,12 +290,13 @@ export default {
   /* border: 1px solid red; */
   display: flex;
   justify-content: flex-end;
+  padding-right: 10px;
 }
 .kakao-map-select {
   /* border: 1px solid red; */
 }
 .create-container {
-  padding-left: 8px;
+  padding-left: 0;
 }
 .create-form {
   display: flex;
@@ -326,7 +344,7 @@ export default {
   display: flex;
 }
 .tag > .tags {
-  width: 21vw;
+  width: 41vw;
 }
 .createContent > textarea {
   vertical-align: top;
@@ -337,6 +355,9 @@ export default {
   align-items: center;
   margin: 3% 0;
   padding: 0 15vw;
+}
+.hihi {
+  width: 35vw;
 }
 .complete-form,
 .temp-form {
@@ -371,19 +392,29 @@ export default {
 input:focus::placeholder {
   color: transparent;
 }
-.tag-btn {
+/* .tag-submit {
   border: none;
   outline: none;
   border-top-left-radius: 0%;
   border-bottom-left-radius: 0%;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-  background-color: rgb(151, 151, 151);
+  background-color: #ee6e9f;
   opacity: 0.85;
   transition: 0.3s;
+} */
+.tag-submit {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #ee6e9f;
+  opacity: 0.85;
+  transition: 0.3s;
+  margin: 1.5px 0 0 5px;
 }
-.tag-btn:hover {
+.tag-submit:hover {
   opacity: 1;
+  background-color: #ee6e9f;
 }
 #tag-input {
   outline: none;
@@ -392,6 +423,23 @@ input:focus::placeholder {
   outline: none;
   outline-style: none;
   -webkit-tap-highlight-color: transparent;
+}
+.tag-btns {
+  border: 3px solid #ee6e9f;
+  border-radius: 20px;
+  background-color: transparent;
+  color: black;
+  margin-bottom: 1.5%;
+  outline: none;
+  /* padding: 5px 10px 5px 10px; */
+  padding: 7px 9px 5px 9px;
+}
+.tag-submit-input {
+  border-radius: 4px;
+}
+.tag-submit-input:focus::placeholder {
+  border: none;
+  outline: none;
 }
 
 /* .{
@@ -467,9 +515,6 @@ input:focus::placeholder {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-  }
-  .tags .tag-input-box {
-    width: 50vw;
   }
 }
 </style>

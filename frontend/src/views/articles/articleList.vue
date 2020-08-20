@@ -112,6 +112,7 @@
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
+
                   <b-card-text class="p-2">
                     <h5
                       class="article-title mt-3 pt-1"
@@ -344,7 +345,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
-                  :no-body="true"
+                  :no-body=true
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"

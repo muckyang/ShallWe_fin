@@ -112,8 +112,8 @@
         <input
           class="searchInput"
           type="search"
-          style="font-family: FontAwesome;"
-          :placeholder="placeholderMessage"
+          style="font-family: Recipekorea; padding-top: 9px;"
+          placeholder="검색"
           v-model="searchData.searchDataForSend.word"
           @keypress.enter="search(searchData)"
         />
@@ -142,7 +142,6 @@ export default {
     return {
       email: " \uf0e0" + "  이메일",
       pw: " \uf084" + "  비밀번호",
-      placeholderMessage: "검색",
       constants,
       searchData: {
         searchDataForSend: {
@@ -157,7 +156,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["REMOVE_TOKEN", "loginCheck"]),
+    ...mapMutations(["REMOVE_TOKEN", "loginCheck","adminCheck"]),
     ...mapActions(["search", "login", "getUserData"]),
   },
   computed: {
@@ -165,6 +164,9 @@ export default {
   },
   created: function () {
     this.loginCheck();
+    if(this.$cookies.get("admin-token")){
+      this.adminCheck()
+    }
     if (this.$cookies.get("auth-token")) {
       this.getUserData();
     }
