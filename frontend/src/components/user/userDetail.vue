@@ -21,7 +21,7 @@
                       <div
                         class="mb-5"
                         style="border: solid 1px lightgray; height: 100px;"
-                      ></div>
+                      >{{userData.introduce}}</div>
                     </div>
                   </b-card-text>
                 </b-card-body>
@@ -120,7 +120,6 @@
         axios
           .post(`${BACK_URL}/accuse/disabled`, this.userData)
           .then(() => {
-            console.log(this.userData, 'UUUUUUUUUUUUUUUUUUUU')
           })
           .catch(( err ) => {
             console.error(err);
