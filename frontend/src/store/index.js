@@ -317,28 +317,25 @@ export default new Vuex.Store({
     // 이한솔 끝
 
     editUser({ state, commit }, editData) {
-      if(editData.address){
-        editData.token = state.authToken;
-        axios
-          .post(`${BACK_URL}/account/update`, editData)
-          .then(() => {
+      editData.token = state.authToken;
+      axios
+        .post(`${BACK_URL}/account/update`, editData)
+        .then(() => {
 
-            Swal.fire({
-              icon: 'success',
-              height: 300,
-              width: 350,
-              title: '<a style="font-size:20px; font-family: Recipekorea; color:black">수정이 완료되었습니다!</a>',
-              confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-              confirmButtonColor: '#ee6e9f',
-            })
-            router.push("/user/profile");
+          Swal.fire({
+            icon: 'success',
+            height: 300,
+            width: 350,
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">수정이 완료되었습니다!</a>',
+            text: '다시 로그인 해주세요!',
+            confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+            confirmButtonColor: '#ee6e9f',
           })
-          .catch((err) => {
-            console.error(err);
-          });
-        }else{
-          alert("주소는 필수 입력 칸입니다.")
-        }
+          commit("REMOVE_TOKEN");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
     deleteUser({ state, commit }) {
       const auth = { token: state.authToken };
