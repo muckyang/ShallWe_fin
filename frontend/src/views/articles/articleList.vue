@@ -100,6 +100,7 @@
                   footer-class="card-end"
                 >
                   <div
+                    v-if="article.status != 4"
                     class="article-img-box m-0 p-0"
                     :style="{
                       height: '100%',
@@ -131,6 +132,28 @@
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
+                  <div
+                    v-else-if="article.status == 0"
+                    class="article-img-box m-0 p-0"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' + require('@/assets/img/DealEnd.png') + ')',
+                      backgroundSize: 'cover',
+                    }"
+                  ></div>
+                  <div
+                    v-else-if="article.status === 5"
+                    class="article-img-box m-0 p-0"
+                    style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' + require('@/assets/img/TimeOver.png') + ')',
+                      backgroundSize: 'cover',
+                    }"
+                  ></div>
 
                   <b-card-text class="p-2">
                     <h5
@@ -419,7 +442,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
-                  :no-body=true
+                  :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
