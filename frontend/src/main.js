@@ -6,6 +6,7 @@ import VueCookies from 'vue-cookies'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import "chart.js";
 import "hchs-vue-charts";
+import "@/assets/css/global.css"
 
 Vue.use(VueCookies)
 Vue.use(BootstrapVue)
