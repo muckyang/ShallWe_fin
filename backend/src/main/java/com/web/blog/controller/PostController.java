@@ -571,7 +571,8 @@ public class PostController {
         System.out.println(forSaveImg.toString());
         long nowtime = datetimeTosec(LocalDateTime.now());
         System.out.println(System.getProperty("user.dir") + "\\frontend\\src\\assets\\images\\");
-        File file = new File("C:\\Users\\multicampus\\Desktop\\image\\"+ nowtime + forSaveImg);
+        // File file = new File("C:\\Users\\multicampus\\Desktop\\image\\"+ nowtime + forSaveImg);
+        File file = new File("C:\\Users\\multicampus\\Desktop\\image\\"+ forSaveImg);
         // File file = new File("/var/www/html/s03p13b203/frontend/src/assets/images/"+ nowtime + forSaveImg);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
