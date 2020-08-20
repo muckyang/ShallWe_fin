@@ -44,11 +44,12 @@
           </div>
         </div>
       </div>
+
       <!--화살표 클릭하면 보일 내용들. 내용,이미지-->
       <div class="collapse multi-collapse review-bottom mt-3" :id="'review'+review.articleId">
         <div class="review-point d-flex">
           <div v-if="review.image" :class="{'review-img-box':review.image}">
-            <b-img :src="review.image" fluid alt="Responsive image" class="review-img"></b-img>
+            <b-img :src="imageUrl" fluid alt="Responsive image" class="review-img"></b-img>
           </div>
           <div :class="{'review-content':review.image, 'review-content-ver':review.image==null}">
             <div
@@ -104,6 +105,13 @@ export default {
   },
   computed: {
     ...mapState(["articleData", "userData"]),
+      imageUrl() {
+      try {
+        return require("C:/Users/multicampus/Desktop/image/" +
+          `${this.review.image}`);
+      } catch {}
+      //   return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
+    },
   },
   methods: {
     ...mapActions([
