@@ -99,6 +99,10 @@ export default new Vuex.Store({
         })
      
     },
+    adminCheck(state){
+      state.adminToken = cookies.get('admin-token')
+      state.isAdmin=true
+    },
     SET_ADMIN_TOKEN(state, token) {
       state.adminToken = token;
       state.isAdmin=true
