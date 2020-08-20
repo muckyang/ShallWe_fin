@@ -102,7 +102,7 @@
             aria-orientation="vertical"
           >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action change-main-color"
               id="v-pills-1-tab"
               data-toggle="pill"
               href="#v-pills-1"
@@ -112,7 +112,7 @@
               >내가 쓴 게시물</a
             >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action change-main-color"
               id="v-pills-2-tab"
               data-toggle="pill"
               href="#v-pills-2"
@@ -122,7 +122,7 @@
               >참여한 게시물</a
             >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action change-main-color"
               id="v-pills-3-tab"
               data-toggle="pill"
               href="#v-pills-3"
@@ -132,7 +132,7 @@
               >거래 완료 게시물</a
             >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action change-main-color"
               id="v-pills-4-tab"
               data-toggle="pill"
               href="#v-pills-4"
@@ -142,7 +142,7 @@
               >내가 쓴 후기</a
             >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action change-main-color"
               id="v-pills-5-tab"
               data-toggle="pill"
               href="#v-pills-5"
@@ -152,7 +152,7 @@
               >내가 쓴 커뮤니티</a
             >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action change-main-color"
               id="v-pills-6-tab"
               data-toggle="pill"
               href="#v-pills-6"
@@ -162,7 +162,7 @@
               >찜 목록</a
             >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action change-main-color"
               id="v-pills-7-tab"
               data-toggle="pill"
               href="#v-pills-7"
@@ -206,10 +206,10 @@
                           params: { ID: `${alist.articleId}` },
                         }"
                       >
-                        <button class="cta">
+                        <button class="see-detail">
                           <span>보러가기</span
                           ><svg
-                            class="Svg"
+                            class="arrow-effect"
                             width="13px"
                             height="10px"
                             viewBox="0 0 13 10"
@@ -253,8 +253,18 @@
                           name: 'articleDetail',
                           params: { ID: `${jlist.articleId}` },
                         }"
-                        >보러가기</router-link
-                      >
+                        ><button class="see-detail">
+                          <span>보러가기</span
+                          ><svg
+                            class="arrow-effect"
+                            width="13px"
+                            height="10px"
+                            viewBox="0 0 13 10"
+                          >
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                          </svg></button
+                      ></router-link>
                     </td>
                   </tr>
                 </tbody>
@@ -290,8 +300,18 @@
                           name: 'articleDetail',
                           params: { ID: `${clist.articleId}` },
                         }"
-                        >보러가기</router-link
-                      >
+                        ><button class="see-detail">
+                          <span>보러가기</span
+                          ><svg
+                            class="arrow-effect"
+                            width="13px"
+                            height="10px"
+                            viewBox="0 0 13 10"
+                          >
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                          </svg></button
+                      ></router-link>
                     </td>
                   </tr>
                 </tbody>
@@ -325,8 +345,18 @@
                           name: 'articleDetail',
                           params: { ID: `${rlist.articleId}` },
                         }"
-                        >보러가기</router-link
-                      >
+                        ><button class="see-detail">
+                          <span>보러가기</span
+                          ><svg
+                            class="arrow-effect"
+                            width="13px"
+                            height="10px"
+                            viewBox="0 0 13 10"
+                          >
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                          </svg></button
+                      ></router-link>
                     </td>
                   </tr>
                 </tbody>
@@ -360,8 +390,18 @@
                           name: 'articleDetail',
                           params: { ID: `${flist.articleId}` },
                         }"
-                        >보러가기</router-link
-                      >
+                        ><button class="see-detail">
+                          <span>보러가기</span
+                          ><svg
+                            class="arrow-effect"
+                            width="13px"
+                            height="10px"
+                            viewBox="0 0 13 10"
+                          >
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                          </svg></button
+                      ></router-link>
                     </td>
                   </tr>
                 </tbody>
@@ -397,8 +437,18 @@
                           name: 'articleDetail',
                           params: { ID: `${llist.articleId}` },
                         }"
-                        >보러가기</router-link
-                      >
+                        ><button class="see-detail">
+                          <span>보러가기</span
+                          ><svg
+                            class="arrow-effect"
+                            width="13px"
+                            height="10px"
+                            viewBox="0 0 13 10"
+                          >
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                          </svg></button
+                      ></router-link>
                     </td>
                   </tr>
                 </tbody>
@@ -434,14 +484,17 @@
                           name: 'articleDetail',
                           params: { ID: `${tlist.articleId}` },
                         }"
-                        >보러가기<svg
-                          class="Svg"
-                          width="13px"
-                          height="10px"
-                          viewBox="0 0 13 10"
-                        >
-                          <path d="M1,5 L11,5"></path>
-                          <polyline points="8 1 12 5 8 9"></polyline></svg
+                        ><button class="see-detail">
+                          <span>보러가기</span
+                          ><svg
+                            class="arrow-effect"
+                            width="13px"
+                            height="10px"
+                            viewBox="0 0 13 10"
+                          >
+                            <path d="M1,5 L11,5"></path>
+                            <polyline points="8 1 12 5 8 9"></polyline>
+                          </svg></button
                       ></router-link>
                     </td>
                   </tr>
@@ -487,6 +540,17 @@ export default {
 </script>
 
 <style>
+.change-main-color:focus {
+  background-color: #ee6e9f;
+  border: 0.5px solid #ee6e9f;
+  /*color: black;*/
+}
+.see-detail {
+  transition: all 0.2s ease;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
 .profile-block {
   height: 50px;
   background-color: lightgrey;
@@ -542,5 +606,23 @@ export default {
 }
 .mypage2 {
   height: 300px;
+}
+.arrow-effect {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: black;
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+.see-detail:hover .arrow-effect {
+  transform: translateX(0);
+}
+.see-detail:active {
+  transform: scale(0.96);
 }
 </style>
