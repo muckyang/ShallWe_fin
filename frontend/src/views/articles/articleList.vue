@@ -106,10 +106,7 @@
                       height: '100%',
                       width: '100%',
                       backgroundImage:
-                        'url(' +
-                        require('http://i3b203.p.ssafy.io/img/' +
-                          article.image) +
-                        ')',
+                        'url('+'../../../images/' + article.image + ')',
                       backgroundSize: 'cover',
                     }"
                   >
@@ -237,10 +234,7 @@
                       height: '100%',
                       width: '100%',
                       backgroundImage:
-                        'url(' +
-                        require('http://i3b203.p.ssafy.io/img/' +
-                          article.image) +
-                        ')',
+                          'url('+'../../../images/' + article.image + ')',
                       backgroundSize: 'cover',
                     }"
                   >
@@ -346,10 +340,7 @@
                       height: '100%',
                       width: '100%',
                       backgroundImage:
-                        'url(' +
-                        require('http://i3b203.p.ssafy.io/img/' +
-                          article.image) +
-                        ')',
+                       'url('+'../../../images/' + article.image + ')',
                       backgroundSize: 'cover',
                     }"
                   >
@@ -454,10 +445,7 @@
                       height: '100%',
                       width: '100%',
                       backgroundImage:
-                        'url(' +
-                        require('http://i3b203.p.ssafy.io/img/' +
-                          article.image) +
-                        ')',
+                          'url('+'../../../images/' + article.image + ')',
                       backgroundSize: 'cover',
                     }"
                   >
@@ -626,7 +614,7 @@ export default {
         return {
           background: "url(" + result + ")",
         };
-        ("{backgroundImage: 'url('+require('http://i3b203.p.ssafy.io/img/')+')'}");
+        ("{backgroundImage: 'url('+'../../../assets/images/' + article.image + ')'}");
         // require("http://i3b203.p.ssafy.io/img/" +
         //   `${article.image}`);
       };
