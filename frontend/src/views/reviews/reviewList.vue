@@ -12,6 +12,7 @@
     <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
       <div
         slot="no-more"
+        class="our-main-font"
         style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
       >더이상 게시물이 존재하지 않습니다!</div>
     </infinite-loading>
