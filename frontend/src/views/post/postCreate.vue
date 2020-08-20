@@ -1,5 +1,8 @@
 <template>
-  <div class="post-container" style="font-family: 'Recipekorea', cursive; margin-left: 10%; margin-right: 10%;">
+  <div
+    class="post-container"
+    style="font-family: 'Recipekorea', cursive; margin-left: 10%; margin-right: 10%;"
+  >
     <div class="d-flex justify-content-between">
       <div class="ml-1" style="font-size:19px">자유게시판 글쓰기</div>
       <div class="alert-msg">
@@ -30,7 +33,10 @@
                 <a class="dropdown-item" href="#" @click="selectCategory(104)">공지사항</a>
               </div>
             </div>-->
-            <b-form-input type="text" v-model="articleData.title"></b-form-input>
+            <b-form-input
+              type="text"
+              v-model="articleData.title"
+            ></b-form-input>
           </td>
         </tr>
         <tr>
@@ -40,7 +46,11 @@
           </th>
           <td>
             <div>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="articleData.description"></b-form-textarea>
+              <b-form-textarea
+                id="textarea-rows"
+                rows="8"
+                v-model="articleData.description"
+              ></b-form-textarea>
             </div>
           </td>
         </tr>
@@ -64,7 +74,9 @@
         style="font-size: 15px;"
         class="temp-form"
         @click="createArticle({ articleData, temp: 0 })"
-      >임시저장</button>
+      >
+        임시저장
+      </button>
       <button
         style="font-size: 15px;"
         class="complete-form"
@@ -126,7 +138,7 @@ export default {
     imageUpload() {
       this.$refs.imageInput.click();
     },
-    fileUpload: function () {
+    fileUpload: function() {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
       console.log(this.file);
@@ -149,11 +161,15 @@ export default {
         });
     },
     postCreate() {
-      this.fileUpload();
-      setTimeout(() => {
-        var articleData = this.articleData;
-        this.createArticle({ articleData, temp: 2 });
-      }, 300);
+      if (this.articleData.description != null) {
+        this.fileUpload();
+        setTimeout(() => {
+          var articleData = this.articleData;
+          this.createArticle({ articleData, temp: 2 });
+        }, 300);
+      } else {
+        alert("제목과 내용은 필수값입니다.");
+      }
     },
   },
 };

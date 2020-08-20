@@ -304,21 +304,33 @@
               @ok="updateJoinData"
             >
               <form ref="form" @submit.stop.prevent="handleSubmit">
-                <b-form-group label="제목" label-for="title-input">
+                <b-form-group
+                  label="제목"
+                  label-for="title-input"
+                  class="our-main-font"
+                >
                   <b-form-input
                     id="title-input"
                     v-model="joinData.title"
                   ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="url" label-for="url-input">
+                <b-form-group
+                  label="url"
+                  label-for="url-input"
+                  class="our-main-font"
+                >
                   <b-form-input
                     id="url-input"
                     v-model="joinData.url"
                   ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="가격" label-for="price-input">
+                <b-form-group
+                  label="가격"
+                  label-for="price-input"
+                  class="our-main-font"
+                >
                   <b-form-input
                     id="price-input"
                     v-model="joinData.price"
@@ -326,7 +338,11 @@
                   >원
                 </b-form-group>
 
-                <b-form-group label="요구사항" label-for="order-input">
+                <b-form-group
+                  label="요구사항"
+                  label-for="order-input"
+                  class="our-main-font"
+                >
                   <b-form-input
                     id="order-input"
                     v-model="joinData.description"
