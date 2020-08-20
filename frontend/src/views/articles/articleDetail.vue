@@ -140,7 +140,7 @@
 
       <!--중간 부분. 이미지, 주요 정보들 -->
       <div class="middle-row">
-        <img class="MyImage" :src="imageUrl" alt="..." />
+        <img class="MyImage" :src=imageUrl(articleData) alt="..." />
         <div class="articleInfo">
           <div class="detail-info">
             <div class="detail-address">

@@ -24,7 +24,7 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="@/assets/img/c2.png"
+            src="http://i3b203.p.ssafy.io/localImg/c2.png"
             alt="image slot"
           >
         </template>
