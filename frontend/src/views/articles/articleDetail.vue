@@ -160,14 +160,21 @@
             <div class="detail-endTime">
               마감 시간 : {{ cutDate(articleData.endTime) }}까지
             </div>
-            <div class="article-url mt-2">
-              사이트 url : {{ articleData.urlLink }}
+            <div
+              class="article-url mt-2"
+              style="overflow:hidden; word-wrap:break-word;"
+            >
+              사이트 url :
+              <div>
+                {{ articleData.urlLink }}
+              </div>
             </div>
             <div v-if="checkedStatus" class="mt-2">
-              오픈 채팅방 url : {{ articleData.openLink }}
+              오픈 채팅방 url :
+              <div>{{ articleData.openLink }}</div>
             </div>
           </div>
-          <div class="detail-btns">
+          <div class="detail-btns mt-2">
             <!--좋아요 버튼-->
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
             <!--공유 버튼-->
@@ -234,42 +241,55 @@
                 class="form-input"
                 @submit.stop.prevent="handleSubmit"
               >
-                <b-form-group label="제목" label-for="title-input">
+                <b-form-group
+                  label="제목"
+                  label-for="title-input"
+                  class="our-main-font"
+                >
                   <b-form-input
                     style="width: 400px;"
                     id="title-input"
                     v-model="joinData.title"
-                    class="form-input"
+                    class="form-input our-main-font"
                   ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="url" label-for="url-input">
+                <b-form-group
+                  label="url"
+                  label-for="url-input"
+                  class="our-main-font"
+                >
                   <b-form-input
                     style="width: 400px;"
                     id="url-input"
                     v-model="joinData.url"
-                    class="form-input"
+                    class="form-input our-main-font"
                   ></b-form-input>
                 </b-form-group>
 
                 <b-form-group
                   label="가격(숫자만 입력하세요.)"
                   label-for="price-input"
+                  class="our-main-font"
                 >
                   <b-form-input
                     style="width: 400px;"
                     id="price-input"
                     v-model="joinData.price"
-                    class="form-input"
+                    class="form-input our-main-font"
                   ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="요구사항" label-for="order-input">
+                <b-form-group
+                  label="요구사항"
+                  label-for="order-input"
+                  class="our-main-font"
+                >
                   <b-form-input
                     style="width: 400px;"
                     id="order-input"
                     v-model="joinData.description"
-                    class="form-input"
+                    class="form-input our-main-font"
                   ></b-form-input>
                 </b-form-group>
               </form>
@@ -370,13 +390,9 @@
                     class="fas fa-crown"
                   ></i>
                 </div>
-
                 <div
                   class="article-participant-status"
-                  v-if="
-                    participant.userId != userData.userId &&
-                      participant.userId != articleData.userId
-                  "
+                  v-if="participant.userId != articleData.userId"
                 >
                   <button v-if="participant.status === 0" class="waiting-btn">
                     대기중
@@ -880,6 +896,13 @@ export default {
   margin-left: 5px;
   vertical-align: text-bottom;
   height: 27px;
+  cursor: none;
+}
+.waiting-btn,
+.accepted-btn,
+.denied-btn:focus {
+  border: none;
+  outline: none;
 }
 .waiting-btn {
   border: 2px solid rgb(240, 219, 31);
@@ -1056,8 +1079,8 @@ a {
 }
 .articleInfo {
   text-align: left;
-  padding: 15px 35px 35px 40px;
-  width: 65%;
+  padding: 15px 30px 35px 35px;
+  width: 55%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -1160,6 +1183,25 @@ a {
 .detail-btns .participate-btn:hover {
   transform: translateY(-3px);
   background-color: #2e0838;
+}
+.detail-btns .detail-join {
+  background-color: #000000;
+  box-shadow: 0 10px 20px -8px rgb(5, 1, 7);
+  /* padding: 10px 11px; */
+  padding: 12px 12px 7px 12px;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+  font-size: 17px;
+  display: block;
+  text-align: center;
+}
+.detail-btns .detail-join:hover {
+  transform: translateY(-3px);
+  background-color: #141314;
 }
 .article-drop {
   display: flex;
