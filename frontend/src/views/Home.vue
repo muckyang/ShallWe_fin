@@ -294,7 +294,7 @@ export default {
 
 <style scoped>
 .carouselBtn{
-	border: none;
+   border: none;
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
