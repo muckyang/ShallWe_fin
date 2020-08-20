@@ -83,6 +83,7 @@
               >
                 <div class="type-one"></div>
                 <b-card
+                  no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -90,7 +91,7 @@
                 >
                   <div
                     class="article-img-box m-0 p-0"
-                    :style="{height: '200px',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
                   >
                     <img
                       v-if="article.categoryId==1"
@@ -111,7 +112,7 @@
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
-                  <b-card-text>
+                  <b-card-text class="p-2">
                     <h5
                       class="article-title mt-3"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
@@ -172,6 +173,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
+                  no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -179,7 +181,7 @@
                 >
                   <div
                     class="article-img-box"
-                    :style="{height: '200px',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
                   >
                     <img
                       v-if="article.categoryId==1"
@@ -257,6 +259,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
+                  no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -264,7 +267,7 @@
                 >
                   <div
                     class="article-img-box"
-                    :style="{height: '200px',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
                   >
                     <img
                       v-if="article.categoryId==1"
@@ -341,6 +344,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
+                  no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -348,7 +352,7 @@
                 >
                   <div
                     class="article-img-box"
-                    :style="{height: '200px',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
                   >
                     <img
                       v-if="article.categoryId==1"
