@@ -38,16 +38,16 @@
                   "
                   >삭제</a
                 >
-
+            </div>
                 <!--다시 보기!!!!!!!1 -->
               </div>
             </div>
 
             <!-- 게시물 신고 -->
-            <div v-else>
+            <div v-if="articleData.userId !== userData.userId">
               <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
-              <b-modal hide-footer="true" id="modal-1" title="신고 접수">
+              <b-modal :hide-footer="true" id="modal-1" title="신고 접수">
                 <h6>신고 사유</h6>
                 <div class="dropdown">
                   <button
@@ -88,15 +88,9 @@
                 <b-form-textarea
                   id="textarea-rows"
                   rows="8"
+                  style="width: 400px"
                   v-model="accuseArticleData.accuseReason"
                 ></b-form-textarea>
-                <h6 class="mt-3">신고할 게시물 URL</h6>
-                <b-form-input
-                  style="width: 400px"
-                  id="type-url"
-                  type="url"
-                  v-model="accuseArticleData.accuseUrl"
-                ></b-form-input>
                 <hr />
                 <button
                   @click="createArticleAccuse({ accuseArticleData })"
@@ -106,9 +100,8 @@
                 </button>
               </b-modal>
             </div>
-          </div>
+          
           <!-- 게시물 신고 -->
-
           <br />
         </div>
         <div
@@ -553,7 +546,7 @@ export default {
         accuseValue: "",
         accuseKind: 0,
         accuseReason: "",
-        accuseUrl: "",
+        accuseUrl: document.URL,
         accuseConfirm: 0,
         token: this.$cookies.get("auth-token"),
       },
@@ -757,32 +750,49 @@ export default {
       return res;
     },
     sendJoinData() {
-      axios
-        .post(`${BACK_URL}/participant/create`, this.joinData)
-        .then((response) => {
-          this.getparticipantData();
-          Swal.fire({
-            icon: "success",
-            height: 300,
-            width: 200,
-            title:
-              '<a style="font-size:20px; font-family: Recipekorea; color:black">참가 완료!</a>',
-            showConfirmButton: false,
-            timer: 1500,
+      if (
+        this.joinData.title &&
+        this.joinData.price &&
+        this.joinData.description &&
+        this.joinData.url
+      ) {
+        axios
+          .post(`${BACK_URL}/participant/create`, this.joinData)
+          .then((response) => {
+            this.getparticipantData();
+            Swal.fire({
+              icon: "success",
+              height: 300,
+              width: 200,
+              title:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">참가 완료!</a>',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire({
+              icon: "error",
+              height: 300,
+              width: 300,
+              title:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">이미 참여한 게시물입니다.</a>',
+              showConfirmButton: false,
+              timer: 1500,
+            });
           });
-        })
-        .catch((error) => {
-          console.log(error);
-          Swal.fire({
-            icon: "error",
-            height: 300,
-            width: 300,
-            title:
-              '<a style="font-size:20px; font-family: Recipekorea; color:black">이미 참여한 게시물입니다.</a>',
-            showConfirmButton: false,
-            timer: 1500,
-          });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          height: 300,
+          width: 350,
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">참여폼을 다 채워주세요!</a>',
+          showConfirmButton: false,
+          timer: 1800,
         });
+      }
     },
     updateJoinData() {
       this.joinData.articleId = this.articleData.articleId;
@@ -841,7 +851,7 @@ export default {
         content: {
           title: this.articleData.title,
           description: this.articleData.description,
-          imageUrl: this.imageUrl,
+          imageUrl: "https://ifh.cc/g/5VcUjM.png",
           link: {
             mobileWebUrl: "https://developers.kakao.com",
             androidExecParams: "test",
@@ -867,6 +877,7 @@ export default {
         },
       });
     },
+    
     likeCheck() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios

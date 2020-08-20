@@ -22,8 +22,8 @@
             </button>
             <div class="dropdown-menu">
               <a :href="accuse.accuseUrl" class="dropdown-item our-main-font">신고상세</a>
-              <a @click="yesAccuse()" class="dropdown-item our-main-font">신고접수</a>
-              <a @click="noAccuse()" class="dropdown-item our-main-font">허위신고</a>
+              <a @click="decideAccuse(1)" class="dropdown-item our-main-font">신고접수</a>
+              <a @click="decideAccuse(2)" class="dropdown-item our-main-font">허위신고</a>
             </div>
           </div>
         </div>
@@ -50,27 +50,17 @@ export default {
     return {};
   },
   methods: {
-    decideAccuse() {
+    decideAccuse(num) {
+      this.accuse.accuseConfirm=num
       this.accuse.token = this.$cookies.get("admin-token");
-      console.log(this.accuse);
       axios
         .post(`${BACK_URL}/accuse/applyto`, this.accuse)
         .then(() => {
-          console.log(this.accuse, "AAAAAAAAAAAAAAA");
+          this.$emit('get')
         })
         .catch((err) => {
           console.error(err);
         });
-    },
-    yesAccuse() {
-      this.accuse.accuseConfirm = 1;
-      this.decideAccuse();
-      console.log(this.accuse, "BBBBB");
-    },
-    noAccuse() {
-      this.accuse.accuseConfirm = 1;
-      this.decideAccuse();
-      console.log(this.accuse, "BBBBB");
     },
   },
 };

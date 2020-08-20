@@ -657,21 +657,31 @@ export default new Vuex.Store({
 
     //게시글 신고 접수
     createArticleAccuse(context, accuseArticleData) {
-      axios
-        .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
-        .then(() => {
-          router.go()
-          Swal.fire({
-            icon: 'warning',
-            height: 300,
-            width: 350,
-            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
-            confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-            confirmButtonColor: '#ee6e9f'
+      if(accuseArticleData.accuseArticleData.accuseKind&&accuseArticleData.accuseArticleData.accuseReason){
+        axios
+          .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
+          .then(() => {
+            router.go()
+            Swal.fire({
+              icon: 'warning',
+              height: 300,
+              width: 350,
+              title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
+              confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+              confirmButtonColor: '#ee6e9f'
+            })
           })
-          router.push(`${this.accuseArticleData.accuseArticleData.accuseUrl}`);
+          .catch((err) => console.log(err));
+      }else{
+        Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 350,
+          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고 종류와 사유를 모두 입력해주세요!</a>',
+          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: '#ee6e9f'
         })
-        .catch((err) => console.log(err));
+      }
     },
     // 댓글 신고 접수
     createCommentAccuse(context, accuseCommentData) {
