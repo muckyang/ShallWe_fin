@@ -64,11 +64,17 @@
       </div>
     </div>
     <br />
-    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
+    <infinite-loading
+      @infinite="infiniteHandler"
+      :identifier="infiniteId"
+      spinner="waveDots"
+    >
       <div
         slot="no-more"
-        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >회원님의 동네에서 등록된 게시글이 더이상 존재하지 않습니다.</div>
+        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px; font-family: 'Recipekorea', cursive; font-size:14.5px"
+      >
+        더이상 게시물이 존재하지 않습니다!
+      </div>
     </infinite-loading>
   </div>
 </template>
@@ -183,26 +189,6 @@ export default {
   color: white;
   font-weight: bold;
 }
-/* .article-title {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.6px;
-  color: #212529;
-  margin-bottom: 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  line-height: 1.2;
-}*/
-/* .article-address {
-  font-size: 13.5px;
-  margin-bottom: 7px;
-  margin-top: 15px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  line-height: 1.2;
-} */
 .article-card {
   height: 400px;
 }
@@ -230,7 +216,6 @@ $x-large: 1200px;
   position: relative;
   flex: 1 1 100%;
   background: lighten($color-bg, 3%);
-
   @media screen and (min-width: $medium) {
     flex-basis: calc(33.33% - (#{$grid-gutter * 2} + #{$card-padding * 2}));
     margin: 0 $grid-gutter;
@@ -238,7 +223,6 @@ $x-large: 1200px;
 }
 .card__one {
   transition: transform 0.3s;
-
   &::after {
     position: absolute;
     top: 0;
@@ -261,10 +245,6 @@ $x-large: 1200px;
       opacity: 1;
     }
   }
-}
-.card-end {
-  // background-color: #FFCBDB;
-  // opacity: 0.7;
 }
 .disable{
   display:none
