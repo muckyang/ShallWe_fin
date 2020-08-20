@@ -1,5 +1,6 @@
 <template>
   <div class="mt-4">
+    <hr>
     <button class="article-create-btn" @click="resetArticles">전체 보기</button>
     <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
       <button class="article-create-btn">글쓰기</button>
@@ -90,6 +91,7 @@ export default {
       allArticles:[],
       address:'default',
       flag:false,
+      infiniteId: +new Date(),
     };
   },
   components: {
