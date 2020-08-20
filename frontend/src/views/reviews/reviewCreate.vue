@@ -1,18 +1,18 @@
 <template>
-  <div class="post-container">
+  <div class="post-container" style="margin-left: 10%; margin-right: 10%">
     <h5 class="pl-sm-2 pb-sm-1">
-      <strong>후기 쓰기</strong>
+      <strong class="our-main-font">후기 쓰기</strong>
     </h5>
     <table class="table mt-1">
       <tbody>
         <tr>
-          <th scope="row">제목<small style="font-size: 17px; color: red;">*</small></th>
+          <th scope="row" class="our-main-font">제목<small style="font-size: 17px; color: red;">*</small></th>
           <td class="d-flex">
             <b-form-input type="text" v-model="articleData.title"></b-form-input>
           </td>
         </tr>
         <tr>
-          <th scope="row">내용<small style="font-size: 17px; color: red;">*</small></th>
+          <th scope="row" class="our-main-font">내용<small style="font-size: 17px; color: red;">*</small></th>
           <td>
             <div>
               <b-form-textarea id="textarea-rows" rows="8" v-model="articleData.description"></b-form-textarea>
@@ -20,17 +20,17 @@
           </td>
         </tr>
         <tr>
-          <th scope="row">사진첨부</th>
+          <th scope="row" class="our-main-font">사진첨부</th>
           <td>
-            <b-form-file class="mt-3" @change="imageChange" plain></b-form-file>
+            <b-form-file class="mt-3 our-main-font" @change="imageChange" plain></b-form-file>
           </td>
         </tr>
       </tbody>
     </table>
     <hr />
-    <button class="temp-form" @click="createArticle({articleData,temp:0})">임시저장</button>
+    <button class="temp-form our-main-font" @click="createArticle({articleData,temp:0})">임시저장</button>
     <button
-      class="complete-form"
+      class="complete-form our-main-font"
       type="submit"
       @click="createArticle({articleData,temp:2})"
       value="Submit"
