@@ -112,6 +112,7 @@
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
+
                   <b-card-text class="p-2">
                     <h5
                       class="article-title mt-3 pt-1"

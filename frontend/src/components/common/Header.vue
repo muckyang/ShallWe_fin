@@ -112,8 +112,8 @@
         <input
           class="searchInput"
           type="search"
-          style="font-family: FontAwesome;"
-          :placeholder="placeholderMessage"
+          style="font-family: Recipekorea; padding-top: 9px;"
+          placeholder="검색"
           v-model="searchData.searchDataForSend.word"
           @keypress.enter="search(searchData)"
         />
@@ -142,7 +142,6 @@ export default {
     return {
       email: " \uf0e0" + "  이메일",
       pw: " \uf084" + "  비밀번호",
-      placeholderMessage: "검색",
       constants,
       searchData: {
         searchDataForSend: {

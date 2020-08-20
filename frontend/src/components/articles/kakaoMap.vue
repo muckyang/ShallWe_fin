@@ -294,7 +294,8 @@ export default {
 
 <style>
 .createMap {
-  width: 38vw;
+  width: 36vw;
+  margin: 45px 0 0 0;
 }
 @media screen and (max-width: 991px) {
   .createMap {
