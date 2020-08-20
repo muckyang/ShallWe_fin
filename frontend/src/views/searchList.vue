@@ -41,7 +41,7 @@
             }"
             href="#"
             @click="selectCategory(1)"
-          >배달</a>
+          >쉘위배민</a>
           <a
             :class="{
               beforeSelect: searchData.categoryId != 2,
@@ -49,7 +49,7 @@
             }"
             href="#"
             @click="selectCategory(2)"
-          >최저주문</a>
+          >쉘위택배</a>
           <a
             :class="{
               beforeSelect: searchData.categoryId != 3,
@@ -57,7 +57,7 @@
             }"
             href="#"
             @click="selectCategory(3)"
-          >공동구매</a>
+          >쉘위N빵</a>
         </div>
         <div v-if="searchData.temp === 2">
           <a
@@ -236,13 +236,13 @@ export default {
     selectCategory(num) {
       if (num == 1) {
         this.searchData.categoryId = 1;
-        this.item2 = "배달";
+        this.item2 = "쉘위배민";
       } else if (num == 2) {
         this.searchData.categoryId = 2;
-        this.item2 = "최저주문";
+        this.item2 = "쉘위택배";
       } else if (num == 3) {
         this.searchData.categoryId = 3;
-        this.item2 = "공동구매";
+        this.item2 = "쉘위N빵";
       } else if (num == 101) {
         this.searchData.categoryId = 101;
         this.item2 = "공지";
