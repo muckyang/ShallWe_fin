@@ -167,6 +167,7 @@ public class AccountController {
             result.email = userOpt.get().getEmail();
             result.userPoint = userOpt.get().getUserPoint();
             result.grade = userOpt.get().getGrade();
+            result.introduce = userOpt.get().getIntroduce();
 
             result.articleList = new LinkedList<>();
             result.reviewList = new LinkedList<>();
