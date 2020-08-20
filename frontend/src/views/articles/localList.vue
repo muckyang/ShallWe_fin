@@ -1,10 +1,12 @@
 <template>
   <div class="mt-4">
     <hr>
-    <button class="article-create-btn" @click="resetArticles">전체 보기</button>
-    <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
-      <button class="article-create-btn">글쓰기</button>
-    </router-link>
+    <div class="d-flex mb-2 justify-content-end">
+      <button class="mr-2 view-all-btn" @click="resetArticles">전체 보기</button>
+      <router-link type="button" :to="{ name: 'articleCreate' }">
+        <button class="article-create-btn">글 쓰기</button>
+      </router-link>
+    </div>
     <kakaoMapForLocal :articles="articles" @setAddress="setAddress"/>
     <div class="tab-content" id="nav-tabContent">
       <div
@@ -163,12 +165,21 @@ export default {
   color: white;
   font-weight: bold;
 }
+.article-create-btn {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #ee6e9f;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
+}
 .view-all-btn {
   border: none;
   outline: none;
   border-radius: 4px;
-  background-color: #eb1969;
   padding: 5px 10px;
+  background-color: rgb(151, 151, 151);
   color: white;
   font-weight: bold;
 }

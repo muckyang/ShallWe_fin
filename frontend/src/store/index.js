@@ -317,25 +317,28 @@ export default new Vuex.Store({
     // 이한솔 끝
 
     editUser({ state, commit }, editData) {
-      editData.token = state.authToken;
-      axios
-        .post(`${BACK_URL}/account/update`, editData)
-        .then(() => {
+      if(editData.address){
+        editData.token = state.authToken;
+        axios
+          .post(`${BACK_URL}/account/update`, editData)
+          .then(() => {
 
-          Swal.fire({
-            icon: 'success',
-            height: 300,
-            width: 350,
-            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">수정이 완료되었습니다!</a>',
-            text: '다시 로그인 해주세요!',
-            confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-            confirmButtonColor: '#ee6e9f',
+            Swal.fire({
+              icon: 'success',
+              height: 300,
+              width: 350,
+              title: '<a style="font-size:20px; font-family: Recipekorea; color:black">수정이 완료되었습니다!</a>',
+              confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+              confirmButtonColor: '#ee6e9f',
+            })
+            router.push("/user/profile");
           })
-          commit("REMOVE_TOKEN");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+          .catch((err) => {
+            console.error(err);
+          });
+        }else{
+          alert("주소는 필수 입력 칸입니다.")
+        }
     },
     deleteUser({ state, commit }) {
       const auth = { token: state.authToken };
@@ -612,17 +615,33 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
         .then(() => {
-          console.log(accuseArticleData, "하하하");
-          router.push("/posts");
+          // router.push(`${this.accuseArticleData.accuseArticleData.accuseUrl}`);
+          // Swal.fire({
+          //   icon: 'warning',
+          //   height: 300,
+          //   width: 350,
+          //   title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
+          //   confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          //   confirmButtonColor: '#ee6e9f'
+          // })
         })
         .catch((err) => console.log(err));
     },
     // 댓글 신고 접수
     createCommentAccuse(context, accuseCommentData) {
+      console.log(accuseCommentData.accuseCommentData)
       axios
         .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
         .then(() => {
-          router.push("/");
+          router.go()
+          // Swal.fire({
+          //   icon: 'warning',
+          //   height: 300,
+          //   width: 350,
+          //   title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
+          //   confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          //   confirmButtonColor: '#ee6e9f'
+          // })
         })
         .catch((err) => console.log(err));
     },

@@ -14,15 +14,6 @@
 							name="introduce"
 							placeholder="소개해주세요."
 							type="text"/>
-					</div>                                
-					<div class="input-wrap birthday-warp">
-						<div class="p-2"><label for="birthday">생일</label></div>
-						<input v-model="editData.birthday" 
-							id="birthday"
-							class="editInput"
-							name="birthday"
-							placeholder="YYYY-MM-DD"
-							type="text"/>
 					</div>
 					<div class="input-wrap address-warp">
 						<div class="p-2"><label for="address">주소</label></div>

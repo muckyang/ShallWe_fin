@@ -1,5 +1,8 @@
 <template>
-  <div class="mt-5 create-container" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
+  <div
+    class="mt-5 create-container"
+    style="font-family: 'Recipekorea', cursive; font-size:16.5px"
+  >
     <div class="create-form">
       <!-- 지도 -->
       <div class="kakao-map-select">
@@ -37,14 +40,21 @@
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
-            >{{ selectedTBG }}</button>
+            >
+              {{ selectedTBG }}
+            </button>
             <div class="dropdown-menu">
               <a class="dropdown-item" @click="selectCategory(1)">쉘위배달</a>
               <a class="dropdown-item" @click="selectCategory(2)">쉘위택배</a>
               <a class="dropdown-item" @click="selectCategory(3)">쉘위공구</a>
             </div>
           </div>
-          <input type="text" id="title" v-model="articleData.title" placeholder=" 제목을 입력하세요" />
+          <input
+            type="text"
+            id="title"
+            v-model="articleData.title"
+            placeholder=" 제목을 입력하세요"
+          />
         </div>
         <!--시작금액/전체금액-->
         <div class="price">
@@ -53,8 +63,18 @@
             <small style="font-size: 17px; color: #ee6e9f;">*</small>/전체금액
             <small style="font-size: 17px; color: #ee6e9f;">*</small>
           </label>
-          <input type="number" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
-          <input type="number" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
+          <input
+            type="number"
+            id="myPrice"
+            v-model="articleData.myPrice"
+            placeholder=" 시작금액"
+          />
+          <input
+            type="number"
+            id="minPrice"
+            v-model="articleData.minPrice"
+            placeholder=" 전체금액"
+          />
         </div>
         <!--종료일시-->
         <div class="endTime">
@@ -86,7 +106,12 @@
         <!--오픈톡방url-->
         <div class="url">
           <label for="url" style="font-size:16px">오픈 카카오톡 URL</label>
-          <input type="url" id="url" v-model="articleData.openLink" placeholder=" url을 입력하세요" />
+          <input
+            type="url"
+            id="url"
+            v-model="articleData.openLink"
+            placeholder=" url을 입력하세요"
+          />
         </div>
         <!--내용-->
         <div class="createContent">
@@ -110,8 +135,21 @@
     <!--태그-->
     <div class="tags">
       <label>태그</label>
-      <b-form-tags v-model="articleData.tags" no-outer-focus class="tag-input-box mb-2">
-        <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
+      <b-form-tags
+        v-model="articleData.tags"
+        no-outer-focus
+        class="tag-input-box mb-2"
+      >
+        <template
+          v-slot="{
+            tags,
+            inputAttrs,
+            inputHandlers,
+            tagVariant,
+            addTag,
+            removeTag,
+          }"
+        >
           <b-input-group class="mb-2">
             <b-form-input
               v-bind="inputAttrs"
@@ -182,7 +220,8 @@ export default {
       imageUrl: null, //다시 검토
       selectedTBG: "카테고리",
       coNum: "1",
-      address: " \uf060" + " 지도에서 만남의 장소를 설정하세요",
+      // address: " \uf060" + " 지도에서 만남의 장소를 설정하세요",
+      address: "<-  지도에서 만남의 장소를 설정하세요",
       file: "",
       path: "",
       uid: "",
@@ -197,7 +236,7 @@ export default {
         this.createArticle({ articleData, temp: num });
       }, 300);
     },
-    fileUpload: function () {
+    fileUpload: function() {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
       console.log(this.file);
@@ -254,27 +293,30 @@ export default {
       handler() {
         try {
           if (this.articleData.minPrice < 0) {
-               Swal.fire({
-          icon: 'warning',
-          height: 300,
-          width: 350,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-             })
+            Swal.fire({
+              icon: "warning",
+              height: 300,
+              width: 350,
+              title:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
+              confirmButtonText:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+              confirmButtonColor: "#ee6e9f",
+            });
             // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.minPrice = null;
           }
           if (this.articleData.myPrice < 0) {
-                    Swal.fire({
-          icon: 'warning',
-          height: 300,
-          width: 350,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-      
-      })
+            Swal.fire({
+              icon: "warning",
+              height: 300,
+              width: 350,
+              title:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
+              confirmButtonText:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+              confirmButtonColor: "#ee6e9f",
+            });
             // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.myPrice = null;
           }
@@ -368,10 +410,9 @@ export default {
   border-radius: 4px;
   opacity: 0.85;
   transition: 0.4s;
-}
-.temp-form {
   background-color: rgb(151, 151, 151);
 }
+
 ._temp-form {
   border: none;
   outline: none;
