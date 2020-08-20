@@ -442,6 +442,7 @@ public class SearchController {
             presp.categoryId = p.getCategoryId();
             presp.userId = p.getUserId();
             presp.title = p.getTitle();
+            presp.status = p.getStatus();
             presp.address = p.getAddress();
             presp.minPrice = p.getMinPrice();
             presp.sumPrice = p.getSumPrice();

@@ -104,10 +104,10 @@ export default {
           });
       } else {
          Swal.fire({
-            icon: 'success',
+            icon: 'warning',
             height: 300,
-            width: 250,  
-             title: '<a style="font-size:20px; font-family: Recipekorea; color:black">댓글을 작성해주세요.</a>',
+            width: 300,  
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">댓글을 작성해주세요.</a>',
             showConfirmButton: false,
             timer: 1500
           })

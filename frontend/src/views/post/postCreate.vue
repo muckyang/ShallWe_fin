@@ -168,7 +168,16 @@ export default {
           this.createArticle({ articleData, temp: 2 });
         }, 300);
       } else {
-        alert("제목과 내용은 필수값입니다.");
+          Swal.fire({
+            icon: "success",
+            height: 300,
+            width: 400,
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">제목과 내용은 필수값입니다.</a>',
+            confirmButtonText:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+            confirmButtonColor: "#ee6e9f",
+          });
       }
     },
   },

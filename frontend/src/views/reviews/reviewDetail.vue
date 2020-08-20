@@ -14,26 +14,37 @@
               class="reviewUpdate"
               :to="{
                         name: 'reviewUpdate',
-                        params: { ID: this.review.articleId},
+                        params: { ID: this.review.articleId },
                       }"
             >
               <a class="dropdown-item our-main-font">수정</a>
             </router-link>
-            <a class="dropdown-item our-main-font" @click="deleteReview(review.articleId)">삭제</a>
+            <a
+              class="dropdown-item our-main-font"
+              @click="deleteReview(review.articleId)"
+              >삭제</a
+            >
           </div>
         </div>
         <div
-          :class="{'review-info':review.userId!== userData.userId,'review-info-ver':review.userId=== userData.userId}"
+          :class="{
+            'review-info': review.userId !== userData.userId,
+            'review-info-ver': review.userId === userData.userId,
+          }"
         >
-          <div class="review-writer our-main-font p-1">{{review.writer}}</div>
-          <div class="review-time our-main-font">{{review.timeAgo}}</div>
+          <div class="review-writer our-main-font p-1">{{ review.writer }}</div>
+          <div class="review-time our-main-font">{{ review.timeAgo }}</div>
         </div>
         <div class="review-middle">
-          <div class="review-title our-main-font p-1">{{review.title}}</div>
+          <div class="review-title our-main-font p-1">{{ review.title }}</div>
           <div class="review-like-comment">
             <div class="like-container our-main-font">
-              <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
-              {{review.likeNum}}
+              <reviewLike
+                @like-change="likeChange"
+                :isLiked="isLiked"
+                :review="review"
+              />
+              {{ review.likeNum }}
             </div>
             <!-- <div class="review-comment">
               <div class="comment-icon">
@@ -46,16 +57,34 @@
       </div>
 
       <!--화살표 클릭하면 보일 내용들. 내용,이미지-->
-      <div class="collapse multi-collapse review-bottom mt-3" :id="'review'+review.articleId">
+      <div
+        class="collapse multi-collapse review-bottom mt-3"
+        :id="'review' + review.articleId"
+      >
         <div class="review-point d-flex">
-          <div v-if="review.image" :class="{'review-img-box':review.image}">
-            <b-img :src="imageUrl" fluid alt="Responsive image" class="review-img"></b-img>
+          <div v-if="review.image" :class="{ 'review-img-box': review.image }">
+            <b-img
+              :src="imageUrl"
+              fluid
+              alt="Responsive image"
+              class="review-img"
+            ></b-img>
           </div>
-          <div :class="{'review-content':review.image, 'review-content-ver':review.image==null}">
+          <div
+            :class="{
+              'review-content': review.image,
+              'review-content-ver': review.image == null,
+            }"
+          >
             <div
-              :class="{'review-description':review.image, 'review-description-ver':review.image==null}"
+              :class="{
+                'review-description': review.image,
+                'review-description-ver': review.image == null,
+              }"
               class="our-main-font"
-            >{{review.description}}</div>
+            >
+              {{ review.description }}
+            </div>
             <reviewCommentList
               :commentList="review.commentList"
               :reviewId="review.articleId"
@@ -67,7 +96,7 @@
       <div class="arrow">
         <a
           data-toggle="collapse"
-          :href="'#'+toggleId(review.articleId)"
+          :href="'#' + toggleId(review.articleId)"
           role="button"
           aria-expanded="false"
           aria-controls="review11"
@@ -105,7 +134,7 @@ export default {
   },
   computed: {
     ...mapState(["articleData", "userData"]),
-      imageUrl() {
+    imageUrl() {
       try {
         return require("C:/Users/multicampus/Desktop/image/" +
           `${this.review.image}`);
@@ -156,7 +185,7 @@ export default {
       this.review.commentList.length = commentLength;
     },
   },
-  created: function () {
+  created: function() {
     this.likeCheck();
   },
 };
