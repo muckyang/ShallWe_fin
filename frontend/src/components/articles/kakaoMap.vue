@@ -33,8 +33,8 @@
 </template>
 
 <script>
-const APP_KEY=process.env.VUE_APP_KAKAO_APP_KEY
-import {mapState} from 'vuex'
+const APP_KEY = process.env.VUE_APP_KAKAO_APP_KEY;
+import { mapState } from "vuex";
 export default {
   props: {
     coNum: String,
@@ -54,13 +54,12 @@ export default {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
       document.head.appendChild(script);
     }
   },
-  computed:{
-    ...mapState(['userData'])
+  computed: {
+    ...mapState(["userData"]),
   },
   methods: {
     initMap() {
@@ -149,10 +148,17 @@ export default {
             infowindow.close();
           });
           kakao.maps.event.addListener(marker, "click", () => {
-            try{
-              this.$emit("setAddress", ditemEl.querySelector(".jibun").innerText);
-            }catch{
-              this.$emit("setAddress",ditemEl.querySelector(".info").getElementsByTagName('span')[0].innerText)
+            try {
+              this.$emit(
+                "setAddress",
+                ditemEl.querySelector(".jibun").innerText
+              );
+            } catch {
+              this.$emit(
+                "setAddress",
+                ditemEl.querySelector(".info").getElementsByTagName("span")[0]
+                  .innerText
+              );
             }
           });
           itemEl.onmouseover = function () {
@@ -163,10 +169,17 @@ export default {
             infowindow.close();
           };
           itemEl.onclick = () => {
-            try{
-              this.$emit("setAddress", ditemEl.querySelector(".jibun").innerText);
-            }catch{
-              this.$emit("setAddress",ditemEl.querySelector(".info").getElementsByTagName('span')[0].innerText)
+            try {
+              this.$emit(
+                "setAddress",
+                ditemEl.querySelector(".jibun").innerText
+              );
+            } catch {
+              this.$emit(
+                "setAddress",
+                ditemEl.querySelector(".info").getElementsByTagName("span")[0]
+                  .innerText
+              );
             }
           };
         })(marker, places[i].place_name);
@@ -281,7 +294,7 @@ export default {
 
 <style>
 .createMap {
-  width: 38vw;
+  width: vw;
 }
 .kakao-search-btn {
   border: none;
