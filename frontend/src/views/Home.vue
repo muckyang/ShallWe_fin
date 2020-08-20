@@ -251,7 +251,8 @@ export default {
     imageUrl() {
       return (article) => {
         try {
-          return require("@/assets/images/" + `${article.image}`);
+          return require("C:/Users/multicampus/Desktop/image/" +
+         `${article.image}`);
         } catch {}
       };
     },
