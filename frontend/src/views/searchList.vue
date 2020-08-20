@@ -138,13 +138,9 @@
             class="text-decoration-none text-dark"
           >
             <b-card no-body="true" class="article-card m-4 _card card__one" align="left">
-              <div
-                class="article-img-box m-0 p-0"
-                :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('http://i3b203.p.ssafy.io/img/'+article.image)+')',backgroundSize: 'cover'}"
-              >
                 <img
                   v-if="article.categoryId==1"
-                  src="http://i3b203.p.ssafy.io/localImg/type2.png"
+                  :src="imageUrl(article)"
                   class="article-type-img"
                   style="max-width: 100%; height: auto;"
                 />
@@ -160,7 +156,7 @@
                   class="article-type-img"
                   style="max-width: 100%; height: auto;"
                 />
-              </div>
+
               <b-card-text class="p-2">
                 <h5 class="article-title mt-3 pt-1">{{ article.title }}</h5>
                 <h6 class="article-area py-1">{{ article.address }}</h6>
@@ -210,6 +206,7 @@ export default {
   },
   methods: {
     ...mapActions(["detailSearch","search"]),
+
     selectTemp(num) {
       if (num === 1) {
         this.searchData.temp = 1;
@@ -258,6 +255,13 @@ export default {
   computed: {
     ...mapState(["articles"]),
   },
+  imageUrl() {
+  try {
+    return require("http://i3b203.p.ssafy.io/img/" +
+      `${this.articleData.image}`);
+  } catch {}
+  //   return require('http://i3b203.p.ssafy.io/img/'+`${article.image}`)
+},
   created: function () {
     this.search(this.$cookies.get('searchData'))
   },

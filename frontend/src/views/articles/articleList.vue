@@ -113,7 +113,7 @@
                           article.status != 4 &&
                           article.status != 5
                       "
-                      :key="imageUrl(article)"
+                      :src="imageUrl(article)"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
