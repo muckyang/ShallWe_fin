@@ -286,6 +286,8 @@ public class PostController {
             result.rgbCodeList=  new LinkedList<>();
             int sum = 0;
             for(int i = 0 ; i < partlist.size(); i++){
+                if(partlist.get(i).getStatus()==2)
+                    break;
                 sum += partlist.get(i).getPrice();
                 result.nameList.add(partlist.get(i).getWriter());
                 result.scoreList.add(partlist.get(i).getPrice());
