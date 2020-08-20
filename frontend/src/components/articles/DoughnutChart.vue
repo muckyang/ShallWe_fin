@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>참가자 별 금액 현황</h3>
+    <h3 class="mb-3">참가자 별 금액 현황</h3>
     <div>
       <chartjs-doughnut
         :bind="true"
