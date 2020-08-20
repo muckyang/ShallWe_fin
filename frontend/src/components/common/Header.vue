@@ -39,7 +39,7 @@
         </li>
       </ul>
 
-      <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
+      <div class="wall" v-show="isLoggedin && !isAdmin">|</div>
 
       <!-- 유저관리 -->
       <div v-if="isAdmin" class="d-flex align-items-starts mr-1">
