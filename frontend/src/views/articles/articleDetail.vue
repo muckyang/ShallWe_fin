@@ -325,14 +325,15 @@
                     >거절</b-button>
 
                     <b-modal id="modal-scoped">
-                      <p>정말 거절하시겠습니까?</p>
+                      <p class="our-main-font">정말 거절하시겠습니까?</p>
                       <template v-slot:modal-footer="{ ok }">
                         <b-button
                           size="sm"
                           variant="danger"
                           @click="denyParticpation(participant)"
+                          class="our-main-font"
                         >거절</b-button>
-                        <b-button size="sm" variant="success" @click="ok()">취소</b-button>
+                        <b-button class="our-main-font" size="sm" variant="success" @click="ok()">취소</b-button>
                       </template>
                     </b-modal>
                   </div>
@@ -512,7 +513,17 @@ export default {
           `${BACK_URL}/participant/accept/${this.articleData.articleId}/${participant}`
         )
         .then((response) => {
-          alert(response.data);
+          // alert(response.data);
+          Swal.fire({
+            icon: "success",
+            height: 300,
+            width: 300,
+
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">참여자 수락되었습니다!</a>',
+            showConfirmButton: false,
+            timer: 1500,
+          });
           this.getArticle(this.$route.params.ID);
         })
         .catch((error) => {
