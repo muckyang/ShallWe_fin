@@ -509,7 +509,8 @@ export default {
             icon: 'success',
             height: 300,
             width: 300,
-            title: '<a style="font-size:1rem; color:black">구매확정 되었습니다!</a>',
+
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">구매확정 되었습니다!</a>',
             showConfirmButton: false,
             timer: 1500
           })
@@ -566,7 +567,7 @@ export default {
             icon: 'success',
             height: 300,
             width: 200,
-             title: '<a style="font-size:1rem; color:black"> 참가 완료!</a>',
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">참가 완료!</a>',
             showConfirmButton: false,
             timer: 1500
           })
@@ -578,7 +579,7 @@ export default {
             icon: 'error',
             height: 300,
             width: 300,
-                title: '<a style="font-size:1rem; color:black">이미 참여한 게시물입니다.</a>',
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">이미 참여한 게시물입니다.</a>',
             showConfirmButton: false,
             timer: 1500
           })
@@ -594,8 +595,7 @@ export default {
             icon: 'success',
             height: 300,
             width: 200,
-            title: '<a style="font-size:1rem; color:black">수정 완료!</a>',
-            
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">수정 완료!</a>',
             showConfirmButton: false,
             timer: 1500
           })
@@ -623,7 +623,7 @@ export default {
             icon: 'success',
             height: 300,
             width: 200,
-            title: '<a style="font-size:1rem; color:black">삭제 완료!</a>',
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">삭제 완료!</a>',
             showConfirmButton: false,
             timer: 1500
           })

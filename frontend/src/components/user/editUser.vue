@@ -62,6 +62,7 @@
 					address:'',
 					birthday:'',
 					introduce: '',
+					token:'',
 				},
 			}
 		},
