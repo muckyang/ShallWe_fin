@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5">
-    <h3 class="mb-3">유저관리</h3>
+    <h3 class="mb-3 our-main-font">유저관리</h3>
     <table class="table">
       <thead class="">
         <tr>
