@@ -215,14 +215,18 @@
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div
-        class="detail-content mt-2"
-        id="item-1"
-        style="font-size: 20px;"
-      >{{ articleData.description }}</div>
+      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
     </div>
-    <div class="kakao-map mt-5">
-      <kakaoMapForDetail />
+    <div class="container">
+      <div class="row">
+        <div class="kakao-map col-6">
+          <kakaoMapForDetail />
+        </div>
+        <!-- 차트 -->
+        <div class="col-6">
+          <DoughnutChart />
+        </div>
+      </div>
     </div>
 
     <!--참가자 리스트-->
