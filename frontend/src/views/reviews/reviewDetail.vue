@@ -14,7 +14,7 @@
               class="reviewUpdate"
               :to="{
                         name: 'reviewUpdate',
-                        params: { ID: this.review.articleId},
+                        params: { ID: this.review.articleId },
                       }"
             >
               <a class="dropdown-item our-main-font">수정</a>

@@ -3,16 +3,20 @@
     <h5 class="pl-sm-2 pb-sm-1">
       <strong class="our-main-font">후기 쓰기</strong>
     </h5>
+            <div class="create-alert-msg">
+          <small style="font-size: 15.5px; color: #ee6e9f;" class="our-main-font">*</small>
+          <small style="font-size: 15.5px;" class="our-main-font">표시는 필수값입니다.</small>
+        </div>
     <table class="table mt-1">
       <tbody>
         <tr>
-          <th scope="row" class="our-main-font">제목<small style="font-size: 17px; color: red;">*</small></th>
+          <th scope="row" class="our-main-font">제목<small style="font-size: 17px; color: #ee6e9f;">*</small></th>
           <td class="d-flex">
             <b-form-input type="text" v-model="articleData.title"></b-form-input>
           </td>
         </tr>
         <tr>
-          <th scope="row" class="our-main-font">내용<small style="font-size: 17px; color: red;">*</small></th>
+          <th scope="row" class="our-main-font">내용<small style="font-size: 17px; color: #ee6e9f;">*</small></th>
           <td>
             <div>
               <b-form-textarea id="textarea-rows" rows="8" v-model="articleData.description"></b-form-textarea>

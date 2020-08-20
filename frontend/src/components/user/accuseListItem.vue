@@ -23,7 +23,7 @@
             <div class="dropdown-menu">
               <a :href="accuse.accuseUrl" class="dropdown-item our-main-font">신고상세</a>
               <a @click="yesAccuse()" class="dropdown-item our-main-font">신고접수</a>
-              <a @click="noAccuse()" class="dropdown-item our-main-font">허위신고</a>
+              <a :href="accuse.accuseUrl" @click="noAccuse()" class="dropdown-item our-main-font">허위신고</a>
             </div>
           </div>
         </div>
