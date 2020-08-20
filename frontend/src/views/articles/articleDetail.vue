@@ -327,7 +327,7 @@
         <!-- 차트 -->
         <div
           class="col-5 d-flex justify-content-start"
-          style="margin-top: 7%; margin-left: 7%; font-family: 'Recipekorea', cursive;"
+          style="margin-top: 6%; margin-left: 7%; font-family: 'Recipekorea', cursive;"
         >
           <DoughnutChart />
         </div>
