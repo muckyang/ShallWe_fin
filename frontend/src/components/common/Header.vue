@@ -156,7 +156,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["REMOVE_TOKEN", "loginCheck"]),
+    ...mapMutations(["REMOVE_TOKEN", "loginCheck","adminCheck"]),
     ...mapActions(["search", "login", "getUserData"]),
   },
   computed: {
@@ -164,6 +164,9 @@ export default {
   },
   created: function () {
     this.loginCheck();
+    if(this.$cookies.get("admin-token")){
+      this.adminCheck()
+    }
     if (this.$cookies.get("auth-token")) {
       this.getUserData();
     }
