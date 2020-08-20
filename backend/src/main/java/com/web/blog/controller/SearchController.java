@@ -310,7 +310,7 @@ public class SearchController {
             System.out.println("헤더에서 구매, 자유게시판 title로 검색");
 
             // 이때는 temp값 구분없이 뽑아내야 함
-            plist = postDao.findPostByStatusNotTitleLikeOrderByCreateTimeDesc(0,word);
+            plist = postDao.findPostByStatusNotAndTitleLikeOrderByCreateTimeDesc(0,word);
             PostListResponse result = new PostListResponse();
             result.postList = getPostList(plist, temp);
 
@@ -321,9 +321,9 @@ public class SearchController {
             System.out.println("title로 검색");
 
             if (categoryId == 0)
-                plist = postDao.findPostByStatusNotTempAndTitleLikeOrderByCreateTimeDesc(0,temp, word);
+                plist = postDao.findPostByStatusNotAndTempAndTitleLikeOrderByCreateTimeDesc(0,temp, word);
             else
-                plist = postDao.findPostByStatusNotTempAndCategoryIdAndTitleLikeOrderByCreateTimeDesc(0,temp, categoryId, word);
+                plist = postDao.findPostByStatusNotAndTempAndCategoryIdAndTitleLikeOrderByCreateTimeDesc(0,temp, categoryId, word);
             PostListResponse result = new PostListResponse();
 
             result.postList = getPostList(plist, temp);
@@ -334,9 +334,9 @@ public class SearchController {
             word = "%" + word + "%";
 
             if (categoryId == 0)
-                plist = postDao.findPostByStatusNotTempAndWriterLikeOrderByCreateTimeDesc(0,temp, word);
+                plist = postDao.findPostByStatusNotAndTempAndWriterLikeOrderByCreateTimeDesc(0,temp, word);
             else
-                plist = postDao.findPostByStatusNotTempAndCategoryIdAndWriterLikeOrderByCreateTimeDesc(0,temp, categoryId, word);
+                plist = postDao.findPostByStatusNotAndTempAndCategoryIdAndWriterLikeOrderByCreateTimeDesc(0,temp, categoryId, word);
             PostListResponse result = new PostListResponse();
             result.postList = getPostList(plist, temp);
 
@@ -347,7 +347,7 @@ public class SearchController {
             PostListResponse result = new PostListResponse();
             for (int i = 0; i < taglist.size(); i++) {
                 int aId = taglist.get(i).getArticleId();
-                Optional<Post> article = postDao.findPostByStatusNotArticleIdAndTempOrderByCreateTimeDesc(0,aId, temp);
+                Optional<Post> article = postDao.findPostByAndArticleIdAndTempOrderByCreateTimeDesc(aId, temp);
                 plist.add(article.get());
                 // result.postList.add(new PostResponse(p.getArticleId(), p.getCategoryId(),
                 // p.getUserId(), p.getTitle(),
@@ -381,33 +381,33 @@ public class SearchController {
 
             if (categoryId == 0) {
                 if (addList.size() == 1) {
-                    plist = postDao.findPostByStatusNotAddressLikeOrderByCreateTimeDesc(0,addList.get(0));
+                    plist = postDao.findPostByStatusNotAndAddressLikeOrderByCreateTimeDesc(0,addList.get(0));
                 } else if (addList.size() == 2) {
-                    plist = postDao.findPostByStatusNotAddressLikeAndAddressLikeOrderByCreateTimeDesc(0,addList.get(0),
+                    plist = postDao.findPostByStatusNotAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(0,addList.get(0),
                             addList.get(1));
                 } else if (addList.size() == 3) {
-                    plist = postDao.findPostByStatusNotAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(0,
+                    plist = postDao.findPostByStatusNotAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(0,
                             addList.get(0), addList.get(1), addList.get(2));
                 } else if (addList.size() == 4) {
                     plist = postDao
-                            .findPostByStatusNotAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(0,
+                            .findPostByStatusNotAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(0,
                                     addList.get(0), addList.get(1), addList.get(2), addList.get(3));
                 }
 
             } else {
                 if (addList.size() == 1) {
-                    plist = postDao.findPostByStatusNotTempAndCategoryIdAndAddressLikeOrderByCreateTimeDesc(0,temp, categoryId,
+                    plist = postDao.findPostByStatusNotAndTempAndCategoryIdAndAddressLikeOrderByCreateTimeDesc(0,temp, categoryId,
                             addList.get(0));
                 } else if (addList.size() == 2) {
-                    plist = postDao.findPostByStatusNotTempAndCategoryIdAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(0,temp,
+                    plist = postDao.findPostByStatusNotAndTempAndCategoryIdAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(0,temp,
                             categoryId, addList.get(0), addList.get(1));
                 } else if (addList.size() == 3) {
                     plist = postDao
-                            .findPostByStatusNotTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(
+                            .findPostByStatusNotAndTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(
                                 0,temp, categoryId, addList.get(0), addList.get(1), addList.get(2));
                 } else if (addList.size() == 4) {
                     plist = postDao
-                            .findPostByStatusNotTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(
+                            .findPostByStatusNotAndTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(
                                    0, temp, categoryId, addList.get(0), addList.get(1), addList.get(2), addList.get(3));
                 }
             }
