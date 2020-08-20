@@ -42,7 +42,7 @@
       </div>
     </div>
     <hr>
-    <button class="btn btn-danger" @click="changeUserStatus()">회원삭제</button>
+    <button v-if="isAdmin" class="btn btn-danger" @click="changeUserStatus()">회원삭제</button>
   </div>
 </template>
 
@@ -56,7 +56,7 @@
   export default {
     name: 'userDetail',
     computed: {
-      ...mapState([ "userData" ]),
+      ...mapState([ "userData","isAdmin" ]),
     },
     methods: {
       ...mapActions([ "getUserDatailData" ]),

@@ -659,15 +659,16 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
         .then(() => {
-          // router.push(`${this.accuseArticleData.accuseArticleData.accuseUrl}`);
-          // Swal.fire({
-          //   icon: 'warning',
-          //   height: 300,
-          //   width: 350,
-          //   title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
-          //   confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          //   confirmButtonColor: '#ee6e9f'
-          // })
+          router.go()
+          Swal.fire({
+            icon: 'warning',
+            height: 300,
+            width: 350,
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
+            confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+            confirmButtonColor: '#ee6e9f'
+          })
+          router.push(`${this.accuseArticleData.accuseArticleData.accuseUrl}`);
         })
         .catch((err) => console.log(err));
     },
@@ -677,15 +678,15 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
         .then(() => {
-          router.go();
-          // Swal.fire({
-          //   icon: 'warning',
-          //   height: 300,
-          //   width: 350,
-          //   title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
-          //   confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          //   confirmButtonColor: '#ee6e9f'
-          // })
+          Swal.fire({
+            icon: 'warning',
+            height: 300,
+            width: 350,
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
+            confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+            confirmButtonColor: '#ee6e9f'
+          })
+          router.go()
         })
         .catch((err) => console.log(err));
     },
