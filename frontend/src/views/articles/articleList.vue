@@ -151,7 +151,7 @@
                       height: '100%',
                       width: '100%',
                       backgroundImage:
-                        'url(' + require('@/assets/img/DealEnd.png') + ')',
+                        'url(' + require('@/assets/img/DealEnd2.png') + ')',
                       backgroundSize: 'cover',
                     }"
                   ></div>
@@ -162,7 +162,7 @@
                       height: '100%',
                       width: '100%',
                       backgroundImage:
-                        'url(' + require('@/assets/img/TimeOver.png') + ')',
+                        'url(' + require('@/assets/img/TimeOver2.png') + ')',
                       backgroundSize: 'cover',
                     }"
                   ></div>
