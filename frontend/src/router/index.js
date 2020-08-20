@@ -243,6 +243,8 @@ router.beforeEach((to, from, next) => {
     "klogin",
     "adminLogin",
     "searchList",
+    "aboutUs",
+    "reviewList",
   ];
   //로그인 하면 안되는 페이지
   const authPages = [

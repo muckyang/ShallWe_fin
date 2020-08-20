@@ -27,7 +27,7 @@
           >로그아웃</a>
         </li>
 
-        <div class="wall" v-show="isLoggedin">|</div>
+        <div class="wall" v-show="isAdmin||isLoggedin">|</div>
 
         <li class="nav-item mr-1">
           <router-link
@@ -38,8 +38,6 @@
           >마이페이지</router-link>
         </li>
       </ul>
-
-      <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
 
       <!-- 유저관리 -->
       <div v-if="isAdmin" class="d-flex align-items-starts mr-1">
@@ -156,7 +154,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["REMOVE_TOKEN", "loginCheck"]),
+    ...mapMutations(["REMOVE_TOKEN", "loginCheck","adminCheck"]),
     ...mapActions(["search", "login", "getUserData"]),
   },
   computed: {
@@ -164,6 +162,9 @@ export default {
   },
   created: function () {
     this.loginCheck();
+    if(this.$cookies.get("admin-token")){
+      this.adminCheck()
+    }
     if (this.$cookies.get("auth-token")) {
       this.getUserData();
     }

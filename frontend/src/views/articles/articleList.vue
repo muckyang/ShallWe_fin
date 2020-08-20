@@ -27,7 +27,8 @@
           role="tab"
           aria-controls="nav-home"
           aria-selected="true"
-        >전체</a>
+          >전체</a
+        >
         <a
           @click="changeCategory(1)"
           class="nav-item nav-link text-dark"
@@ -37,7 +38,8 @@
           role="tab"
           aria-controls="nav-profile"
           aria-selected="false"
-        >쉘위배민</a>
+          >쉘위배민</a
+        >
         <a
           @click="changeCategory(2)"
           class="nav-item nav-link text-dark"
@@ -47,7 +49,8 @@
           role="tab"
           aria-controls="nav-contact"
           aria-selected="false"
-        >쉘위택배</a>
+          >쉘위택배</a
+        >
         <a
           @click="changeCategory(3)"
           class="nav-item nav-link text-dark"
@@ -57,7 +60,8 @@
           role="tab"
           aria-controls="nav-profile"
           aria-selected="false"
-        >쉘위N빵</a>
+          >쉘위N빵</a
+        >
         <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
           <button class="write-btn" style="font-size: 16px">글쓰기</button>
         </router-link>
@@ -73,7 +77,13 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -91,22 +101,31 @@
                 >
                   <div
                     class="article-img-box m-0 p-0"
-                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        require('C:/Users/multicampus/Desktop/image/' +
+                          article.image) +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
                   >
                     <img
-                      v-if="article.categoryId==1"
+                      v-if="article.categoryId == 1"
                       src="@/assets/img/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId==2"
+                      v-if="article.categoryId == 2"
                       src="@/assets/img/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId==3"
+                      v-if="article.categoryId == 3"
                       src="@/assets/img/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
@@ -117,18 +136,21 @@
                     <h5
                       class="article-title mt-3 pt-1"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
-                    >{{ article.title }}</h5>
+                    >
+                      {{ article.title }}
+                    </h5>
                     <h6
                       class="article-address py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
-                    >{{ article.address }}</h6>
+                    >
+                      {{ article.address }}
+                    </h6>
                     <h6
                       class="article-price py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
-                      minPrice(article.minPrice)
-                      }}원
+                      가격: {{ sumPrice(article.sumPrice) }}원 /
+                      {{ minPrice(article.minPrice) }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -165,7 +187,13 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -182,22 +210,31 @@
                 >
                   <div
                     class="article-img-box"
-                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        require('C:/Users/multicampus/Desktop/image/' +
+                          article.image) +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
                   >
                     <img
-                      v-if="article.categoryId==1"
+                      v-if="article.categoryId == 1"
                       src="@/assets/img/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId==2"
+                      v-if="article.categoryId == 2"
                       src="@/assets/img/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId==3"
+                      v-if="article.categoryId == 3"
                       src="@/assets/img/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
@@ -208,18 +245,21 @@
                     <h5
                       class="article-title mt-3 pt-1"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
-                    >{{ article.title }}</h5>
+                    >
+                      {{ article.title }}
+                    </h5>
                     <h6
                       class="article-address py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
-                    >{{ article.address }}</h6>
+                    >
+                      {{ article.address }}
+                    </h6>
                     <h6
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
-                      minPrice(article.minPrice)
-                      }}원
+                      가격: {{ sumPrice(article.sumPrice) }}원 /
+                      {{ minPrice(article.minPrice) }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -227,12 +267,17 @@
                       class="d-flex justify-content-between"
                       style="font-family: 'Recipekorea', cursive; font-size:14.5px"
                     >
-                      <small>
-                        <b-icon-heart></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
+                      <div class="articleList-subInfo">
+                        <div class="articleList-heart">
+                          <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                          {{ article.likeNum }}
+                        </div>
+                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                        <div class="articleList-chat ml-2">
+                          <i class="far fa-comment-dots"></i>
+                          {{ article.commentNum }}
+                        </div>
+                      </div>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
                   </template>
@@ -251,7 +296,13 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -268,22 +319,31 @@
                 >
                   <div
                     class="article-img-box"
-                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        require('C:/Users/multicampus/Desktop/image/' +
+                          article.image) +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
                   >
                     <img
-                      v-if="article.categoryId==1"
+                      v-if="article.categoryId == 1"
                       src="@/assets/img/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId==2"
+                      v-if="article.categoryId == 2"
                       src="@/assets/img/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId==3"
+                      v-if="article.categoryId == 3"
                       src="@/assets/img/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
@@ -293,18 +353,21 @@
                     <h5
                       class="article-title mt-3 pt-1"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
-                    >{{ article.title }}</h5>
+                    >
+                      {{ article.title }}
+                    </h5>
                     <h6
                       class="article-address py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
-                    >{{ article.address }}</h6>
+                    >
+                      {{ article.address }}
+                    </h6>
                     <h6
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
-                      minPrice(article.minPrice)
-                      }}원
+                      가격: {{ sumPrice(article.sumPrice) }}원 /
+                      {{ minPrice(article.minPrice) }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -312,12 +375,17 @@
                       class="d-flex justify-content-between"
                       style="font-family: 'Recipekorea', cursive; font-size:14.5px"
                     >
-                      <small>
-                        <b-icon-heart></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
+                      <div class="articleList-subInfo">
+                        <div class="articleList-heart">
+                          <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                          {{ article.likeNum }}
+                        </div>
+                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                        <div class="articleList-chat ml-2">
+                          <i class="far fa-comment-dots"></i>
+                          {{ article.commentNum }}
+                        </div>
+                      </div>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
                   </template>
@@ -336,7 +404,13 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -345,7 +419,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
-                  :no-body="true"
+                  :no-body=true
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -353,22 +427,31 @@
                 >
                   <div
                     class="article-img-box"
-                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        require('C:/Users/multicampus/Desktop/image/' +
+                          article.image) +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
                   >
                     <img
-                      v-if="article.categoryId==1"
+                      v-if="article.categoryId == 1"
                       src="@/assets/img/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId==2"
+                      v-if="article.categoryId == 2"
                       src="@/assets/img/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId==3"
+                      v-if="article.categoryId == 3"
                       src="@/assets/img/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
@@ -378,18 +461,21 @@
                     <h5
                       class="article-title mt-3 pt-1"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
-                    >{{ article.title }}</h5>
+                    >
+                      {{ article.title }}
+                    </h5>
                     <h6
                       class="article-address py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
-                    >{{ article.address }}</h6>
+                    >
+                      {{ article.address }}
+                    </h6>
                     <h6
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
-                      minPrice(article.minPrice)
-                      }}원
+                      가격: {{ sumPrice(article.sumPrice) }}원 /
+                      {{ minPrice(article.minPrice) }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -397,12 +483,17 @@
                       class="d-flex justify-content-between"
                       style="font-family: 'Recipekorea', cursive; font-size:14.5px"
                     >
-                      <small>
-                        <b-icon-heart></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
+                      <div class="articleList-subInfo">
+                        <div class="articleList-heart">
+                          <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                          {{ article.likeNum }}
+                        </div>
+                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                        <div class="articleList-chat ml-2">
+                          <i class="far fa-comment-dots"></i>
+                          {{ article.commentNum }}
+                        </div>
+                      </div>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
                   </template>
@@ -413,11 +504,17 @@
         </b-container>
       </div>
     </div>
-    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
+    <infinite-loading
+      @infinite="infiniteHandler"
+      :identifier="infiniteId"
+      spinner="waveDots"
+    >
       <div
         slot="no-more"
         style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px; font-family: 'Recipekorea', cursive; font-size:14.5px"
-      >더이상 게시물이 존재하지 않습니다!</div>
+      >
+        더이상 게시물이 존재하지 않습니다!
+      </div>
     </infinite-loading>
   </div>
 </template>
