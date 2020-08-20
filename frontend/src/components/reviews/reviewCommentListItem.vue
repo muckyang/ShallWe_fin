@@ -5,49 +5,137 @@
       <div class="review-comment-container">
         <div class="comment-user">
           <router-link
-            :to="{ name: 'userDetail', params: { ID: comment.userId }}"
-          >{{ comment.nickname }}</router-link>
-          <div class="comment-drop dropdown dropleft" v-if="comment.userId === userData.userId">
+            class="comment-user-link our-main-font"
+            :to="{ name: 'userDetail', params: { ID: comment.userId } }"
+          >
+            <a class="comment-user-link our-main-font">{{
+              comment.nickname
+            }}</a>
+          </router-link>
+          <div
+            class="comment-drop dropdown dropleft"
+            v-if="comment.userId === userData.userId"
+          >
             <button type="button" class="comment-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
             </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" @click="showInput" v-if="!flag">수정</a>
-              <a class="dropdown-item" @click="deleteComment">삭제</a>
+            <div class="dropdown-menu our-main-font">
+              <a
+                class="dropdown-item our-main-font"
+                @click="showInput"
+                v-if="!flag"
+                >수정</a
+              >
+              <a class="dropdown-item our-main-font" @click="deleteComment"
+                >삭제</a
+              >
             </div>
           </div>
 
-          <!-- 댓글 신고 -->
+          <!-- 게시물 신고 -->
           <div v-else>
-            <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
-            <b-modal id="modal-1" title="신고 접수">
-              <h6>신고 사유</h6>
-              <div class="dropdown">
-                <button
-                  class="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >선택</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">노쇼</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고</a>
+            <button
+              type="button"
+              class="siren-btn our-main-font"
+              data-toggle="modal"
+              :data-target="'#exampleModal' + comment.commentId"
+            >
+              신고
+            </button>
+
+            <div
+              class="modal fade"
+              :id="'exampleModal' + comment.commentId"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5
+                      class="modal-title our-main-font"
+                      id="exampleModalLabel"
+                    >
+                      신고 접수
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <h6 class="our-main-font">신고 사유</h6>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-secondary btn-sm dropdown-toggle our-main-font"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        선택
+                      </button>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <a
+                          class="dropdown-item our-main-font"
+                          href="#"
+                          @click="changeAccuseKind(1)"
+                          >욕설, 비난을 했어요!</a
+                        >
+                        <a
+                          class="dropdown-item our-main-font"
+                          href="#"
+                          @click="changeAccuseKind(2)"
+                          >약속 장소에 나오지 않았어요!</a
+                        >
+                        <a
+                          class="dropdown-item our-main-font"
+                          href="#"
+                          @click="changeAccuseKind(3)"
+                          >광고를 하고 있어요!</a
+                        >
+                      </div>
+                    </div>
+                    <h6 class="mt-3 our-main-font">사유 상세</h6>
+                    <b-form-textarea
+                      id="textarea-rows"
+                      rows="8"
+                      v-model="accuseCommentData.accuseReason"
+                    ></b-form-textarea>
+                    <h6 class="mt-3 our-main-fonts">신고할 게시물 URL</h6>
+                    <b-form-input
+                      style="width: 400px"
+                      id="type-url"
+                      type="url"
+                      v-model="accuseCommentData.accuseUrl"
+                    ></b-form-input>
+                    <hr />
+                    <button
+                      @click="createCommentAccuse({ accuseCommentData })"
+                      class="btn btn-danger btn-sm our-main-font"
+                    >
+                      신고접수
+                    </button>
+                  </div>
                 </div>
               </div>
-              <h6>신고할 댓글의 게시물 URL</h6>
-              <b-form-input id="type-url" type="url" v-model="accuseCommentData.accuseUrl"></b-form-input>
-              <h6>사유 상세</h6>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="accuseCommentData.accuseReason"></b-form-textarea>
-              <button @click="createCommentAccuse({ accuseCommentData })">신고접수</button>
-            </b-modal>
+            </div>
           </div>
-          <!-- 댓글 신고 -->
+          <!-- 게시물 신고 -->
         </div>
-        <div class="comment-content">{{ comment.content }}</div>
-        <div class="comment-create-time">{{ cutDate(comment.createTime) }}</div>
+        <div class="comment-content our-main-font">{{ comment.content }}</div>
+        <div class="comment-create-time our-main-font">
+          {{ cutDate(comment.createTime) }}
+        </div>
       </div>
     </div>
 
@@ -58,8 +146,22 @@
         <input class="comment-input" type="text" v-model="comment.content" />
       </div>
       <div class="comment-update-submit">
-        <button type="button" v-if="flag" class="comment-update-btn" @click="updateCancel">취소</button>
-        <button type="button" v-if="flag" class="comment-update-btn" @click="updateComment">수정</button>
+        <button
+          type="button"
+          v-if="flag"
+          class="comment-update-btn our-main-font"
+          @click="updateCancel"
+        >
+          취소
+        </button>
+        <button
+          type="button"
+          v-if="flag"
+          class="comment-update-btn our-main-font"
+          @click="updateComment"
+        >
+          수정
+        </button>
       </div>
     </div>
   </div>
@@ -175,21 +277,23 @@ export default {
 /* @import url('node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'); */
 .siren-btn {
   border: none;
+  outline: none;
   background-color: transparent;
-  color: black;
+  color: rgb(218, 37, 37);
   font-size: 80%;
   font-weight: bold;
 }
 .siren-btn:hover {
   border: none;
+  outline: none;
   background-color: transparent;
-  color: black;
+  color: rgb(224, 34, 34);
 }
 .siren-btn:focus {
   border: none;
   outline: none;
   background-color: transparent;
-  color: black;
+  color: rgb(224, 34, 34);
 }
 .review-comment-container {
   border-bottom: 1px solid rgb(237, 237, 240);
@@ -201,10 +305,14 @@ export default {
 }
 .comment-user {
   text-align: left;
+  vertical-align: -webkit-baseline-middle;
   font-weight: bold;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+.comment-user-link {
+  padding-top: 10px;
 }
 .comment-content {
   text-align: left;
@@ -241,6 +349,10 @@ export default {
 .comment-drop:hover .comment-btn {
   background-color: transparent;
   color: rgb(145, 141, 141);
+  border: none;
+  outline: none;
+}
+.comment-btn:focus {
   border: none;
   outline: none;
 }

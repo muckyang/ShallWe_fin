@@ -1,6 +1,6 @@
 <template>
   <div class="review-comment-box">
-    <div class="review-comment-start">
+    <div class="review-comment-start our-main-font">
       <i class="far fa-comment-dots"></i>
       댓글 {{ commentList.length }}
     </div>
@@ -19,14 +19,14 @@
     <div class="review-comment-write">
       <div class="review-comment-text">
         <input
-          class="review-comment-input"
+          class="review-comment-input our-main-font"
           placeholder="댓글을 남겨보세요 :)"
           type="text"
           v-model="commentData.content"
         />
       </div>
       <div class="review-comment-submit">
-        <button type="button" class="comment-submit-btn" @click="createComment">
+        <button type="button" class="comment-submit-btn our-main-font" @click="createComment">
           등록
         </button>
       </div>
@@ -103,7 +103,14 @@ export default {
             console.error(err);
           });
       } else {
-        alert("댓글을 써주세요!");
+         Swal.fire({
+            icon: 'warning',
+            height: 300,
+            width: 300,  
+            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">댓글을 작성해주세요.</a>',
+            showConfirmButton: false,
+            timer: 1500
+          })
       }
     },
     // getComments(){

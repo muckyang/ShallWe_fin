@@ -243,6 +243,8 @@ router.beforeEach((to, from, next) => {
     "klogin",
     "adminLogin",
     "searchList",
+    "aboutUs",
+    "reviewList",
   ];
   //로그인 하면 안되는 페이지
   const authPages = [
@@ -266,7 +268,13 @@ router.beforeEach((to, from, next) => {
 
   //로그인 해야 하는 페이지에 로그인 안한 상태로 접근
   if (authRequired && !isLoggedIn) {
-    alert("로그인 후 이용해 주세요");
+    // alert("로그인 후 이용해 주세요");
+    Swal.fire({
+      icon: 'warning',
+      height: 300,
+      width: 350,
+      title: '<a style="font-size:1rem; color:black">로그인 후 이용해 주세요!!</a>'
+    });
     next("/");
   } else {
     next();

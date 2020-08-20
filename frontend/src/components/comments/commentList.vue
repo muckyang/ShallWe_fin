@@ -1,8 +1,8 @@
 <template>
-  <div class="comments-box mt-4">
-    <div class="comment-start">
+  <div class="comments-box mt-4" style="font-family: 'Recipekorea', cursive;">
+    <div class="comment-start" style="font-size:19px">
       <i class="far fa-comment-dots"></i>
-      댓글 {{comments.length}}
+      댓글 {{ comments.length }}
     </div>
 
     <!--댓글 보여주는 공간-->
@@ -24,7 +24,9 @@
         />
       </div>
       <div class="comment-submit">
-        <button type="button" class="comment-submit-btn" @click="createComment">등록</button>
+        <button type="button" class="comment-submit-btn" @click="createComment">
+          등록
+        </button>
       </div>
     </div>
   </div>
@@ -60,15 +62,19 @@ export default {
     ...mapActions(["getArticle"]),
     ...mapMutations(["GET_COMMENTS"]),
     createComment() {
-      axios
-        .post(`${BACK_URL}/comment/create`, this.commentData)
-        .then(() => {
-          this.commentData.content = "";
-          this.getArticle(this.$route.params.ID); //다시 보기
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      if (this.commentData.content) {
+        axios
+          .post(`${BACK_URL}/comment/create`, this.commentData)
+          .then(() => {
+            this.commentData.content = "";
+            this.getArticle(this.$route.params.ID); //다시 보기
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        alert("댓글을 입력해주세요.");
+      }
     },
     // getComments(){
     //   axios.get(`${BACK_URL}/comment/read/${this.$route.params.ID}`)
@@ -114,11 +120,19 @@ export default {
   margin: 0 4px 3px 0;
 }
 .comment-submit-btn {
-  font-weight: bold;
   border: none;
   outline: none;
   background-color: transparent;
   color: grey;
+  font-size: 16.5px;
+}
+.comment-submit-btn:hover {
+  border: none;
+  outline: none;
+}
+.comment-submit-btn:focus {
+  border: none;
+  outline: none;
 }
 .comment-text {
   /* border: none;
@@ -129,6 +143,9 @@ export default {
   border: none;
   outline: none;
   width: 100%;
+}
+.comment-input::placeholder {
+  font-size: 16px;
 }
 .comment-input:focus::placeholder {
   color: transparent;

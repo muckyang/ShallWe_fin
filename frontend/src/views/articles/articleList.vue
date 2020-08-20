@@ -12,7 +12,12 @@
     <i class="fas fa-search"></i></button>-->
 
     <nav class="mt-4 mb-3 mx-1">
-      <div class="nav nav-tabs navs" id="nav-tab" role="tablist">
+      <div
+        class="nav nav-tabs navs"
+        id="nav-tab"
+        role="tablist"
+        style="font-family: 'Recipekorea', cursive; font-size:18px"
+      >
         <a
           @click="changeCategory(0)"
           class="nav-item nav-link active text-dark"
@@ -22,7 +27,8 @@
           role="tab"
           aria-controls="nav-home"
           aria-selected="true"
-        >전체</a>
+          >전체</a
+        >
         <a
           @click="changeCategory(1)"
           class="nav-item nav-link text-dark"
@@ -32,7 +38,8 @@
           role="tab"
           aria-controls="nav-profile"
           aria-selected="false"
-        >쉘위배달</a>
+          >쉘위배민</a
+        >
         <a
           @click="changeCategory(2)"
           class="nav-item nav-link text-dark"
@@ -42,7 +49,8 @@
           role="tab"
           aria-controls="nav-contact"
           aria-selected="false"
-        >쉘위택배</a>
+          >쉘위택배</a
+        >
         <a
           @click="changeCategory(3)"
           class="nav-item nav-link text-dark"
@@ -52,9 +60,10 @@
           role="tab"
           aria-controls="nav-profile"
           aria-selected="false"
-        >쉘위공구</a>
+          >쉘위N빵</a
+        >
         <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
-          <button class="write-btn">글쓰기</button>
+          <button class="write-btn" style="font-size: 16px">글쓰기</button>
         </router-link>
       </div>
     </nav>
@@ -68,7 +77,13 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -76,30 +91,119 @@
                 }"
                 class="text-decoration-none text-dark"
               >
+                <div class="type-one"></div>
                 <b-card
+                  :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
-                  img-width="100%"
-                  img-height="60%"
-                  :img-src="imageUrl(article)"
-                  img-alt="Image"
-                  img-top
                   footer-bg-variant="#ee6e9f"
                   footer-class="card-end"
                 >
-                  <b-card-text>
-                    <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address">{{ article.address }}</h6>
-                    <h6 class="article-price">가격: {{ sumPrice(article.sumPrice) }}/{{ minPrice(article.minPrice) }}</h6>
+                  <div
+                    v-if="article.status != 4 && article.status != 5"
+                    class="article-img-box m-0 p-0"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        require('http://i3b203.p.ssafy.io/img/' +
+                          article.image) +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
+                  >
+                    <img
+                      v-if="
+                        article.categoryId == 1 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                      src="@/assets/img/type2.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                    <img
+                      v-if="
+                        article.categoryId == 2 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                      src="@/assets/img/type1.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                    <img
+                      v-if="
+                        article.categoryId == 3 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                      src="@/assets/img/type3.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                  </div>
+                  <div
+                    v-else-if="article.status == 4"
+                    class="article-img-box m-0 p-0"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' + require('@/assets/img/DealEnd2.png') + ')',
+                      backgroundSize: 'cover',
+                    }"
+                  ></div>
+                  <div
+                    v-else-if="article.status === 5"
+                    class="article-img-box m-0 p-0"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' + require('@/assets/img/TimeOver2.png') + ')',
+                      backgroundSize: 'cover',
+                    }"
+                  ></div>
+
+                  <b-card-text class="p-2">
+                    <h5
+                      class="article-title mt-3 pt-1"
+                      style="font-family: 'Recipekorea', cursive; font-size:18px"
+                    >
+                      {{ article.title }}
+                    </h5>
+                    <h6
+                      class="article-address py-1"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
+                      {{ article.address }}
+                    </h6>
+                    <h6
+                      class="article-price py-1"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
+                      가격: {{ sumPrice(article.sumPrice) }}원 /
+                      {{ minPrice(article.minPrice) }}원
+                    </h6>
                   </b-card-text>
                   <template v-slot:footer>
-                    <div class="d-flex justify-content-between">
-                      <small>
-                        <b-icon-heart></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
+                    <div
+                      class="d-flex justify-content-between"
+                      style="font-family: 'Recipekorea', cursive; font-size:14.5px"
+                    >
+                      <div class="articleList-subInfo">
+                        <div class="articleList-heart">
+                          <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                          {{ article.likeNum }}
+                        </div>
+                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                        <div class="articleList-chat ml-2">
+                          <i class="far fa-comment-dots"></i>
+                          {{ article.commentNum }}
+                        </div>
+                      </div>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
                   </template>
@@ -118,7 +222,13 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -127,29 +237,82 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
+                  :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
-                  img-width="100%"
-                  img-height="60%"
-                  :img-src="imageUrl(article)"
-                  img-alt="Image"
-                  img-top
                   footer-bg-variant="#ee6e9f"
                   footer-class="card-end"
                 >
-                  <b-card-text>
-                    <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address" style="font-size: 13.5px;">{{ article.address }}</h6>
-                    <h6 class="article-price">가격: {{ sumPrice(article.sumPrice) }}/{{ minPrice(article.minPrice) }}</h6>
+                  <div
+                    class="article-img-box"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        require('http://i3b203.p.ssafy.io/img/' +
+                          article.image) +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
+                  >
+                    <img
+                      v-if="article.categoryId == 1"
+                      src="@/assets/img/type2.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                    <img
+                      v-if="article.categoryId == 2"
+                      src="@/assets/img/type1.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                    <img
+                      v-if="article.categoryId == 3"
+                      src="@/assets/img/type3.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                  </div>
+                  <!-- <img src alt /> -->
+                  <b-card-text class="p-2">
+                    <h5
+                      class="article-title mt-3 pt-1"
+                      style="font-family: 'Recipekorea', cursive; font-size:18px"
+                    >
+                      {{ article.title }}
+                    </h5>
+                    <h6
+                      class="article-address py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
+                      {{ article.address }}
+                    </h6>
+                    <h6
+                      class="article-price py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
+                      가격: {{ sumPrice(article.sumPrice) }}원 /
+                      {{ minPrice(article.minPrice) }}원
+                    </h6>
                   </b-card-text>
                   <template v-slot:footer>
-                    <div class="d-flex justify-content-between">
-                      <small>
-                        <b-icon-heart></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
+                    <div
+                      class="d-flex justify-content-between"
+                      style="font-family: 'Recipekorea', cursive; font-size:14.5px"
+                    >
+                      <div class="articleList-subInfo">
+                        <div class="articleList-heart">
+                          <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                          {{ article.likeNum }}
+                        </div>
+                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                        <div class="articleList-chat ml-2">
+                          <i class="far fa-comment-dots"></i>
+                          {{ article.commentNum }}
+                        </div>
+                      </div>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
                   </template>
@@ -168,7 +331,13 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -177,29 +346,81 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
+                  :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
-                  img-width="100%"
-                  img-height="60%"
-                  :img-src="imageUrl(article)"
-                  img-alt="Image"
-                  img-top
                   footer-bg-variant="#ee6e9f"
                   footer-class="card-end"
                 >
-                  <b-card-text>
-                    <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address" style="font-size: 13.5px;">{{ article.address }}</h6>
-                    <h6 class="article-price">가격: {{ sumPrice(article.sumPrice) }}/{{ minPrice(article.minPrice) }}</h6>
+                  <div
+                    class="article-img-box"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        require('http://i3b203.p.ssafy.io/img/' +
+                          article.image) +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
+                  >
+                    <img
+                      v-if="article.categoryId == 1"
+                      src="@/assets/img/type2.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                    <img
+                      v-if="article.categoryId == 2"
+                      src="@/assets/img/type1.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                    <img
+                      v-if="article.categoryId == 3"
+                      src="@/assets/img/type3.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                  </div>
+                  <b-card-text class="p-2">
+                    <h5
+                      class="article-title mt-3 pt-1"
+                      style="font-family: 'Recipekorea', cursive; font-size:18px"
+                    >
+                      {{ article.title }}
+                    </h5>
+                    <h6
+                      class="article-address py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
+                      {{ article.address }}
+                    </h6>
+                    <h6
+                      class="article-price py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
+                      가격: {{ sumPrice(article.sumPrice) }}원 /
+                      {{ minPrice(article.minPrice) }}원
+                    </h6>
                   </b-card-text>
                   <template v-slot:footer>
-                    <div class="d-flex justify-content-between">
-                      <small>
-                        <b-icon-heart></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
+                    <div
+                      class="d-flex justify-content-between"
+                      style="font-family: 'Recipekorea', cursive; font-size:14.5px"
+                    >
+                      <div class="articleList-subInfo">
+                        <div class="articleList-heart">
+                          <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                          {{ article.likeNum }}
+                        </div>
+                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                        <div class="articleList-chat ml-2">
+                          <i class="far fa-comment-dots"></i>
+                          {{ article.commentNum }}
+                        </div>
+                      </div>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
                   </template>
@@ -218,7 +439,13 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="6" lg="4" v-for="article in articles" :key="article.articleId">
+            <b-col
+              cols="12"
+              sm="6"
+              lg="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
               <router-link
                 :to="{
                   name: 'articleDetail',
@@ -227,29 +454,81 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
+                  :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
-                  img-width="100%"
-                  img-height="60%"
-                  :img-src="imageUrl(article)"
-                  img-alt="Image"
-                  img-top
                   footer-bg-variant="#ee6e9f"
                   footer-class="card-end"
                 >
-                  <b-card-text>
-                    <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address">{{ article.address }}</h6>
-                    <h6 class="article-price">가격: {{ sumPrice(article.sumPrice) }}/{{ minPrice(article.minPrice) }}</h6>
+                  <div
+                    class="article-img-box"
+                    :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        require('http://i3b203.p.ssafy.io/img/' +
+                          article.image) +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
+                  >
+                    <img
+                      v-if="article.categoryId == 1"
+                      src="@/assets/img/type2.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                    <img
+                      v-if="article.categoryId == 2"
+                      src="@/assets/img/type1.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                    <img
+                      v-if="article.categoryId == 3"
+                      src="@/assets/img/type3.png"
+                      class="article-type-img"
+                      style="max-width: 100%; height: auto;"
+                    />
+                  </div>
+                  <b-card-text class="p-2">
+                    <h5
+                      class="article-title mt-3 pt-1"
+                      style="font-family: 'Recipekorea', cursive; font-size:18px"
+                    >
+                      {{ article.title }}
+                    </h5>
+                    <h6
+                      class="article-address py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
+                      {{ article.address }}
+                    </h6>
+                    <h6
+                      class="article-price py-2"
+                      style="font-family: 'Recipekorea', cursive; font-size:16px"
+                    >
+                      가격: {{ sumPrice(article.sumPrice) }}원 /
+                      {{ minPrice(article.minPrice) }}원
+                    </h6>
                   </b-card-text>
                   <template v-slot:footer>
-                    <div class="d-flex justify-content-between">
-                      <small>
-                        <b-icon-heart></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
+                    <div
+                      class="d-flex justify-content-between"
+                      style="font-family: 'Recipekorea', cursive; font-size:14.5px"
+                    >
+                      <div class="articleList-subInfo">
+                        <div class="articleList-heart">
+                          <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                          {{ article.likeNum }}
+                        </div>
+                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                        <div class="articleList-chat ml-2">
+                          <i class="far fa-comment-dots"></i>
+                          {{ article.commentNum }}
+                        </div>
+                      </div>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
                   </template>
@@ -260,11 +539,17 @@
         </b-container>
       </div>
     </div>
-    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
+    <infinite-loading
+      @infinite="infiniteHandler"
+      :identifier="infiniteId"
+      spinner="waveDots"
+    >
       <div
         slot="no-more"
-        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >더이상 게시물이 존재하지 않습니다!</div>
+        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px; font-family: 'Recipekorea', cursive; font-size:14.5px"
+      >
+        더이상 게시물이 존재하지 않습니다!
+      </div>
     </infinite-loading>
   </div>
 </template>
@@ -280,6 +565,9 @@ export default {
   name: "articleList",
   data() {
     return {
+      articleImg: {
+        backgroundImage: `url(${require("@/assets/img/food1.png")})`,
+      },
       categoryNum: 0,
       page: 0,
       onlyOne: true,
@@ -299,6 +587,23 @@ export default {
   },
   methods: {
     ...mapActions(["getArticles", "search"]),
+    cutPrice(article) {
+      let CD = date + "";
+      const year = CD.substring(0, 4) + "년 ";
+      const month = CD.substring(5, 7) + "월";
+      const day = CD.substring(8, 10) + "일 ";
+      const hour = CD.substring(11, 13) + "시";
+      const minute = CD.substring(14, 16) + "분";
+      const res = year + month + day + hour + minute;
+      return res;
+    },
+    LabelImg(article) {
+      if (article.categoryId == 1) {
+        var imgHome = "@/assets/img/food1.png";
+        console.log(imgHome);
+        return imgHome;
+      }
+    },
     infiniteHandler($state) {
       const auth = { token: cookies.get("auth-token") };
       axios
@@ -327,27 +632,73 @@ export default {
       // this.getArticles({ temp: 1, categoryId: this.categoryNum });
     },
   },
-    computed: {
-      imageUrl(){
-        return (article)=>{
-          return 'http://i3b203.p.ssafy.io/img/'+`${article.image}`
-        }
-      },
-      minPrice(){
-        return(price)=>{
-          return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(price)
-        }
-      },
-      sumPrice(){
-          return(price)=>{
-            return new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(price)
-          }
-        },
-      },
+  computed: {
+    imageUrl() {
+      return (article) => {
+        var arImg = article.image;
+        var result = "http://i3b203.p.ssafy.io/img/" + arImg;
+        console.log(result);
+        return {
+          background: "url(" + result + ")",
+        };
+        ("{backgroundImage: 'url('+require('http://i3b203.p.ssafy.io/img/')+')'}");
+        // require("http://i3b203.p.ssafy.io/img/" +
+        //   `${article.image}`);
+      };
+    },
+
+    minPrice() {
+      return (price) => {
+        var res = new Intl.NumberFormat("ko-KR", {
+          style: "currency",
+          currency: "KRW",
+        }).format(price);
+        let result = res + "";
+        const real = result.substring(1, res.length);
+        return real;
+      };
+    },
+    sumPrice() {
+      return (price) => {
+        var res = new Intl.NumberFormat("ko-KR", {
+          style: "currency",
+          currency: "KRW",
+        }).format(price);
+        let result = res + "";
+        const real = result.substring(1, res.length);
+        return real;
+      };
+    },
+  },
 };
 </script>
 
 <style>
+/* .article-img-box {
+  width: 100%;
+  height: 60%;
+  border: 1px solid red;
+  background-image: url("imageUrl(article)");
+} */
+.articleList-subInfo {
+  display: flex;
+  vertical-align: middle;
+  font-size: 13px;
+}
+.article-background-img {
+  width: 100%;
+  height: 60%;
+  margin: 0 0 0 0;
+}
+.article-type-img {
+  width: 40%;
+  height: 40%;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+.type-one {
+}
 .article-list-box {
   width: 95%;
 }
@@ -385,8 +736,9 @@ export default {
 
 <style scoped lang="scss">
 $color-bg: #f8f8f8;
+// $color-bg: #572e2e;
 $card-padding: 20px;
-$grid-gutter: 31px;
+$grid-gutter: 30px;
 
 // Media Queries breakpoints
 $small: 480px;
@@ -398,6 +750,7 @@ $x-large: 1200px;
   position: relative;
   flex: 1 1 100%;
   background: lighten($color-bg, 3%);
+  // background: #ee6e9f;
 
   @media screen and (min-width: $medium) {
     flex-basis: calc(33.33% - (#{$grid-gutter * 2} + #{$card-padding * 2}));
@@ -431,8 +784,8 @@ $x-large: 1200px;
   }
 }
 // .card-end {
-  // background-color: #FFCBDB;
-  // opacity: 0.7;
+// background-color: #FFCBDB;
+// opacity: 0.7;
 // }
 .navs {
   // border: 1px solid red;
@@ -447,8 +800,7 @@ $x-large: 1200px;
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
-  padding: 5px 10px;
+  padding: 7px 8px 3px 8px;
   color: white;
-  font-weight: bold;
 }
 </style>

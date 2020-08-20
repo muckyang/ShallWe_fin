@@ -1,7 +1,10 @@
 <template>
   <div>
     <!-- Navbar1 -->
-    <nav class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar">
+    <nav
+      class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar"
+      style="font-family: 'Recipekorea', cursive;"
+    >
       <ul class="navbar-nav d-flex flex-row">
         <!-- 로그인 X -->
         <li class="nav-item mr-1">
@@ -10,42 +13,48 @@
             class="nav-link navbar1-item loginBtn"
             v-if="!isLoggedin"
             @click="REMOVE_TOKEN"
+            style="font-size: 13.5px"
           >카카오 로그인</a>
         </li>
         <!-- 로그인 O -->
         <li class="nav-item mr-1">
-          <a href="#" v-if="isLoggedin" @click="REMOVE_TOKEN" class="nav-link navbar1-item">로그아웃</a>
+          <a
+            href="#"
+            v-if="isLoggedin"
+            @click="REMOVE_TOKEN"
+            class="nav-link navbar1-item"
+            style="font-size: 13.5px"
+          >로그아웃</a>
         </li>
 
-        <div class="wall" v-show="isLoggedin">|</div>
+        <div class="wall" v-show="isAdmin||isLoggedin">|</div>
 
         <li class="nav-item mr-1">
           <router-link
-            v-if="isLoggedin"
+            v-if="isLoggedin&&!isAdmin"
             v-bind:to="{ name: constants.URL_TYPE.USER.PROFILE }"
             class="nav-link navbar1-item"
+            style="font-size: 13.5px"
           >마이페이지</router-link>
         </li>
       </ul>
 
-      <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
-
       <!-- 유저관리 -->
-      <div v-if="userData.grade === 0" class="d-flex align-items-starts mr-1">
+      <div v-if="isAdmin" class="d-flex align-items-starts mr-1">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/user/userlist" class="nav-link navbar1-item">유저관리</a>
+            <a href="/user/userlist" class="nav-link navbar1-item" style="font-size: 13.5px">유저관리</a>
           </li>
         </ul>
       </div>
 
-      <div class="wall" v-show="isLoggedin && userData.grade === 0">|</div>
+      <div class="wall" v-show="isAdmin">|</div>
 
       <!-- 신고관리 -->
-      <div v-if="userData.grade === 0" class="d-flex align-items-starts">
+      <div v-if="isAdmin" class="d-flex align-items-starts">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="/user/accuselist" class="nav-link navbar1-item">신고관리</a>
+            <a href="/user/accuselist" class="nav-link navbar1-item" style="font-size: 13.5px">신고관리</a>
           </li>
         </ul>
       </div>
@@ -60,7 +69,7 @@
       >Shall we?</a>
     </nav>
     <!-- Navbar3 -->
-    <nav class="navbar navbar-expand-lg navbar-light p-0">
+    <nav class="navbar navbar-expand-lg navbar-light p-0 mt-4" style="font-size: 18px">
       <!--페이지 줄일때 네브바 햄버거로 만들어주는거-->
       <button
         class="navbar-toggler"
@@ -101,8 +110,8 @@
         <input
           class="searchInput"
           type="search"
-          style="font-family: FontAwesome;"
-          placeholder="Search"
+          style="font-family: Recipekorea; padding-top: 9px;"
+          placeholder="검색"
           v-model="searchData.searchDataForSend.word"
           @keypress.enter="search(searchData)"
         />
@@ -145,14 +154,17 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["REMOVE_TOKEN", "loginCheck"]),
+    ...mapMutations(["REMOVE_TOKEN", "loginCheck","adminCheck"]),
     ...mapActions(["search", "login", "getUserData"]),
   },
   computed: {
-    ...mapState(["isLoggedin", "userData"]),
+    ...mapState(["isLoggedin", "userData", "isAdmin"]),
   },
   created: function () {
     this.loginCheck();
+    if(this.$cookies.get("admin-token")){
+      this.adminCheck()
+    }
     if (this.$cookies.get("auth-token")) {
       this.getUserData();
     }
@@ -252,12 +264,19 @@ export default {
   border-width: 1.5px;
   border-color: #000;
   padding-left: 1.3%;
+  padding-bottom: 0.6%;
 }
 .searchInput:focus {
   outline: none;
 }
 .searchInput:focus::placeholder {
   color: transparent;
+}
+.searchInput::placeholder {
+  font-family: "Recipekorea";
+  font-size: 15px;
+  /* font-size: 5px; */
+  /* font-size: 4px;  */
 }
 .searchBtn {
   height: 35px;

@@ -23,6 +23,7 @@ import com.web.blog.model.post.Post;
 import com.web.blog.model.user.KsignupRequest;
 import com.web.blog.model.user.TokenRequest;
 import com.web.blog.model.user.User;
+import com.web.blog.model.user.UserRequest;
 import com.web.blog.service.JwtService;
 import com.web.blog.service.KakaoService;
 import com.web.blog.service.KakaoUserInfo;
@@ -253,7 +254,7 @@ public class AccountController {
 
     @PostMapping("/account/update")
     @ApiOperation(value = "수정하기")
-    public Object update(@Valid @RequestBody KsignupRequest req) {
+    public Object update(@Valid @RequestBody UserRequest req) {
         String token = req.getToken();
 
         // 복호화' ;
@@ -265,35 +266,34 @@ public class AccountController {
         if (userOpt.isPresent()) {
             User user = userDao.getUserByEmail(jwtuser.getEmail());
             user.setAddress(req.getAddress());
-            user.setNickname(req.getNickname());
+            // user.setNickname(req.getNickname());
 
-            user.setProfileImage(req.getProfileImage());
             user.setIntroduce(req.getIntroduce());
             user.setBirthday(req.getBirthday());
 
-            if (user.getNickname() != req.getNickname()) {
+            // if (user.getNickname() != req.getNickname()) {
 
-                // 닉네임 유효성 검사 해야함
-                List<Participant> palist = partDao.getParticipantByUserId(user.getUserId());
-                for (int i = 0; i < palist.size(); i++) {
-                    Participant p = palist.get(i);
-                    p.setWriter(req.getNickname());
-                    partDao.save(p);
-                }
-                List<Post> plist = postDao.getPostByUserId(user.getUserId());
-                for (int i = 0; i < plist.size(); i++) {
-                    Post p = plist.get(i);
-                    p.setWriter(req.getNickname());
-                    postDao.save(p);
-                }
-                List<Comment> clist = commentDao.getCommentByUserId(user.getUserId());
-                for (int i = 0; i < clist.size(); i++) {
-                    Comment c = clist.get(i);
-                    c.setWriter(req.getNickname());
-                    commentDao.save(c);
-                }
+            //     // 닉네임 유효성 검사 해야함
+            //     List<Participant> palist = partDao.getParticipantByUserId(user.getUserId());
+            //     for (int i = 0; i < palist.size(); i++) {
+            //         Participant p = palist.get(i);
+            //         p.setWriter(req.getNickname());
+            //         partDao.save(p);
+            //     }
+            //     List<Post> plist = postDao.getPostByUserId(user.getUserId());
+            //     for (int i = 0; i < plist.size(); i++) {
+            //         Post p = plist.get(i);
+            //         p.setWriter(req.getNickname());
+            //         postDao.save(p);
+            //     }
+            //     List<Comment> clist = commentDao.getCommentByUserId(user.getUserId());
+            //     for (int i = 0; i < clist.size(); i++) {
+            //         Comment c = clist.get(i);
+            //         c.setWriter(req.getNickname());
+            //         commentDao.save(c);
+            //     }
 
-            }
+            // }
             userDao.save(user); // 수정내용 저장
             System.out.println("수정하기 완료!! ");
             User result = user;

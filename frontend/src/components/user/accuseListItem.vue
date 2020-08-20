@@ -4,16 +4,16 @@
 
       <div class="d-flex justify-content-between">
         <small v-if="accuse.accuseIndex === 1">
-          <span class="badge badge-pill badge-dark mr-2">게시물 신고</span>
-          <span v-if="accuse.accuseKind == 1">욕설</span>
-          <span v-if="accuse.accuseKind == 2">노쇼</span>
-          <span v-if="accuse.accuseKind == 3">광고</span>
+          <span class="badge badge-pill badge-dark mr-2 our-main-font">게시물 신고</span>
+          <span v-if="accuse.accuseKind == 1" class="our-main-font">욕설, 비난을 했어요!</span>
+          <span v-if="accuse.accuseKind == 2" class="our-main-font">약속 장소에 나오지 않았어요!</span>
+          <span v-if="accuse.accuseKind == 3" class="our-main-font">광고를 하고 있어요!</span>
         </small>
         <small v-if="accuse.accuseIndex === 2">
-          <span class="badge badge-pill badge-dark mr-2">댓글 신고</span>
-          <span v-if="accuse.accuseKind == 1">욕설</span>
-          <span v-if="accuse.accuseKind == 2">노쇼</span>
-          <span v-if="accuse.accuseKind == 3">광고</span>
+          <span class="badge badge-pill badge-light mr-2 our-main-font" style="background-color: lightgray;">댓글 신고</span>
+          <span v-if="accuse.accuseKind == 1" class="our-main-font">욕설, 비난을 했어요!</span>
+          <span v-if="accuse.accuseKind == 2" class="our-main-font">약속 장소에 나오지 않았어요!</span>
+          <span v-if="accuse.accuseKind == 3" class="our-main-font">광고를 하고 있어요!</span>
         </small>
         <div>
           <div class="article-drop dropdown dropleft">
@@ -21,16 +21,16 @@
               <i class="fas fa-ellipsis-v"></i>
             </button>
             <div class="dropdown-menu">
-              <a :href="accuse.accuseUrl" class="dropdown-item">신고상세</a>
-              <a :href="accuse.accuseUrl" @click="yesAccuse()" class="dropdown-item">신고접수</a>
-              <a :href="accuse.accuseUrl" @click="noAccuse()" class="dropdown-item">허위신고</a>
+              <a :href="accuse.accuseUrl" class="dropdown-item our-main-font">신고상세</a>
+              <a @click="decideAccuse(1)" class="dropdown-item our-main-font">신고접수</a>
+              <a @click="decideAccuse(2)" class="dropdown-item our-main-font">허위신고</a>
             </div>
           </div>
         </div>
       </div>
-      <h5 class="mt-0 mb-2 mt-1"># {{ accuse.accuseId }}. "{{ accuse.reporter }}" 님의 신고 내용</h5>
-      <h6>피신고자: {{ accuse.defendant }}</h6>
-      <p class="mb-0">{{ accuse.accuseReason }}</p>
+      <h5 class="mt-0 mb-2 mt-1 our-main-font"># {{ accuse.accuseId }}. "{{ accuse.reporter }}" 님의 신고 내용</h5>
+      <h6 class="our-main-font">피신고자: {{ accuse.defendant }}</h6>
+      <p class="mb-0 our-main-font">{{ accuse.accuseReason }}</p>
     </b-media>
     <hr>
   </div>
@@ -50,27 +50,17 @@ export default {
     return {};
   },
   methods: {
-    decideAccuse() {
+    decideAccuse(num) {
+      this.accuse.accuseConfirm=num
       this.accuse.token = this.$cookies.get("admin-token");
-      console.log(this.accuse);
       axios
         .post(`${BACK_URL}/accuse/applyto`, this.accuse)
         .then(() => {
-          console.log(this.accuse, "AAAAAAAAAAAAAAA");
+          this.$emit('get')
         })
         .catch((err) => {
           console.error(err);
         });
-    },
-    yesAccuse() {
-      this.accuse.accuseConfirm = 1;
-      this.decideAccuse();
-      console.log(this.accuse, "BBBBB");
-    },
-    noAccuse() {
-      this.accuse.accuseConfirm = 1;
-      this.decideAccuse();
-      console.log(this.accuse, "BBBBB");
     },
   },
 };

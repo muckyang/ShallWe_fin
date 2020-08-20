@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5">
+  <div class="mt-5" style="font-family: 'Recipekorea', cursive; font-size:17.5px">
     <div class="dropdown mr-1">
       <!-- <button
         class="downBtn btn btn-secondary"
@@ -10,7 +10,7 @@
         aria-expanded="false"
       >
         {{ item3 }}
-      </button> -->
+      </button>-->
       <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
       <div class="mainSearch">
         <a
@@ -20,8 +20,7 @@
           }"
           href="#"
           @click="selectTemp(1)"
-          >게시글</a
-        >
+        >게시글</a>
         <a
           :class="{
             beforeSelect: searchData.temp != 2,
@@ -29,8 +28,7 @@
           }"
           href="#"
           @click="selectTemp(2)"
-          >커뮤니티</a
-        >
+        >커뮤니티</a>
       </div>
       <!-- </div> -->
 
@@ -43,8 +41,7 @@
             }"
             href="#"
             @click="selectCategory(1)"
-            >배달</a
-          >
+          >배달</a>
           <a
             :class="{
               beforeSelect: searchData.categoryId != 2,
@@ -52,8 +49,7 @@
             }"
             href="#"
             @click="selectCategory(2)"
-            >최저주문</a
-          >
+          >최저주문</a>
           <a
             :class="{
               beforeSelect: searchData.categoryId != 3,
@@ -61,8 +57,7 @@
             }"
             href="#"
             @click="selectCategory(3)"
-            >공동구매</a
-          >
+          >공동구매</a>
         </div>
         <div v-if="searchData.temp === 2">
           <a
@@ -72,8 +67,7 @@
             }"
             href="#"
             @click="selectCategory(101)"
-            >공지</a
-          >
+          >공지</a>
           <a
             :class="{
               beforeSelect: searchData.categoryId != 102,
@@ -81,8 +75,7 @@
             }"
             href="#"
             @click="selectCategory(102)"
-            >후기</a
-          >
+          >후기</a>
           <a
             :class="{
               beforeSelect: searchData.categoryId != 103,
@@ -90,8 +83,7 @@
             }"
             href="#"
             @click="selectCategory(103)"
-            >자유</a
-          >
+          >자유</a>
         </div>
         <div>|</div>
         <div v-if="searchData.temp !== 0" class="dropdown mr-1">
@@ -102,8 +94,7 @@
             }"
             href="#"
             @click="selectSubject(0)"
-            >제목</a
-          >
+          >제목</a>
           <a
             :class="{
               beforeSelect: searchData.searchDataForSend.subject != 'writer',
@@ -111,8 +102,7 @@
             }"
             href="#"
             @click="selectSubject(1)"
-            >작성자</a
-          >
+          >작성자</a>
           <a
             v-if="searchData.temp === 1"
             :class="{
@@ -121,35 +111,25 @@
             }"
             href="#"
             @click="selectSubject(2)"
-            >주소</a
-          >
+          >주소</a>
         </div>
       </div>
     </div>
 
     <input
-      class="detail-search mt-4"
-      style="font-family: FontAwesome;"
+      class="detail-search mt-4 mb-4 ml-3"
+      style="font-family: 'Recipekorea', cursive; font-size:15px"
       placeholder="Search"
       v-model="searchData.searchDataForSend.word"
       @keypress.enter="detailSearch(searchData)"
     />
-    <button
-      class="detail-search-btn"
-      type="submit"
-      @click="detailSearch(searchData)"
-    >
+    <button class="detail-search-btn" type="submit" @click="detailSearch(searchData)">
       <i class="fas fa-search"></i>
     </button>
 
     <b-container class="bv-example-row">
       <b-row align-h="start">
-        <b-col
-          cols="12"
-          sm="4"
-          v-for="article in articles"
-          :key="article.articleId"
-        >
+        <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
           <router-link
             :to="{
               name: 'articleDetail',
@@ -157,29 +137,47 @@
             }"
             class="text-decoration-none text-dark"
           >
-            <b-card
-              class="article-card m-4 _card card__one"
-              align="left"
-              img-width="100%"
-              img-height="60%"
-              :img-src="article.image"
-              img-alt="Image"
-              img-top
-            >
-              <b-card-text>
-                <h5 class="article-title">{{ article.title }}</h5>
-                <h6 class="article-area">{{ article.address }}</h6>
-                <h6 class="article-price">
-                  가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
-                </h6>
+            <b-card no-body="true" class="article-card m-4 _card card__one" align="left">
+              <div
+                class="article-img-box m-0 p-0"
+                :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('http://i3b203.p.ssafy.io/img/'+article.image)+')',backgroundSize: 'cover'}"
+              >
+                <img
+                  v-if="article.categoryId==1"
+                  src="@/assets/img/type2.png"
+                  class="article-type-img"
+                  style="max-width: 100%; height: auto;"
+                />
+                <img
+                  v-if="article.categoryId==2"
+                  src="@/assets/img/type1.png"
+                  class="article-type-img"
+                  style="max-width: 100%; height: auto;"
+                />
+                <img
+                  v-if="article.categoryId==3"
+                  src="@/assets/img/type3.png"
+                  class="article-type-img"
+                  style="max-width: 100%; height: auto;"
+                />
+              </div>
+              <b-card-text class="p-2">
+                <h5 class="article-title mt-3 pt-1">{{ article.title }}</h5>
+                <h6 class="article-area py-1">{{ article.address }}</h6>
+                <h6 class="article-price pt-2">가격: \{{ article.sumPrice }} / \{{ article.minPrice }}</h6>
               </b-card-text>
               <template v-slot:footer>
                 <div class="d-flex justify-content-between">
-                  <small>
-                    <b-icon-heart></b-icon-heart> {{ article.likeNum }}개
-                    <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                    {{ article.commentNum }}개
-                  </small>
+                  <div class="articleList-subInfo" style="font-size: 16px">
+                    <div class="articleList-heart">
+                      <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                      {{ article.likeNum }}
+                    </div>
+                    <div class="articleList-chat ml-2">
+                      <i class="far fa-comment-dots"></i>
+                      {{ article.commentNum }}
+                    </div>
+                  </div>
                   <small class="text-muted">{{ article.timeAgo }}</small>
                 </div>
               </template>
@@ -211,7 +209,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["detailSearch"]),
+    ...mapActions(["detailSearch","search"]),
     selectTemp(num) {
       if (num === 1) {
         this.searchData.temp = 1;
@@ -260,8 +258,8 @@ export default {
   computed: {
     ...mapState(["articles"]),
   },
-  created: function() {
-    // this.search(this.$cookies.get('searchData'))
+  created: function () {
+    this.search(this.$cookies.get('searchData'))
   },
 };
 </script>

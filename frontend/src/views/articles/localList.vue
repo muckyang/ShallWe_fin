@@ -1,9 +1,16 @@
 <template>
-  <div class="mt-4">
-    <div class="tab-content" id="nav-tabContent">
-      <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
-        <button class="article-create-btn">글쓰기</button>
+  <div class="mt-4 our-main-font">
+    <hr />
+    <div class="d-flex mb-2 justify-content-end">
+      <button class="mr-2 pt-2 view-all-btn" @click="resetArticles">
+        전체 보기
+      </button>
+      <router-link type="button" :to="{ name: 'articleCreate' }">
+        <button class="article-create-btn pt-2 ">글 쓰기</button>
       </router-link>
+    </div>
+    <kakaoMapForLocal :articles="articles" @setAddress="setAddress" />
+    <div class="tab-content" id="nav-tabContent">
       <div
         v-if="categoryNum === 0"
         class="tab-pane fade show active"
@@ -13,55 +20,70 @@
       >
         <b-container class="bv-example-row">
           <b-row align-h="start">
-            <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
-              <router-link
-                :to="{
-                  name: 'articleDetail',
-                  params: { ID: `${article.articleId}` },
-                }"
-                class="text-decoration-none text-dark"
-              >
-                <b-card
-                  class="article-card m-4 _card card__one"
-                  align="left"
-                  img-width="100%"
-                  img-height="60%"
-                  :img-src="imageUrl(article)"
-                  img-alt="Image"
-                  img-top
-                  footer-bg-variant="#ee6e9f"
-                  footer-class="card-end"
+            <b-col
+              cols="12"
+              sm="4"
+              v-for="article in articles"
+              :key="article.articleId"
+            >
+              <div v-if="article.address === address || !flag">
+                <router-link
+                  :to="{
+                    name: 'articleDetail',
+                    params: { ID: `${article.articleId}` },
+                  }"
+                  class="text-decoration-none text-dark"
                 >
-                  <b-card-text>
-                    <h5 class="article-title">{{ article.title }}</h5>
-                    <h6 class="article-address">{{ article.address }}</h6>
-                    <br />
-                    <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
-                  </b-card-text>
-                  <template v-slot:footer>
-                    <div class="d-flex justify-content-between">
-                      <small>
-                        <b-icon-heart></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
-                      <small class="text-muted">{{ article.timeAgo }}</small>
-                    </div>
-                  </template>
-                </b-card>
-              </router-link>
+                  <b-card
+                    class="article-card m-4 _card card__one"
+                    align="left"
+                    img-width="100%"
+                    img-height="60%"
+                    :img-src="imageUrl(article)"
+                    img-alt="Image"
+                    img-top
+                    footer-bg-variant="#ee6e9f"
+                    footer-class="card-end"
+                  >
+                    <b-card-text>
+                      <h5 class="article-title">{{ article.title }}</h5>
+                      <h6 class="article-address">{{ article.address }}</h6>
+                      <br />
+                      <h6 class="article-price">
+                        가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
+                      </h6>
+                    </b-card-text>
+                    <template v-slot:footer>
+                      <div class="d-flex justify-content-between">
+                        <small>
+                          <b-icon-heart></b-icon-heart>
+                          {{ article.likeNum }}개
+                          <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
+                          {{ article.commentNum }}개
+                        </small>
+                        <small class="text-muted">{{ article.timeAgo }}</small>
+                      </div>
+                    </template>
+                  </b-card>
+                </router-link>
+              </div>
             </b-col>
           </b-row>
         </b-container>
       </div>
     </div>
     <br />
-    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId" spinner="waveDots">
+    <infinite-loading
+      @infinite="infiniteHandler"
+      :identifier="infiniteId"
+      spinner="waveDots"
+    >
       <div
         slot="no-more"
-        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;"
-      >회원님의 동네에서 등록된 게시글이 더이상 존재하지 않습니다.</div>
+        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px; font-family: 'Recipekorea', cursive; font-size:14.5px"
+      >
+        더이상 게시물이 존재하지 않습니다!
+      </div>
     </infinite-loading>
   </div>
 </template>
@@ -72,6 +94,7 @@ import { mapState, mapActions } from "vuex";
 import InfiniteLoading from "vue-infinite-loading";
 import cookies from "vue-cookies";
 import axios from "axios";
+import kakaoMapForLocal from "@/components/articles/kakaoMapForLocal.vue";
 
 export default {
   name: "articleList",
@@ -81,10 +104,24 @@ export default {
       page: 0,
       onlyOne: true,
       articles: [],
+      duarticles: [],
+      allArticles: [],
+      address: "default",
+      flag: false,
+      infiniteId: +new Date(),
     };
   },
   components: {
     InfiniteLoading,
+    kakaoMapForLocal,
+  },
+  computed: {
+    imageUrl() {
+      return (article) => {
+        return require("http://i3b203.p.ssafy.io/img/" +
+          `${article.image}`);
+      };
+    },
   },
   methods: {
     ...mapActions(["getArticles", "search"]),
@@ -95,6 +132,7 @@ export default {
         .then((res) => {
           setTimeout(() => {
             if (res.data.postList.length) {
+              this.allArticles = this.allArticles.concat(res.data.postList);
               this.articles = this.articles.concat(res.data.postList);
               this.page += 1;
               $state.loaded();
@@ -114,20 +152,22 @@ export default {
       this.onlyOne = true;
       this.infiniteId += 1;
     },
-  },
-  computed: {
-      imageUrl(){
-        return (article)=>{
-          return 'http://i3b203.p.ssafy.io/img/'+`${article.image}`
+    setAddress(address) {
+      this.address = address;
+      this.flag = true;
+      var tempArticles = [];
+      for (const a of this.articles) {
+        if (a.address === address) {
+          tempArticles.push(a);
         }
-      },
+      }
+      this.articles = tempArticles;
+    },
+    resetArticles() {
+      this.articles = this.allArticles;
+      this.flag = false;
+    },
   },
-  // computed: {
-  //   ...mapState(["articles"]),
-  // },
-  // created() {
-  //   this.getArticles({ temp: 3, categoryId: this.categoryNum });
-  // },
 };
 </script>
 
@@ -141,26 +181,24 @@ export default {
   color: white;
   font-weight: bold;
 }
-/* .article-title {
-  font-size: 17px;
-  font-weight: 600;
-  letter-spacing: -0.6px;
-  color: #212529;
-  margin-bottom: 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  line-height: 1.2;
-}*/
-/* .article-address {
-  font-size: 13.5px;
-  margin-bottom: 7px;
-  margin-top: 15px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  line-height: 1.2;
-} */
+.article-create-btn {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #ee6e9f;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
+}
+.view-all-btn {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  background-color: rgb(151, 151, 151);
+  color: white;
+  font-weight: bold;
+}
 .article-card {
   height: 400px;
 }
@@ -188,7 +226,6 @@ $x-large: 1200px;
   position: relative;
   flex: 1 1 100%;
   background: lighten($color-bg, 3%);
-
   @media screen and (min-width: $medium) {
     flex-basis: calc(33.33% - (#{$grid-gutter * 2} + #{$card-padding * 2}));
     margin: 0 $grid-gutter;
@@ -196,7 +233,6 @@ $x-large: 1200px;
 }
 .card__one {
   transition: transform 0.3s;
-
   &::after {
     position: absolute;
     top: 0;
@@ -220,8 +256,7 @@ $x-large: 1200px;
     }
   }
 }
-.card-end {
-  // background-color: #FFCBDB;
-  // opacity: 0.7;
+.disable {
+  display: none;
 }
 </style>

@@ -1,10 +1,13 @@
 <template>
   <div class="mt-5">
-    <div class="container detail">
+    <div
+      class="container detail"
+      style="font-family: 'Recipekorea', cursive; font-size:16.5px"
+    >
       <!--Top 부분. 제목, 작성자, create time -->
       <div class="top">
         <div class="top-row">
-          <div class="detail-title">{{ articleData.title }}</div>
+          <div class="detail-title ml-1">{{ articleData.title }}</div>
           <!--게시글 수정,삭제,신고 버튼-->
           <div v-if="udflag">
             <div
@@ -12,62 +15,93 @@
               v-if="articleData.userId === userData.userId"
             >
               <button type="button" class="article-btn" data-toggle="dropdown">
-                <i class="fas fa-ellipsis-v"></i>
+                <i class="fas fa-ellipsis-h"></i>
               </button>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu px-0 w-1 pr-0 control-width">
                 <router-link
                   class="articleUpdate"
+                  style="text-decoration: none; color: black"
                   :to="{
                     name: 'articleUpdate',
                     params: { ID: this.$route.params.ID },
                   }"
                 >
-                  <a class="dropdown-item articleUpdate">수정</a>
+                  <a class="dropdown-item pr-0 articleUpdate">수정</a>
                 </router-link>
                 <a
-                  class="dropdown-item"
-                  @click="deleteArticle({articleId: articleData.articleId, categoryId: articleData.categoryId})"
-                >삭제</a>
-
+                  class="dropdown-item pr-0"
+                  @click="
+                    deleteArticle({
+                      articleId: articleData.articleId,
+                      categoryId: articleData.categoryId,
+                    })
+                  "
+                  >삭제</a
+                >
+            </div>
                 <!--다시 보기!!!!!!!1 -->
               </div>
             </div>
 
             <!-- 게시물 신고 -->
-            <div v-else>
+            <div v-if="articleData.userId !== userData.userId">
               <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
-              <b-modal id="modal-1" title="신고 접수">
+              <b-modal :hide-footer="true" id="modal-1" title="신고 접수">
                 <h6>신고 사유</h6>
                 <div class="dropdown">
                   <button
-                    class="btn btn-secondary dropdown-toggle"
+                    class="btn btn-secondary btn-sm dropdown-toggle"
                     type="button"
                     id="dropdownMenuButton"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
-                  >선택</button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설</a>
-                    <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">노쇼</a>
-                    <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고</a>
+                  >
+                    {{ kind }}
+                  </button>
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      @click="changeAccuseKind(1)"
+                      >욕설, 비난을 했어요!</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      @click="changeAccuseKind(2)"
+                      >약속 장소에 나오지 않았어요!</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      @click="changeAccuseKind(3)"
+                      >광고를 하고 있어요!</a
+                    >
                   </div>
                 </div>
-                <h6>신고할 게시물 URL</h6>
-                <b-form-input id="type-url" type="url" v-model="accuseArticleData.accuseUrl"></b-form-input>
-                <h6>사유 상세</h6>
+                <h6 class="mt-3">사유 상세</h6>
                 <b-form-textarea
                   id="textarea-rows"
                   rows="8"
+                  style="width: 400px"
                   v-model="accuseArticleData.accuseReason"
                 ></b-form-textarea>
-                <button @click="createArticleAccuse({ accuseArticleData })">신고접수</button>
+                <hr />
+                <button
+                  @click="createArticleAccuse({ accuseArticleData })"
+                  class="btn btn-danger btn-sm"
+                >
+                  신고접수
+                </button>
               </b-modal>
             </div>
-          </div>
+          
           <!-- 게시물 신고 -->
-
           <br />
         </div>
         <div
@@ -77,18 +111,29 @@
           }"
         >
           <button
-            class="tag"
+            class="tag-btn raise-btn"
             v-for="tag in articleData.tags"
             :key="tag.no"
             @click="putWord(tag)"
-          >#{{ tag }}</button>
+          >
+            #{{ tag }}
+          </button>
         </div>
-        <div class="in-the-top">
-          <div class="writer">
-            {{ articleData.writer }}
+        <div class="in-the-top ml-1">
+          <div class="writer mt-1">
+            <router-link
+              style="text-decoration: none; color: black"
+              :to="{
+                name: 'userDetail',
+                params: { ID: articleData.userId },
+              }"
+              >{{ articleData.writer }}</router-link
+            >
             <br />
           </div>
-          <div class="create-time">{{ articleData.timeAgo }}</div>
+          <div class="create-time" style="font-size:12px">
+            {{ articleData.timeAgo }}
+          </div>
         </div>
       </div>
       <hr class="top-line" />
@@ -98,33 +143,66 @@
         <img class="MyImage" :src=imageUrl(articleData) alt="..." />
         <div class="articleInfo">
           <div class="detail-info">
-            <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
-            <div class="detail-price">
-              <div class="min-price">최소 주문 금액: {{ minPrice }}</div>
-              <div class="min-price">모인 금액: {{ sumPrice }}</div>
+            <div class="detail-address">
+              만남의 장소: {{ articleData.address }}
             </div>
-            <div class="detail-endTime">마감 시간: {{ cutDate(articleData.endTime) }}까지</div>
-            <div v-if="checkedStatus">오픈 채팅방 url: {{articleData.openLink}}</div>
+            <div class="detail-price">
+              <div class="min-price">최소 주문 금액 : \{{ minPrice }}</div>
+              <div class="min-price mt-2">모인 금액 : \{{ sumPrice }}</div>
+            </div>
+            <div class="detail-endTime">
+              마감 시간 : {{ cutDate(articleData.endTime) }}까지
+            </div>
+            <div
+              class="article-url mt-2"
+              style="overflow:hidden; word-wrap:break-word;"
+            >
+              사이트 url :
+              <div>
+                {{ articleData.urlLink }}
+              </div>
+            </div>
+            <div v-if="checkedStatus" class="mt-2">
+              오픈 채팅방 url :
+              <div>{{ articleData.openLink }}</div>
+            </div>
           </div>
-          <div class="detail-btns">
+          <div class="detail-btns mt-2">
             <!--좋아요 버튼-->
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
             <!--공유 버튼-->
-            <a href="javascript:;" class="mx-1" @click="shareContent" id="kakao-link">
+            <a
+              href="javascript:;"
+              class="mx-1 kakao-share-link"
+              @click="shareContent"
+              id="kakao-link"
+            >
               <button @click="shareContent" class="detail-share">
                 <!-- <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제" /> -->
                 <i class="fas fa-share-alt"></i> 공유
               </button>
             </a>
-            <div v-if="articleData.status===4 && checkParticipant" class="like-content">
-              <router-link :to="{ name: 'reviewCreate' }" class="ml-auto routerLink">
+            <div
+              v-if="articleData.status === 4 && checkParticipant"
+              class="like-content"
+            >
+              <router-link
+                :to="{ name: 'reviewCreate' }"
+                class="ml-auto routerLink"
+                style="text-decoration: none; color: black"
+              >
                 <button class="review-create-button">
                   <i class="fas fa-pencil-alt"></i> 후기
                 </button>
               </router-link>
             </div>
             <div v-if="articleData.status < 4">
-              <b-button id="show-btn" v-b-modal.join-modal class="participate-btn" v-if="joinFlag">
+              <b-button
+                id="show-btn"
+                v-b-modal.join-modal
+                class="participate-btn"
+                v-if="joinFlag"
+              >
                 <i class="fas fa-user-plus"></i> 참여
               </b-button>
               <!-- <b-button id="show-btn" v-b-modal.join-modal class="detail-join" v-if="joinFlag">
@@ -151,42 +229,117 @@
               class="form-input"
               @ok="sendJoinData"
             >
-              <form ref="form" class="form-input" @submit.stop.prevent="handleSubmit">
-                <b-form-group label="제목" label-for="title-input">
-                  <b-form-input id="title-input" v-model="joinData.title" class="form-input"></b-form-input>
+              <form
+                ref="form"
+                class="form-input"
+                @submit.stop.prevent="handleSubmit"
+              >
+                <b-form-group
+                  label="제목"
+                  label-for="title-input"
+                  class="our-main-font"
+                >
+                  <b-form-input
+                    style="width: 400px;"
+                    id="title-input"
+                    v-model="joinData.title"
+                    class="form-input our-main-font"
+                  ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="url" label-for="url-input">
-                  <b-form-input id="url-input" v-model="joinData.url" class="form-input"></b-form-input>
+                <b-form-group
+                  label="url"
+                  label-for="url-input"
+                  class="our-main-font"
+                >
+                  <b-form-input
+                    style="width: 400px;"
+                    id="url-input"
+                    v-model="joinData.url"
+                    class="form-input our-main-font"
+                  ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="가격(숫자만 입력하세요.)" label-for="price-input">
-                  <b-form-input id="price-input" v-model="joinData.price" class="form-input"></b-form-input>
+                <b-form-group
+                  label="가격(숫자만 입력하세요.)"
+                  label-for="price-input"
+                  class="our-main-font"
+                >
+                  <b-form-input
+                    style="width: 400px;"
+                    id="price-input"
+                    v-model="joinData.price"
+                    class="form-input our-main-font"
+                  ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="요구사항" label-for="order-input">
-                  <b-form-input id="order-input" v-model="joinData.description" class="form-input"></b-form-input>
+                <b-form-group
+                  label="요구사항"
+                  label-for="order-input"
+                  class="our-main-font"
+                >
+                  <b-form-input
+                    style="width: 400px;"
+                    id="order-input"
+                    v-model="joinData.description"
+                    class="form-input our-main-font"
+                  ></b-form-input>
                 </b-form-group>
               </form>
             </b-modal>
 
             <!--임시modal-->
-            <b-modal id="update-modal" size="xl" ref="modal" title="수정하기" @ok="updateJoinData">
+            <b-modal
+              id="update-modal"
+              size="xl"
+              ref="modal"
+              title="수정하기"
+              @ok="updateJoinData"
+            >
               <form ref="form" @submit.stop.prevent="handleSubmit">
-                <b-form-group label="제목" label-for="title-input">
-                  <b-form-input id="title-input" v-model="joinData.title"></b-form-input>
+                <b-form-group
+                  label="제목"
+                  label-for="title-input"
+                  class="our-main-font"
+                >
+                  <b-form-input
+                    id="title-input"
+                    v-model="joinData.title"
+                  ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="url" label-for="url-input">
-                  <b-form-input id="url-input" v-model="joinData.url"></b-form-input>
+                <b-form-group
+                  label="url"
+                  label-for="url-input"
+                  class="our-main-font"
+                >
+                  <b-form-input
+                    id="url-input"
+                    v-model="joinData.url"
+                  ></b-form-input>
                 </b-form-group>
 
-                <b-form-group label="가격" label-for="price-input">
-                  <b-form-input id="price-input" v-model="joinData.price"></b-form-input>원
+                <b-form-group
+                  label="가격"
+                  label-for="price-input"
+                  class="our-main-font"
+                >
+                  <b-form-input
+                    id="price-input"
+                    v-model="joinData.price"
+                  ></b-form-input
+                  >원
                 </b-form-group>
 
-                <b-form-group label="요구사항" label-for="order-input">
-                  <b-form-input id="order-input" v-model="joinData.description"></b-form-input>
+                <b-form-group
+                  label="요구사항"
+                  label-for="order-input"
+                  class="our-main-font"
+                >
+                  <b-form-input
+                    id="order-input"
+                    v-model="joinData.description"
+                  ></b-form-input>
                 </b-form-group>
               </form>
             </b-modal>
@@ -195,39 +348,95 @@
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
+      <div class="detail-content" id="item-1">
+        {{ articleData.description }}
+      </div>
     </div>
-    <div class="kakao-map">
-      <kakaoMapForDetail />
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-5 d-flex justify-content-end mt-5"
+          style="margin-left: 8%;"
+        >
+          <kakaoMapForDetail />
+        </div>
+        <!-- 차트 -->
+        <div
+          class="col-5 d-flex justify-content-start"
+          style="margin-top: 6%; margin-left: 7%; font-family: 'Recipekorea', cursive;"
+        >
+          <DoughnutChart />
+        </div>
+      </div>
     </div>
 
     <!--참가자 리스트-->
-    <div class="members">
-      <div class="members-start">
+    <div class="members mt-5" style="font-family: 'Recipekorea', cursive;">
+      <div class="members-start" style="font-size:19px">
         <i class="fas fa-users"></i>
         참여 멤버 (총 {{ articleData.partList.length }}명)
       </div>
       <div class>
-        <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
+        <div
+          class="member-list"
+          v-for="participant in articleData.partList"
+          :key="participant.no"
+        >
           <div class="member">
-            <div class="member-writer">
-              <router-link
-                :to="{ name: 'userDetail', params: { ID: participant.userId }}"
-              >{{participant.writer}}</router-link>
-              <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
+            <div class="member-writer-info">
+              <div class="members-status">
+                <div class="member-writer" style="font-size:18px">
+                  <router-link
+                    style="text-decoration: none; color: black"
+                    :to="{
+                      name: 'userDetail',
+                      params: { ID: participant.userId },
+                    }"
+                    >{{ participant.writer }}</router-link
+                  >
+                  <i
+                    v-if="articleData.userId === participant.userId"
+                    class="fas fa-crown"
+                  ></i>
+                </div>
+                <div
+                  class="article-participant-status"
+                  v-if="participant.userId != articleData.userId"
+                >
+                  <button v-if="participant.status === 0" class="waiting-btn">
+                    대기중
+                  </button>
+                  <button v-if="participant.status === 1" class="accepted-btn">
+                    수락됨
+                  </button>
+                  <button v-if="participant.status === 2" class="denied-btn">
+                    거절됨
+                  </button>
+                </div>
+              </div>
             </div>
-
             <div v-if="participant.status === 0">
               <div
                 class="article-drop dropdown dropleft"
                 v-if="participant.userId === userData.userId"
               >
-                <button type="button" class="article-btn" data-toggle="dropdown">
+                <button
+                  type="button"
+                  class="article-btn"
+                  data-toggle="dropdown"
+                >
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu">
-                  <b-button variant="light" size="sm" v-b-modal.update-modal>수정</b-button>
-                  <b-button variant="light" size="sm" @click="cancel(participant.no)">삭제</b-button>
+                  <b-button variant="light" size="sm" v-b-modal.update-modal
+                    >수정</b-button
+                  >
+                  <b-button
+                    variant="light"
+                    size="sm"
+                    @click="cancel(participant.no)"
+                    >삭제</b-button
+                  >
                 </div>
               </div>
 
@@ -236,16 +445,28 @@
                 v-if="articleData.writer === userData.nickname"
               >
                 <div v-if="participant.status === 0">
-                  <button type="button" class="article-btn" data-toggle="dropdown">
+                  <button
+                    type="button"
+                    class="article-btn"
+                    data-toggle="dropdown"
+                  >
                     <i class="fas fa-ellipsis-v"></i>
                   </button>
-                  <div class="dropdown-menu">
+                  <div class="dropdown-menu dropleft">
                     <b-button
-                      variant="light"
+                      class="dropdown-item"
                       size="sm"
+                      variant="light"
                       @click="acceptParticpation(participant.writer)"
-                    >수락</b-button>
-                    <b-button @click="$bvModal.show('modal-scoped')">거절</b-button>
+                      >수락</b-button
+                    >
+                    <b-button
+                      class="dropdown-item"
+                      size="sm"
+                      variant="light"
+                      @click="$bvModal.show('modal-scoped')"
+                      >거절</b-button
+                    >
 
                     <b-modal id="modal-scoped">
                       <p>정말 거절하시겠습니까?</p>
@@ -254,8 +475,11 @@
                           size="sm"
                           variant="danger"
                           @click="denyParticpation(participant)"
-                        >거절</b-button>
-                        <b-button size="sm" variant="success" @click="ok()">취소</b-button>
+                          >거절</b-button
+                        >
+                        <b-button size="sm" variant="success" @click="ok()"
+                          >취소</b-button
+                        >
                       </template>
                     </b-modal>
                   </div>
@@ -266,20 +490,24 @@
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-title"
-          >제목: {{ participant.title }}</div>
-          <div class="member-price">가격: {{ parPrice(participant.price) }}</div>
+            style="font-size:18px"
+          >
+            {{ participant.title }}
+          </div>
           <div
             v-if="articleData.userId !== participant.userId"
-            class="member-content"
-          >요구사항: {{ participant.description }}</div>
-          <div v-if="participant.status===0">처리상태:수락 대기</div>
-          <div v-if="participant.status===1">처리상태:수락</div>
-          <div v-if="participant.status===2">처리상태:거절</div>
+            class="member-content mt-1"
+            style="font-size:17.5px"
+          >
+            요구사항: {{ participant.description }}
+          </div>
+          <div class="member-price py-1 mt-1" style="font-size:17.5px">
+            가격: \{{ parPrice(participant.price) }}
+          </div>
         </div>
       </div>
     </div>
     <commentList />
-    <div>{{udflag}}</div>
   </div>
 </template>
 
@@ -290,6 +518,7 @@ import { mapState, mapActions } from "vuex";
 import commentList from "@/components/comments/commentList";
 import articleLike from "@/components/articles/articleLike";
 import kakaoMapForDetail from "@/components/articles/kakaoMapForDetail";
+import DoughnutChart from "@/components/articles/DoughnutChart";
 
 export default {
   name: "articleDetail",
@@ -297,6 +526,7 @@ export default {
     commentList,
     articleLike,
     kakaoMapForDetail,
+    DoughnutChart,
   },
   data() {
     return {
@@ -316,7 +546,7 @@ export default {
         accuseValue: "",
         accuseKind: 0,
         accuseReason: "",
-        accuseUrl: "",
+        accuseUrl: document.URL,
         accuseConfirm: 0,
         token: this.$cookies.get("auth-token"),
       },
@@ -329,52 +559,56 @@ export default {
         categoryId: 0,
         temp: 1,
       },
+      kind: "선택",
     };
   },
   computed: {
     ...mapState(["articleData", "userData"]),
     minPrice() {
-      return new Intl.NumberFormat("ko-KR", {
+      var res = new Intl.NumberFormat("ko-KR", {
         style: "currency",
         currency: "KRW",
       }).format(this.articleData.minPrice);
+      let result = res + "";
+      const real = result.substring(1, res.length);
+      return real;
     },
     sumPrice() {
-      return new Intl.NumberFormat("ko-KR", {
+      var res = new Intl.NumberFormat("ko-KR", {
         style: "currency",
         currency: "KRW",
       }).format(this.articleData.sumPrice);
+      let result = res + "";
+      const real = result.substring(1, res.length);
+      return real;
     },
     parPrice() {
       return (price) => {
-        return new Intl.NumberFormat("ko-KR", {
+        var res = new Intl.NumberFormat("ko-KR", {
           style: "currency",
           currency: "KRW",
         }).format(price);
+        let result = res + "";
+        const real = result.substring(1, res.length);
+        return real;
       };
     },
-    imageUrl(){
-        return (articleData)=> {
-          return 'http://i3b203.p.ssafy.io/img/'+`${articleData.image}`
-        }
-      },
-    // imageUrl() {
-    //   try{
-    //     return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
-    //   }catch{
-
-    //   }
-    //   return require('@/assets/images/'+`${article.image}`)
-    // },
-    udflag(){
-      var tmp = 0
-      for(const t of this.articleData.partList){
-        if(t.status===1){
-          tmp++
+    imageUrl() {
+      try {
+        return require("http://i3b203.p.ssafy.io/img/" +
+          `${this.articleData.image}`);
+      } catch {}
+      //   return require('http://i3b203.p.ssafy.io/img/'+`${article.image}`)
+    },
+    udflag() {
+      var tmp = 0;
+      for (const t of this.articleData.partList) {
+        if (t.status === 1) {
+          tmp++;
         }
       }
 
-      return tmp===1 ? true : false
+      return tmp === 1 ? true : false;
     },
     joinFlag() {
       const tempList = [];
@@ -455,8 +689,17 @@ export default {
       axios
         .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
         .then((response) => {
-          alert("구매가 확정되었습니다.");
-          this.getArticle(this.$route.params.ID)
+          Swal.fire({
+            icon: "success",
+            height: 300,
+            width: 300,
+
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">구매확정 되었습니다!</a>',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.getArticle(this.$route.params.ID);
         })
         .catch((error) => {
           console.log(error);
@@ -469,6 +712,13 @@ export default {
 
     // 신고 유형 변경
     changeAccuseKind(kind) {
+      if (kind === 1) {
+        this.kind = "욕설, 비난을 했어요!";
+      } else if (kind === 2) {
+        this.kind = "약속 장소에 나오지 않았어요!";
+      } else {
+        this.kind = "광고를 하고 있어요!";
+      }
       this.accuseArticleData.accuseKind = kind;
       this.linkArticleData();
       this.linkUserData();
@@ -500,16 +750,49 @@ export default {
       return res;
     },
     sendJoinData() {
-      axios
-        .post(`${BACK_URL}/participant/create`, this.joinData)
-        .then((response) => {
-          this.getparticipantData();
-          alert("등록이 완료되었습니다!");
-        })
-        .catch((error) => {
-          console.log(error);
-          alert("이미 참가한 게시글 입니다.");
+      if (
+        this.joinData.title &&
+        this.joinData.price &&
+        this.joinData.description &&
+        this.joinData.url
+      ) {
+        axios
+          .post(`${BACK_URL}/participant/create`, this.joinData)
+          .then((response) => {
+            this.getparticipantData();
+            Swal.fire({
+              icon: "success",
+              height: 300,
+              width: 200,
+              title:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">참가 완료!</a>',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            Swal.fire({
+              icon: "error",
+              height: 300,
+              width: 300,
+              title:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">이미 참여한 게시물입니다.</a>',
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
+      } else {
+        Swal.fire({
+          icon: "warning",
+          height: 300,
+          width: 350,
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">참여폼을 다 채워주세요!</a>',
+          showConfirmButton: false,
+          timer: 1800,
         });
+      }
     },
     updateJoinData() {
       this.joinData.articleId = this.articleData.articleId;
@@ -517,7 +800,15 @@ export default {
         .post(`${BACK_URL}/participant/update`, this.joinData)
         .then((response) => {
           this.getparticipantData();
-          alert("수정이 완료되었습니다.");
+          Swal.fire({
+            icon: "success",
+            height: 300,
+            width: 200,
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">수정 완료!</a>',
+            showConfirmButton: false,
+            timer: 1500,
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -538,7 +829,15 @@ export default {
         .post(`${BACK_URL}/participant/delete/${no}`)
         .then((response) => {
           this.getparticipantData();
-          console.log("삭제가 완료되었습니다.");
+          Swal.fire({
+            icon: "success",
+            height: 300,
+            width: 200,
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">삭제 완료!</a>',
+            showConfirmButton: false,
+            timer: 1500,
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -570,14 +869,15 @@ export default {
             },
           },
         ],
-        success: function (response) {
+        success: function(response) {
           console.log(response);
         },
-        fail: function (error) {
+        fail: function(error) {
           console.log(error);
         },
       });
     },
+    
     likeCheck() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios
@@ -592,7 +892,7 @@ export default {
       this.likeCheck();
     },
   },
-  created: function () {
+  created: function() {
     this.getArticle(this.$route.params.ID);
     this.likeCheck();
   },
@@ -600,6 +900,63 @@ export default {
 </script>
 
 <style>
+.members-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.member-writer {
+  text-align: center;
+  padding-top: 3px;
+}
+.article-participant-status {
+  vertical-align: 4px;
+}
+.waiting-btn,
+.accepted-btn,
+.denied-btn {
+  outline: none;
+  border-radius: 5px;
+  background-color: transparent;
+  padding-top: 4px;
+  font-size: 14px;
+  margin-left: 5px;
+  vertical-align: text-bottom;
+  height: 27px;
+  cursor: none;
+}
+.waiting-btn,
+.accepted-btn,
+.denied-btn:focus {
+  border: none;
+  outline: none;
+}
+.waiting-btn {
+  border: 2px solid rgb(240, 219, 31);
+  color: rgb(240, 219, 31);
+}
+.accepted-btn {
+  border: 2px solid rgb(102, 102, 247);
+  color: rgb(102, 102, 247);
+}
+.denied-btn {
+  border: 2px solid rgb(218, 37, 37);
+  color: rgb(218, 37, 37);
+}
+.control-width {
+  width: 30px;
+}
+.member-writer-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.kakao-share-link {
+  text-decoration: none;
+}
+.kakao-share-link:hover {
+  text-decoration: none;
+}
 .routerLink {
   text-decoration: none;
 }
@@ -613,7 +970,8 @@ export default {
   color: #eee;
   border-radius: 3px;
   box-shadow: 0 10px 20px -8px #1d0622;
-  padding: 10px 12px;
+  /* padding: 10px 12px; */
+  padding: 12px 12px 7px 12px;
   -webkit-transition: 0.3s ease;
 }
 .review-create-button:hover {
@@ -624,9 +982,9 @@ export default {
 }
 .kakao-map {
   display: flex;
-  width: 100%;
+  width: 700px;
   margin: 3% 0 0 0;
-  padding: auto;
+  /* padding: auto; */
   justify-content: center;
   text-align: center;
 }
@@ -663,6 +1021,7 @@ export default {
 .fa-crown {
   color: rgb(245, 230, 24);
   vertical-align: text-top;
+  margin-left: 4px;
 }
 .members-start {
   width: 100%;
@@ -698,7 +1057,7 @@ b-modal.form-input {
 .MyImage {
   width: 45%;
   height: 300px;
-  margin: 10px;
+  margin: 10px 5px 10px 2px;
 }
 .totheContent {
   background-color: #676d74;
@@ -747,14 +1106,14 @@ a {
 }
 .articleInfo {
   text-align: left;
-  padding: 15px 35px 35px 40px;
-  width: 65%;
+  padding: 15px 30px 35px 35px;
+  width: 55%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 990px) {
   .middle-row {
     display: flex;
     flex-direction: column;
@@ -800,7 +1159,7 @@ a {
 }
 .detail-content {
   margin: 30px 0;
-  padding: 0 15px;
+  padding: 0 2px;
   text-align: left;
 }
 .detail-btns {
@@ -816,7 +1175,7 @@ a {
   background: rgb(250, 227, 1);
   border-radius: 3px;
   color: #ffffff;
-  padding: 10px 12px;
+  padding: 12px 12px 7px 12px;
   font-size: 17px;
   text-align: center;
   box-shadow: 0 10px 20px -8px rgb(202, 190, 21);
@@ -836,7 +1195,8 @@ a {
   /* background-color: rgb(37, 7, 44); */
   background-color: #32093d;
   box-shadow: 0 10px 20px -8px rgb(5, 1, 7);
-  padding: 10px 11px;
+  /* padding: 10px 11px; */
+  padding: 12px 12px 7px 12px;
   border-radius: 3px;
   border: none;
   outline: none;
@@ -851,6 +1211,25 @@ a {
   transform: translateY(-3px);
   background-color: #2e0838;
 }
+.detail-btns .detail-join {
+  background-color: #000000;
+  box-shadow: 0 10px 20px -8px rgb(5, 1, 7);
+  /* padding: 10px 11px; */
+  padding: 12px 12px 7px 12px;
+  border-radius: 3px;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+  font-size: 17px;
+  display: block;
+  text-align: center;
+}
+.detail-btns .detail-join:hover {
+  transform: translateY(-3px);
+  background-color: #141314;
+}
 .article-drop {
   display: flex;
   flex-direction: row;
@@ -864,6 +1243,10 @@ a {
   border: none;
   cursor: pointer;
   width: 100%;
+  outline: none;
+}
+.article-btn:focus {
+  border: none;
   outline: none;
 }
 .article-drop:hover {
@@ -914,10 +1297,55 @@ a {
 .nomargin {
   margin: 0;
 }
-.tag {
+/* .tag-btn {
+  border: 3px solid #ee6e9f;
+  background-color: transparent;
   margin-right: 1%;
-  border: none;
   outline: none;
-  border-radius: 3px;
+  border-radius: 20px;
+  padding: 5px 6px 2px 4px;
+  box-shadow: 0 1px 4px #e23577, 0 0 40px #fcfafa inset;
+} */
+</style>
+
+<style scoped lang="scss">
+.tag-btn {
+  position: relative;
+
+  background-color: transparent;
+  border: 3px solid #ee6e9f;
+  margin-right: 1%;
+  outline: none;
+  border-radius: 20px;
+  padding: 5px 6px 2px 4px;
+
+  color: #000;
+  text-align: center;
+
+  transform-style: flat;
+  transition: all 250ms ease-out;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    transition: all 250ms ease-out;
+  }
+}
+.raise-btn {
+  &:before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &:hover {
+    border: 3px solid #ee6e9f;
+
+    &:before {
+      box-shadow: 0 15px 10px -10px #e23577;
+    }
+  }
 }
 </style>
