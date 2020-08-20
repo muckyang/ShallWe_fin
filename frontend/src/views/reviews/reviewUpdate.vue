@@ -1,46 +1,55 @@
 <template>
-  <div>
-    <div class="container m-5 mx-auto font-weight-bold">
-      <div class="shadow border rounded m-5">
-        <div class="form-group mb-5 w-75 mx-auto">
-          <p class="align-self-center m-1 text-left">Title</p>
-          <input
-            id="title"
-            type="text"
-            class="form-control form-control-lg"
-            v-model="articleUpdateData.title"
-          />
-        </div>
-        <div class="form-group w-75 mx-auto">
-          <p class="align-self-center m-1 text-left">Description</p>
-          <textarea
-            placeholder="내용을 입력해 주세요."
-            class="form-control form-control-lg"
-            v-model="articleUpdateData.description"
-            id="content"
-            cols="30"
-            rows="10"
-          ></textarea>
-        </div>
-        <div class="form-group mb-5 w-75 mx-auto">
-          <p class="align-self-center m-1 mt-3 text-left">Image</p>
-          <input type="file" class="form-control form-control-lg" @change="imageChange" />
-        </div>
+  <div class="post-container" style="margin-left: 10%; margin-right: 10%">
+    <h5 class="pl-sm-2 pb-sm-1">
+      <strong class="our-main-font">후기 수정</strong>
+    </h5>
+    <!--선택 장소-->
+      <div class="create-alert-msg">
+        <small style="font-size: 15.5px; color: #ee6e9f;" class="our-main-font">*</small>
+        <small style="font-size: 15.5px;" class="our-main-font">표시는 필수값입니다.</small>
       </div>
-    </div>
+    <table class="table mt-1">
+      <tbody>
+        <tr>
+          <th scope="row" class="our-main-font">제목<small style="font-size: 15.5px; color: #ee6e9f;" class="our-main-font">*</small></th>
+          <td class="d-flex">
+            <b-form-input type="text" v-model="articleData.title"></b-form-input>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" class="our-main-font">내용<small style="font-size: 15.5px; color: #ee6e9f;" class="our-main-font">*</small></th>
+          <td>
+            <div>
+              <b-form-textarea id="textarea-rows" rows="8" v-model="articleData.description"></b-form-textarea>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" class="our-main-font">사진첨부</th>
+          <td>
+            <b-form-file class="mt-3 our-main-font" @change="imageChange" plain></b-form-file>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <div class="d-flex justify-content-center">
     <button
-      class="btn btn-secondary"
+      style="font-size: 15px;"
+      class="complete-form our-main-font"
       type="submit"
       @click="updateArticle({ articleUpdateData, temp: 2 })"
     >수정</button>
     <button
-      class="ml-1 btn btn-danger"
+      style="font-size: 15px;"
+      class="temp-form our-main-font"
+      
       type="submit"
       @click="deleteArticle({ id: articleUpdateData.articleId, temp: 2 })"
     >삭제</button>
+    </div>
   </div>
 </template>
-
 <script>
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 import axios from "axios";
