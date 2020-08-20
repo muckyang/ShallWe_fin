@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container m-5 mx-auto font-weight-bold">
+    <div class="container m-5 mx-auto font-weight-bold our-main-font">
       <div class="shadow border rounded m-5">
         <div class="form-group mb-5 w-75 mx-auto">
           <p class="align-self-center m-1 text-left">Title</p>
@@ -24,20 +24,26 @@
         </div>
         <div class="form-group mb-5 w-75 mx-auto">
           <p class="align-self-center m-1 mt-3 text-left">Image</p>
-          <input type="file" id="file" name="file" ref="file" style="width: 100%;"/>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            ref="file"
+            style="width: 100%;"
+          />
         </div>
       </div>
     </div>
-    <button
-      class="btn btn-secondary"
-      type="submit"
-      @click="postUpdate"
-    >수정</button>
+    <button class="btn btn-secondary" type="submit" @click="postUpdate">
+      수정
+    </button>
     <button
       class="ml-1 btn btn-danger"
       type="submit"
       @click="deleteArticle({ id: articleUpdateData.articleId, temp: 2 })"
-    >삭제</button>
+    >
+      삭제
+    </button>
     <button @click="fileUpload">asdsadas</button>
   </div>
 </template>
@@ -71,38 +77,37 @@ export default {
     imageUpload() {
       this.$refs.imageInput.click();
     },
-    fileUpload: function () {
+    fileUpload: function() {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
       formData.append("file", this.file);
       formData.append("uid", 10);
-      axios.post(`${BACK_URL}/file`
-          ,formData
-          , {
-              headers: {
-                  'Content-Type': 'multipart/form-data'
-              }
-          })
+      axios
+        .post(`${BACK_URL}/file`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
-          this.path = response.data
-          this.articleUpdateData.image = this.path
-          var tmp=this.articleUpdateData.image.split('.')
-          tmp[1]=tmp[1].toLowerCase()
-          this.articleUpdateData.image = tmp[0]+'.'+tmp[1]
+          this.path = response.data;
+          this.articleUpdateData.image = this.path;
+          var tmp = this.articleUpdateData.image.split(".");
+          tmp[1] = tmp[1].toLowerCase();
+          this.articleUpdateData.image = tmp[0] + "." + tmp[1];
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    postUpdate(){
-      this.fileUpload()
+    postUpdate() {
+      this.fileUpload();
       setTimeout(() => {
-        var articleUpdateData=this.articleUpdateData
-        this.updateArticle({ articleUpdateData, temp: 2 })
+        var articleUpdateData = this.articleUpdateData;
+        this.updateArticle({ articleUpdateData, temp: 2 });
       }, 300);
     },
   },
-  created: function () {
+  created: function() {
     this.getArticle(this.$route.params.ID);
     this.articleUpdateData = this.articleData;
   },
