@@ -27,7 +27,7 @@
           >로그아웃</a>
         </li>
 
-        <div class="wall" v-show="isLoggedin">|</div>
+        <div class="wall" v-show="isAdmin||isLoggedin">|</div>
 
         <li class="nav-item mr-1">
           <router-link
@@ -38,8 +38,6 @@
           >마이페이지</router-link>
         </li>
       </ul>
-
-      <div class="wall" v-show="isLoggedin && !isAdmin">|</div>
 
       <!-- 유저관리 -->
       <div v-if="isAdmin" class="d-flex align-items-starts mr-1">
