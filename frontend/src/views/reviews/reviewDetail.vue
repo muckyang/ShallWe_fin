@@ -25,11 +25,11 @@
         <div
           :class="{'review-info':review.userId!== userData.userId,'review-info-ver':review.userId=== userData.userId}"
         >
-          <div class="review-writer our-main-font">{{review.writer}}</div>
+          <div class="review-writer our-main-font p-1">{{review.writer}}</div>
           <div class="review-time our-main-font">{{review.timeAgo}}</div>
         </div>
         <div class="review-middle">
-          <div class="review-title our-main-font">{{review.title}}</div>
+          <div class="review-title our-main-font p-1">{{review.title}}</div>
           <div class="review-like-comment">
             <div class="like-container our-main-font">
               <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
@@ -53,6 +53,7 @@
           <div :class="{'review-content':review.image, 'review-content-ver':review.image==null}">
             <div
               :class="{'review-description':review.image, 'review-description-ver':review.image==null}"
+              class="our-main-font"
             >{{review.description}}</div>
             <reviewCommentList
               :commentList="review.commentList"

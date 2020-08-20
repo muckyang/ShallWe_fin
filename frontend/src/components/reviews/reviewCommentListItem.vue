@@ -5,10 +5,10 @@
       <div class="review-comment-container">
         <div class="comment-user">
           <router-link
-            class="comment-user-link"
+            class="comment-user-link our-main-font" 
             :to="{ name: 'userDetail', params: { ID: comment.userId } }"
           >
-            <a class="comment-user-link">{{ comment.nickname }}</a>
+            <a class="comment-user-link our-main-font">{{ comment.nickname }}</a>
           </router-link>
           <div
             class="comment-drop dropdown dropleft"
@@ -17,9 +17,9 @@
             <button type="button" class="comment-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
             </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" @click="showInput" v-if="!flag">수정</a>
-              <a class="dropdown-item" @click="deleteComment">삭제</a>
+            <div class="dropdown-menu our-main-font">
+              <a class="dropdown-item our-main-font" @click="showInput" v-if="!flag">수정</a>
+              <a class="dropdown-item our-main-font" @click="deleteComment">삭제</a>
             </div>
           </div>
 
@@ -27,7 +27,7 @@
           <div v-else>
             <button
               type="button"
-              class="siren-btn"
+              class="siren-btn our-main-font"
               data-toggle="modal"
               :data-target="'#exampleModal' + commentId"
             >
@@ -44,7 +44,7 @@
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">
+                    <h5 class="modal-title our-main-font" id="exampleModalLabel">
                       신고 접수
                     </h5>
                     <button
@@ -57,10 +57,10 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <h6>신고 사유</h6>
+                    <h6 class="our-main-font">신고 사유</h6>
                     <div class="dropdown">
                       <button
-                        class="btn btn-secondary btn-sm dropdown-toggle"
+                        class="btn btn-secondary btn-sm dropdown-toggle our-main-font"
                         type="button"
                         id="dropdownMenuButton"
                         data-toggle="dropdown"
@@ -74,32 +74,32 @@
                         aria-labelledby="dropdownMenuButton"
                       >
                         <a
-                          class="dropdown-item"
+                          class="dropdown-item our-main-font" 
                           href="#"
                           @click="changeAccuseKind(1)"
                           >욕설, 비난을 했어요!</a
                         >
                         <a
-                          class="dropdown-item"
+                          class="dropdown-item our-main-font"
                           href="#"
                           @click="changeAccuseKind(2)"
                           >약속 장소에 나오지 않았어요!</a
                         >
                         <a
-                          class="dropdown-item"
+                          class="dropdown-item our-main-font"
                           href="#"
                           @click="changeAccuseKind(3)"
                           >광고를 하고 있어요!</a
                         >
                       </div>
                     </div>
-                    <h6 class="mt-3">사유 상세</h6>
+                    <h6 class="mt-3 our-main-font">사유 상세</h6>
                     <b-form-textarea
                       id="textarea-rows"
                       rows="8"
                       v-model="accuseCommentData.accuseReason"
                     ></b-form-textarea>
-                    <h6 class="mt-3">신고할 게시물 URL</h6>
+                    <h6 class="mt-3 our-main-fonts">신고할 게시물 URL</h6>
                     <b-form-input
                       style="width: 400px"
                       id="type-url"
@@ -109,7 +109,7 @@
                     <hr />
                     <button
                       @click="createCommentAccuse({ accuseCommentData })"
-                      class="btn btn-danger btn-sm"
+                      class="btn btn-danger btn-sm our-main-font"
                     >
                       신고접수
                     </button>
@@ -120,8 +120,8 @@
           </div>
           <!-- 게시물 신고 -->
         </div>
-        <div class="comment-content">{{ comment.content }}</div>
-        <div class="comment-create-time">{{ cutDate(comment.createTime) }}</div>
+        <div class="comment-content our-main-font">{{ comment.content }}</div>
+        <div class="comment-create-time our-main-font">{{ cutDate(comment.createTime) }}</div>
       </div>
     </div>
 
@@ -135,7 +135,7 @@
         <button
           type="button"
           v-if="flag"
-          class="comment-update-btn"
+          class="comment-update-btn our-main-font"
           @click="updateCancel"
         >
           취소
@@ -143,7 +143,7 @@
         <button
           type="button"
           v-if="flag"
-          class="comment-update-btn"
+          class="comment-update-btn our-main-font"
           @click="updateComment"
         >
           수정
