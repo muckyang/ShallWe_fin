@@ -336,6 +336,7 @@ import { mapState, mapActions } from "vuex";
 import commentList from "@/components/comments/commentList";
 import articleLike from "@/components/articles/articleLike";
 import kakaoMapForDetail from "@/components/articles/kakaoMapForDetail";
+import DoughnutChart from '@/components/articles/DoughnutChart'
 
 export default {
   name: "articleDetail",
@@ -343,6 +344,7 @@ export default {
     commentList,
     articleLike,
     kakaoMapForDetail,
+    DoughnutChart,
   },
   data() {
     return {
