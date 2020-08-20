@@ -18,21 +18,6 @@
             <small style="font-size: 17px; color: #ee6e9f;">*</small>
           </th>
           <td class="d-flex">
-            <!-- <div class="btn-group">
-              <button
-                type="button"
-                class="btn btn-outline-secondary btn-sm dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >{{ selectedTBG }}</button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" @click="selectCategory(101)">공지</a>
-                <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
-                관리자라면 선택할 수 있음
-                <a class="dropdown-item" href="#" @click="selectCategory(104)">공지사항</a>
-              </div>
-            </div>-->
             <b-form-input
               type="text"
               v-model="articleData.title"
@@ -99,9 +84,7 @@ export default {
   },
   methods: {
     ...mapActions(["getArticle", "deleteArticle", "updateArticle"]),
-    imageUpload() {
-      this.$refs.imageInput.click();
-    },
+
     fileUpload: function() {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];

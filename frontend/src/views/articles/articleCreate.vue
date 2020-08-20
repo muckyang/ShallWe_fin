@@ -55,59 +55,48 @@
       </div>
     </div>
   </div>
+  <div class="tags">
+    <label>태그</label>
+    <b-form-tags v-model="articleData.tags" no-outer-focus class="tag-input-box mb-2">
+      <template
+        v-slot="{
+          tags,
+          inputAttrs,
+          inputHandlers,
+          tagVariant,
+          addTag,
+          removeTag
+        }">
+        <b-input-group class="mb-2">
+          <b-form-input
+            v-bind="inputAttrs"
+            v-on="inputHandlers"
+            placeholder="엔터를 누르면 태그가 추가돼요!"
+            id="tag-input"
+            class="form-control tag-submit-input"
+          ></b-form-input>
+          <b-input-group-append>
+            <b-button @click="addTag()" class="tag-submit">등록</b-button>
+          </b-input-group-append>
+        </b-input-group>
+        <div class="mt-2" style="font-size: 20px;">
+          <b-form-tag
+            v-for="tag in tags"
+            @remove="removeTag(tag)"
+            :key="tag"
+            :title="tag"
+            :variant="tagVariant"
+            class="tag-btns mr-2">
+            <div class="tag-name mt-1">{{ tag }}</div>
+          </b-form-tag>
+        </div>
+      </template>
+    </b-form-tags>
+  </div>
 
-    <div class="tags">
-      <label>태그</label>
-      <b-form-tags
-        v-model="articleData.tags"
-        no-outer-focus
-        class="tag-input-box mb-2"
-      >
-        <template
-          v-slot="{
-            tags,
-            inputAttrs,
-            inputHandlers,
-            tagVariant,
-            addTag,
-            removeTag,
-          }"
-        >
-          <b-input-group class="mb-2">
-            <b-form-input
-              v-bind="inputAttrs"
-              v-on="inputHandlers"
-              placeholder="엔터를 누르면 태그가 추가돼요!"
-              id="tag-input"
-              class="form-control tag-submit-input"
-            ></b-form-input>
-            <b-input-group-append>
-              <div>
-                <b-button @click="addTag()" class="tag-submit">등록</b-button>
-              </div>
-            </b-input-group-append>
-          </b-input-group>
-          <div class="mt-2" style="font-size: 20px;">
-            <b-form-tag
-              v-for="tag in tags"
-              @remove="removeTag(tag)"
-              :key="tag"
-              :title="tag"
-              :variant="tagVariant"
-              class="tag-btns mr-2"
-            >
-              <div class="tag-name mt-1">{{ tag }}</div>
-            </b-form-tag>
-          </div>
-        </template>
-      </b-form-tags>
-    </div>
-
-    <div class="create-submit">
-      <button class="temp-form" @click="articleCreate(0)">임시저장</button>
-      <button class="complete-form" @click="articleCreate(1)">
-        <i class="fas fa-check"></i> 완료
-      </button>
+  <div class="create-submit">
+    <button class="temp-form" @click="articleCreate(0)">임시저장</button>
+    <button class="complete-form" @click="articleCreate(1)"><i class="fas fa-check"></i> 완료</button>
     </div>
   </div>
 </template>
@@ -184,12 +173,24 @@ export default {
     selectCategory(num) {
       this.articleData.categoryId = num;
       if (num === 1) {
-        this.selectedTBG = "쉘위배민";
+        this.selectedTBG = "쉘위배달";
       } else if (num === 2) {
         this.selectedTBG = "쉘위택배";
       } else {
-        this.selectedTBG = "쉘위N빵";
+        this.selectedTBG = "쉘위공구";
       }
+    },
+    imageChange(e) {
+      const selectedImage = e.target.files[0];
+      this.createBase64Image(selectedImage);
+    },
+    createBase64Image(fileObject) {
+      this.articleData.image = new Image();
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.articleData.image = e.target.result;
+      };
+      reader.readAsDataURL(fileObject);
     },
     imageUpload() {
       this.$refs.imageInput.click();
@@ -203,20 +204,21 @@ export default {
       deep: true,
       handler() {
         try {
-          if (this.articleData.minPrice < 0) {
+           if (this.articleData.minPrice!=undefined && this.articleData.myPrice!=undefined &&  this.articleData.minPrice <= this.articleData.myPrice) {
             Swal.fire({
               icon: "warning",
               height: 300,
-              width: 350,
+              width: 400,
               title:
-                '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">시작 금액은 최소 금액보다 커야합니다.</a>',
               confirmButtonText:
                 '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
               confirmButtonColor: "#ee6e9f",
             });
+            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.minPrice = null;
           }
-          if (this.articleData.myPrice < 0) {
+          if (this.articleData.minPrice <= 0 ) {
             Swal.fire({
               icon: "warning",
               height: 300,
@@ -227,6 +229,21 @@ export default {
                 '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
               confirmButtonColor: "#ee6e9f",
             });
+            // alert("1이상의 정수만 입력이 가능합니다.");
+            this.articleData.minPrice = null;
+          }
+          if (this.articleData.myPrice <= 0) {
+            Swal.fire({
+              icon: "warning",
+              height: 300,
+              width: 350,
+              title:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">1이상의 정수만 입력이 가능합니다.</a>',
+              confirmButtonText:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+              confirmButtonColor: "#ee6e9f",
+            });
+            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.myPrice = null;
           }
         } catch {}
@@ -238,9 +255,13 @@ export default {
 
 <style>
 .create-alert-msg {
+  /* border: 1px solid red; */
   display: flex;
   justify-content: flex-end;
   padding-right: 10px;
+}
+.kakao-map-select {
+  /* border: 1px solid red; */
 }
 .create-container {
   padding-left: 0;
@@ -250,9 +271,11 @@ export default {
   flex-direction: row;
 }
 .right-items {
+  /* border: 1px solid blue; */
   text-align: left;
   margin: 0 0 0 1.5vw;
   width: 55vw;
+  /* border: 1px solid rgb(201, 201, 201); */
   border-radius: 4px;
 }
 .right-items > div {
@@ -336,6 +359,17 @@ export default {
 input:focus::placeholder {
   color: transparent;
 }
+/* .tag-submit {
+  border: none;
+  outline: none;
+  border-top-left-radius: 0%;
+  border-bottom-left-radius: 0%;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  background-color: #ee6e9f;
+  opacity: 0.85;
+  transition: 0.3s;
+} */
 .tag-submit {
   border: none;
   outline: none;
@@ -364,6 +398,7 @@ input:focus::placeholder {
   color: black;
   margin-bottom: 1.5%;
   outline: none;
+  /* padding: 5px 10px 5px 10px; */
   padding: 7px 9px 5px 9px;
 }
 .tag-submit-input {
@@ -373,6 +408,43 @@ input:focus::placeholder {
   border: none;
   outline: none;
 }
+
+/* .{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-top-color: rgba(255,255,255,0.5);
+  border-bottom-color: rgba(255,255,255,0.5);
+  -webkit-transform: scale(0.1, 1);
+  transform: scale(0.1, 1);
+}
+.:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    background-color: rgba(255,255,255,0.25);
+} */
 @media screen and (max-width: 991px) {
   .create-form {
     display: flex;
@@ -382,6 +454,7 @@ input:focus::placeholder {
     padding-right: 8vw;
   }
   .selected-place {
+    /* border: 1px solid red; */
     width: 80vw;
     display: flex;
   }
@@ -402,6 +475,7 @@ input:focus::placeholder {
     margin: 5vh 0 0 0;
   }
   .createContent > .article-text-area {
+    /* border: 1px solid red; */
     width: 77.3vw;
   }
   .tags {

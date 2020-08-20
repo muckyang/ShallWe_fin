@@ -4,9 +4,7 @@
       class="container detail"
       style="font-family: 'Recipekorea', cursive; font-size:16.5px"
     >
-      <!-- <div>{{ articleData.description }}</div>
-      <commentList />-->
-      <!--Top 부분. 제목, 작성자, create time -->
+
       <div class="top">
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
@@ -40,7 +38,6 @@
                 "
                 >삭제</a
               >
-              <!--다시 보기!!!!!!!1 -->
             </div>
           </div>
 
@@ -109,7 +106,7 @@
         </div>
       </div>
       <hr class="top-line" />
-      <!-- {{isImage}}{{noImage}} -->
+
       <!--이미지-->
       <div v-if="articleData.image" class="middle-row">
         <img class="post-img" :src="imageUrl" alt="..." />
@@ -225,7 +222,6 @@ export default {
 
   created: function() {
     this.getArticle(this.$route.params.ID);
-    // this.getImg();
     this.getUserData();
     this.likeCheck();
   },

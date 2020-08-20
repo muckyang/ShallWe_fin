@@ -37,42 +37,42 @@
                   v-if="userData.grade === 0"
                   class="mt-1 mb-4"
                   style="width: 140px;"
-                  src="@/assets/userGrade/Level_0.png"
+                  src="http://i3b203.p.ssafy.io/localImg/Level_0.png"
                   alt=""
                 />
                 <img
                   v-if="userData.grade === 1"
                   class="mt-1 mb-4"
                   style="width: 140px;"
-                  src="@/assets/userGrade/Level_1.png"
+                  src="http://i3b203.p.ssafy.io/localImg/Level_1.png"
                   alt=""
                 />
                 <img
                   v-if="userData.grade === 2"
                   class="mt-1 mb-4"
                   style="width: 140px;"
-                  src="@/assets/userGrade/Level_2.png"
+                  src="http://i3b203.p.ssafy.io/localImg/Level_2.png"
                   alt=""
                 />
                 <img
                   v-if="userData.grade === 3"
                   class="mt-1 mb-4"
                   style="width: 140px;"
-                  src="@/assets/userGrade/Level_3.png"
+                  src="http://i3b203.p.ssafy.io/localImg//Level_3.png"
                   alt=""
                 />
                 <img
                   v-if="userData.grade === 4"
                   class="mt-1 mb-4"
                   style="width: 140px;"
-                  src="@/assets/userGrade/Level_4.png"
+                  src="http://i3b203.p.ssafy.io/localImg/Level_4.png"
                   alt=""
                 />
                 <img
                   v-if="userData.grade === 5"
                   class="mt-1 mb-4"
                   style="width: 140px;"
-                  src="@/assets/userGrade/Level_5.png"
+                  src="http://i3b203.p.ssafy.io/localImg/Level_5.png"
                   alt=""
                 />
 
@@ -518,7 +518,7 @@
 </template>
 
 <script>
-const BACK_URL = "http://127.0.0.1:8080";
+const BACK_URL = process.env.VUE_APP_BACK_URL
 import constants from "../../lib/constants";
 import { mapState, mapActions } from "vuex";
 
