@@ -6,11 +6,14 @@
         <div class="comment-user">
           <router-link
             class="comment-user-link"
-            :to="{ name: 'userDetail', params: { ID: comment.userId }}"
+            :to="{ name: 'userDetail', params: { ID: comment.userId } }"
           >
             <a class="comment-user-link">{{ comment.nickname }}</a>
           </router-link>
-          <div class="comment-drop dropdown dropleft" v-if="comment.userId === userData.userId">
+          <div
+            class="comment-drop dropdown dropleft"
+            v-if="comment.userId === userData.userId"
+          >
             <button type="button" class="comment-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
             </button>
@@ -22,50 +25,94 @@
 
           <!-- 게시물 신고 -->
           <div v-else>
-            <button type="button" class="siren-btn" data-toggle="modal" :data-target="'#exampleModal' + commentId ">
+            <button
+              type="button"
+              class="siren-btn"
+              data-toggle="modal"
+              :data-target="'#exampleModal' + commentId"
+            >
               신고
             </button>
 
-            <div class="modal fade" :id="'exampleModal' + commentId " tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div
+              class="modal fade"
+              :id="'exampleModal' + commentId"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">신고 접수</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                      신고 접수
+                    </h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
                   <div class="modal-body">
                     <h6>신고 사유</h6>
-              <div class="dropdown">
-                <button
-                  class="btn btn-secondary btn-sm dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >선택</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설, 비난을 했어요!</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">약속 장소에 나오지 않았어요!</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고를 하고 있어요!</a>
-                </div>
-              </div>
-              <h6 class="mt-3">사유 상세</h6>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="accuseCommentData.accuseReason"></b-form-textarea>
-              <h6 class="mt-3">신고할 게시물 URL</h6>
-              <b-form-input
-                style="width: 400px"
-                id="type-url"
-                type="url"
-                v-model="accuseCommentData.accuseUrl"
-              ></b-form-input>
-              <hr />
-              <button
-                @click="createCommentAccuse({ accuseCommentData })"
-                class="btn btn-danger btn-sm"
-              >신고접수</button>
+                    <div class="dropdown">
+                      <button
+                        class="btn btn-secondary btn-sm dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        선택
+                      </button>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          @click="changeAccuseKind(1)"
+                          >욕설, 비난을 했어요!</a
+                        >
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          @click="changeAccuseKind(2)"
+                          >약속 장소에 나오지 않았어요!</a
+                        >
+                        <a
+                          class="dropdown-item"
+                          href="#"
+                          @click="changeAccuseKind(3)"
+                          >광고를 하고 있어요!</a
+                        >
+                      </div>
+                    </div>
+                    <h6 class="mt-3">사유 상세</h6>
+                    <b-form-textarea
+                      id="textarea-rows"
+                      rows="8"
+                      v-model="accuseCommentData.accuseReason"
+                    ></b-form-textarea>
+                    <h6 class="mt-3">신고할 게시물 URL</h6>
+                    <b-form-input
+                      style="width: 400px"
+                      id="type-url"
+                      type="url"
+                      v-model="accuseCommentData.accuseUrl"
+                    ></b-form-input>
+                    <hr />
+                    <button
+                      @click="createCommentAccuse({ accuseCommentData })"
+                      class="btn btn-danger btn-sm"
+                    >
+                      신고접수
+                    </button>
                   </div>
                 </div>
               </div>
@@ -85,8 +132,22 @@
         <input class="comment-input" type="text" v-model="comment.content" />
       </div>
       <div class="comment-update-submit">
-        <button type="button" v-if="flag" class="comment-update-btn" @click="updateCancel">취소</button>
-        <button type="button" v-if="flag" class="comment-update-btn" @click="updateComment">수정</button>
+        <button
+          type="button"
+          v-if="flag"
+          class="comment-update-btn"
+          @click="updateCancel"
+        >
+          취소
+        </button>
+        <button
+          type="button"
+          v-if="flag"
+          class="comment-update-btn"
+          @click="updateComment"
+        >
+          수정
+        </button>
       </div>
     </div>
   </div>
@@ -204,7 +265,7 @@ export default {
   border: none;
   background-color: transparent;
   color: rgb(218, 37, 37);
-  font-size: 77%;
+  font-size: 80%;
   font-weight: bold;
 }
 .siren-btn:hover {
