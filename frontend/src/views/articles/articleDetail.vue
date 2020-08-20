@@ -327,7 +327,7 @@
         <!-- 차트 -->
         <div
           class="col-5 d-flex justify-content-start"
-          style="margin-top: 7%; margin-left: 7%; font-family: 'Recipekorea', cursive;"
+          style="margin-top: 6%; margin-left: 7%; font-family: 'Recipekorea', cursive;"
         >
           <DoughnutChart />
         </div>
@@ -348,36 +348,38 @@
         >
           <div class="member">
             <div class="member-writer-info">
-              <div class="member-writer mb-2" style="font-size:17px">
-                <router-link
-                  style="text-decoration: none; color: black"
-                  :to="{
-                    name: 'userDetail',
-                    params: { ID: participant.userId },
-                  }"
-                  >{{ participant.writer }}</router-link
-                >
-                <i
-                  v-if="articleData.userId === participant.userId"
-                  class="fas fa-crown"
-                ></i>
-              </div>
+              <div class="members-status">
+                <div class="member-writer" style="font-size:18px">
+                  <router-link
+                    style="text-decoration: none; color: black"
+                    :to="{
+                      name: 'userDetail',
+                      params: { ID: participant.userId },
+                    }"
+                    >{{ participant.writer }}</router-link
+                  >
+                  <i
+                    v-if="articleData.userId === participant.userId"
+                    class="fas fa-crown"
+                  ></i>
+                </div>
 
-              <div
-                class="article-participant-status"
-                v-if="
-                  participant.userId != userData.userId &&
-                    participant.userId != articleData.userId
-                "
-              >
-                <div v-if="participant.status === 0">
-                  <button class="waiting-btn">대기중</button>
-                </div>
-                <div v-if="participant.status === 1">
-                  <button class="accepted-btn">수락됨</button>
-                </div>
-                <div v-if="participant.status === 2">
-                  <button class="denied-btn">거절됨</button>
+                <div
+                  class="article-participant-status"
+                  v-if="
+                    participant.userId != userData.userId &&
+                      participant.userId != articleData.userId
+                  "
+                >
+                  <button v-if="participant.status === 0" class="waiting-btn">
+                    대기중
+                  </button>
+                  <button v-if="participant.status === 1" class="accepted-btn">
+                    수락됨
+                  </button>
+                  <button v-if="participant.status === 2" class="denied-btn">
+                    거절됨
+                  </button>
                 </div>
               </div>
             </div>
@@ -418,14 +420,19 @@
                   >
                     <i class="fas fa-ellipsis-v"></i>
                   </button>
-                  <div class="dropdown-menu">
+                  <div class="dropdown-menu dropleft">
                     <b-button
-                      variant="light"
+                      class="dropdown-item"
                       size="sm"
+                      variant="light"
                       @click="acceptParticpation(participant.writer)"
                       >수락</b-button
                     >
-                    <b-button @click="$bvModal.show('modal-scoped')"
+                    <b-button
+                      class="dropdown-item"
+                      size="sm"
+                      variant="light"
+                      @click="$bvModal.show('modal-scoped')"
                       >거절</b-button
                     >
 
@@ -458,11 +465,11 @@
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-content mt-1"
-            style="font-size:18px"
+            style="font-size:17.5px"
           >
             요구사항: {{ participant.description }}
           </div>
-          <div class="member-price py-1 mt-1" style="font-size:18px">
+          <div class="member-price py-1 mt-1" style="font-size:17.5px">
             가격: \{{ parPrice(participant.price) }}
           </div>
         </div>
@@ -835,12 +842,40 @@ export default {
 </script>
 
 <style>
+.members-status {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.member-writer {
+  text-align: center;
+  padding-top: 4.5px;
+}
+.article-participant-status {
+  vertical-align: 4px;
+}
 .waiting-btn,
 .accepted-btn,
 .denied-btn {
-  border: red;
   outline: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  background-color: transparent;
+  padding-top: 5px;
+  font-size: 14px;
+  margin-left: 5px;
+  vertical-align: text-bottom;
+}
+.waiting-btn {
+  border: 2px solid rgb(240, 219, 31);
+  color: rgb(240, 219, 31);
+}
+.accepted-btn {
+  border: 2px solid rgb(75, 75, 221);
+  color: rgb(75, 75, 221);
+}
+.denied-btn {
+  border: 2px solid rgb(218, 37, 37);
+  color: rgb(218, 37, 37);
 }
 .control-width {
   width: 30px;
