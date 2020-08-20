@@ -127,9 +127,7 @@
               <th scope="row" v-if="article.categoryId === 101">
                 <span class="notification">공지</span>
               </th>
-              <!-- <th scope="row" v-else-if="article.categoryId === 103">
-                <span class="post-id">{{ article.articleId }}</span>
-              </th>-->
+
               <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-free">자유</span>
               </th>
@@ -182,9 +180,7 @@
               <th scope="row" v-if="article.categoryId === 101">
                 <span class="notification">공지</span>
               </th>
-              <!-- <th scope="row" v-else-if="article.categoryId === 103">
-                <span class="post-id">{{ article.articleId }}</span>
-              </th>-->
+
               <th scope="row" v-else-if="article.categoryId === 103">
                 <span class="post-free">자유</span>
               </th>
@@ -280,7 +276,6 @@ export default {
       this.articles = [];
       this.onlyOne = true;
       this.infiniteId += 1;
-      // this.getArticles({ temp: 2, categoryId: this.categoryNum });
     },
     cutDate(date) {
       let CD = date + "";
@@ -291,14 +286,6 @@ export default {
       return res;
     },
   },
-  // computed: {
-  //   ...mapState(["articles"]),
-  // },
-  // created() {
-  //   console.log("ㅇㅇㅇ");
-  //   this.getArticles({ temp: 2, categoryId: this.categoryNum });
-  //   console.log(this.articles);
-  // },
 };
 </script>
 
