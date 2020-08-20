@@ -147,25 +147,13 @@
                   <div
                     v-else-if="article.status == 4"
                     class="article-img-box m-0 p-0"
-                    :style="{
-                      height: '100%',
-                      width: '100%',
-                      backgroundImage:
-                        'url(' + require('http://i3b203.p.ssafy.io/localImg/DealEnd2.png') + ')',
-                      backgroundSize: 'cover',
-                    }"
-                  ></div>
+                  ><img src="http://i3b203.p.ssafy.io/localImg/DealEnd2.png" alt=""></div>
+                  
                   <div
                     v-else-if="article.status === 5"
                     class="article-img-box m-0 p-0"
-                    :style="{
-                      height: '100%',
-                      width: '100%',
-                      backgroundImage:
-                        'url(' + require('http://i3b203.p.ssafy.io/localImg/TimeOver2.png') + ')',
-                      backgroundSize: 'cover',
-                    }"
-                  ></div>
+                  ><img src="http://i3b203.p.ssafy.io/localImg/TimeOver2.png" alt=""></div>
+                  
 
                   <b-card-text class="p-2">
                     <h5
@@ -565,9 +553,6 @@ export default {
   name: "articleList",
   data() {
     return {
-      articleImg: {
-        backgroundImage: `url(${require("http://i3b203.p.ssafy.io/localImg/food1.png")})`,
-      },
       categoryNum: 0,
       page: 0,
       onlyOne: true,
