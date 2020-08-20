@@ -1,190 +1,102 @@
 <template>
-  <div
-    class="mt-5 create-container"
-    style="font-family: 'Recipekorea', cursive; font-size:16.5px"
-  >
+  <div class="mt-5 create-container" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
     <div class="create-form">
-      <!-- 지도 -->
       <div class="kakao-map-select">
         <kakaoMap :coNum="coNum" @setAddress="setAddress" />
       </div>
       <div class="right-items">
-        <!--선택 장소-->
         <div class="create-alert-msg">
           <small style="font-size: 15.5px; color: #ee6e9f;">*</small>
           <small style="font-size: 15.5px;">표시는 필수값입니다.</small>
         </div>
-        <div class="selected-place">
-          <label style="font-size:16px">
-            어디서 만날까?
-            <small style="font-size: 17px; color: #ee6e9f;">*</small>
-          </label>
-          <input
-            type="text"
-            v-model="articleData.address"
-            :placeholder="address"
-            style="font-family: 'Recipekorea';"
-            readonly
-          />
-        </div>
-        <!--제목-->
-        <div class="title">
-          <label for="title" style="font-size:16px">
-            제목
-            <small style="font-size: 17px; color: #ee6e9f;">*</small>
-          </label>
-          <div class="btn-group">
-            <button
-              type="button"
-              class="btn btn-outline-secondary btn-sm dropdown-toggle"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              {{ selectedTBG }}
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" @click="selectCategory(1)">쉘위배민</a>
-              <a class="dropdown-item" @click="selectCategory(2)">쉘위택배</a>
-              <a class="dropdown-item" @click="selectCategory(3)">쉘위N빵</a>
-            </div>
+      <div class="selected-place">
+        <label style="font-size:16px">어디서 만날까?<small style="font-size: 17px; color: #ee6e9f;">*</small></label>
+        <input type="text" v-model="articleData.address" :placeholder="address" style="font-family: 'Recipekorea';" readonly />
+      </div>
+      <div class="title">
+        <label for="title" style="font-size:16px">제목<small style="font-size: 17px; color: #ee6e9f;">*</small></label>
+        <div class="btn-group">
+          <button type="button" class="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ selectedTBG }}</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" @click="selectCategory(1)">쉘위배민</a>
+            <a class="dropdown-item" @click="selectCategory(2)">쉘위택배</a>
+            <a class="dropdown-item" @click="selectCategory(3)">쉘위N빵</a>
           </div>
-          <input
-            type="text"
-            id="title"
-            v-model="articleData.title"
-            placeholder=" 제목을 입력하세요"
-          />
         </div>
-        <!--시작금액/전체금액-->
-        <div class="price">
-          <label for style="font-size:16px">
-            시작금액
-            <small style="font-size: 17px; color: #ee6e9f;">*</small>/전체금액
-            <small style="font-size: 17px; color: #ee6e9f;">*</small>
-          </label>
-          <input
-            type="number"
-            id="myPrice"
-            v-model="articleData.myPrice"
-            placeholder=" 시작금액"
-          />
-          <input
-            type="number"
-            id="minPrice"
-            v-model="articleData.minPrice"
-            placeholder=" 전체금액"
-          />
-        </div>
-        <!--종료일시-->
-        <div class="endTime">
-          <label for style="font-size:16px">
-            종료일자
-            <small style="font-size: 17px; color: #ee6e9f;">*</small>/종료시간
-            <small style="font-size: 17px; color: #ee6e9f;">*</small>
-          </label>
-          <input type="date" v-model="articleData.endDate" />
-          <input type="time" id="form-endTime" v-model="articleData.endTime" />
-        </div>
-        <!-- 파일 업로드 -->
-        <div class="imageInsert d-flex">
-          <label style="font-size:16px">사진 업로드</label>
-          <input type="file" id="file" name="file" ref="file" />
-          <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
-        </div>
-        <!--url-->
-        <div class="url">
-          <label for="url" style="font-size:16px">URL</label>
-          <input
-            type="url"
-            id="url"
-            v-model="articleData.urlLink"
-            placeholder=" url을 입력하세요"
-            required
-          />
-        </div>
-        <!--오픈톡방url-->
-        <div class="url">
-          <label for="url" style="font-size:16px">오픈 카카오톡 URL</label>
-          <input
-            type="url"
-            id="url"
-            v-model="articleData.openLink"
-            placeholder=" url을 입력하세요"
-          />
-        </div>
-        <!--내용-->
-        <div class="createContent">
-          <label for="textarea-rows" style="font-size:16px">
-            내용
-            <small style="font-size: 17px; color: #ee6e9f;">*</small>
-          </label>
-          <div class="article-text-area">
-            <b-form-textarea
-              id="textarea-rows"
-              v-model="articleData.description"
-              placeholder="내용을 입력하세요..."
-              rows="3"
-              max-rows="6"
-            ></b-form-textarea>
-          </div>
+        <input type="text" id="title" v-model="articleData.title" placeholder=" 제목을 입력하세요" />
+      </div>
+      <div class="price">
+        <label for style="font-size:16px">시작금액<small style="font-size: 17px; color: #ee6e9f;">*</small>/전체금액<small style="font-size: 17px; color: #ee6e9f;">*</small></label>
+        <input type="number" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
+        <input type="number" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
+      </div>
+      <div class="endTime">
+        <label for style="font-size:16px">종료일자<small style="font-size: 17px; color: #ee6e9f;">*</small>/종료시간<small style="font-size: 17px; color: #ee6e9f;">*</small></label>
+        <input type="date" v-model="articleData.endDate" />
+        <input type="time" id="form-endTime" v-model="articleData.endTime" />
+      </div>
+      <div class="imageInsert d-flex">
+        <label style="font-size:16px">사진 업로드</label>
+        <input type="file" id="file" name="file" ref="file" />
+      </div>
+      <div class="url">
+        <label for="url" style="font-size:16px">URL</label>
+        <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" required />
+      </div>
+      <div class="url">
+        <label for="url" style="font-size:16px">오픈 카카오톡 URL</label>
+        <input type="url" id="url" v-model="articleData.openLink" placeholder=" url을 입력하세요" />
+      </div>
+      <div class="createContent">
+        <label for="textarea-rows" style="font-size:16px">내용<small style="font-size: 17px; color: #ee6e9f;">*</small></label>
+        <div class="article-text-area">
+          <b-form-textarea id="textarea-rows" v-model="articleData.description" placeholder="내용을 입력하세요..." rows="3" max-rows="6" ></b-form-textarea>
         </div>
       </div>
     </div>
+  </div>
+  <div class="tags">
+    <label>태그</label>
+    <b-form-tags v-model="articleData.tags" no-outer-focus class="tag-input-box mb-2">
+      <template
+        v-slot="{
+          tags,
+          inputAttrs,
+          inputHandlers,
+          tagVariant,
+          addTag,
+          removeTag
+        }">
+        <b-input-group class="mb-2">
+          <b-form-input
+            v-bind="inputAttrs"
+            v-on="inputHandlers"
+            placeholder="엔터를 누르면 태그가 추가돼요!"
+            id="tag-input"
+            class="form-control tag-submit-input"
+          ></b-form-input>
+          <b-input-group-append>
+            <b-button @click="addTag()" class="tag-submit">등록</b-button>
+          </b-input-group-append>
+        </b-input-group>
+        <div class="mt-2" style="font-size: 20px;">
+          <b-form-tag
+            v-for="tag in tags"
+            @remove="removeTag(tag)"
+            :key="tag"
+            :title="tag"
+            :variant="tagVariant"
+            class="tag-btns mr-2">
+            <div class="tag-name mt-1">{{ tag }}</div>
+          </b-form-tag>
+        </div>
+      </template>
+    </b-form-tags>
+  </div>
 
-    <!--태그-->
-    <div class="tags">
-      <label>태그</label>
-      <b-form-tags
-        v-model="articleData.tags"
-        no-outer-focus
-        class="tag-input-box mb-2"
-      >
-        <template
-          v-slot="{
-            tags,
-            inputAttrs,
-            inputHandlers,
-            tagVariant,
-            addTag,
-            removeTag,
-          }"
-        >
-          <b-input-group class="mb-2">
-            <b-form-input
-              v-bind="inputAttrs"
-              v-on="inputHandlers"
-              placeholder="엔터를 누르면 태그가 추가돼요!"
-              id="tag-input"
-              class="form-control tag-submit-input"
-            ></b-form-input>
-            <b-input-group-append>
-              <div>
-                <b-button @click="addTag()" class="tag-submit">등록</b-button>
-              </div>
-            </b-input-group-append>
-          </b-input-group>
-          <div class="mt-2" style="font-size: 20px;">
-            <b-form-tag
-              v-for="tag in tags"
-              @remove="removeTag(tag)"
-              :key="tag"
-              :title="tag"
-              :variant="tagVariant"
-              class="tag-btns mr-2"
-            >
-              <div class="tag-name mt-1">{{ tag }}</div>
-            </b-form-tag>
-          </div>
-        </template>
-      </b-form-tags>
-    </div>
-
-    <div class="create-submit">
-      <button class="temp-form" @click="articleCreate(0)">임시저장</button>
-      <button class="complete-form" @click="articleCreate(1)">
-        <i class="fas fa-check"></i> 완료
-      </button>
+  <div class="create-submit">
+    <button class="temp-form" @click="articleCreate(0)">임시저장</button>
+    <button class="complete-form" @click="articleCreate(1)"><i class="fas fa-check"></i> 완료</button>
     </div>
   </div>
 </template>
@@ -217,10 +129,9 @@ export default {
         tags: [],
         token: this.$cookies.get("auth-token"),
       },
-      imageUrl: null, //다시 검토
+      imageUrl: null,
       selectedTBG: "카테고리",
       coNum: "1",
-      // address: " \uf060" + " 지도에서 만남의 장소를 설정하세요",
       address: "<-  지도에서 만남의 장소를 설정하세요",
       file: "",
       path: "",
@@ -261,11 +172,11 @@ export default {
     selectCategory(num) {
       this.articleData.categoryId = num;
       if (num === 1) {
-        this.selectedTBG = "쉘위배달";
+        this.selectedTBG = "쉘위배민";
       } else if (num === 2) {
         this.selectedTBG = "쉘위택배";
       } else {
-        this.selectedTBG = "쉘위공구";
+        this.selectedTBG = "쉘위N빵";
       }
     },
     imageUpload() {
@@ -291,7 +202,6 @@ export default {
                 '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
               confirmButtonColor: "#ee6e9f",
             });
-            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.minPrice = null;
           }
           if (this.articleData.myPrice < 0) {
@@ -305,7 +215,6 @@ export default {
                 '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
               confirmButtonColor: "#ee6e9f",
             });
-            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.myPrice = null;
           }
         } catch {}
@@ -317,13 +226,9 @@ export default {
 
 <style>
 .create-alert-msg {
-  /* border: 1px solid red; */
   display: flex;
   justify-content: flex-end;
   padding-right: 10px;
-}
-.kakao-map-select {
-  /* border: 1px solid red; */
 }
 .create-container {
   padding-left: 0;
@@ -333,11 +238,9 @@ export default {
   flex-direction: row;
 }
 .right-items {
-  /* border: 1px solid blue; */
   text-align: left;
   margin: 0 0 0 1.5vw;
   width: 55vw;
-  /* border: 1px solid rgb(201, 201, 201); */
   border-radius: 4px;
 }
 .right-items > div {
@@ -421,17 +324,6 @@ export default {
 input:focus::placeholder {
   color: transparent;
 }
-/* .tag-submit {
-  border: none;
-  outline: none;
-  border-top-left-radius: 0%;
-  border-bottom-left-radius: 0%;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  background-color: #ee6e9f;
-  opacity: 0.85;
-  transition: 0.3s;
-} */
 .tag-submit {
   border: none;
   outline: none;
@@ -460,7 +352,6 @@ input:focus::placeholder {
   color: black;
   margin-bottom: 1.5%;
   outline: none;
-  /* padding: 5px 10px 5px 10px; */
   padding: 7px 9px 5px 9px;
 }
 .tag-submit-input {
@@ -470,43 +361,6 @@ input:focus::placeholder {
   border: none;
   outline: none;
 }
-
-/* .{
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
-  border-top-style: solid;
-  border-bottom-style: solid;
-  border-top-color: rgba(255,255,255,0.5);
-  border-bottom-color: rgba(255,255,255,0.5);
-  -webkit-transform: scale(0.1, 1);
-  transform: scale(0.1, 1);
-}
-.:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
-    background-color: rgba(255,255,255,0.25);
-} */
 @media screen and (max-width: 991px) {
   .create-form {
     display: flex;
@@ -516,7 +370,6 @@ input:focus::placeholder {
     padding-right: 8vw;
   }
   .selected-place {
-    /* border: 1px solid red; */
     width: 80vw;
     display: flex;
   }
@@ -537,7 +390,6 @@ input:focus::placeholder {
     margin: 5vh 0 0 0;
   }
   .createContent > .article-text-area {
-    /* border: 1px solid red; */
     width: 77.3vw;
   }
   .tags {
