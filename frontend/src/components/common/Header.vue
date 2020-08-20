@@ -9,7 +9,7 @@
         <!-- 로그인 X -->
         <li class="nav-item mr-1">
           <a
-            href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://localhost:8080/account/kakaoLogin&response_type=code"
+            href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://i3b203.p.ssafy.io/:8080/account/kakaoLogin&response_type=code"
             class="nav-link navbar1-item loginBtn"
             v-if="!isLoggedin"
             @click="REMOVE_TOKEN"
