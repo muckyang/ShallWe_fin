@@ -1,10 +1,11 @@
 <template>
   <div class="mt-4">
+    <button class="article-create-btn" @click="resetArticles">전체 보기</button>
+    <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
+      <button class="article-create-btn">글쓰기</button>
+    </router-link>
     <kakaoMapForLocal :articles="articles" @setAddress="setAddress"/>
     <div class="tab-content" id="nav-tabContent">
-      <router-link :to="{ name: 'articleCreate' }" class="ml-auto">
-        <button class="article-create-btn">글쓰기</button>
-      </router-link>
       <div
         v-if="categoryNum === 0"
         class="tab-pane fade show active"
@@ -15,11 +16,11 @@
         <b-container class="bv-example-row">
           <b-row align-h="start">
             <b-col cols="12" sm="4" v-for="article in articles" :key="article.articleId">
-              <div v-if="article.address===address||flag">
+              <div v-if="article.address===address||!flag">
                 <router-link
                   :to="{
                     name: 'articleDetail',
-                    params: { ID: `${article.articleId}` },
+                    params: { ID: `${article.articleId}`},
                   }"
                   class="text-decoration-none text-dark"
                 >
@@ -85,8 +86,10 @@ export default {
       page: 0,
       onlyOne: true,
       articles: [],
+      duarticles:[],
+      allArticles:[],
       address:'default',
-      flag:true,
+      flag:false,
     };
   },
   components: {
@@ -109,6 +112,7 @@ export default {
         .then((res) => {
           setTimeout(() => {
             if (res.data.postList.length) {
+              this.allArticles = this.allArticles.concat(res.data.postList);
               this.articles = this.articles.concat(res.data.postList);
               this.page += 1;
               $state.loaded();
@@ -130,8 +134,19 @@ export default {
     },
     setAddress(address){
       this.address=address
+      this.flag=true
+      var tempArticles=[]
+      for(const a of this.articles){
+        if(a.address===address){
+          tempArticles.push(a)
+        }
+      }
+      this.articles=tempArticles
+    },
+    resetArticles(){
+      this.articles=this.allArticles
       this.flag=false
-    }
+    },
   },
 };
 </script>
@@ -142,6 +157,15 @@ export default {
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
+  padding: 5px 10px;
+  color: white;
+  font-weight: bold;
+}
+.view-all-btn {
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  background-color: #eb1969;
   padding: 5px 10px;
   color: white;
   font-weight: bold;
@@ -228,5 +252,8 @@ $x-large: 1200px;
 .card-end {
   // background-color: #FFCBDB;
   // opacity: 0.7;
+}
+.disable{
+  display:none
 }
 </style>

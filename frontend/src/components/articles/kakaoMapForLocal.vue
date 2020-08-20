@@ -1,8 +1,7 @@
 <template>
-  <div class="createMap">
-    <div class="map_wrap">
-      <div id="map" style="width:100%;height:350px;"></div>
-    </div>
+  <div>
+    <div id="map" style="width:100%;height:350px;"></div>
+    <div style="display:none">{{articles[0]}}</div>
   </div>
 </template>
 
@@ -30,6 +29,9 @@ export default {
         `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
       document.head.appendChild(script);
     }
+  },
+  updated(){
+    this.initMap()
   },
   methods: {
     initMap() {
