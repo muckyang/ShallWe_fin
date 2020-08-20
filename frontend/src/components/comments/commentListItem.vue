@@ -18,7 +18,7 @@
 
            <!-- 게시물 신고 -->
             <div v-else>
-              <b-button v-b-modal="'modal-'+`${this.comment.commentId}`" class="siren-btn">신고</b-button>
+              <b-button v-if="comment.status===1" v-b-modal="'modal-'+`${this.comment.commentId}`" class="siren-btn">신고</b-button>
 
               <b-modal :hide-footer="true" :id="'modal-'+this.comment.commentId" title="신고 접수">
                 <h6>신고 사유</h6>
@@ -30,7 +30,7 @@
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
-                  >선택</button>
+                  >{{selectedKind}}</button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설, 비난을 했어요!</a>
                     <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">약속 장소에 나오지 않았어요!</a>
@@ -40,16 +40,10 @@
                 <h6 class="mt-3">사유 상세</h6>
                 <b-form-textarea
                   id="textarea-rows"
+                  style="width: 400px"
                   rows="8"
                   v-model="accuseCommentData.accuseReason"
                 ></b-form-textarea>
-                <h6 class="mt-3">신고할 게시물 URL</h6>
-                <b-form-input
-                  style="width: 400px"
-                  id="type-url"
-                  type="url"
-                  v-model="accuseCommentData.accuseUrl"
-                ></b-form-input>
                 <hr />
                 <button
                   @click="createCommentAccuse({ accuseCommentData })"
@@ -111,10 +105,11 @@ export default {
         accuseValue: this.comment.commentId,
         accuseKind: 0,
         accuseReason: "",
-        accuseUrl: "",
+        accuseUrl: document.URL,
         accuseConfirm: 0,
         token: this.$cookies.get("auth-token"),
       },
+      selectedKind:'선택'
     };
   },
   computed: {
@@ -137,6 +132,13 @@ export default {
     },
     // 신고 유형 변경
     changeAccuseKind(kind) {
+      if(kind===1){
+        this.selectedKind="욕설, 비난을 했어요!"
+      }else if(kind===2){
+        this.selectedKind="약속 장소에 나오지 않았어요!"
+      }else{
+        this.selectedKind="광고를 하고 있어요!"
+      }
       this.accuseCommentData.accuseKind = kind;
       this.linkUserData();
       this.linkCommentData();
