@@ -498,6 +498,7 @@ export default new Vuex.Store({
       }else{
         cookies.set("searchData", searchData, 0);
         searchData.categoryId = 0;
+        cookies.set('searchData',searchData, 0)
         axios
           .post(
             `${BACK_URL}/post/search/1/${searchData.categoryId}`,
@@ -514,7 +515,6 @@ export default new Vuex.Store({
       } 
     },
     detailSearch({ commit }, searchData) {
-      cookies.set("searchData", searchData, 0);
       if (searchData.categoryId === 0) {
         searchData.categoryId = "temp";
       }
@@ -523,11 +523,12 @@ export default new Vuex.Store({
         searchData.searchDataForSend.subject &&
         searchData.categoryId &&
         searchData.temp
-      ) {
-        if (searchData.categoryId === "temp") {
-          searchData.categoryId = 0;
-        }
-        console.log(searchData);
+        ) {
+          if (searchData.categoryId === "temp") {
+            searchData.categoryId = 0;
+          }
+          console.log(searchData);
+        cookies.set("searchData", searchData, 0);
         axios
           .post(
             `${BACK_URL}/post/search/${searchData.temp}/${searchData.categoryId}`,

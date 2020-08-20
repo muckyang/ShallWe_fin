@@ -259,13 +259,7 @@ export default {
     ...mapState(["articles"]),
   },
   created: function () {
-    var searchData= {
-        searchDataForSend: {
-          word: this.$cookies.get('searchKeyword'),
-          subject: "headertitle",
-        }
-      }
-    this.search(searchData)
+    this.search(this.$cookies.get('searchData'))
   },
 };
 </script>
