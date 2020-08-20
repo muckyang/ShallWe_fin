@@ -491,20 +491,17 @@ export default {
       axios
         .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
         .then((response) => {
-<<<<<<< HEAD
+
              Swal.fire({
             icon: 'success',
             height: 300,
-            width: 400,
-            title: '구매확정 되었습니다!',
+            width: 300,
+            title: '<a style="font-size:1rem; color:black">구매확정 되었습니다!</a>',
             showConfirmButton: false,
             timer: 1500
           })
           this.getArticle(this.$route.params.ID)
-=======
-          alert("구매가 확정되었습니다.");
-          this.getArticle(this.$route.params.ID);
->>>>>>> 841d5d46862321976c8b2e2e6da61f5c4e27790b
+
         })
         .catch((error) => {
           console.log(error);
@@ -555,8 +552,8 @@ export default {
          Swal.fire({
             icon: 'success',
             height: 300,
-            width: 250,
-            title: '참가 완료!',
+            width: 200,
+             title: '<a style="font-size:1rem; color:black"> 참가 완료!</a>',
             showConfirmButton: false,
             timer: 1500
           })
@@ -567,8 +564,8 @@ export default {
              Swal.fire({
             icon: 'error',
             height: 300,
-            width: 400,
-            title: '이미 참여한 게시물입니다.',
+            width: 300,
+                title: '<a style="font-size:1rem; color:black">이미 참여한 게시물입니다.</a>',
             showConfirmButton: false,
             timer: 1500
           })
@@ -583,8 +580,9 @@ export default {
              Swal.fire({
             icon: 'success',
             height: 300,
-            width: 250,
-            title: '수정 완료!',
+            width: 200,
+            title: '<a style="font-size:1rem; color:black">수정 완료!</a>',
+            
             showConfirmButton: false,
             timer: 1500
           })
@@ -611,8 +609,8 @@ export default {
              Swal.fire({
             icon: 'success',
             height: 300,
-            width: 250,
-            title: '삭제 완료!',
+            width: 200,
+            title: '<a style="font-size:1rem; color:black">삭제 완료!</a>',
             showConfirmButton: false,
             timer: 1500
           })

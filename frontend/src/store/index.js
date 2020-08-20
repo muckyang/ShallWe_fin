@@ -91,8 +91,8 @@ export default new Vuex.Store({
     
         Swal.fire({
           icon: 'success',
-          height: 400,
-          width: 300,
+          height: 300,
+          width: 400,
           title : '로그인 되셨습니다.',
           text : '환영합니다.'
         })
@@ -208,10 +208,10 @@ export default new Vuex.Store({
               .post(`${BACK_URL}/account/signup`, signUpData)
               .then((response) => {
                 Swal.fire({
-                  height: 400,
-                  width: 300,
+                  height: 300,
+                  width: 400,
                   title: '회원가입이 완료되었습니다.',
-                  text:'Shall we 에 가입되신걸 축하합니다',
+                  text:'Shall We 에 가입되신걸 축하합니다',
                   icon : 'success'
                  } )
                 commit("SET_TOKEN", response.data);
@@ -223,26 +223,27 @@ export default new Vuex.Store({
               });
           } else {
             swal.fire({
-              height: 400,
+              height: 300,
               width: 300,
               icon : "error",
-              title: '약관에 동의해 주세요',
+              title: '<a style="font-size:1rem; color:black">약관에 동의해 주세요</a>',
               text: '',
             })
             // alert("약관에 동의해 주세요");
           }
         } else {
           swal.fire({
-            height: 400,
+            height: 300,
             width: 300,
             icon : "error",
+            
             title: '닉네임을 입력해 주세요',
             text: '',
           })
         }
       } else {
         swal.fire({
-          height: 400,
+          height: 300,
           width: 300,
           icon : "error",
           title: '빈 칸을 모두 채워주세요',
@@ -308,12 +309,13 @@ export default new Vuex.Store({
         .post(`${BACK_URL}/account/update`, editData)
         .then(() => {
 
-          swal.fire({
-            icon : "success",
-            title: '수정이 완료되었습니다.',
-            text: '다시 로그인 해주세요!!',
+          Swal.fire({
+            icon: 'success',
+            height: 300,
+            width: 400,
+            title: '정보수정이 완료되었습니다!',
+            text: "다시 로그인 해주세요!"
           })
-          // alert("수정이 완료되었습니다. 다시 로그인해 주세요");
           commit("REMOVE_TOKEN");
         })
         .catch((err) => {
@@ -326,7 +328,13 @@ export default new Vuex.Store({
         .post(`${BACK_URL}/account/delete`, auth)
         .then(() => {
           commit("REMOVE_TOKEN");
-          alert("회원 탈퇴가 완료되었습니다.");
+          Swal.fire({
+            icon: 'success',
+            height: 300,
+            width: 400,
+            title: '회원탈퇴가 완료되었습니다.'
+         
+          })
           router.push("/");
         })
         .catch((err) => {
@@ -364,7 +372,12 @@ export default new Vuex.Store({
     //게시글 생성
     createArticle(context, articleData) {
       if(articleData.temp===1&&(!articleData.articleData.categoryId||!articleData.articleData.title||!articleData.articleData.address||!articleData.articleData.description||!articleData.articleData.minPrice||!articleData.articleData.myPrice||!articleData.articleData.endDate||!articleData.articleData.endTime)){
-        alert("필수 입력칸을 모두 채워 주세요")
+        Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 530,
+        title: '필수 입력칸을 모두 채워주세요'
+        })
       }else{
         if (articleData.temp === 1 || articleData.temp === 0) {
           if (articleData.articleData.endTime.length < 8) {
@@ -400,7 +413,12 @@ export default new Vuex.Store({
     //게시글 수정하기
     updateArticle({ state }, updateData) {
       if(updateData.temp===1&&(!updateData.articleUpdateData.categoryId||!updateData.articleUpdateData.title||!updateData.articleUpdateData.address||!updateData.articleUpdateData.description||!updateData.articleUpdateData.minPrice||!updateData.articleUpdateData.myPrice||!updateData.articleUpdateData.endDate||!updateData.articleUpdateData.endTime)){
-        alert("필수 입력칸을 모두 채워 주세요")
+        Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 530,
+          title: '필수 입력칸을 모두 채워주세요'
+        })
       }else{
         if(updateData.temp==1){
           if (updateData.articleUpdateData.endTime) {
@@ -493,13 +511,37 @@ export default new Vuex.Store({
             console.log(err);
           });
       } else if (!searchData.temp) {
-        alert("게시글 종류를 선택해 주세요!");
+        Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 350,
+          title: '<a style="font-size:1rem; color:black">게시글 종류를 선택해 주세요!</a>',
+        })
+        // alert("게시글 종류를 선택해 주세요!");
       } else if (!searchData.categoryId) {
-        alert("카테고리를 선택해 주세요!");
+        Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 350,
+          title: '<a style="font-size:1rem; color:black">카테고리를 선택해 주세요!</a>',
+        })
+        // alert("카테고리를 선택해 주세요!");
       } else if (!searchData.searchDataForSend.subject) {
-        alert("분류를 선택해 주세요!");
+        Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 350,
+          title: '<a style="font-size:1rem; color:black">분류를 선택해 주세요!</a>'
+      })
+        // alert("분류를 선택해 주세요!");
       } else if (!searchData.searchDataForSend.word) {
-        alert("검색어를 입력해 주세요!");
+        Swal.fire({
+          icon: 'warning',
+          height: 300,
+          width: 350,
+          title: '<a style="font-size:1rem; color:black">검색어를 입력해 주세요!</a>'
+        })
+        // alert("검색어를 입력해 주세요!");
       }
     },
 
