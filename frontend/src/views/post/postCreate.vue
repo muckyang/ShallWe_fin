@@ -18,21 +18,6 @@
             <small style="font-size: 17px; color: #ee6e9f;">*</small>
           </th>
           <td class="d-flex">
-            <!-- <div class="btn-group">
-              <button
-                type="button"
-                class="btn btn-outline-secondary btn-sm dropdown-toggle"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >{{ selectedTBG }}</button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" @click="selectCategory(101)">공지</a>
-                <a class="dropdown-item" href="#" @click="selectCategory(103)">자유</a>
-                관리자라면 선택할 수 있음
-                <a class="dropdown-item" href="#" @click="selectCategory(104)">공지사항</a>
-              </div>
-            </div>-->
             <b-form-input
               type="text"
               v-model="articleData.title"
@@ -91,7 +76,7 @@
 </template>
 
 <script>
-const BACK_URL = "http://127.0.0.1:8080";
+const BACK_URL = process.env.VUE_APP_BACK_URL
 import axios from "axios";
 import { mapActions } from "vuex";
 
@@ -100,12 +85,11 @@ export default {
   data() {
     return {
       articleData: {
-        categoryId: 103,
         title: null,
         description: null,
         token: this.$cookies.get("auth-token"),
       },
-      imageUrl: null, //다시 검토
+      imageUrl: null,
       value: [],
       selectedTBG: "카테고리",
       file: "",
@@ -113,19 +97,6 @@ export default {
   },
   methods: {
     ...mapActions(["createArticle", "tempSaveArticle"]),
-    selectCategory(num) {
-      this.articleData.categoryId = num;
-      if (num === 101) {
-        this.selectedTBG = "공지";
-      } else if (num === 102) {
-        this.selectedTBG = "후기";
-      } else {
-        this.selectedTBG = "자유";
-      }
-    },
-    imageUpload() {
-      this.$refs.imageInput.click();
-    },
     fileUpload: function() {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
@@ -149,7 +120,7 @@ export default {
         });
     },
     postCreate() {
-      if (this.articleData.description != null) {
+      if (this.articleData.description&&this.articleData.title) {
         this.fileUpload();
         setTimeout(() => {
           var articleData = this.articleData;
