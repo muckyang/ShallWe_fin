@@ -203,7 +203,22 @@ public class AdminController {
             // 신고가 허위일 경우
             else if (req.getAccuseConfirm() == 2) {
                 userR.setUserPoint(userR.getUserPoint() - 30);
-                
+                int up = userR.getUserPoint();
+                if(up <= 1000){
+                    userR.setGrade(1);
+                }else if(up <= 1500){ 
+                    userR.setGrade(2);
+                }else if(up <= 2500){ 
+                    userR.setGrade(3);
+                }else if(up <= 4000){ 
+                    userR.setGrade(4);
+                }else { 
+                    userR.setGrade(5);
+                }
+                userDao.save(userR);
+                Accuse accuse = accuseDao.findAccuseByAccuseId(req.getAccuseId());
+                accuse.setAccuseConfirm(2);
+                accuseDao.save(accuse);
                 userDao.save(userR);
                 System.out.println("점수(user point) 수정");
                 
