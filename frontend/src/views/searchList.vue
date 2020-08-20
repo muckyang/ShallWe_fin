@@ -209,7 +209,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["detailSearch"]),
+    ...mapActions(["detailSearch","search"]),
     selectTemp(num) {
       if (num === 1) {
         this.searchData.temp = 1;
@@ -259,7 +259,13 @@ export default {
     ...mapState(["articles"]),
   },
   created: function () {
-    // this.search(this.$cookies.get('searchData'))
+    var searchData= {
+        searchDataForSend: {
+          word: this.$cookies.get('searchKeyword'),
+          subject: "headertitle",
+        }
+      }
+    this.search(searchData)
   },
 };
 </script>
