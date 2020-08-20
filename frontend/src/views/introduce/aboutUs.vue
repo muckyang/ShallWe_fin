@@ -42,7 +42,7 @@
       <div class="col-4 col-6-medium col-12-small">
         <section class="box style1 main-point-box p-3 _card card__one">
           <!-- <div class="infinite">
-            <img src="@/assets/img/truck1.png" class="truckIcon" />
+            <img src="http://i3b203.p.ssafy.io/localImg/truck1.png" class="truckIcon" />
           </div>-->
           <div class="infinite">
           <img src="http://i3b203.p.ssafy.io/localImg/truck1.png" class="truckIcon" />
@@ -115,7 +115,7 @@
         <p class="font-change">회원가입 때 등록한 가장 가까운 편의점 주소로 같은 동네의 거래 상황을 알 수 있습니다.</p>
       </section>
       <div class="about-us-map">
-        <img src="@/assets/img/about-us-map.png" class="mapIcon" />
+        <img src="http://i3b203.p.ssafy.io/localImg/about-us-map.png" class="mapIcon" />
       </div>
     </section>
   </div>

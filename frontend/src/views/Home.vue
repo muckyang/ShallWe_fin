@@ -37,12 +37,11 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="@/assets/img/캐러셀1.png"
+            src="http://i3b203.p.ssafy.io/localImg/캐러셀1.png"
             alt="image slot"
           >
         </template>
       </b-carousel-slide></router-link>
-
 	 <router-link to="/article" class="ml-0" id="article">
       <b-carousel-slide background="white">
         <template v-slot:img>
@@ -50,7 +49,7 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="@/assets/img/캐러셀2.png"
+            src="http://i3b203.p.ssafy.io/localImg/캐러셀2.png"
             alt="image slot"
           >
         </template>
@@ -63,7 +62,7 @@
             class="d-block img-fluid w-100"
             width="1024"
             height="480"
-            src="@/assets/img/캐러셀3.png"
+            src="http://i3b203.p.ssafy.io/localImg/캐러셀3.png"
             alt="image slot"
           >
         </template>

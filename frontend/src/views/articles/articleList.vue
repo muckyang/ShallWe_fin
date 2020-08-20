@@ -119,7 +119,7 @@
                           article.status != 4 &&
                           article.status != 5
                       "
-                      src="@/assets/img/type2.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -129,7 +129,7 @@
                           article.status != 4 &&
                           article.status != 5
                       "
-                      src="@/assets/img/type1.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -139,7 +139,7 @@
                           article.status != 4 &&
                           article.status != 5
                       "
-                      src="@/assets/img/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -147,25 +147,13 @@
                   <div
                     v-else-if="article.status == 4"
                     class="article-img-box m-0 p-0"
-                    :style="{
-                      height: '100%',
-                      width: '100%',
-                      backgroundImage:
-                        'url(' + require('@/assets/img/DealEnd2.png') + ')',
-                      backgroundSize: 'cover',
-                    }"
-                  ></div>
+                  ><img src="http://i3b203.p.ssafy.io/localImg/DealEnd2.png" alt=""></div>
+                  
                   <div
                     v-else-if="article.status === 5"
                     class="article-img-box m-0 p-0"
-                    :style="{
-                      height: '100%',
-                      width: '100%',
-                      backgroundImage:
-                        'url(' + require('@/assets/img/TimeOver2.png') + ')',
-                      backgroundSize: 'cover',
-                    }"
-                  ></div>
+                  ><img src="http://i3b203.p.ssafy.io/localImg/TimeOver2.png" alt=""></div>
+                  
 
                   <b-card-text class="p-2">
                     <h5
@@ -258,19 +246,19 @@
                   >
                     <img
                       v-if="article.categoryId == 1"
-                      src="@/assets/img/type2.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 2"
-                      src="@/assets/img/type1.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 3"
-                      src="@/assets/img/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -367,19 +355,19 @@
                   >
                     <img
                       v-if="article.categoryId == 1"
-                      src="@/assets/img/type2.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 2"
-                      src="@/assets/img/type1.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 3"
-                      src="@/assets/img/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -475,19 +463,19 @@
                   >
                     <img
                       v-if="article.categoryId == 1"
-                      src="@/assets/img/type2.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 2"
-                      src="@/assets/img/type1.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
                       v-if="article.categoryId == 3"
-                      src="@/assets/img/type3.png"
+                      src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -565,9 +553,6 @@ export default {
   name: "articleList",
   data() {
     return {
-      articleImg: {
-        backgroundImage: `url(${require("@/assets/img/food1.png")})`,
-      },
       categoryNum: 0,
       page: 0,
       onlyOne: true,
@@ -599,7 +584,7 @@ export default {
     },
     LabelImg(article) {
       if (article.categoryId == 1) {
-        var imgHome = "@/assets/img/food1.png";
+        var imgHome = "http://i3b203.p.ssafy.io/localImg/food1.png";
         console.log(imgHome);
         return imgHome;
       }

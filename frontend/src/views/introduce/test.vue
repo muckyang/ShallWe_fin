@@ -3,7 +3,7 @@
     <div class="col-4 col-6-medium col-12-small">
       <section class="box style1 main-point-box p-3 _card card__one">
         <div class="infinite">
-          <img src="@/assets/img/truck1.png" class="infinite" />
+          <img src="http://i3b203.p.ssafy.io/localImg/truck1.png" class="infinite" />
         </div>
         <h3>쉘위택배</h3>
         <p>물건의 최저금액을 같이 맞춰</p>
