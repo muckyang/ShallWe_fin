@@ -1,141 +1,73 @@
 <template>
 <div>
-	<div>
-		<hr>
-		  <div>
-    <b-carousel
-      id="carousel-1"
-      v-model="slide"
-      :interval="4000"
-      controls
-      indicators
-      background="#ababab"
-      img-width="1024"
-      img-height="480"
-      style="text-shadow: 1px 1px 2px #333;"
-      @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
-    ><router-link to="/introduce" class="ml-0" id="introduce">
-			<b-carousel-slide>
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="@/assets/img/c2.png"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide></router-link>
-			<router-link to="/article" class="ml-0" id="article">
-      <b-carousel-slide background="white">
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="@/assets/img/캐러셀1.jpg"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide></router-link>
-	 <router-link to="/article" class="ml-0" id="article">
-      <b-carousel-slide background="white">
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="@/assets/img/캐러셀2.png"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide></router-link>
-	  <router-link to="/article" class="ml-0" id="article">
-      <b-carousel-slide background="white">
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="@/assets/img/캐러셀3.png"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide></router-link>
-    </b-carousel>
-  </div>
-
-
-		<!-- 2. 실시간 게시물-->
-		<hr>
-		<div class="division-box homeMenu d-flex align-items-center justify-content-center ">
-			<h2 style="color: #ee6e9f;">실시간 게시물</h2>
-		</div>
-		<hr class="division-box-underline-1">
-
-		<b-container class="bv-example-row">
-		<b-row align-h="start">
-			<b-col cols="12" sm="6" lg="4" v-for="article in recentList" :key="article.keyVal">
-			<router-link
-				:to="{
-				name: 'articleDetail',
-				params: { ID: `${article.articleId}` },
-				}"
-				class="text-decoration-none text-dark"
-			>
+   <div>
+      <hr>
+        <div>
+         <b-carousel
+         id="carousel-1"
+         v-model="slide"
+         :interval="4000"
+         controls
+         indicators
+         background="#ababab"
+         img-width="1024"
+         img-height="480"
+         style="text-shadow: 1px 1px 2px #333;"
+         @sliding-start="onSlideStart"
+         @sliding-end="onSlideEnd"
+         >
       <b-carousel-slide>
-				<template v-slot:img>
-				<img
-					class="d-block img-fluid w-100"
-					width="1024"
-					height="480"
-					src="@/assets/img/c2.png"
-					alt="image slot"
-				>
-				</template>
-			</b-carousel-slide>
+            <template v-slot:img>
+            <img
+               class="d-block img-fluid w-100"
+               width="1024"
+               height="480"
+               src="@/assets/img/c2.png"
+               alt="image slot"
+            >
+            </template>
+         </b-carousel-slide>
 
       <router-link to="/introduce" class="ml-0" id="introduce">
-			<b-carousel-slide background="white">
-				<template v-slot:img>
-				<img
-					class="d-block img-fluid w-100"
-					width="1024"
-					height="480"
-					src="@/assets/img/캐러셀1.jpg"
-					alt="image slot"
-				>
-				</template>
-			</b-carousel-slide>
+         <b-carousel-slide background="white">
+            <template v-slot:img>
+            <img
+               class="d-block img-fluid w-100"
+               width="1024"
+               height="480"
+               src="@/assets/img/캐러셀1.jpg"
+               alt="image slot"
+            >
+            </template>
+         </b-carousel-slide>
       </router-link>
 
-				<b-carousel-slide background="white">
-				<template v-slot:img>
-					<img
-					class="d-block img-fluid w-100"
-					width="1024"
-					height="480"
-					src="@/assets/img/캐러셀2.png"
-					alt="image slot"
-					/>
-				</template>
-				</b-carousel-slide>
+            <b-carousel-slide background="white">
+            <template v-slot:img>
+               <img
+               class="d-block img-fluid w-100"
+               width="1024"
+               height="480"
+               src="@/assets/img/캐러셀2.png"
+               alt="image slot"
+               />
+            </template>
+            </b-carousel-slide>
 
-				<router-link to="/article" class="ml-0" id="article">
-				<b-carousel-slide background="white">
-					<template v-slot:img>
-					<img
-						class="d-block img-fluid w-100"
-						width="1024"
-						height="480"
-						src="@/assets/img/캐러셀3.png"
-						alt="image slot"
-					/>
+            <router-link to="/article" class="ml-0" id="article">
+            <b-carousel-slide background="white">
+               <template v-slot:img>
+               <img
+                  class="d-block img-fluid w-100"
+                  width="1024"
+                  height="480"
+                  src="@/assets/img/캐러셀3.png"
+                  alt="image slot"
+               />
           
-					</template>
+               </template>
           </b-carousel-slide
-				></router-link>
+            ></router-link>
       </b-carousel>
     </div>
 
@@ -362,7 +294,7 @@ export default {
 
 <style scoped>
 .carouselBtn{
-	border: none;
+   border: none;
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
