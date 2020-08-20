@@ -214,14 +214,6 @@ public class ParticipantController {
     @ApiOperation(value = "참가자삭제하기")
     public Object delete(@Valid @PathVariable int no) {
         Participant participant = participantDao.getParticipantByNo(no);// 참가자의 해당 정보를 가져옴
-        int price = participant.getPrice();
-
-        // 게시물 sum_price에 수정
-        // Post post = postDao.getPostByArticleId(participant.getArticleId());// 해당 구매게시물을 얻어옴
-        // int sumPrice = post.getSumPrice();// sumPrice를 얻어옴
-        // sumPrice = (sumPrice - price);// 참가자의 가격을 빼줌
-        // post.setSumPrice(sumPrice);
-        // postDao.save(post);// 다시 DB에 넣어줌
 
         participantDao.delete(participant);
         System.out.println("참가자 삭제하기!!");

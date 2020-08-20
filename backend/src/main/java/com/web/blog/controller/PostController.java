@@ -80,7 +80,7 @@ public class PostController {
     // 게시물 만료시간 지나면 자동 비활성화
     @Scheduled(cron = "*/30 * * * * *")
     public void articleTimeOut() {
-        System.out.println("게시물 활성화 상태 변경 30초마다 실행중입니다.");
+        System.out.println("30초마다 실행중.");
         List<Post> plist = postDao.findAll();
         for (Post p : plist) {
             if (p.getStatus() == 1 || p.getStatus() == 2) {
@@ -109,13 +109,6 @@ public class PostController {
         Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent()) {
             if (temp == 0) {// 임시저장
-
-                // Post post = new Post(req.getCategoryId(), userOpt.get().getUserId(),
-                // req.getTitle(),
-                // userOpt.get().getNickname(), req.getAddress(), req.getDescription(),
-                // req.getMinPrice(),
-                // req.getMyPrice(), req.getImage(), temp, endTime);
-
                 Post post = new Post();
                 post.setCategoryId(req.getCategoryId());
                 post.setUserId(userOpt.get().getUserId());
@@ -135,6 +128,7 @@ public class PostController {
                 post.setCommentNum(0);
                 post.setUrlLink(req.getUrlLink());
                 postDao.save(post);
+
                 System.out.println("임시저장!!");
 
                 return new ResponseEntity<>("임시저장 완료", HttpStatus.OK);
@@ -256,13 +250,6 @@ public class PostController {
             Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
 
             PostResponse result = new PostResponse();
-            // PostResponse result = new PostResponse(p.getArticleId(), p.getCategoryId(),
-            // p.getUserId(), p.getTitle(),
-            // p.getAddress(), p.getMinPrice(), p.getSumPrice(), p.getLikeNum(),
-            // p.getCommentNum(),
-            // p.getDescription(), p.getWriter(), p.getUrlLink(),p.getOpenLink(),
-            // p.getImage(), taglist, p.getTemp(),
-            // p.getEndTime(), BeforeCreateTime(p.getCreateTime()), p.getCreateTime());
 
             result.articleId = p.getArticleId();
             result.categoryId = p.getCategoryId();
@@ -570,10 +557,10 @@ public class PostController {
         String forSaveImg = ff.getOriginalFilename().toLowerCase();
         System.out.println(forSaveImg.toString());
         long nowtime = datetimeTosec(LocalDateTime.now());
-        System.out.println(System.getProperty("user.dir") + "\\frontend\\src\\assets\\images\\");
-        File file = new File("C:\\Users\\multicampus\\Desktop\\image\\"+ nowtime + forSaveImg);
-        // File file = new File("C:\\Users\\multicampus\\Desktop\\image\\"+ forSaveImg);
-        // File file = new File("/var/www/html/s03p13b203/frontend/src/assets/images/"+ nowtime + forSaveImg);
+        // System.out.println(System.getProperty("user.dir") + "\\frontend\\src\\assets\\images\\");
+        // File file = new File("C:\\Users\\multicampus\\Desktop\\image\\"+ nowtime + forSaveImg); // 이미지 파일명 중복 허용
+        // File file = new File("C:\\Users\\multicampus\\Desktop\\image\\"+ forSaveImg); // 
+        File file = new File("/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/images/"+ nowtime + forSaveImg);
         if(!file.getParentFile().exists()){
             file.getParentFile().mkdirs();
         }
