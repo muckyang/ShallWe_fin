@@ -87,7 +87,7 @@
           }"
         >
           <button
-            class="tag"
+            class="tag-btn"
             v-for="tag in articleData.tags"
             :key="tag.no"
             @click="putWord(tag)"
@@ -243,10 +243,19 @@
                 <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
               </div>
 
-              <div class="article-participant-status" v-if="participant.userId != userData.userId">
-                <div v-if="participant.status===0">처리상태:수락 대기</div>
-                <div v-if="participant.status===1">처리상태:수락</div>
-                <div v-if="participant.status===2">처리상태:거절</div>
+              <div
+                class="article-participant-status"
+                v-if="participant.userId != userData.userId && participant.userId != articleData.userId"
+              >
+                <div v-if="participant.status===0">
+                  <button class="waiting-btn">대기중</button>
+                </div>
+                <div v-if="participant.status===1">
+                  <button class="accepted-btn">수락됨</button>
+                </div>
+                <div v-if="participant.status===2">
+                  <button class="denied-btn">거절됨</button>
+                </div>
               </div>
             </div>
             <div v-if="participant.status === 0">
@@ -636,6 +645,13 @@ export default {
 </script>
 
 <style>
+.waiting-btn,
+.accepted-btn,
+.denied-btn {
+  border: red;
+  outline: none;
+  border-radius: 4px;
+}
 .control-width {
   width: 30px;
 }
@@ -971,10 +987,12 @@ a {
 .nomargin {
   margin: 0;
 }
-.tag {
+.tag-btn {
   margin-right: 1%;
-  border: none;
+  border: 3px solid #ee6e9f;
   outline: none;
-  border-radius: 3px;
+  border-radius: 20px;
+  background-color: transparent;
+  padding: 5px 6px 2px 4px;
 }
 </style>
