@@ -19,7 +19,7 @@ export default new Vuex.Store({
     isLoggedin: false,
     isTerm: false,
     isChecked: false,
-    // isSended: false,
+    isAdmin:false,
 
     userData: {
       name: "",
@@ -100,6 +100,7 @@ export default new Vuex.Store({
     },
     SET_ADMIN_TOKEN(state, token) {
       state.adminToken = token;
+      state.isAdmin=true
       cookies.set("admin-token", token, 0);
     },
     REMOVE_TOKEN(state) {
@@ -115,6 +116,7 @@ export default new Vuex.Store({
       state.authToken = null;
       cookies.remove("auth-token");
       state.isLoggedin = false;
+      state.isAdmin=false
       state.modal = true;
       router.push("/");
     },
@@ -371,7 +373,7 @@ export default new Vuex.Store({
           }
         }
         if(!articleData.articleData.image&&articleData.temp===1){
-          articleData.articleData.image="default.jpeg"
+          articleData.articleData.image="default.jpg"
         }
         if(cookies.get('admin-token')){
           articleData.articleData.categoryId=101
@@ -397,13 +399,15 @@ export default new Vuex.Store({
     },
     //게시글 수정하기
     updateArticle({ state }, updateData) {
-      if(!updateData.articleUpdateData.categoryId||!updateData.articleUpdateData.title||!updateData.articleUpdateData.address||!updateData.articleUpdateData.description||!updateData.articleUpdateData.minPrice||!updateData.articleUpdateData.myPrice||!updateData.articleUpdateData.endDate||!updateData.articleUpdateData.endTime){
+      if(updateData.temp===1&&(!updateData.articleUpdateData.categoryId||!updateData.articleUpdateData.title||!updateData.articleUpdateData.address||!updateData.articleUpdateData.description||!updateData.articleUpdateData.minPrice||!updateData.articleUpdateData.myPrice||!updateData.articleUpdateData.endDate||!updateData.articleUpdateData.endTime)){
         alert("필수 입력칸을 모두 채워 주세요")
       }else{
-        if (updateData.articleUpdateData.endTime) {
-          if (updateData.articleUpdateData.endTime.length < 8) {
-            updateData.articleUpdateData.endTime =
-              updateData.articleUpdateData.endTime + ":00";
+        if(updateData.temp==1){
+          if (updateData.articleUpdateData.endTime) {
+            if (updateData.articleUpdateData.endTime.length < 8) {
+              updateData.articleUpdateData.endTime =
+                updateData.articleUpdateData.endTime + ":00";
+            }
           }
         }
         updateData.articleUpdateData.token = state.authToken;
@@ -523,39 +527,22 @@ export default new Vuex.Store({
         });
     },
 
-    // 게시글 신고 접수
-    // createArticleAccuse(context, accuseArticleData) {
-    //   axios
-    //     .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
-    //     .then(() => {
-    //       console.log(accuseArticleData, "하하하");
-    //       router.push("/posts");
-    //     })
-    //     .catch((err) => console.log(err));
-    // },
-    // // 댓글 신고 접수
-    // createCommentAccuse(context, accuseCommentData) {
-    //   axios
-    //     .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
-    //     .then(() => {
-    //       router.push("/");
-    //     })
-    //     .catch((err) => console.log(err));
-    // },
+    //게시글 신고 접수
     createArticleAccuse(context, accuseArticleData) {
       axios
-        .post(`${BACK_URL}/accuse/create`, accuseArticleData)
+        .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
         .then(() => {
-          router.push("/");
+          console.log(accuseArticleData, "하하하");
+          router.push("/posts");
         })
         .catch((err) => console.log(err));
     },
+    // 댓글 신고 접수
     createCommentAccuse(context, accuseCommentData) {
       axios
         .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
         .then(() => {
           router.push("/");
-          console.log(accuseCommentData, "AAA");
         })
         .catch((err) => console.log(err));
     },

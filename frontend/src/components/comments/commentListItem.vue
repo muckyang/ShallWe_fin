@@ -2,7 +2,7 @@
   <div>
     <div class="d-flex">
       <div class="comment-box">
-        <div class="comment-user" style="font-size:18px">
+        <div class="comment-user" style="font-size:17px">
           <router-link
             :to="{ name: 'userDetail', params: { ID: comment.userId }}"
           >{{ comment.nickname }}</router-link>
@@ -183,6 +183,8 @@ export default {
 <style>
 /* @import '../node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'; */
 /* @import url('node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'); */
+.siren-btn {
+}
 .comment-box {
   border-bottom: 1px solid rgb(237, 237, 240);
   display: flex;
@@ -227,6 +229,10 @@ export default {
   outline: none;
 }
 .comment-btn:hover {
+  border: none;
+  outline: none;
+}
+.comment-btn:focus {
   border: none;
   outline: none;
 }

@@ -5,7 +5,7 @@
         class="nav nav-tabs d-flex"
         id="nav-tab"
         role="tablist"
-        style="font-family: 'Recipekorea', cursive; font-size:16.5px"
+        style="font-family: 'Recipekorea', cursive; font-size:18px"
       >
         <a
           @click="changeCategory(100)"
@@ -80,6 +80,7 @@
               </th>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none; color: black"
                   :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
                     name: 'postDetail',
@@ -89,6 +90,7 @@
               </td>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
@@ -129,6 +131,7 @@
               </th>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
                     name: 'postDetail',
@@ -138,6 +141,7 @@
               </td>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
@@ -178,6 +182,7 @@
               </th>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :class="{ 'post-title': article.categoryId === 101 }"
                   :to="{
                     name: 'postDetail',
@@ -187,6 +192,7 @@
               </td>
               <td style="font-size:14px">
                 <router-link
+                  style="text-decoration:none;"
                   :to="{
                     name: 'postDetail',
                     params: { ID: `${article.articleId}` },
@@ -301,7 +307,7 @@ export default {
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
-  padding: 7px 7px 3px 7px;
+  padding: 7px 8px 3px 8px;
   color: white;
 }
 .post-id {

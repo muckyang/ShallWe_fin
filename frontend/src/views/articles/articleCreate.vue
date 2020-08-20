@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5 create-container">
+  <div class="mt-5 create-container" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
     <div class="create-form">
       <!-- 지도 -->
       <div class="kakao-map-select">
@@ -7,19 +7,29 @@
       </div>
       <div class="right-items">
         <!--선택 장소-->
+        <div class="create-alert-msg">
+          <small style="font-size: 15px; color: #ee6e9f;">*</small>
+          <small style="font-size: 15px;">표시는 필수값입니다.</small>
+        </div>
         <div class="selected-place">
-          <label for>어디서 만날까?<small style="font-size: 17px; color: red;">*</small></label>
+          <label for>
+            어디서 만날까?
+            <small style="font-size: 17px; color: #ee6e9f;">*</small>
+          </label>
           <input
             type="text"
             v-model="articleData.address"
             :placeholder="address"
-            style="font-family: FontAwesome;"
+            style="font-family: 'Recipekorea';"
             readonly
           />
         </div>
         <!--제목-->
         <div class="title">
-          <label for="title">제목<small style="font-size: 17px; color: red;">*</small></label>
+          <label for="title">
+            제목
+            <small style="font-size: 17px; color: #ee6e9f;">*</small>
+          </label>
           <div class="btn-group">
             <button
               type="button"
@@ -38,28 +48,40 @@
         </div>
         <!--시작금액/전체금액-->
         <div class="price">
-          <label for>시작금액<small style="font-size: 17px; color: red;">*</small>/전체금액<small style="font-size: 17px; color: red;">*</small></label>
+          <label for>
+            시작금액
+            <small style="font-size: 17px; color: #ee6e9f;">*</small>/전체금액
+            <small style="font-size: 17px; color: #ee6e9f;">*</small>
+          </label>
           <input type="number" id="myPrice" v-model="articleData.myPrice" placeholder=" 시작금액" />
           <input type="number" id="minPrice" v-model="articleData.minPrice" placeholder=" 전체금액" />
         </div>
         <!--종료일시-->
         <div class="endTime">
-          <label for>종료일자<small style="font-size: 17px; color: red;">*</small>/종료시간<small style="font-size: 17px; color: red;">*</small></label>
+          <label for>
+            종료일자
+            <small style="font-size: 17px; color: #ee6e9f;">*</small>/종료시간
+            <small style="font-size: 17px; color: #ee6e9f;">*</small>
+          </label>
           <input type="date" v-model="articleData.endDate" />
           <input type="time" id="form-endTime" v-model="articleData.endTime" />
         </div>
         <!-- 파일 업로드 -->
         <div class="imageInsert d-flex">
           <label>사진 업로드</label>
-          <div class="d-flex">
-            <input type="file" id="file" name="file" ref="file" style="width: 100%;"/>
-            <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
-          </div>
+          <input type="file" id="file" name="file" ref="file" />
+          <!-- <button v-on:click="fileUpload" class="mr-2 _temp-form text-white" style="font-size: 13px; width: 20%;">업로드</button> -->
         </div>
         <!--url-->
         <div class="url">
           <label for="url">URL</label>
-          <input type="url" id="url" v-model="articleData.urlLink" placeholder=" url을 입력하세요" required/>
+          <input
+            type="url"
+            id="url"
+            v-model="articleData.urlLink"
+            placeholder=" url을 입력하세요"
+            required
+          />
         </div>
         <!--오픈톡방url-->
         <div class="url">
@@ -68,49 +90,56 @@
         </div>
         <!--내용-->
         <div class="createContent">
-          <label for="textarea-rows">내용<small style="font-size: 17px; color: red;">*</small></label>
-          <b-form-textarea
+          <label for="textarea-rows">
+            내용
+            <small style="font-size: 17px; color: #ee6e9f;">*</small>
+          </label>
+          <div class="article-text-area">
+            <b-form-textarea
               id="textarea-rows"
               v-model="articleData.description"
               placeholder="내용을 입력하세요..."
               rows="3"
               max-rows="6"
             ></b-form-textarea>
+          </div>
         </div>
       </div>
     </div>
 
     <!--태그-->
     <div class="tags">
-      <label for>태그</label>
-      <b-form-tags v-model="articleData.tags" no-outer-focus class="mb-2">
-        <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
-          <b-input-group class="mb-2">
-            <b-form-input
-              v-bind="inputAttrs"
-              v-on="inputHandlers"
-              placeholder="엔터를 누르면 태그가 추가돼요! :)"
-              id="tag-input"
-              class="form-control"
-            ></b-form-input>
-            <b-input-group-append>
-              <div class="tag-btn">
-                <b-button @click="addTag()" class="tag-btn" variant="dark">등록</b-button>
-              </div>
-            </b-input-group-append>
-          </b-input-group>
-          <div class="d-inline-block" style="font-size: 1.5rem;">
-            <b-form-tag
-              v-for="tag in tags"
-              @remove="removeTag(tag)"
-              :key="tag"
-              :title="tag"
-              :variant="tagVariant"
-              class="mr-1"
-            >{{ tag }}</b-form-tag>
-          </div>
-        </template>
-      </b-form-tags>
+      <label>태그</label>
+      <div class="tag-input-box">
+        <b-form-tags v-model="articleData.tags" no-outer-focus class="mb-2">
+          <template v-slot="{ tags, inputAttrs, inputHandlers, tagVariant, addTag, removeTag }">
+            <b-input-group class="mb-2">
+              <b-form-input
+                v-bind="inputAttrs"
+                v-on="inputHandlers"
+                placeholder="엔터를 누르면 태그가 추가돼요! :)"
+                id="tag-input"
+                class="form-control"
+              ></b-form-input>
+              <b-input-group-append>
+                <div class="tag-btn">
+                  <b-button @click="addTag()" class="tag-btn" variant="dark">등록</b-button>
+                </div>
+              </b-input-group-append>
+            </b-input-group>
+            <div class="d-inline-block" style="font-size: 1.5rem;">
+              <b-form-tag
+                v-for="tag in tags"
+                @remove="removeTag(tag)"
+                :key="tag"
+                :title="tag"
+                :variant="tagVariant"
+                class="mr-1"
+              >{{ tag }}</b-form-tag>
+            </div>
+          </template>
+        </b-form-tags>
+      </div>
     </div>
 
     <div class="create-submit">
@@ -143,7 +172,7 @@ export default {
         minPrice: null,
         myPrice: null,
         urlLink: null,
-        openLink:null,
+        openLink: null,
         endDate: null,
         endTime: null,
         image: "",
@@ -154,18 +183,18 @@ export default {
       selectedTBG: "카테고리",
       coNum: "1",
       address: " \uf060" + " 지도에서 만남의 장소를 설정하세요",
-      file: '',
-      path: '',
-      uid: '',
+      file: "",
+      path: "",
+      uid: "",
     };
   },
   methods: {
     ...mapActions(["createArticle", "tempSaveArticle"]),
-    articleCreate(num){
-      this.fileUpload()
+    articleCreate(num) {
+      this.fileUpload();
       setTimeout(() => {
-        var articleData=this.articleData 
-        this.createArticle({articleData,temp:num})
+        var articleData = this.articleData;
+        this.createArticle({ articleData, temp: num });
       }, 300);
     },
     fileUpload: function () {
@@ -173,19 +202,18 @@ export default {
       this.file = this.$refs.file.files[0];
       console.log(this.file);
       formData.append("file", this.file);
-       axios.post(`${BACK_URL}/file`
-          ,formData
-          , {
-              headers: {
-                  'Content-Type': 'multipart/form-data'
-              }
-          })
+      axios
+        .post(`${BACK_URL}/file`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((response) => {
-          this.path = response.data
-          this.articleData.image = this.path
-          var tmp=this.articleData.image.split('.')
-          tmp[1]=tmp[1].toLowerCase()
-          this.articleData.image = tmp[0]+'.'+tmp[1]
+          this.path = response.data;
+          this.articleData.image = this.path;
+          var tmp = this.articleData.image.split(".");
+          tmp[1] = tmp[1].toLowerCase();
+          this.articleData.image = tmp[0] + "." + tmp[1];
         })
         .catch((error) => {
           console.log(error);
@@ -221,29 +249,34 @@ export default {
     },
   },
   watch: {
-    articleData:{
+    articleData: {
       deep: true,
-      handler(){
-        try{
-          if(this.articleData.minPrice<0){
-            alert("1이상의 정수만 입력이 가능합니다.")
-            this.articleData.minPrice=null
+      handler() {
+        try {
+          if (this.articleData.minPrice < 0) {
+            alert("1이상의 정수만 입력이 가능합니다.");
+            this.articleData.minPrice = null;
           }
-          if(this.articleData.myPrice<0){
-            alert("1이상의 정수만 입력이 가능합니다.")
-            this.articleData.myPrice=null
+          if (this.articleData.myPrice < 0) {
+            alert("1이상의 정수만 입력이 가능합니다.");
+            this.articleData.myPrice = null;
           }
-
-        }catch{
-
-        }
-      }
-    }
-  }
+        } catch {}
+      },
+    },
+  },
 };
 </script>
 
 <style>
+.create-alert-msg {
+  /* border: 1px solid red; */
+  display: flex;
+  justify-content: flex-end;
+}
+.kakao-map-select {
+  /* border: 1px solid red; */
+}
 .create-container {
   padding-left: 8px;
 }
@@ -252,6 +285,7 @@ export default {
   flex-direction: row;
 }
 .right-items {
+  /* border: 1px solid blue; */
   text-align: left;
   margin: 0 0 0 1.5vw;
   width: 55vw;
@@ -359,6 +393,7 @@ input:focus::placeholder {
   outline-style: none;
   -webkit-tap-highlight-color: transparent;
 }
+
 /* .{
   content: '';
   position: absolute;
@@ -395,4 +430,46 @@ input:focus::placeholder {
     transition: all 0.3s;
     background-color: rgba(255,255,255,0.25);
 } */
+@media screen and (max-width: 991px) {
+  .create-form {
+    display: flex;
+    flex-direction: column;
+  }
+  .create-alert-msg {
+    padding-right: 8vw;
+  }
+  .selected-place {
+    /* border: 1px solid red; */
+    width: 80vw;
+    display: flex;
+  }
+  .selected-place > input,
+  .imageInsert > input,
+  .url > input {
+    width: 60.5vw;
+  }
+  .title > input {
+    width: 51vw;
+  }
+  .price > input,
+  .endTime > input {
+    width: 30vw;
+  }
+  .right-items {
+    width: 87vw;
+    margin: 5vh 0 0 0;
+  }
+  .createContent > .article-text-area {
+    /* border: 1px solid red; */
+    width: 77.3vw;
+  }
+  .tags {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .tags .tag-input-box {
+    width: 50vw;
+  }
+}
 </style>

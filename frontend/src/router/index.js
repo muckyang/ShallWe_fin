@@ -150,7 +150,7 @@ const routes = [
     component: postDetail,
   },
   {
-    path: "/pupdate",
+    path: "/pupdate/:ID",
     name: "postUpdate",
     component: postUpdate,
   },
@@ -243,6 +243,7 @@ router.beforeEach((to, from, next) => {
     "klogin",
     "adminLogin",
     "searchList",
+    "aboutUs",
   ];
   //로그인 하면 안되는 페이지
   const authPages = [

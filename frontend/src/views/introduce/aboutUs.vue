@@ -29,7 +29,7 @@
           <!--배달음식의 최소주문금액을 같이 맞춰 최소의 금액으로 최대의 맛있는 음식을 나눠 보아요-->
           <h4 class="font-change">
             <span>
-              배달음식의 최소주문금액을 함께
+              <br />배달음식의 최소주문금액을 함께
               <br />
               <br />채우고
             </span>
@@ -80,11 +80,11 @@
           <div class="about-us-point mb-5">
             <h2 class="font-change" style="color: #000">신뢰성</h2>
             <h4>
-              <p class="font-change" style="color: #000">
+              <span class="font-change" style="color: #000">
                 회원관리에 있어 점수 또는 등급을 부여
                 <br />
                 <div class="mt-1 font-change" style="color: #000">카카오 로그인으로 1인 1계정으로 신뢰점수 ↑</div>
-              </p>
+              </span>
             </h4>
           </div>
           <img src="@/assets/img/trust2.png" class="trustIcon" />
@@ -95,10 +95,11 @@
           <div class="about-us-point mb-5">
             <h2 class="font-change" style="color: #000">안정성</h2>
             <h4>
-              <p class="font-change" style="color: #000">
+              <span class="font-change" style="color: #000">
                 주변 CCTV가 많은 편의점 지도 API를 통해
-                <br /><div class="mt-1 font-change" style="color: #000">사용자가 서로의 위치의 중간지점 편의점 지정</div>
-              </p>
+                <br />
+                <div class="mt-1 font-change" style="color: #000">사용자가 서로의 위치의 중간지점 편의점 지정</div>
+              </span>
             </h4>
           </div>
           <img src="@/assets/img/Convenience2.png" class="ConIcon" />
@@ -107,11 +108,13 @@
     </div>
 
     <section class="about-us-map-container">
-        <section class="box style1">
-          <h2 class="font-change">나의 동네에서 싸게 구매하자!!</h2>
-          <p>회원가입 때 등록한 가장 가까운 편의점 주소로 같은 동네의 거래 상황을 알 수 있습니다.</p>
-        </section>
-          <div class="about-us-map"><img src="@/assets/img/about-us-map.png" class="mapIcon" /></div>
+      <section class="box style1">
+        <h2 class="font-change">나의 동네에서 싸게 구매하자!!</h2>
+        <p class="font-change">회원가입 때 등록한 가장 가까운 편의점 주소로 같은 동네의 거래 상황을 알 수 있습니다.</p>
+      </section>
+      <div class="about-us-map">
+        <img src="@/assets/img/about-us-map.png" class="mapIcon" />
+      </div>
     </section>
   </div>
 </template>
@@ -142,19 +145,19 @@ export default {
 </script>
 
 <style>
-.about-us-map-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 0 150px 0;
+.about-us-map-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 0 150px 0;
 }
-.about-us-map{
-    width:800px;
-    height: 350px; 
+.about-us-map {
+  width: 800px;
+  height: 350px;
 }
-.mapIcon{
-    width: 100%;
-    height:350px;
+.mapIcon {
+  width: 100%;
+  height: 350px;
 }
 .about-us-middle {
   display: flex;

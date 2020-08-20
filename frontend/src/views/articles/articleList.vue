@@ -83,14 +83,15 @@
               >
                 <div class="type-one"></div>
                 <b-card
+                  no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
                   footer-class="card-end"
                 >
                   <div
-                    class="article-img-box"
-                    :style="{height: '200px',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    class="article-img-box m-0 p-0"
+                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
                   >
                     <img
                       v-if="article.categoryId==1"
@@ -111,22 +112,22 @@
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
-                  <b-card-text>
+                  <b-card-text class="p-2">
                     <h5
                       class="article-title mt-3"
                       style="font-family: 'Recipekorea', cursive; font-size:18px"
                     >{{ article.title }}</h5>
                     <h6
-                      class="article-address py-2"
+                      class="article-address py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >{{ article.address }}</h6>
                     <h6
-                      class="article-price py-2"
+                      class="article-price py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}/{{
+                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
                       minPrice(article.minPrice)
-                      }}
+                      }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -134,12 +135,17 @@
                       class="d-flex justify-content-between"
                       style="font-family: 'Recipekorea', cursive; font-size:14.5px"
                     >
-                      <small>
-                        <b-icon-heart style="color: #ee6e9f"></b-icon-heart>
-                        {{ article.likeNum }}개
-                        <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                        {{ article.commentNum }}개
-                      </small>
+                      <div class="articleList-subInfo">
+                        <div class="articleList-heart">
+                          <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                          {{ article.likeNum }}
+                        </div>
+                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                        <div class="articleList-chat ml-2">
+                          <i class="far fa-comment-dots"></i>
+                          {{ article.commentNum }}
+                        </div>
+                      </div>
                       <small class="text-muted">{{ article.timeAgo }}</small>
                     </div>
                   </template>
@@ -167,6 +173,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
+                  no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -174,7 +181,7 @@
                 >
                   <div
                     class="article-img-box"
-                    :style="{height: '200px',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
                   >
                     <img
                       v-if="article.categoryId==1"
@@ -209,9 +216,9 @@
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}/{{
+                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
                       minPrice(article.minPrice)
-                      }}
+                      }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -252,6 +259,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
+                  no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -259,7 +267,7 @@
                 >
                   <div
                     class="article-img-box"
-                    :style="{height: '200px',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
                   >
                     <img
                       v-if="article.categoryId==1"
@@ -293,9 +301,9 @@
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}/{{
+                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
                       minPrice(article.minPrice)
-                      }}
+                      }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -336,6 +344,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
+                  no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -343,7 +352,7 @@
                 >
                   <div
                     class="article-img-box"
-                    :style="{height: '200px',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
+                    :style="{height: '100%',width:'100%',backgroundImage: 'url('+require('C:/Users/multicampus/Desktop/image/'+article.image)+')',backgroundSize: 'cover'}"
                   >
                     <img
                       v-if="article.categoryId==1"
@@ -377,9 +386,9 @@
                       class="article-price py-2"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
-                      가격: {{ sumPrice(article.sumPrice) }}/{{
+                      가격: {{ sumPrice(article.sumPrice) }}원 / {{
                       minPrice(article.minPrice)
-                      }}
+                      }}원
                     </h6>
                   </b-card-text>
                   <template v-slot:footer>
@@ -507,18 +516,24 @@ export default {
 
     minPrice() {
       return (price) => {
-        return new Intl.NumberFormat("ko-KR", {
+        var res = new Intl.NumberFormat("ko-KR", {
           style: "currency",
           currency: "KRW",
         }).format(price);
+        let result = res + "";
+        const real = result.substring(1, res.length);
+        return real;
       };
     },
     sumPrice() {
       return (price) => {
-        return new Intl.NumberFormat("ko-KR", {
+        var res = new Intl.NumberFormat("ko-KR", {
           style: "currency",
           currency: "KRW",
         }).format(price);
+        let result = res + "";
+        const real = result.substring(1, res.length);
+        return real;
       };
     },
   },
@@ -532,6 +547,11 @@ export default {
   border: 1px solid red;
   background-image: url("imageUrl(article)");
 } */
+.articleList-subInfo {
+  display: flex;
+  vertical-align: middle;
+  font-size: 13px;
+}
 .article-background-img {
   width: 100%;
   height: 60%;
@@ -583,8 +603,9 @@ export default {
 
 <style scoped lang="scss">
 $color-bg: #f8f8f8;
+// $color-bg: #572e2e;
 $card-padding: 20px;
-$grid-gutter: 31px;
+$grid-gutter: 30px;
 
 // Media Queries breakpoints
 $small: 480px;
@@ -596,6 +617,7 @@ $x-large: 1200px;
   position: relative;
   flex: 1 1 100%;
   background: lighten($color-bg, 3%);
+  // background: #ee6e9f;
 
   @media screen and (min-width: $medium) {
     flex-basis: calc(33.33% - (#{$grid-gutter * 2} + #{$card-padding * 2}));
@@ -645,7 +667,7 @@ $x-large: 1200px;
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
-  padding: 7px 7px 3px 7px;
+  padding: 7px 8px 3px 8px;
   color: white;
 }
 </style>

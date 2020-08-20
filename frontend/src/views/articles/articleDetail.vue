@@ -1,10 +1,10 @@
 <template>
   <div class="mt-5">
-    <div class="container detail">
+    <div class="container detail" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
       <!--Top 부분. 제목, 작성자, create time -->
       <div class="top">
         <div class="top-row">
-          <div class="detail-title">{{ articleData.title }}</div>
+          <div class="detail-title ml-1">{{ articleData.title }}</div>
           <!--게시글 수정,삭제,신고 버튼-->
           <div v-if="udflag">
             <div
@@ -12,20 +12,21 @@
               v-if="articleData.userId === userData.userId"
             >
               <button type="button" class="article-btn" data-toggle="dropdown">
-                <i class="fas fa-ellipsis-v"></i>
+                <i class="fas fa-ellipsis-h"></i>
               </button>
-              <div class="dropdown-menu">
+              <div class="dropdown-menu px-0 w-1 pr-0 control-width">
                 <router-link
                   class="articleUpdate"
+                  style="text-decoration: none; color: black"
                   :to="{
                     name: 'articleUpdate',
                     params: { ID: this.$route.params.ID },
                   }"
                 >
-                  <a class="dropdown-item articleUpdate">수정</a>
+                  <a class="dropdown-item pr-0 articleUpdate">수정</a>
                 </router-link>
                 <a
-                  class="dropdown-item"
+                  class="dropdown-item pr-0"
                   @click="deleteArticle({articleId: articleData.articleId, categoryId: articleData.categoryId})"
                 >삭제</a>
 
@@ -61,9 +62,17 @@
                   v-model="accuseArticleData.accuseReason"
                 ></b-form-textarea>
                 <h6 class="mt-3">신고할 게시물 URL</h6>
-                <b-form-input style="width: 400px" id="type-url" type="url" v-model="accuseArticleData.accuseUrl"></b-form-input>
-                <hr>
-                <button @click="createArticleAccuse({ accuseArticleData })" class="btn btn-danger btn-sm">신고접수</button>
+                <b-form-input
+                  style="width: 400px"
+                  id="type-url"
+                  type="url"
+                  v-model="accuseArticleData.accuseUrl"
+                ></b-form-input>
+                <hr />
+                <button
+                  @click="createArticleAccuse({ accuseArticleData })"
+                  class="btn btn-danger btn-sm"
+                >신고접수</button>
               </b-modal>
             </div>
           </div>
@@ -84,12 +93,12 @@
             @click="putWord(tag)"
           >#{{ tag }}</button>
         </div>
-        <div class="in-the-top">
-          <div class="writer">
+        <div class="in-the-top ml-1">
+          <div class="writer mt-1">
             {{ articleData.writer }}
             <br />
           </div>
-          <div class="create-time">{{ articleData.timeAgo }}</div>
+          <div class="create-time" style="font-size:12px">{{ articleData.timeAgo }}</div>
         </div>
       </div>
       <hr class="top-line" />
@@ -101,24 +110,34 @@
           <div class="detail-info">
             <div class="detail-address">만남의 장소: {{ articleData.address }}</div>
             <div class="detail-price">
-              <div class="min-price">최소 주문 금액: {{ minPrice }}</div>
-              <div class="min-price">모인 금액: {{ sumPrice }}</div>
+              <div class="min-price">최소 주문 금액 : \{{ minPrice }}</div>
+              <div class="min-price mt-2">모인 금액 : \{{ sumPrice }}</div>
             </div>
-            <div class="detail-endTime">마감 시간: {{ cutDate(articleData.endTime) }}까지</div>
-            <div v-if="checkedStatus">오픈 채팅방 url: {{articleData.openLink}}</div>
+            <div class="detail-endTime">마감 시간 : {{ cutDate(articleData.endTime) }}까지</div>
+            <div class="article-url mt-2">사이트 url : {{articleData.urlLink}}</div>
+            <div v-if="checkedStatus" class="mt-2">오픈 채팅방 url : {{articleData.openLink}}</div>
           </div>
           <div class="detail-btns">
             <!--좋아요 버튼-->
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
             <!--공유 버튼-->
-            <a href="javascript:;" class="mx-1" @click="shareContent" id="kakao-link">
+            <a
+              href="javascript:;"
+              class="mx-1 kakao-share-link"
+              @click="shareContent"
+              id="kakao-link"
+            >
               <button @click="shareContent" class="detail-share">
                 <!-- <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제" /> -->
                 <i class="fas fa-share-alt"></i> 공유
               </button>
             </a>
             <div v-if="articleData.status===4 && checkParticipant" class="like-content">
-              <router-link :to="{ name: 'reviewCreate' }" class="ml-auto routerLink">
+              <router-link
+                :to="{ name: 'reviewCreate' }"
+                class="ml-auto routerLink"
+                style="text-decoration: none; color: black"
+              >
                 <button class="review-create-button">
                   <i class="fas fa-pencil-alt"></i> 후기
                 </button>
@@ -196,7 +215,11 @@
       </div>
 
       <!--하단 부분. 내용,(지도) -->
-      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
+      <div
+        class="detail-content mt-2"
+        id="item-1"
+        style="font-size: 20px;"
+      >{{ articleData.description }}</div>
     </div>
     <div class="kakao-map mt-5">
       <kakaoMapForDetail />
@@ -211,13 +234,21 @@
       <div class>
         <div class="member-list" v-for="participant in articleData.partList" :key="participant.no">
           <div class="member">
-            <div class="member-writer" style="font-size:18px">
-              <router-link
-                :to="{ name: 'userDetail', params: { ID: participant.userId }}"
-              >{{participant.writer}}</router-link>
-              <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
-            </div>
+            <div class="member-writer-info">
+              <div class="member-writer mb-2" style="font-size:17px">
+                <router-link
+                  style="text-decoration: none; color: black"
+                  :to="{ name: 'userDetail', params: { ID: participant.userId }}"
+                >{{participant.writer}}</router-link>
+                <i v-if="articleData.userId === participant.userId" class="fas fa-crown"></i>
+              </div>
 
+              <div class="article-participant-status" v-if="participant.userId != userData.userId">
+                <div v-if="participant.status===0">처리상태:수락 대기</div>
+                <div v-if="participant.status===1">처리상태:수락</div>
+                <div v-if="participant.status===2">처리상태:거절</div>
+              </div>
+            </div>
             <div v-if="participant.status === 0">
               <div
                 class="article-drop dropdown dropleft"
@@ -267,25 +298,21 @@
           <div
             v-if="articleData.userId !== participant.userId"
             class="member-title"
-            style="font-size:17px"
-          >제목: {{ participant.title }}</div>
-          <div
-            class="member-price py-1"
-            style="font-size:17.5px"
-          >가격: {{ parPrice(participant.price) }}</div>
+            style="font-size:18px"
+          >{{ participant.title }}</div>
           <div
             v-if="articleData.userId !== participant.userId"
-            class="member-content"
+            class="member-content mt-1"
             style="font-size:18px"
           >요구사항: {{ participant.description }}</div>
-          <div v-if="participant.status===0">처리상태:수락 대기</div>
-          <div v-if="participant.status===1">처리상태:수락</div>
-          <div v-if="participant.status===2">처리상태:거절</div>
+          <div
+            class="member-price py-1 mt-1"
+            style="font-size:18px"
+          >가격: \{{ parPrice(participant.price) }}</div>
         </div>
       </div>
     </div>
     <commentList />
-    <div>{{udflag}}</div>
   </div>
 </template>
 
@@ -340,42 +367,50 @@ export default {
   computed: {
     ...mapState(["articleData", "userData"]),
     minPrice() {
-      return new Intl.NumberFormat("ko-KR", {
+      var res = new Intl.NumberFormat("ko-KR", {
         style: "currency",
         currency: "KRW",
       }).format(this.articleData.minPrice);
+      let result = res + "";
+      const real = result.substring(1, res.length);
+      return real;
     },
     sumPrice() {
-      return new Intl.NumberFormat("ko-KR", {
+      var res = new Intl.NumberFormat("ko-KR", {
         style: "currency",
         currency: "KRW",
       }).format(this.articleData.sumPrice);
+      let result = res + "";
+      const real = result.substring(1, res.length);
+      return real;
     },
     parPrice() {
       return (price) => {
-        return new Intl.NumberFormat("ko-KR", {
+        var res = new Intl.NumberFormat("ko-KR", {
           style: "currency",
           currency: "KRW",
         }).format(price);
+        let result = res + "";
+        const real = result.substring(1, res.length);
+        return real;
       };
     },
     imageUrl() {
-      try{
-        return require('C:/Users/multicampus/Desktop/image/'+`${this.articleData.image}`)
-      }catch{
-
-      }
-    //   return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
+      try {
+        return require("C:/Users/multicampus/Desktop/image/" +
+          `${this.articleData.image}`);
+      } catch {}
+      //   return require('C:/Users/multicampus/Desktop/image/'+`${article.image}`)
     },
-    udflag(){
-      var tmp = 0
-      for(const t of this.articleData.partList){
-        if(t.status===1){
-          tmp++
+    udflag() {
+      var tmp = 0;
+      for (const t of this.articleData.partList) {
+        if (t.status === 1) {
+          tmp++;
         }
       }
 
-      return tmp===1 ? true : false
+      return tmp === 1 ? true : false;
     },
     joinFlag() {
       const tempList = [];
@@ -456,6 +491,7 @@ export default {
       axios
         .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
         .then((response) => {
+<<<<<<< HEAD
              Swal.fire({
             icon: 'success',
             height: 300,
@@ -465,6 +501,10 @@ export default {
             timer: 1500
           })
           this.getArticle(this.$route.params.ID)
+=======
+          alert("구매가 확정되었습니다.");
+          this.getArticle(this.$route.params.ID);
+>>>>>>> 841d5d46862321976c8b2e2e6da61f5c4e27790b
         })
         .catch((error) => {
           console.log(error);
@@ -637,6 +677,20 @@ export default {
 </script>
 
 <style>
+.control-width {
+  width: 30px;
+}
+.member-writer-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.kakao-share-link {
+  text-decoration: none;
+}
+.kakao-share-link:hover {
+  text-decoration: none;
+}
 .routerLink {
   text-decoration: none;
 }
@@ -650,7 +704,8 @@ export default {
   color: #eee;
   border-radius: 3px;
   box-shadow: 0 10px 20px -8px #1d0622;
-  padding: 10px 12px;
+  /* padding: 10px 12px; */
+  padding: 12px 12px 7px 12px;
   -webkit-transition: 0.3s ease;
 }
 .review-create-button:hover {
@@ -736,7 +791,7 @@ b-modal.form-input {
 .MyImage {
   width: 45%;
   height: 300px;
-  margin: 10px;
+  margin: 10px 5px 10px 2px;
 }
 .totheContent {
   background-color: #676d74;
@@ -792,7 +847,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 990px) {
   .middle-row {
     display: flex;
     flex-direction: column;
@@ -838,7 +893,7 @@ a {
 }
 .detail-content {
   margin: 30px 0;
-  padding: 0 15px;
+  padding: 0 2px;
   text-align: left;
 }
 .detail-btns {
@@ -854,7 +909,7 @@ a {
   background: rgb(250, 227, 1);
   border-radius: 3px;
   color: #ffffff;
-  padding: 10px 12px;
+  padding: 12px 12px 7px 12px;
   font-size: 17px;
   text-align: center;
   box-shadow: 0 10px 20px -8px rgb(202, 190, 21);
@@ -874,7 +929,8 @@ a {
   /* background-color: rgb(37, 7, 44); */
   background-color: #32093d;
   box-shadow: 0 10px 20px -8px rgb(5, 1, 7);
-  padding: 10px 11px;
+  /* padding: 10px 11px; */
+  padding: 12px 12px 7px 12px;
   border-radius: 3px;
   border: none;
   outline: none;
@@ -902,6 +958,10 @@ a {
   border: none;
   cursor: pointer;
   width: 100%;
+  outline: none;
+}
+.article-btn:focus {
+  border: none;
   outline: none;
 }
 .article-drop:hover {
