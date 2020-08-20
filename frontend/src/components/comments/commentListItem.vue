@@ -18,11 +18,11 @@
 
           <!-- 게시물 신고 -->
           <div v-else>
-            <button type="button" class="siren-btn" data-toggle="modal" :data-target="'#exampleModal' + commentId ">
+            <button type="button" class="siren-btn" data-toggle="modal" :data-target="'#exampleModal' + accuseCommentData.accuseId">
               신고
             </button>
 
-            <div class="modal fade" :id="'exampleModal' + commentId " tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" :id="'exampleModal' + accuseCommentData.accuseId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
