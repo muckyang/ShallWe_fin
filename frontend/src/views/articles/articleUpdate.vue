@@ -93,13 +93,7 @@
         <!-- 파일 업로드 -->
         <div class="imageInsert d-flex">
           <label style="font-size:16px">사진 업로드</label>
-          <input
-            type="file"
-            id="file"
-            name="file"
-            ref="file"
-            class="w-100 ml-3"
-          />
+          <input type="file" id="file" name="file" ref="file" />
         </div>
         <!--url-->
         <div class="url">

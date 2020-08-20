@@ -263,6 +263,7 @@ export default {
 /* @import url('node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'); */
 .siren-btn {
   border: none;
+  outline: none;
   background-color: transparent;
   color: rgb(218, 37, 37);
   font-size: 80%;
@@ -270,6 +271,7 @@ export default {
 }
 .siren-btn:hover {
   border: none;
+  outline: none;
   background-color: transparent;
   color: rgb(224, 34, 34);
 }
@@ -277,7 +279,7 @@ export default {
   border: none;
   outline: none;
   background-color: transparent;
-  color: black;
+  color: rgb(224, 34, 34);
 }
 .review-comment-container {
   border-bottom: 1px solid rgb(237, 237, 240);
