@@ -22,7 +22,9 @@
         <tr>
           <th scope="row" class="our-main-font">사진첨부</th>
           <td>
-            <b-form-file class="mt-3 our-main-font" @change="imageChange" plain></b-form-file>
+          <div class="">
+            <input type="file" id="file" name="file" ref="file" class="w-100 our-main-font"/>
+          </div>
           </td>
         </tr>
       </tbody>
@@ -75,6 +77,35 @@ export default {
     },
     imageUpload() {
       this.$refs.imageInput.click();
+    },
+    fileUpload: function () {
+      var formData = new FormData();
+      this.file = this.$refs.file.files[0];
+      console.log(this.file);
+      formData.append("file", this.file);
+      axios
+        .post(`${BACK_URL}/file`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          this.path = response.data;
+          this.articleData.image = this.path;
+          var tmp = this.articleData.image.split(".");
+          tmp[1] = tmp[1].toLowerCase();
+          this.articleData.image = tmp[0] + "." + tmp[1];
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    postCreate() {
+      this.fileUpload();
+      setTimeout(() => {
+        var articleData = this.articleData;
+        this.createArticle({ articleData, temp: 2 });
+      }, 300);
     },
   },
 };
