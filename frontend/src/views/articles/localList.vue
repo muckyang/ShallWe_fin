@@ -2,15 +2,11 @@
   <div class="mt-4 our-main-font">
     <hr />
     <div class="d-flex mb-2 justify-content-end">
-      <button
-        class="mr-2 view-all-btn"
-        @click="resetArticles"
-        style="paddin-top:10px;"
-      >
+      <button class="mr-2 pt-2 view-all-btn" @click="resetArticles">
         전체 보기
       </button>
       <router-link type="button" :to="{ name: 'articleCreate' }">
-        <button class="article-create-btn">글 쓰기</button>
+        <button class="article-create-btn pt-2 ">글 쓰기</button>
       </router-link>
     </div>
     <kakaoMapForLocal :articles="articles" @setAddress="setAddress" />

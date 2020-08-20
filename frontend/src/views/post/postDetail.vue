@@ -1,6 +1,9 @@
 <template>
   <div class="mt-5">
-    <div class="container detail" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
+    <div
+      class="container detail"
+      style="font-family: 'Recipekorea', cursive; font-size:16.5px"
+    >
       <!-- <div>{{ articleData.description }}</div>
       <commentList />-->
       <!--Top 부분. 제목, 작성자, create time -->
@@ -8,7 +11,10 @@
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
           <!--수정,삭제,신고 버튼-->
-          <div class="article-drop dropdown dropleft" v-if="articleData.userId === userData.userId">
+          <div
+            class="article-drop dropdown dropleft"
+            v-if="articleData.userId === userData.userId"
+          >
             <button type="button" class="article-btn" data-toggle="dropdown">
               <i class="fas fa-ellipsis-v"></i>
             </button>
@@ -26,8 +32,14 @@
               </router-link>
               <a
                 class="dropdown-item"
-                @click="deleteArticle({articleId: articleData.articleId, categoryId: articleData.categoryId})"
-              >삭제</a>
+                @click="
+                  deleteArticle({
+                    articleId: articleData.articleId,
+                    categoryId: articleData.categoryId,
+                  })
+                "
+                >삭제</a
+              >
               <!--다시 보기!!!!!!!1 -->
             </div>
           </div>
@@ -36,7 +48,7 @@
           <div v-else>
             <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
-            <b-modal hide-footer="true" id="modal-1" title="신고 접수">
+            <b-modal :hide-footer="true" id="modal-1" title="신고 접수">
               <h6>신고 사유</h6>
               <div class="dropdown">
                 <button
@@ -46,15 +58,27 @@
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                >선택</button>
+                >
+                  선택
+                </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)">욕설, 비난을 했어요!</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)">약속 장소에 나오지 않았어요!</a>
-                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)">광고를 하고 있어요!</a>
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(1)"
+                    >욕설, 비난을 했어요!</a
+                  >
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(2)"
+                    >약속 장소에 나오지 않았어요!</a
+                  >
+                  <a class="dropdown-item" href="#" @click="changeAccuseKind(3)"
+                    >광고를 하고 있어요!</a
+                  >
                 </div>
               </div>
               <h6 class="mt-3">사유 상세</h6>
-              <b-form-textarea id="textarea-rows" rows="8" v-model="accuseArticleData.accuseReason"></b-form-textarea>
+              <b-form-textarea
+                id="textarea-rows"
+                rows="8"
+                v-model="accuseArticleData.accuseReason"
+              ></b-form-textarea>
               <h6 class="mt-3">신고할 게시물 URL</h6>
               <b-form-input
                 style="width: 400px"
@@ -66,7 +90,9 @@
               <button
                 @click="createArticleAccuse({ accuseArticleData })"
                 class="btn btn-danger btn-sm"
-              >신고접수</button>
+              >
+                신고접수
+              </button>
             </b-modal>
           </div>
           <!-- 게시물 신고 -->
@@ -90,7 +116,9 @@
       </div>
 
       <!--내용, 댓글-->
-      <div class="detail-content" id="item-1">{{ articleData.description }}</div>
+      <div class="detail-content" id="item-1">
+        {{ articleData.description }}
+      </div>
     </div>
     <commentList />
     <hr />
@@ -196,7 +224,7 @@ export default {
     },
   },
 
-  created: function () {
+  created: function() {
     this.getArticle(this.$route.params.ID);
     // this.getImg();
     this.getUserData();
