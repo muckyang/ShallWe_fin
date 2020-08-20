@@ -162,10 +162,10 @@ export default {
     ...mapState(["articleData", "userData"]),
     imageUrl() {
       try {
-        return require("@/assets/images/" +
+        return require("http://i3b203.p.ssafy.io/img/" +
           `${this.articleData.image}`);
       } catch {}
-      //   return require('@/assets/images/'+`${article.image}`)
+      //   return require('http://i3b203.p.ssafy.io/img/'+`${article.image}`)
     },
   },
 

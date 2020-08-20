@@ -107,7 +107,7 @@
                       width: '100%',
                       backgroundImage:
                         'url(' +
-                        require('@/assets/images/' +
+                        require('http://i3b203.p.ssafy.io/img/' +
                           article.image) +
                         ')',
                       backgroundSize: 'cover',
@@ -250,7 +250,7 @@
                       width: '100%',
                       backgroundImage:
                         'url(' +
-                        require('@/assets/images/' +
+                        require('http://i3b203.p.ssafy.io/img/' +
                           article.image) +
                         ')',
                       backgroundSize: 'cover',
@@ -359,7 +359,7 @@
                       width: '100%',
                       backgroundImage:
                         'url(' +
-                        require('@/assets/images/' +
+                        require('http://i3b203.p.ssafy.io/img/' +
                           article.image) +
                         ')',
                       backgroundSize: 'cover',
@@ -467,7 +467,7 @@
                       width: '100%',
                       backgroundImage:
                         'url(' +
-                        require('@/assets/images/' +
+                        require('http://i3b203.p.ssafy.io/img/' +
                           article.image) +
                         ')',
                       backgroundSize: 'cover',
@@ -636,13 +636,13 @@ export default {
     imageUrl() {
       return (article) => {
         var arImg = article.image;
-        var result = "@/assets/images/" + arImg;
+        var result = "http://i3b203.p.ssafy.io/img/" + arImg;
         console.log(result);
         return {
           background: "url(" + result + ")",
         };
-        ("{backgroundImage: 'url('+require('@/assets/images/')+')'}");
-        // require("@/assets/images/" +
+        ("{backgroundImage: 'url('+require('http://i3b203.p.ssafy.io/img/')+')'}");
+        // require("http://i3b203.p.ssafy.io/img/" +
         //   `${article.image}`);
       };
     },
