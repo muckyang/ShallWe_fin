@@ -456,7 +456,14 @@ export default {
       axios
         .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
         .then((response) => {
-          alert("구매가 확정되었습니다.");
+             Swal.fire({
+            icon: 'success',
+            height: 300,
+            width: 400,
+            title: '구매확정 되었습니다!',
+            showConfirmButton: false,
+            timer: 1500
+          })
           this.getArticle(this.$route.params.ID)
         })
         .catch((error) => {
@@ -505,11 +512,26 @@ export default {
         .post(`${BACK_URL}/participant/create`, this.joinData)
         .then((response) => {
           this.getparticipantData();
-          alert("등록이 완료되었습니다!");
+         Swal.fire({
+            icon: 'success',
+            height: 300,
+            width: 250,
+            title: '참가 완료!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+
         })
         .catch((error) => {
           console.log(error);
-          alert("이미 참가한 게시글 입니다.");
+             Swal.fire({
+            icon: 'error',
+            height: 300,
+            width: 400,
+            title: '이미 참여한 게시물입니다.',
+            showConfirmButton: false,
+            timer: 1500
+          })
         });
     },
     updateJoinData() {
@@ -518,7 +540,14 @@ export default {
         .post(`${BACK_URL}/participant/update`, this.joinData)
         .then((response) => {
           this.getparticipantData();
-          alert("수정이 완료되었습니다.");
+             Swal.fire({
+            icon: 'success',
+            height: 300,
+            width: 250,
+            title: '수정 완료!',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
         .catch((err) => {
           console.log(err);
@@ -539,7 +568,14 @@ export default {
         .post(`${BACK_URL}/participant/delete/${no}`)
         .then((response) => {
           this.getparticipantData();
-          console.log("삭제가 완료되었습니다.");
+             Swal.fire({
+            icon: 'success',
+            height: 300,
+            width: 250,
+            title: '삭제 완료!',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
         .catch((err) => {
           console.log(err);
