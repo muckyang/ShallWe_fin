@@ -17,21 +17,21 @@
                         params: { ID: this.review.articleId},
                       }"
             >
-              <a class="dropdown-item">수정</a>
+              <a class="dropdown-item our-main-font">수정</a>
             </router-link>
-            <a class="dropdown-item" @click="deleteReview(review.articleId)">삭제</a>
+            <a class="dropdown-item our-main-font" @click="deleteReview(review.articleId)">삭제</a>
           </div>
         </div>
         <div
           :class="{'review-info':review.userId!== userData.userId,'review-info-ver':review.userId=== userData.userId}"
         >
-          <div class="review-writer">{{review.writer}}</div>
-          <div class="review-time">{{review.timeAgo}}</div>
+          <div class="review-writer our-main-font">{{review.writer}}</div>
+          <div class="review-time our-main-font">{{review.timeAgo}}</div>
         </div>
         <div class="review-middle">
-          <div class="review-title">{{review.title}}</div>
+          <div class="review-title our-main-font">{{review.title}}</div>
           <div class="review-like-comment">
-            <div class="like-container">
+            <div class="like-container our-main-font">
               <reviewLike @like-change="likeChange" :isLiked="isLiked" :review="review" />
               {{review.likeNum}}
             </div>
