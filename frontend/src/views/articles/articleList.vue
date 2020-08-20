@@ -105,9 +105,6 @@
                     :style="{
                       height: '100%',
                       width: '100%',
-                      backgroundImage:
-                        'url('+'../../../images/' + article.image + ')',
-                      backgroundSize: 'cover',
                     }"
                   >
                     <img
@@ -116,7 +113,7 @@
                           article.status != 4 &&
                           article.status != 5
                       "
-                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
+                      :key="imageUrl(article)"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
@@ -221,7 +218,7 @@
                 }"
                 class="text-decoration-none text-dark"
               >
-                <b-card
+               <b-card
                   :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
@@ -229,35 +226,55 @@
                   footer-class="card-end"
                 >
                   <div
-                    class="article-img-box"
+                    v-if="article.status != 4 && article.status != 5"
+                    class="article-img-box m-0 p-0"
                     :style="{
                       height: '100%',
                       width: '100%',
-                      backgroundImage:
-                          'url('+'../../../images/' + article.image + ')',
-                      backgroundSize: 'cover',
                     }"
                   >
                     <img
-                      v-if="article.categoryId == 1"
-                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
+                      v-if="
+                        article.categoryId == 1 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                      :key="imageUrl(article)"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId == 2"
+                      v-if="
+                        article.categoryId == 2 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
                       src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId == 3"
+                      v-if="
+                        article.categoryId == 3 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
                       src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
-                  <!-- <img src alt /> -->
+                  <div
+                    v-else-if="article.status == 4"
+                    class="article-img-box m-0 p-0"
+                  ><img src="http://i3b203.p.ssafy.io/localImg/DealEnd2.png" alt=""></div>
+                  
+                  <div
+                    v-else-if="article.status === 5"
+                    class="article-img-box m-0 p-0"
+                  ><img src="http://i3b203.p.ssafy.io/localImg/TimeOver2.png" alt=""></div>
+                  
+
                   <b-card-text class="p-2">
                     <h5
                       class="article-title mt-3 pt-1"
@@ -266,13 +283,13 @@
                       {{ article.title }}
                     </h5>
                     <h6
-                      class="article-address py-2"
+                      class="article-address py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
                       {{ article.address }}
                     </h6>
                     <h6
-                      class="article-price py-2"
+                      class="article-price py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
                       가격: {{ sumPrice(article.sumPrice) }}원 /
@@ -327,7 +344,7 @@
                 }"
                 class="text-decoration-none text-dark"
               >
-                <b-card
+                              <b-card
                   :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
@@ -335,34 +352,55 @@
                   footer-class="card-end"
                 >
                   <div
-                    class="article-img-box"
+                    v-if="article.status != 4 && article.status != 5"
+                    class="article-img-box m-0 p-0"
                     :style="{
                       height: '100%',
                       width: '100%',
-                      backgroundImage:
-                       'url('+'../../../images/' + article.image + ')',
-                      backgroundSize: 'cover',
                     }"
                   >
                     <img
-                      v-if="article.categoryId == 1"
-                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
+                      v-if="
+                        article.categoryId == 1 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                      :key="imageUrl(article)"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId == 2"
+                      v-if="
+                        article.categoryId == 2 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
                       src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId == 3"
+                      v-if="
+                        article.categoryId == 3 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
                       src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
+                  <div
+                    v-else-if="article.status == 4"
+                    class="article-img-box m-0 p-0"
+                  ><img src="http://i3b203.p.ssafy.io/localImg/DealEnd2.png" alt=""></div>
+                  
+                  <div
+                    v-else-if="article.status === 5"
+                    class="article-img-box m-0 p-0"
+                  ><img src="http://i3b203.p.ssafy.io/localImg/TimeOver2.png" alt=""></div>
+                  
+
                   <b-card-text class="p-2">
                     <h5
                       class="article-title mt-3 pt-1"
@@ -371,13 +409,13 @@
                       {{ article.title }}
                     </h5>
                     <h6
-                      class="article-address py-2"
+                      class="article-address py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
                       {{ article.address }}
                     </h6>
                     <h6
-                      class="article-price py-2"
+                      class="article-price py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
                       가격: {{ sumPrice(article.sumPrice) }}원 /
@@ -432,7 +470,7 @@
                 }"
                 class="text-decoration-none text-dark"
               >
-                <b-card
+                              <b-card
                   :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
@@ -440,34 +478,55 @@
                   footer-class="card-end"
                 >
                   <div
-                    class="article-img-box"
+                    v-if="article.status != 4 && article.status != 5"
+                    class="article-img-box m-0 p-0"
                     :style="{
                       height: '100%',
                       width: '100%',
-                      backgroundImage:
-                          'url('+'../../../images/' + article.image + ')',
-                      backgroundSize: 'cover',
                     }"
                   >
                     <img
-                      v-if="article.categoryId == 1"
-                      src="http://i3b203.p.ssafy.io/localImg/type2.png"
+                      v-if="
+                        article.categoryId == 1 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                      :key="imageUrl(article)"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId == 2"
+                      v-if="
+                        article.categoryId == 2 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
                       src="http://i3b203.p.ssafy.io/localImg/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId == 3"
+                      v-if="
+                        article.categoryId == 3 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
                       src="http://i3b203.p.ssafy.io/localImg/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
+                  <div
+                    v-else-if="article.status == 4"
+                    class="article-img-box m-0 p-0"
+                  ><img src="http://i3b203.p.ssafy.io/localImg/DealEnd2.png" alt=""></div>
+                  
+                  <div
+                    v-else-if="article.status === 5"
+                    class="article-img-box m-0 p-0"
+                  ><img src="http://i3b203.p.ssafy.io/localImg/TimeOver2.png" alt=""></div>
+                  
+
                   <b-card-text class="p-2">
                     <h5
                       class="article-title mt-3 pt-1"
@@ -476,13 +535,13 @@
                       {{ article.title }}
                     </h5>
                     <h6
-                      class="article-address py-2"
+                      class="article-address py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
                       {{ article.address }}
                     </h6>
                     <h6
-                      class="article-price py-2"
+                      class="article-price py-1"
                       style="font-family: 'Recipekorea', cursive; font-size:16px"
                     >
                       가격: {{ sumPrice(article.sumPrice) }}원 /
@@ -606,20 +665,27 @@ export default {
     },
   },
   computed: {
-    imageUrl() {
-      return (article) => {
-        var arImg = article.image;
-        var result = "http://i3b203.p.ssafy.io/img/" + arImg;
-        console.log(result);
-        return {
-          background: "url(" + result + ")",
-        };
-        ("{backgroundImage: 'url('+'../../../assets/images/' + article.image + ')'}");
-        // require("http://i3b203.p.ssafy.io/img/" +
-        //   `${article.image}`);
-      };
-    },
+    // imageUrl() {
+    //   return (article) => {
+    //     var arImg = article.image;
+    //     var result = "http://i3b203.p.ssafy.io/img/" + arImg;
+    //     console.log(result);
+    //     return {
+    //       background: "url(" + result + ")",
+    //     };
+    //     ("{backgroundImage: 'url('+'../../../assets/images/' + article.image + ')'}");
+    //     // require("http://i3b203.p.ssafy.io/img/" +
+    //     //   `${article.image}`);
+    //   };
+    // },
 
+    imageUrl() {
+      try {
+        return require("http://i3b203.p.ssafy.io/img/" +
+          `${this.articleData.image}`);
+      } catch {}
+      //   return require('http://i3b203.p.ssafy.io/img/'+`${article.image}`)
+    },
     minPrice() {
       return (price) => {
         var res = new Intl.NumberFormat("ko-KR", {
