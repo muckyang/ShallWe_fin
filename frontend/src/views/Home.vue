@@ -1,233 +1,282 @@
 <template>
-<div>
-	<div>
-		<hr>
-		  <div>
-    <b-carousel
-      id="carousel-1"
-      v-model="slide"
-      :interval="4000"
-      controls
-      indicators
-      background="#ababab"
-      img-width="1024"
-      img-height="480"
-      style="text-shadow: 1px 1px 2px #333;"
-      @sliding-start="onSlideStart"
-      @sliding-end="onSlideEnd"
-    >
-    
-    <router-link to="/introduce" class="ml-0" id="introduce">
-			<b-carousel-slide>
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="http://i3b203.p.ssafy.io/localImg/c2.png"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide></router-link>
-
-			<router-link to="/article" class="ml-0" id="article">
-      <b-carousel-slide background="white">
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="http://i3b203.p.ssafy.io/localImg/캐러셀1.png"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide></router-link>
-
-	 <router-link to="/article" class="ml-0" id="article">
-      <b-carousel-slide background="white">
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="http://i3b203.p.ssafy.io/localImg/캐러셀2.png"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide></router-link>
-
-	  <router-link to="/article" class="ml-0" id="article">
-      <b-carousel-slide background="white">
-        <template v-slot:img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="http://i3b203.p.ssafy.io/localImg/캐러셀3.png"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide>
-      </router-link>
-    </b-carousel>
-  </div>
-    <!-- 2. 실시간 게시물-->
-    <hr />
-    <div
-      class="division-box homeMenu d-flex align-items-center justify-content-center "
-    >
-      <h2
-        class="mt-0"
-        style="font-family: 'Recipekorea', cursive; color: #ee6e9f;"
-      >
-        실시간 게시물
-      </h2>
-    </div>
-    <hr class="division-box-underline-1" />
-
-    <b-container class="bv-example-row">
-      <b-row align-h="start">
-        <b-col
-          cols="12"
-          sm="6"
-          lg="4"
-          v-for="article in recentList"
-          :key="article.keyVal"
+  <div>
+    <div>
+      <hr />
+      <div>
+        <b-carousel
+          id="carousel-1"
+          v-model="slide"
+          :interval="4000"
+          controls
+          indicators
+          background="#ababab"
+          img-width="1024"
+          img-height="480"
+          style="text-shadow: 1px 1px 2px #333;"
+          @sliding-start="onSlideStart"
+          @sliding-end="onSlideEnd"
         >
-          <router-link
-            :to="{
+          <router-link to="/introduce" class="ml-0" id="introduce">
+            <b-carousel-slide>
+              <template v-slot:img>
+                <img
+                  class="d-block img-fluid w-100"
+                  width="1024"
+                  height="480"
+                  src="http://i3b203.p.ssafy.io/localImg/c2.png"
+                  alt="image slot"
+                />
+              </template>
+            </b-carousel-slide>
+          </router-link>
+
+          <router-link to="/article" class="ml-0" id="article">
+            <b-carousel-slide background="white">
+              <template v-slot:img>
+                <img
+                  class="d-block img-fluid w-100"
+                  width="1024"
+                  height="480"
+                  src="http://i3b203.p.ssafy.io/localImg/캐러셀1.png"
+                  alt="image slot"
+                />
+              </template>
+            </b-carousel-slide>
+          </router-link>
+
+          <router-link to="/article" class="ml-0" id="article">
+            <b-carousel-slide background="white">
+              <template v-slot:img>
+                <img
+                  class="d-block img-fluid w-100"
+                  width="1024"
+                  height="480"
+                  src="http://i3b203.p.ssafy.io/localImg/캐러셀2.png"
+                  alt="image slot"
+                />
+              </template>
+            </b-carousel-slide>
+          </router-link>
+
+          <router-link to="/article" class="ml-0" id="article">
+            <b-carousel-slide background="white">
+              <template v-slot:img>
+                <img
+                  class="d-block img-fluid w-100"
+                  width="1024"
+                  height="480"
+                  src="http://i3b203.p.ssafy.io/localImg/캐러셀3.png"
+                  alt="image slot"
+                />
+              </template>
+            </b-carousel-slide>
+          </router-link>
+        </b-carousel>
+      </div>
+      <!-- 2. 실시간 게시물-->
+      <hr />
+      <div class="division-box homeMenu d-flex align-items-center justify-content-center">
+        <h2 class="mt-0" style="font-family: 'Recipekorea', cursive; color: #ee6e9f;">실시간 게시물</h2>
+      </div>
+      <hr class="division-box-underline-1" />
+
+      <b-container class="bv-example-row">
+        <b-row align-h="start">
+          <b-col cols="12" sm="6" lg="4" v-for="article in recentList" :key="article.keyVal">
+            <router-link
+              :to="{
               name: 'articleDetail',
               params: { ID: `${article.articleId}` },
             }"
-            class="text-decoration-none text-dark"
-          >
-            <b-card
-              class="article-card m-4 _card card__one"
-              align="left"
-              img-width="100%"
-              img-height="60%"
-              :img-src="imageUrl(article)"
-              img-alt="Image"
-              img-top
-              footer-bg-variant="#ee6e9f"
-              footer-class="card-end"
+              class="text-decoration-none text-dark"
             >
-              <b-card-text>
-                <h5 class="article-title">{{ article.title }}</h5>
-                <h6 class="article-address">{{ article.address }}</h6>
-                <h6 class="article-price">
-                  가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
-                </h6>
-              </b-card-text>
-              <template v-slot:footer>
-                <div class="d-flex justify-content-between">
-                  <small>
-                    <b-icon-heart></b-icon-heart>
-                    {{ article.likeNum }}개
-                    <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                    {{ article.commentNum }}개
-                  </small>
-                  <small class="text-muted">{{ article.timeAgo }}</small>
+              <b-card
+                :no-body="true"
+                class="article-card m-4 _card card__one"
+                align="left"
+                footer-bg-variant="#ee6e9f"
+                footer-class="card-end"
+              >
+                <div
+                  v-if="article.status != 4 && article.status != 5"
+                  class="article-img-box m-0 p-0"
+                  :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' +
+                        'http://i3b203.p.ssafy.io/img/' +
+                          article.image +
+                        ')',
+                      backgroundSize: 'cover',
+                    }"
+                >
+                  <img
+                    v-if="
+                        article.categoryId == 1 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                    src="http://i3b203.p.ssafy.io/localImg/type2.png"
+                    class="article-type-img"
+                    style="max-width: 100%; height: auto;"
+                  />
+                  <img
+                    v-if="
+                        article.categoryId == 2 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                    src="http://i3b203.p.ssafy.io/localImg/type1.png"
+                    class="article-type-img"
+                    style="max-width: 100%; height: auto;"
+                  />
+                  <img
+                    v-if="
+                        article.categoryId == 3 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
+                    src="http://i3b203.p.ssafy.io/localImg/type3.png"
+                    class="article-type-img"
+                    style="max-width: 100%; height: auto;"
+                  />
                 </div>
-              </template>
-            </b-card>
-          </router-link>
-        </b-col>
-      </b-row>
-    </b-container>
+                <div
+                  v-else-if="article.status == 4"
+                  class="article-img-box m-0 p-0"
+                  :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' + 'http://i3b203.p.ssafy.io/localImg/DealEnd2.png' + ')',
+                      backgroundSize: 'cover',
+                    }"
+                ></div>
+                <div
+                  v-else-if="article.status === 5"
+                  class="article-img-box m-0 p-0"
+                  :style="{
+                      height: '100%',
+                      width: '100%',
+                      backgroundImage:
+                        'url(' + 'http://i3b203.p.ssafy.io/localImg/TimeOver2.png' + ')',
+                      backgroundSize: 'cover',
+                    }"
+                ></div>
 
-    <!-- 3. 마감 임박 게시물-->
-    <hr />
-    <div
-      class="division-box homeMenu d-flex align-items-center justify-content-center "
-    >
-      <h2 style="font-family: 'Recipekorea', cursive; color: #ee6e9f;">
-        마감 임박 게시물
-      </h2>
-    </div>
-    <hr class="division-box-underline-2" />
+                <b-card-text class="p-2">
+                  <h5
+                    class="article-title mt-3 pt-1"
+                    style="font-family: 'Recipekorea', cursive; font-size:18px"
+                  >{{ article.title }}</h5>
+                  <h6
+                    class="article-address py-1"
+                    style="font-family: 'Recipekorea', cursive; font-size:16px"
+                  >{{ article.address }}</h6>
+                  <br />
+                  <h6
+                    class="article-price py-1"
+                    style="font-family: 'Recipekorea', cursive; font-size:16px"
+                  >가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                </b-card-text>
+                <template v-slot:footer>
+                  <div
+                    class="d-flex justify-content-between"
+                    style="font-family: 'Recipekorea', cursive; font-size:14.5px"
+                  >
+                    <div class="articleList-subInfo">
+                      <div class="articleList-heart">
+                        <i class="far fa-heart" style="color: #ee6e9f; "></i>
+                        {{ article.likeNum }}
+                      </div>
+                      <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
+                      <div class="articleList-chat ml-2">
+                        <i class="far fa-comment-dots"></i>
+                        {{ article.commentNum }}
+                      </div>
+                    </div>
+                    <small class="text-muted">{{ article.timeAgo }}</small>
+                  </div>
+                </template>
+              </b-card>
+            </router-link>
+          </b-col>
+        </b-row>
+      </b-container>
 
-    <b-container class="bv-example-row">
-      <b-row align-h="start">
-        <b-col
-          cols="12"
-          sm="6"
-          lg="4"
-          v-for="article in deadLineList"
-          :key="article.keyVal"
-        >
-          <router-link
-            :to="{
+      <!-- 3. 마감 임박 게시물-->
+      <hr />
+      <div class="division-box homeMenu d-flex align-items-center justify-content-center">
+        <h2 style="font-family: 'Recipekorea', cursive; color: #ee6e9f;">마감 임박 게시물</h2>
+      </div>
+      <hr class="division-box-underline-2" />
+
+      <b-container class="bv-example-row">
+        <b-row align-h="start">
+          <b-col cols="12" sm="6" lg="4" v-for="article in deadLineList" :key="article.keyVal">
+            <router-link
+              :to="{
               name: 'articleDetail',
               params: { ID: `${article.articleId}` },
             }"
-            class="text-decoration-none text-dark"
-          >
-            <b-card
-              class="article-card m-4 _card card__one"
-              align="left"
-              img-width="100%"
-              img-height="60%"
-              :img-src="imageUrl(article)"
-              img-alt="Image"
-              img-top
-              footer-bg-variant="#ee6e9f"
-              footer-class="card-end"
+              class="text-decoration-none text-dark"
             >
+              <b-card
+                class="article-card m-4 _card card__one"
+                align="left"
+                img-width="100%"
+                img-height="60%"
+                :img-src="imageUrl(article)"
+                img-alt="Image"
+                img-top
+                footer-bg-variant="#ee6e9f"
+                footer-class="card-end"
+              >
+                <b-card-text>
+                  <h5 class="article-title">{{ article.title }}</h5>
+                  <h6 class="article-address">{{ article.address }}</h6>
+                  <h6 class="article-price">가격: {{ article.sumPrice }}원/{{ article.minPrice }}원</h6>
+                </b-card-text>
+                <template v-slot:footer>
+                  <div class="d-flex justify-content-between">
+                    <small>
+                      <b-icon-heart></b-icon-heart>
+                      {{ article.likeNum }}개
+                      <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
+                      {{ article.commentNum }}개
+                    </small>
+                    <small class="text-muted">{{ article.timeAgo }}</small>
+                  </div>
+                </template>
+              </b-card>
+            </router-link>
+          </b-col>
+        </b-row>
+      </b-container>
+
+      <!-- 4. 베스트 후기 -->
+      <hr />
+      <div class="division-box homeMenu d-flex align-items-center justify-content-center">
+        <h2 style="font-family: 'Recipekorea', cursive; color: #ee6e9f;">베스트 후기</h2>
+      </div>
+      <hr class="division-box-underline-3" />
+
+      <b-container>
+        <b-row>
+          <b-col cols="12" sm="4" v-for="review in bestReview" :key="review.keyVal">
+            <b-card class="text-center mt-3">
               <b-card-text>
-                <h5 class="article-title">{{ article.title }}</h5>
-                <h6 class="article-address">{{ article.address }}</h6>
-                <h6 class="article-price">
-                  가격: {{ article.sumPrice }}원/{{ article.minPrice }}원
-                </h6>
+                <i class="fas fa-quote-left"></i>
+                {{ review.description }}
+                <i class="fas fa-quote-right"></i>
               </b-card-text>
-              <template v-slot:footer>
-                <div class="d-flex justify-content-between">
-                  <small>
-                    <b-icon-heart></b-icon-heart>
-                    {{ article.likeNum }}개
-                    <b-icon-chat-dots class="ml-1"></b-icon-chat-dots>
-                    {{ article.commentNum }}개
-                  </small>
-                  <small class="text-muted">{{ article.timeAgo }}</small>
-                </div>
-              </template>
             </b-card>
-          </router-link>
-        </b-col>
-      </b-row>
-    </b-container>
-
-    <!-- 4. 베스트 후기 -->
-    <hr />
-    <div
-      class="division-box homeMenu d-flex align-items-center justify-content-center "
-    >
-      <h2 style="font-family: 'Recipekorea', cursive; color: #ee6e9f;">
-        베스트 후기
-      </h2>
+          </b-col>
+        </b-row>
+      </b-container>
+      <hr />
     </div>
-    <hr class="division-box-underline-3" />
-
-    <b-container>
-      <b-row>
-        <b-col
-          cols="12"
-          sm="4"
-          v-for="review in bestReview"
-          :key="review.keyVal"
-        >
-          <b-card class="text-center mt-3">
-            <b-card-text
-              ><i class="fas fa-quote-left"></i> {{ review.description }}
-              <i class="fas fa-quote-right"></i
-            ></b-card-text>
-          </b-card>
-        </b-col>
-      </b-row>
-    </b-container>
-    <hr />
-  </div>
   </div>
 </template>
 
@@ -251,8 +300,7 @@ export default {
     imageUrl() {
       return (article) => {
         try {
-          return "http://i3b203.p.ssafy.io/img/" +
-         `${article.image}`;
+          return "http://i3b203.p.ssafy.io/img/" + `${article.image}`;
         } catch {}
       };
     },
@@ -294,8 +342,8 @@ export default {
 </script>
 
 <style scoped>
-.carouselBtn{
-   border: none;
+.carouselBtn {
+  border: none;
   outline: none;
   border-radius: 4px;
   background-color: #ee6e9f;
