@@ -83,7 +83,7 @@
               >
                 <div class="type-one"></div>
                 <b-card
-                  no-body="true"
+                  :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -173,7 +173,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
-                  no-body="true"
+                  :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -259,7 +259,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
-                  no-body="true"
+                  :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
@@ -344,7 +344,7 @@
                 class="text-decoration-none text-dark"
               >
                 <b-card
-                  no-body="true"
+                  :no-body="true"
                   class="article-card m-4 _card card__one"
                   align="left"
                   footer-bg-variant="#ee6e9f"
