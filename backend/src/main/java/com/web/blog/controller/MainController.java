@@ -50,7 +50,7 @@ public class MainController {
         List<Post> list;
         max = 6;
         System.out.println("일반게시물 실시간 게시물");// temp:1 category:0 생성타임내림차순 status:1,2
-        list = postDao.findPostByStatusNotTempOrderByCreateTimeDesc(0,1);// 일반 게시물 뽑아 온 다음
+        list = postDao.findPostByStatusNotAndTempOrderByCreateTimeDesc(0,1);// 일반 게시물 뽑아 온 다음
         for (int i = 0; i < list.size(); i++) {
             if (max == 0)
                 break;
@@ -63,7 +63,7 @@ public class MainController {
         List<Post> elist;
         max = 6;
         System.out.println("마감임박 게시물");// temp:1 category:0 마감시간오름차순 status:1,2
-        elist = postDao.findPostByStatusNotTempOrderByEndTimeAsc(0,1);// 일반 게시물 뽑아 온 다음
+        elist = postDao.findPostByStatusNotAndTempOrderByEndTimeAsc(0,1);// 일반 게시물 뽑아 온 다음
         for (int i = 0; i < elist.size(); i++) {
             if (max == 0)
                 break;
@@ -76,7 +76,7 @@ public class MainController {
         List<Post> likelist;
         max = 6;
         System.out.println("좋아요수에 따른 베스트 후기");// temp:2 category:102 좋아요수내림차순
-        likelist = postDao.findPostByStatusNotTempAndCategoryIdOrderByLikeNumDesc(0,2, 102);
+        likelist = postDao.findPostByStatusNotAndTempAndCategoryIdOrderByLikeNumDesc(0,2, 102);
         for (int i = 0; i < likelist.size(); i++) {
             if (max == 0)
                 break;
