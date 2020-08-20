@@ -100,7 +100,7 @@
                   footer-class="card-end"
                 >
                   <div
-                    v-if="article.status != 4"
+                    v-if="article.status != 4 && article.status != 5"
                     class="article-img-box m-0 p-0"
                     :style="{
                       height: '100%',
@@ -114,26 +114,38 @@
                     }"
                   >
                     <img
-                      v-if="article.categoryId == 1"
+                      v-if="
+                        article.categoryId == 1 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
                       src="@/assets/img/type2.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId == 2"
+                      v-if="
+                        article.categoryId == 2 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
                       src="@/assets/img/type1.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                     <img
-                      v-if="article.categoryId == 3"
+                      v-if="
+                        article.categoryId == 3 &&
+                          article.status != 4 &&
+                          article.status != 5
+                      "
                       src="@/assets/img/type3.png"
                       class="article-type-img"
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
                   <div
-                    v-else-if="article.status == 0"
+                    v-else-if="article.status == 4"
                     class="article-img-box m-0 p-0"
                     :style="{
                       height: '100%',
@@ -146,7 +158,7 @@
                   <div
                     v-else-if="article.status === 5"
                     class="article-img-box m-0 p-0"
-                    style="{
+                    :style="{
                       height: '100%',
                       width: '100%',
                       backgroundImage:
