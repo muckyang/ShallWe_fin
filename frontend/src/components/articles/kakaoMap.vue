@@ -294,7 +294,13 @@ export default {
 
 <style>
 .createMap {
-  width: vw;
+  width: 38vw;
+}
+@media screen and (max-width: 991px) {
+  .createMap {
+    width: 87vw;
+    padding-right: 8vw;
+  }
 }
 .kakao-search-btn {
   border: none;
