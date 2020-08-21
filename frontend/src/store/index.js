@@ -241,11 +241,9 @@ export default new Vuex.Store({
       }
     },
     adminLogin({ commit }, loginData) {
-      console.log(loginData);
       axios
         .post(`${BACK_URL}/admin/login`, loginData)
         .then((response) => {
-          console.log(response.data);
           commit("SET_ADMIN_TOKEN", response.data.adminToken);
           commit("SET_TOKEN", response.data.token);
         })
@@ -324,7 +322,6 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}`, auth)
         .then((response) => {
-          console.log(response, ",ssdfs");
           commit("GET_ARTICLES", response.data.postList);
         })
         .catch((err) => {
@@ -336,7 +333,6 @@ export default new Vuex.Store({
       axios
         .post(`${BACK_URL}/post/detail/${articleID}`, auth)
         .then((response) => {
-          console.log(response.data,"RES")
           commit("GET_ARTICLE", response);
           commit("GET_COMMENTS", response.data.commentList);
         })
@@ -433,7 +429,6 @@ export default new Vuex.Store({
           updateData.articleUpdateData.image = "default.jpg";
         }
         updateData.articleUpdateData.token = state.authToken;
-        console.log(updateData.articleUpdateData);
         axios
           .put(
             `${BACK_URL}/post/update/${updateData.temp}`,
@@ -507,7 +502,6 @@ export default new Vuex.Store({
           if (searchData.categoryId === "temp") {
             searchData.categoryId = 0;
           }
-          console.log(searchData);
         cookies.set("searchData", searchData, 0);
         axios
           .post(

@@ -31,7 +31,7 @@ export default {
         .then(() => {
           this.$emit("like-change");
         })
-        .catch((err) => console.log(err.response.data));
+        .catch((err) => console.log(err));
     },
   },
   computed: {

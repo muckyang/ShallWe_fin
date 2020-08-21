@@ -584,7 +584,6 @@ export default {
     LabelImg(article) {
       if (article.categoryId == 1) {
         var imgHome = "http://i3b203.p.ssafy.io/localImg/food1.png";
-        console.log(imgHome);
         return imgHome;
       }
     },
@@ -620,7 +619,6 @@ export default {
       return (article) => {
         var arImg = article.image;
         var result = "http://i3b203.p.ssafy.io/img/" + arImg;
-        console.log(result);
         return {
           background: "url(" + result + ")",
         };
