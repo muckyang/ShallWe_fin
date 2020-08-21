@@ -488,7 +488,7 @@ export default {
     },
     acceptParticpation(participant) {
       axios
-        .post(
+        .put(
           `${BACK_URL}/participant/accept/${this.articleData.articleId}/${participant}`
         )
         .then((response) => {
@@ -510,7 +510,7 @@ export default {
     },
     denyParticpation(participant) {
       axios
-        .post(
+        .put(
           `${BACK_URL}/participant/denied/${this.articleData.articleId}/${participant.writer}`
         )
         .then((response) => {
@@ -524,7 +524,7 @@ export default {
     },
     confirmPurchase() {
       axios
-        .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
+        .put(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
         .then((response) => {
           Swal.fire({
             icon: "success",
@@ -630,7 +630,7 @@ export default {
     updateJoinData() {
       this.joinData.articleId = this.articleData.articleId;
       axios
-        .post(`${BACK_URL}/participant/update`, this.joinData)
+        .put(`${BACK_URL}/participant/update`, this.joinData)
         .then((response) => {
           this.getparticipantData();
           Swal.fire({
@@ -649,7 +649,7 @@ export default {
     },
     getparticipantData() {
       axios
-        .post(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
+        .get(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
         .then((response) => {
           this.articleData.partList = response.data.participantList;
         })
@@ -659,7 +659,7 @@ export default {
     },
     cancel(no) {
       axios
-        .post(`${BACK_URL}/participant/delete/${no}`)
+        .delete(`${BACK_URL}/participant/delete/${no}`)
         .then((response) => {
           this.getparticipantData();
           Swal.fire({
