@@ -1,12 +1,10 @@
 <template>
   <div>
-    <!-- Navbar1 -->
     <nav
       class="navbar navbar-light d-flex justify-content-end navbar1 p-0 my-navbar"
       style="font-family: 'Recipekorea', cursive;"
     >
       <ul class="navbar-nav d-flex flex-row">
-        <!-- 로그인 X -->
         <li class="nav-item mr-1">
           <a
             href="https://kauth.kakao.com/oauth/authorize?client_id=5a3a01519efdeba53b7a039bffafd62d&redirect_uri=http://i3b203.p.ssafy.io:8080/account/kakaoLogin&response_type=code"
@@ -16,7 +14,6 @@
             style="font-size: 13.5px"
           >카카오 로그인</a>
         </li>
-        <!-- 로그인 O -->
         <li class="nav-item mr-1">
           <a
             href="#"
@@ -38,8 +35,6 @@
           >마이페이지</router-link>
         </li>
       </ul>
-
-      <!-- 유저관리 -->
       <div v-if="isAdmin" class="d-flex align-items-starts mr-1">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -50,7 +45,6 @@
 
       <div class="wall" v-show="isAdmin">|</div>
 
-      <!-- 신고관리 -->
       <div v-if="isAdmin" class="d-flex align-items-starts">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -59,7 +53,6 @@
         </ul>
       </div>
     </nav>
-    <!-- Navbar2 -->
     <nav class="navbar navbar-light d-flex justify-content-center my-navbar p-1">
       <a
         class="navbar-brand mt-3"
@@ -68,9 +61,7 @@
       font-size: 35px"
       >Shall we?</a>
     </nav>
-    <!-- Navbar3 -->
     <nav class="navbar navbar-expand-lg navbar-light p-0 mt-4" style="font-size: 18px">
-      <!--페이지 줄일때 네브바 햄버거로 만들어주는거-->
       <button
         class="navbar-toggler"
         type="button"
@@ -105,8 +96,6 @@
             <router-link to="/localList" class="nav-link mainMenu pb-0" id="community">우리 동네</router-link>
           </li>
         </ul>
-
-        <!-- Search -->
         <input
           class="searchInput"
           type="search"
@@ -118,7 +107,6 @@
         <button class="searchBtn my-2 my-sm-0" type="submit" @click="search(searchData)">
           <i class="fas fa-search"></i>
         </button>
-        <!-- </div> -->
       </div>
     </nav>
   </div>
@@ -210,7 +198,6 @@ export default {
 .google-img {
   height: 24px;
   width: 23px;
-  /* margin: 0 0 0 5px; */
 }
 .blank {
   width: 10px;
@@ -275,8 +262,6 @@ export default {
 .searchInput::placeholder {
   font-family: "Recipekorea";
   font-size: 15px;
-  /* font-size: 5px; */
-  /* font-size: 4px;  */
 }
 .searchBtn {
   height: 35px;

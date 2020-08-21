@@ -4,8 +4,6 @@
       <i class="far fa-comment-dots"></i>
       댓글 {{ commentList.length }}
     </div>
-
-    <!--댓글 보여주는 공간-->
     <div class="review-comment-list-box mb-3">
       <reviewCommentListItem
         v-for="comment in commentList"
@@ -15,7 +13,6 @@
         @re-render="delComment(reviewId)"
       />
     </div>
-    <!--댓글 등록 공간-->
     <div class="review-comment-write">
       <div class="review-comment-text">
         <input
@@ -113,15 +110,6 @@ export default {
           })
       }
     },
-    // getComments(){
-    //   axios.get(`${BACK_URL}/comment/read/${this.$route.params.ID}`)
-    //     .then((response)=>{
-    //       this.GET_COMMENTS(response.data.commentList)
-    //     })
-    //     .catch((err)=>{
-    //       console.error(err)
-    //     })
-    // },
   },
   created() {
     this.getArticle(this.reviewId);
@@ -131,10 +119,7 @@ export default {
 
 <style>
 .review-comment-box {
-  /* margin: 0 auto; */
   width: 100%;
-  /* height: 50px; */
-  /* padding: 0 12px; */
 }
 .review-comment-start {
   width: 95%;
@@ -168,10 +153,7 @@ export default {
   color: grey;
 }
 .review-comment-text {
-  /* border: none;
-  outline: none; */
   display: block;
-  /* height: 100%; */
 }
 .review-comment-input {
   border: none;
