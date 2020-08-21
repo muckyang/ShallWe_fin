@@ -31,6 +31,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -146,7 +147,7 @@ public class AdminController {
 
     }
 
-    @PostMapping("/accuse/applyto")
+    @PutMapping("/accuse/applyto")
     @ApiOperation(value = "신고 적용하기")
     public Object applyto(@Valid @RequestBody AccuseRequest req) {
         String token = req.getToken();
@@ -230,7 +231,7 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/accuse/disabled")
+    @PutMapping("/accuse/disabled")
     @ApiOperation(value = "비활성화시키기")
     public Object disabled(@Valid @RequestBody AccuseRequest req) {
         String token = req.getToken();
