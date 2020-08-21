@@ -8,7 +8,6 @@
       <div class="top">
         <div class="top-row">
           <div class="detail-title">{{ articleData.title }}</div>
-          <!--수정,삭제,신고 버튼-->
           <div
             class="article-drop dropdown dropleft"
             v-if="articleData.userId === userData.userId"
@@ -40,8 +39,6 @@
               >
             </div>
           </div>
-
-          <!-- 게시물 신고 -->
           <div v-else>
             <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
@@ -92,7 +89,6 @@
               </button>
             </b-modal>
           </div>
-          <!-- 게시물 신고 -->
 
           <br />
         </div>
@@ -106,13 +102,10 @@
         </div>
       </div>
       <hr class="top-line" />
-
-      <!--이미지-->
       <div v-if="articleData.image" class="middle-row">
         <img class="post-img" :src="imageUrl" alt="..." />
       </div>
 
-      <!--내용, 댓글-->
       <div class="detail-content" id="item-1">
         {{ articleData.description }}
       </div>
@@ -202,19 +195,16 @@ export default {
       const res = year + month + day + hour + minute;
       return res;
     },
-    // 신고 유형 변경
     changeAccuseKind(kind) {
       this.accuseArticleData.accuseKind = kind;
       this.linkArticleData();
       this.linkUserData();
     },
-    // 해당 articleData 연결
     linkArticleData() {
       this.accuseArticleData.accuseIndex = 1;
       this.accuseArticleData.accuseValue = this.articleData.articleId;
       this.accuseArticleData.defendant = this.articleData.writer;
     },
-    // 해당 userData 연결
     linkUserData() {
       this.accuseArticleData.reporter = this.userData.nickname;
     },

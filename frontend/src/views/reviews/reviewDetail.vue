@@ -46,17 +46,9 @@
               />
               {{ review.likeNum }}
             </div>
-            <!-- <div class="review-comment">
-              <div class="comment-icon">
-                <i class="far fa-comment-dots"></i>
-              </div>
-              {{review.commentList.length}}
-            </div>-->
           </div>
         </div>
       </div>
-
-      <!--화살표 클릭하면 보일 내용들. 내용,이미지-->
       <div
         class="collapse multi-collapse review-bottom mt-3"
         :id="'review' + review.articleId"
@@ -257,16 +249,10 @@ export default {
 .comment-icon {
   margin: 0 3px;
 }
-.review-bottom {
-  /* border: 1px solid red; */
-}
 .review-img-box {
   text-align: left;
   padding: 0px 0px 0 20px;
   width: 57%;
-}
-.review-img {
-  /* border: 1px solid blue; */
 }
 .arrow {
   opacity: 0.6;
@@ -281,17 +267,13 @@ export default {
   margin: 10px 0 50px 0;
 }
 .review-content {
-  /* margin: 10px 0 10px 0; */
   display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
   text-align: left;
   width: 42%;
   height: 100%;
-  /* padding: 0px 25px; */
 }
 .review-content-ver {
-  /* border: 1px solid blue; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;

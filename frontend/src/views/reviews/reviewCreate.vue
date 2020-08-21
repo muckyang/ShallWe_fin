@@ -61,7 +61,7 @@ export default {
         description: null,
         token: this.$cookies.get("auth-token"),
       },
-      imageUrl: null, //다시 검토
+      imageUrl: null,
       value: [],
     };
   },
