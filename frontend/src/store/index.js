@@ -266,7 +266,7 @@ export default new Vuex.Store({
     getUserData({ state, commit }) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/account/read`, auth)
+        .get(`${BACK_URL}/account/read`, auth)
         .then((response) => {
           commit("GET_USERDATA", response.data);
         })
@@ -278,7 +278,7 @@ export default new Vuex.Store({
     getUserDatailData({ state, commit }, userId) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/account/read/${userId}`, auth)
+        .get(`${BACK_URL}/account/read/${userId}`, auth)
         .then((res) => {
           commit("GET_USER", res);
         })
@@ -290,7 +290,7 @@ export default new Vuex.Store({
     editUser({ state, commit }, editData) {
       editData.token = state.authToken;
       axios
-        .post(`${BACK_URL}/account/update`, editData)
+        .put(`${BACK_URL}/account/update`, editData)
         .then(() => {
           Swal.fire({
             icon: "success",
@@ -312,7 +312,7 @@ export default new Vuex.Store({
     deleteUser({ state, commit }) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/account/delete`, auth)
+        .delete(`${BACK_URL}/account/delete`, auth)
         .then(() => {
           commit("REMOVE_TOKEN");
           Swal.fire({
@@ -453,7 +453,7 @@ export default new Vuex.Store({
         updateData.articleUpdateData.token = state.authToken;
         console.log(updateData.articleUpdateData);
         axios
-          .post(
+          .put(
             `${BACK_URL}/post/update/${updateData.temp}`,
             updateData.articleUpdateData
           )
@@ -479,7 +479,7 @@ export default new Vuex.Store({
     deleteArticle({ state, dispatch }, data) {
       const auth = { token: state.authToken };
       axios
-        .get(`${BACK_URL}/post/delete/${data.articleId}`)
+        .delete(`${BACK_URL}/post/delete/${data.articleId}`)
         .then(() => {
           if (data.categoryId < 10) {
             router.push(`/article`);
@@ -662,7 +662,7 @@ export default new Vuex.Store({
     getAccuses({ state, commit }) {
       const admin = { token: state.adminToken };
       axios
-        .post(`${BACK_URL}/accuse/read`, admin)
+        .get(`${BACK_URL}/accuse/read`, admin)
         .then((res) => {
           commit("GET_ACCUSES", res.data.accuseList);
         })
@@ -673,7 +673,7 @@ export default new Vuex.Store({
     decideAccuse({ state }, decisionData) {
       const admin = { token: state.adminToken };
       axios
-        .post(`${BACK_URL}/accuse/applyto`, decisionData)
+        .put(`${BACK_URL}/accuse/applyto`, decisionData)
         .then(() => {
           router.push("/user/accuselist");
         })

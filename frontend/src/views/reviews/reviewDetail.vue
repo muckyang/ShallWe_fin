@@ -151,7 +151,7 @@ export default {
     deleteReview(reviewID) {
       const auth = { token: this.$cookies.get("auth-token") };
       axios
-        .get(`${BACK_URL}/post/delete/${reviewID}`)
+        .delete(`${BACK_URL}/post/delete/${reviewID}`)
         .then(() => {
           this.isdeleted = true;
         })

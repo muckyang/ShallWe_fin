@@ -237,7 +237,7 @@ export default {
     deleteComment() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios
-        .post(BACK_URL + `/comment/delete/${this.comment.commentId}`, auth)
+        .delete(BACK_URL + `/comment/delete/${this.comment.commentId}`, auth)
         .then(() => {
           this.watchFlag = true;
         })
@@ -250,7 +250,7 @@ export default {
     },
     updateComment() {
       axios
-        .post(BACK_URL + "/comment/update", this.comment)
+        .put(BACK_URL + "/comment/update", this.comment)
         .then((response) => {
           this.flag = false;
         })

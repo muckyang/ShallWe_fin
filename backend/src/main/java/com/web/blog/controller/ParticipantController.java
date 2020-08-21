@@ -22,8 +22,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -99,7 +102,7 @@ public class ParticipantController {
 
     }
 
-    @PostMapping("/participant/accept/{articleId}/{nickname}")
+    @PutMapping("/participant/accept/{articleId}/{nickname}")
     @ApiOperation(value = "참가 수락")
     public Object accept(@PathVariable int articleId, @PathVariable String nickname)
             throws MessagingException, IOException {
@@ -129,7 +132,7 @@ public class ParticipantController {
         }
     }
 
-    @PostMapping("/participant/denied/{articleId}/{nickname}")
+    @PutMapping("/participant/denied/{articleId}/{nickname}")
     @ApiOperation(value = "참가 거부")
     public Object denied(@PathVariable int articleId, @PathVariable String nickname)
             throws MessagingException, IOException {
@@ -152,7 +155,7 @@ public class ParticipantController {
 
 
     @Transactional(readOnly = true)
-    @PostMapping("/participant/read/{articleId}")
+    @GetMapping("/participant/read/{articleId}")
     @ApiOperation(value = "참가자 목록")
     public Object read(@PathVariable int articleId) throws MessagingException, IOException {
 
@@ -168,7 +171,7 @@ public class ParticipantController {
 
     }
 
-    @PostMapping("/participant/update")
+    @PutMapping("/participant/update")
     @ApiOperation(value = "참가자 수정")
     public Object update(@Valid @RequestBody ParticipantRequest request) {
         System.out.println(request.toString());
@@ -210,7 +213,7 @@ public class ParticipantController {
 
     }
 
-    @PostMapping("/participant/delete/{no}")
+    @DeleteMapping("/participant/delete/{no}")
     @ApiOperation(value = "참가자삭제하기")
     public Object delete(@Valid @PathVariable int no) {
         Participant participant = participantDao.getParticipantByNo(no);// 참가자의 해당 정보를 가져옴
