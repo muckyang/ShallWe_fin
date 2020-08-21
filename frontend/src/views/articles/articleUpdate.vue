@@ -4,12 +4,10 @@
     style="font-family: 'Recipekorea', cursive; font-size:16.5px"
   >
     <div class="create-form">
-      <!-- 지도 -->
       <div class="kakao-map-select">
         <kakaoMap :coNum="coNum" @setAddress="setAddress" />
       </div>
       <div class="right-items">
-        <!--선택 장소-->
         <div class="create-alert-msg">
           <small style="font-size: 15.5px; color: #ee6e9f;">*</small>
           <small style="font-size: 15.5px;">표시는 필수값입니다.</small>
@@ -28,7 +26,6 @@
             readonly
           />
         </div>
-        <!--제목-->
         <div class="title">
           <label for="title" style="font-size:16px"
             >제목<small style="font-size: 17px; color: #ee6e9f;"
@@ -58,7 +55,6 @@
             placeholder=" 제목을 입력하세요"
           />
         </div>
-        <!--시작금액/전체금액-->
         <div class="price">
           <label style="font-size:16px"
             >시작금액 <small style="font-size: 17px; color: #ee6e9f;">*</small>/
@@ -79,7 +75,6 @@
             placeholder=" 전체금액"
           />
         </div>
-        <!--종료일시-->
         <div class="endTime">
           <label style="font-size:16px"
             >종료일자 <small style="font-size: 17px; color: #ee6e9f;">*</small>/
@@ -90,12 +85,10 @@
           <input type="date" v-model="articleData.endDate" />
           <input type="time" id="form-endTime" v-model="articleData.endTime" />
         </div>
-        <!-- 파일 업로드 -->
         <div class="imageInsert d-flex">
           <label style="font-size:16px">사진 업로드</label>
           <input type="file" id="file" name="file" ref="file" />
         </div>
-        <!--url-->
         <div class="url">
           <label for="url" style="font-size:16px">URL</label>
           <input
@@ -106,7 +99,6 @@
             required
           />
         </div>
-        <!--오픈톡방url-->
         <div class="url">
           <label for="url" style="font-size:16px">오픈 카카오톡 URL</label>
           <input
@@ -116,7 +108,6 @@
             placeholder=" url을 입력하세요"
           />
         </div>
-        <!--내용-->
         <div class="createContent">
           <label for="textarea-rows" style="font-size:16px"
             >내용
@@ -134,8 +125,6 @@
         </div>
       </div>
     </div>
-
-    <!--태그-->
     <div class="tags">
       <label for>태그</label>
       <b-form-tags

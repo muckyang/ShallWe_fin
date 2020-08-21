@@ -96,9 +96,7 @@ export default {
     },
   },
   created: function() {
-    // console.log(this.$route.params.ID,"ID")
     this.getArticle(this.$route.params.ID);
-    // this.articleUpdateData = this.articleData;
   },
   mounted(){
     this.getArticle(this.$route.params.ID);

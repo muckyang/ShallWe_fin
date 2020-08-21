@@ -1,17 +1,6 @@
 <template>
   <div class="mt-5" style="font-family: 'Recipekorea', cursive; font-size:17.5px">
     <div class="dropdown mr-1">
-      <!-- <button
-        class="downBtn btn btn-secondary"
-        type="button"
-        id="dropdownMenuButton"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        {{ item3 }}
-      </button>-->
-      <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> -->
       <div class="mainSearch">
         <a
           :class="{
@@ -30,8 +19,6 @@
           @click="selectTemp(2)"
         >커뮤니티</a>
       </div>
-      <!-- </div> -->
-
       <div v-if="searchData.temp !== 0" class="select-item-row mt-2">
         <div v-if="searchData.temp === 1">
           <a
@@ -237,7 +224,6 @@
                       <i class="far fa-heart" style="color: #ee6e9f; "></i>
                       {{ article.likeNum }}
                     </div>
-                    <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                     <div class="articleList-chat ml-2">
                       <i class="far fa-comment-dots"></i>
                       {{ article.commentNum }}
@@ -334,7 +320,6 @@ $color-bg: #f8f8f8;
 $card-padding: 20px;
 $grid-gutter: 31px;
 
-// Media Queries breakpoints
 $small: 480px;
 $medium: 768px;
 $large: 992px;
@@ -342,9 +327,6 @@ $x-large: 1200px;
 .select-item-row {
   display: flex;
   justify-content: center;
-}
-.mainSearch {
-  // border: 1px solid blue;
 }
 .beforeSelect {
   text-decoration: none;

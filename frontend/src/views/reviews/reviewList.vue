@@ -1,7 +1,6 @@
 <template>
   <div class="container review-list mt-5">
     <div class="review-list-top">
-      <!-- <div class="review-length">{{reviews.length}}개의 후기가 있습니다.</div> -->
     </div>
     <reviewDetail
       v-for="review in reviews"
@@ -25,7 +24,7 @@ import { mapState, mapActions } from "vuex";
 import InfiniteLoading from "vue-infinite-loading";
 import cookies from "vue-cookies";
 import axios from "axios";
-import reviewDetail from "./reviewDetail"; //무적권 상대주소
+import reviewDetail from "./reviewDetail";
 
 export default {
   name: "reviewList",
@@ -46,17 +45,6 @@ export default {
     ...mapState(["userData"]),
   },
   methods: {
-    // getReviews() {
-    //   const auth ={ token: cookies.get("auth-token") };
-    //   axios
-    //     .post(`${BACK_URL}/post/read/2/${this.categoryNum}/${this.page}`, auth )
-    //     .then((response) => {
-    //       this.reviews = response.data.postList;
-    //     })
-    //     .catch((err) => {
-    //         console.error(err);
-    //     });
-    // },
     ...mapActions(["search", "getUserData"]),
     infiniteHandler($state) {
       const auth = { token: cookies.get("auth-token") };
@@ -95,7 +83,6 @@ export default {
   align-self: center;
 }
 .review-list {
-  /* border: 1px solid black; */
   width: 90%;
 }
 </style>

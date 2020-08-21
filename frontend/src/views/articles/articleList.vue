@@ -187,7 +187,6 @@
                           <i class="far fa-heart" style="color: #ee6e9f; "></i>
                           {{ article.likeNum }}
                         </div>
-                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                         <div class="articleList-chat ml-2">
                           <i class="far fa-comment-dots"></i>
                           {{ article.commentNum }}
@@ -264,7 +263,6 @@
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
-                  <!-- <img src alt /> -->
                   <b-card-text class="p-2">
                     <h5
                       class="article-title mt-3 pt-1"
@@ -296,7 +294,6 @@
                           <i class="far fa-heart" style="color: #ee6e9f; "></i>
                           {{ article.likeNum }}
                         </div>
-                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                         <div class="articleList-chat ml-2">
                           <i class="far fa-comment-dots"></i>
                           {{ article.commentNum }}
@@ -404,7 +401,6 @@
                           <i class="far fa-heart" style="color: #ee6e9f; "></i>
                           {{ article.likeNum }}
                         </div>
-                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                         <div class="articleList-chat ml-2">
                           <i class="far fa-comment-dots"></i>
                           {{ article.commentNum }}
@@ -512,7 +508,6 @@
                           <i class="far fa-heart" style="color: #ee6e9f; "></i>
                           {{ article.likeNum }}
                         </div>
-                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                         <div class="articleList-chat ml-2">
                           <i class="far fa-comment-dots"></i>
                           {{ article.commentNum }}
@@ -618,7 +613,6 @@ export default {
       this.articles = [];
       this.onlyOne = true;
       this.infiniteId += 1;
-      // this.getArticles({ temp: 1, categoryId: this.categoryNum });
     },
   },
   computed: {
@@ -678,8 +672,6 @@ export default {
   top: 0px;
   left: 0px;
 }
-.type-one {
-}
 .article-list-box {
   width: 95%;
 }
@@ -717,11 +709,8 @@ export default {
 
 <style scoped lang="scss">
 $color-bg: #f8f8f8;
-// $color-bg: #572e2e;
 $card-padding: 20px;
 $grid-gutter: 30px;
-
-// Media Queries breakpoints
 $small: 480px;
 $medium: 768px;
 $large: 992px;
@@ -731,7 +720,6 @@ $x-large: 1200px;
   position: relative;
   flex: 1 1 100%;
   background: lighten($color-bg, 3%);
-  // background: #ee6e9f;
 
   @media screen and (min-width: $medium) {
     flex-basis: calc(33.33% - (#{$grid-gutter * 2} + #{$card-padding * 2}));
@@ -764,12 +752,7 @@ $x-large: 1200px;
     }
   }
 }
-// .card-end {
-// background-color: #FFCBDB;
-// opacity: 0.7;
-// }
 .navs {
-  // border: 1px solid red;
   display: flex;
   justify-content: space-between;
 }

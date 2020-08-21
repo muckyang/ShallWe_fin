@@ -2,14 +2,12 @@
   <div class="mt-5">
     <div class="container">
       <div class="row">
-        <!-- Card -->
         <div
           class="card col-3"
           style="width: 18rem;"
           v-for="temp in articles"
           :key="temp.pid"
         >
-          <!-- 사진들은 다시 고를 겁니다. 현재는 랜덤 사진입니다. -->
           <img
             src="https://source.unsplash.com/random"
             class="card-img-top"
