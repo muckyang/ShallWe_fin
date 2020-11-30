@@ -1,5 +1,4 @@
 <template>
-  <!-- <div data-spy="scroll" data-target="#navbar-example2" data-offset="0" class="mt-1"> -->
   <div class="mt-1">
     <div class="d-flex">
       <div class="review-comment-container">
@@ -31,8 +30,6 @@
               >
             </div>
           </div>
-
-          <!-- 게시물 신고 -->
           <div v-else>
             <button
               type="button"
@@ -130,7 +127,6 @@
               </div>
             </div>
           </div>
-          <!-- 게시물 신고 -->
         </div>
         <div class="comment-content our-main-font">{{ comment.content }}</div>
         <div class="comment-create-time our-main-font">
@@ -138,8 +134,6 @@
         </div>
       </div>
     </div>
-
-    <!-- 댓글 수정 input 공간-->
 
     <div v-if="flag" class="comment-update-write">
       <div class="comment-update-text">
@@ -223,13 +217,11 @@ export default {
     linkCommentData() {
       this.accuseCommentData.accuseValue = this.comment.commentId;
     },
-    // 신고 유형 변경
     changeAccuseKind(kind) {
       this.accuseCommentData.accuseKind = kind;
       this.linkUserData();
       this.linkCommentData();
     },
-    // 해당 userData 연결
     linkUserData() {
       this.accuseCommentData.reporter = this.userData.nickname;
     },
@@ -237,7 +229,7 @@ export default {
     deleteComment() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios
-        .post(BACK_URL + `/comment/delete/${this.comment.commentId}`, auth)
+        .delete(BACK_URL + `/comment/delete/${this.comment.commentId}`, auth)
         .then(() => {
           this.watchFlag = true;
         })
@@ -250,7 +242,7 @@ export default {
     },
     updateComment() {
       axios
-        .post(BACK_URL + "/comment/update", this.comment)
+        .put(BACK_URL + "/comment/update", this.comment)
         .then((response) => {
           this.flag = false;
         })
@@ -273,8 +265,6 @@ export default {
 </script>
 
 <style>
-/* @import '../node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'; */
-/* @import url('node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'); */
 .siren-btn {
   border: none;
   outline: none;
@@ -378,8 +368,6 @@ export default {
   color: grey;
 }
 .comment-update-text {
-  /* border: none;
-  outline: none; */
   display: block;
 }
 .comment-update-input {

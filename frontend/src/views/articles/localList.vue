@@ -127,7 +127,6 @@
                             <i class="far fa-heart" style="color: #ee6e9f; "></i>
                             {{ article.likeNum }}
                           </div>
-                          <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                           <div class="articleList-chat ml-2">
                             <i class="far fa-comment-dots"></i>
                             {{ article.commentNum }}
@@ -280,8 +279,6 @@ export default {
 $color-bg: #f8f8f8;
 $card-padding: 20px;
 $grid-gutter: 31px;
-
-// Media Queries breakpoints
 $small: 480px;
 $medium: 768px;
 $large: 992px;

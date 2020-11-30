@@ -61,7 +61,7 @@ export default {
         description: null,
         token: this.$cookies.get("auth-token"),
       },
-      imageUrl: null, //다시 검토
+      imageUrl: null,
       value: [],
     };
   },
@@ -73,7 +73,6 @@ export default {
     fileUpload: function () {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
-      console.log(this.file);
       formData.append("file", this.file);
       axios
         .post(`${BACK_URL}/file`, formData, {

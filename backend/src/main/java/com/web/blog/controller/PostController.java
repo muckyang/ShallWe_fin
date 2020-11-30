@@ -35,9 +35,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -76,7 +78,6 @@ public class PostController {
     @Autowired
     private JwtService jwtService;
 
-
     // 게시물 만료시간 지나면 자동 비활성화
     @Scheduled(cron = "*/30 * * * * *")
     public void articleTimeOut() {
@@ -94,8 +95,7 @@ public class PostController {
 
     @PostMapping("/post/create/{temp}")
     @ApiOperation(value = "게시글 및 임시글 등록")
-    public Object create(@Valid @RequestBody PostRequest req, @PathVariable int temp)
-            throws  IOException {
+    public Object create(@Valid @RequestBody PostRequest req, @PathVariable int temp) throws IOException {
         String token = req.getToken();
         String endDate = req.getEndDate();
         String endT = req.getEndTime();
@@ -153,13 +153,13 @@ public class PostController {
 
                 // 태그 등록
                 String[] tags = req.getTags();// 태그 내용
-                if(tags.length==0){
+                if (tags.length == 0) {
                     post.setTag("태그");
-                }else{
+                } else {
                     String ptag = "#";
                     for (int i = 0; i < tags.length; i++) {
                         ptag += tags[i] + "#";
-    
+
                     }
                     post.setTag(ptag.substring(0, ptag.length() - 1));
                 }
@@ -231,7 +231,7 @@ public class PostController {
     public Object detail(@PathVariable int articleId, @RequestBody TokenRequest request) {
         // 토큰 받아오면 그 토큰으로 유효성 검사 후 uid 받아와서 좋아요 한지 여부 확인
         long before = System.currentTimeMillis();
-      
+
         // System.out.println("상세보기 들어옴 " + request.toString());
         Post p = postDao.findPostByArticleId(articleId);
 
@@ -270,7 +270,7 @@ public class PostController {
             result.endTime = p.getEndTime();
             result.timeAgo = BeforeCreateTime(p.getCreateTime());
             result.createTime = p.getCreateTime();
-            
+
             result.status = p.getStatus();
             // 이 게시물에 해당되는 태그는 다 보내기
             List<Tag> tlist = tagDao.findTagByArticleId(articleId);
@@ -281,47 +281,49 @@ public class PostController {
             List<Participant> partlist = participantDao.findParticipantByArticleId(articleId);
             result.partList = partlist;
             result.tags = tags;
-            result.nameList=  new LinkedList<>();
-            result.scoreList=  new LinkedList<>();
-            result.rgbCodeList=  new LinkedList<>();
+            result.nameList = new LinkedList<>();
+            result.scoreList = new LinkedList<>();
+            result.rgbCodeList = new LinkedList<>();
             int sum = 0;
-            for(int i = 0 ; i < partlist.size(); i++){
-                sum += partlist.get(i).getPrice();
-                result.nameList.add(partlist.get(i).getWriter());
-                result.scoreList.add(partlist.get(i).getPrice());
-                if(i == 0){
-                    result.rgbCodeList.add("#FF6A89");
-                }else if( i==1 ){
-                    result.rgbCodeList.add("#50B4FF");
-                }else if( i==2 ){
-                    result.rgbCodeList.add("#FFE13C");
-                }else if( i==3 ){
-                    result.rgbCodeList.add("#93FB93");
-                }else if( i==4 ){
-                    result.rgbCodeList.add("#DD78F6");
+            for (int i = 0; i < partlist.size(); i++) {
+                if (partlist.get(i).getStatus() == 1) {
+                    sum += partlist.get(i).getPrice();
+                    result.nameList.add(partlist.get(i).getWriter());
+                    result.scoreList.add(partlist.get(i).getPrice());
+                    if (i == 0) {
+                        result.rgbCodeList.add("#FF6A89");
+                    } else if (i == 1) {
+                        result.rgbCodeList.add("#50B4FF");
+                    } else if (i == 2) {
+                        result.rgbCodeList.add("#FFE13C");
+                    } else if (i == 3) {
+                        result.rgbCodeList.add("#93FB93");
+                    } else if (i == 4) {
+                        result.rgbCodeList.add("#DD78F6");
+                    }
                 }
             }
-            if(sum >= p.getMinPrice()){// 이미 금액 충족 
+            if (sum >= p.getMinPrice()) {// 이미 금액 충족
 
-            }else{
+            } else {
                 result.nameList.add("남은금액");
-                result.scoreList.add(p.getMinPrice() - sum);               
+                result.scoreList.add(p.getMinPrice() - sum);
                 result.rgbCodeList.add("#ADADAD");
             }
             if (userOpt.isPresent()) {// 로그인 상태일때
-                
+
                 Optional<Like> isILiked = likeDao.findLikeByUserIdAndArticleId(userOpt.get().getUserId(), articleId);
                 if (isILiked.isPresent()) // 좋아요 한 경우
-                result.isLiked = true;
+                    result.isLiked = true;
                 else // 좋아요 하지 않은경우
-                result.isLiked = false;
-                
+                    result.isLiked = false;
+
                 System.out.println("게시물 상세보기 !!!");
             } else {
                 System.out.println("비로그인 / 로그인 여부 확인 !!!");
                 result.isLiked = false;
             }
-            
+
             List<Comment> clist = commentDao.findCommentByArticleId(p.getArticleId());
             result.commentList = new LinkedList<>(); // 댓글 리스트 가져옴
             for (int i = 0; i < clist.size(); i++) {
@@ -331,7 +333,7 @@ public class PostController {
                 c.setCommentId(clist.get(i).getCommentId());
                 c.setArticleId(clist.get(i).getArticleId());
                 c.setUserId(clist.get(i).getUserId());
-                
+
                 c.setStatus(clist.get(i).getStatus());
                 if (clist.get(i).getStatus() == 0) {
                     c.setNickname("신고된 댓글");
@@ -342,25 +344,25 @@ public class PostController {
                 }
                 c.setTimeAgo(BeforeCreateTime(clist.get(i).getCreateTime()));
                 c.setCreateTime(clist.get(i).getCreateTime());
-                
+
                 result.commentList.add(c);
-                
+
                 System.out.println(nickname);
             }
-            
+
             System.out.println("리턴!!" + (System.currentTimeMillis() - before) + "초 ");
-            
+
             return new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-    
-    @PostMapping("/post/update/{temp}")
+
+    @PutMapping("/post/update/{temp}")
     @ApiOperation(value = "게시글 및 임시글 수정")
     public Object update(@Valid @RequestBody PostRequest req, @PathVariable int temp) {
         Post p = postDao.findPostByArticleId(req.getArticleId());
-        
+
         String token = req.getToken();
         User jwtuser = jwtService.getUser(token);
         int userId;
@@ -451,7 +453,7 @@ public class PostController {
                 return new ResponseEntity<>("수정이 불가능한 게시물 입니다.", HttpStatus.OK);
             }
         } else if (temp == 2) { // 자유게시판
-            
+
             Post post = postDao.getPostByArticleId(req.getArticleId());
 
             post.setTitle(req.getTitle());
@@ -472,7 +474,7 @@ public class PostController {
         }
     }
 
-    @GetMapping("/post/complete/{articleId}")
+    @PutMapping("/post/complete/{articleId}")
     @ApiOperation(value = "거래완료")
     public Object complete(@Valid @PathVariable int articleId) {
         Post post = postDao.findPostByArticleId(articleId);
@@ -488,15 +490,15 @@ public class PostController {
                     user.setUserPoint(user.getUserPoint() + 30);
                 }
                 int up = user.getUserPoint();
-                if(up <= 1000){
+                if (up <= 1000) {
                     user.setGrade(1);
-                }else if(up <= 1500){ 
+                } else if (up <= 1500) {
                     user.setGrade(2);
-                }else if(up <= 2500){ 
+                } else if (up <= 2500) {
                     user.setGrade(3);
-                }else if(up <= 4000){ 
+                } else if (up <= 4000) {
                     user.setGrade(4);
-                }else { 
+                } else {
                     user.setGrade(5);
                 }
                 userDao.save(user);
@@ -511,7 +513,7 @@ public class PostController {
         return new ResponseEntity<>("자유글 수정 완료 ", HttpStatus.OK);
     }
 
-    @GetMapping("/post/delete/{articleId}")
+    @DeleteMapping("/post/delete/{articleId}")
     @ApiOperation(value = "삭제하기")
     public Object delete(@Valid @PathVariable int articleId) {
 
@@ -552,20 +554,21 @@ public class PostController {
 
     @PostMapping("/file")
     public String fileTest(@RequestPart("file") MultipartFile ff) throws IllegalStateException, IOException {
-      
+
         System.out.println(ff.toString());
         String forSaveImg = ff.getOriginalFilename().toLowerCase();
         System.out.println(forSaveImg.toString());
         long nowtime = datetimeTosec(LocalDateTime.now());
         System.out.println(System.getProperty("user.dir") + "\\frontend\\src\\assets\\images\\");
-        // File file = new File("C:\\Users\\multicampus\\Desktop\\image\\"+ nowtime + forSaveImg);
-        File file = new File("/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/images/"+ nowtime + forSaveImg);
-        if(!file.getParentFile().exists()){
+        // File file = new File("C:\\Users\\multicampus\\Desktop\\image\\"+ nowtime +
+        // forSaveImg);
+        File file = new File("/home/ubuntu/shallwe/s03p13b203/frontend/src/assets/images/" + nowtime + forSaveImg);
+        if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
         ff.transferTo(file);
         System.out.println(file.getName());
-        
+
         return file.getName();
 
     }

@@ -1,11 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
 import axios from "axios";
 import cookies from "vue-cookies";
 import router from "../router";
-
-// CommonJS
 
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 
@@ -13,14 +10,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    //사용자 인증
     authToken: cookies.get("auth-token"),
     adminToken: cookies.get("admin-token"),
     isLoggedin: false,
     isTerm: false,
     isChecked: false,
     isAdmin: false,
-
     userData: {
       name: "",
       address: "",
@@ -82,13 +77,11 @@ export default new Vuex.Store({
   getters: {},
 
   mutations: {
-    //사용자 관리
     SET_TOKEN(state, token) {
       router.push("/");
       state.authToken = token;
       cookies.set("auth-token", token, 0);
       state.isLoggedin = true;
-
       Swal.fire({
         icon: "success",
         height: 300,
@@ -112,7 +105,6 @@ export default new Vuex.Store({
     REMOVE_TOKEN(state) {
       if (state.adminToken) {
         cookies.remove("admin-token");
-
         Swal.fire({
           icon: "success",
           height: 300,
@@ -153,8 +145,10 @@ export default new Vuex.Store({
       state.userData = userData;
     },
     GET_ARTICLES(state, articles) {
-      state.articles = articles;
+      state.articles.push(articles);
+      console.log(state.articles,'들어옴?')
     },
+
     GET_ARTICLE(state, response) {
       state.articleData = response.data;
     },
@@ -249,11 +243,9 @@ export default new Vuex.Store({
       }
     },
     adminLogin({ commit }, loginData) {
-      console.log(loginData);
       axios
         .post(`${BACK_URL}/admin/login`, loginData)
         .then((response) => {
-          console.log(response.data);
           commit("SET_ADMIN_TOKEN", response.data.adminToken);
           commit("SET_TOKEN", response.data.token);
         })
@@ -261,12 +253,10 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-
-    //profile
     getUserData({ state, commit }) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/account/read`, auth)
+        .get(`${BACK_URL}/account/read`, auth)
         .then((response) => {
           commit("GET_USERDATA", response.data);
         })
@@ -274,11 +264,10 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-
     getUserDatailData({ state, commit }, userId) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/account/read/${userId}`, auth)
+        .get(`${BACK_URL}/account/read/${userId}`, auth)
         .then((res) => {
           commit("GET_USER", res);
         })
@@ -286,11 +275,10 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-
     editUser({ state, commit }, editData) {
       editData.token = state.authToken;
       axios
-        .post(`${BACK_URL}/account/update`, editData)
+        .put(`${BACK_URL}/account/update`, editData)
         .then(() => {
           Swal.fire({
             icon: "success",
@@ -312,7 +300,7 @@ export default new Vuex.Store({
     deleteUser({ state, commit }) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/account/delete`, auth)
+        .delete(`${BACK_URL}/account/delete`, auth)
         .then(() => {
           commit("REMOVE_TOKEN");
           Swal.fire({
@@ -331,22 +319,23 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-
-    //게시글 관리
-    //전체 조회, 임시저장글 조회
     getArticles({ state, commit }, data) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}`, auth)
+        .post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}/${data.page}`, auth)
         .then((response) => {
-          console.log(response, ",ssdfs");
-          commit("GET_ARTICLES", response.data.postList);
+          if (response.data.postList.length) {
+            commit("GET_ARTICLES", response.data.postList);
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+     
         })
         .catch((err) => {
           console.error(err);
         });
     },
-    //단일 게시글 조회
     getArticle({ state, commit }, articleID) {
       const auth = { token: state.authToken };
       axios
@@ -359,7 +348,6 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-    //게시글 생성
     createArticle(context, articleData) {
       if (
         articleData.temp === 1 &&
@@ -414,7 +402,6 @@ export default new Vuex.Store({
           .catch((err) => console.log(err));
       }
     },
-    //게시글 수정하기
     updateArticle({ state }, updateData) {
       if (
         updateData.temp === 1 &&
@@ -450,9 +437,8 @@ export default new Vuex.Store({
           updateData.articleUpdateData.image = "default.jpg";
         }
         updateData.articleUpdateData.token = state.authToken;
-        console.log(updateData.articleUpdateData);
         axios
-          .post(
+          .put(
             `${BACK_URL}/post/update/${updateData.temp}`,
             updateData.articleUpdateData
           )
@@ -474,11 +460,10 @@ export default new Vuex.Store({
           });
       }
     },
-    //게시글 삭제하기
     deleteArticle({ state, dispatch }, data) {
       const auth = { token: state.authToken };
       axios
-        .get(`${BACK_URL}/post/delete/${data.articleId}`)
+        .delete(`${BACK_URL}/post/delete/${data.articleId}`)
         .then(() => {
           if (data.categoryId < 10) {
             router.push(`/article`);
@@ -490,7 +475,6 @@ export default new Vuex.Store({
           console.log(err);
         });
     },
-    //전체 게시글 검색
     search({ commit }, searchData) {
       if (!searchData.searchDataForSend.word) {
         alert("검색어를 입력해 주세요");
@@ -522,6 +506,7 @@ export default new Vuex.Store({
         searchData.searchDataForSend.subject &&
         searchData.categoryId &&
         searchData.temp
+
       ) {
         if (searchData.categoryId === "temp") {
           searchData.categoryId = 0;
@@ -586,8 +571,6 @@ export default new Vuex.Store({
         });
       }
     },
-
-    // 관리자 페이지
     getUsers({ state, commit }, users) {
       const auth = { token: state.authToken };
       axios
@@ -611,8 +594,6 @@ export default new Vuex.Store({
           console.error(err);
         });
     },
-
-    //게시글 신고 접수
     createArticleAccuse(context, accuseArticleData) {
       if (
         accuseArticleData.accuseArticleData.accuseKind &&
@@ -650,7 +631,6 @@ export default new Vuex.Store({
         });
       }
     },
-    // 댓글 신고 접수
     createCommentAccuse(context, accuseCommentData) {
       console.log(accuseCommentData.accuseCommentData);
       axios
@@ -673,7 +653,7 @@ export default new Vuex.Store({
     getAccuses({ state, commit }) {
       const admin = { token: state.adminToken };
       axios
-        .post(`${BACK_URL}/accuse/read`, admin)
+        .get(`${BACK_URL}/accuse/read`, admin)
         .then((res) => {
           commit("GET_ACCUSES", res.data.accuseList);
         })
@@ -684,7 +664,7 @@ export default new Vuex.Store({
     decideAccuse({ state }, decisionData) {
       const admin = { token: state.adminToken };
       axios
-        .post(`${BACK_URL}/accuse/applyto`, decisionData)
+        .put(`${BACK_URL}/accuse/applyto`, decisionData)
         .then(() => {
           router.push("/user/accuselist");
         })

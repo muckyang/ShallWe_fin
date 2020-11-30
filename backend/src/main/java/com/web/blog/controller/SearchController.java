@@ -89,13 +89,14 @@ public class SearchController {
 
     }
 
-    @Transactional(readOnly = true)
+
     @PostMapping("/post/read/{temp}/{categoryId}/{pageNum}")
     @ApiOperation(value = "게시글 및 임시글 목록")
-    public PostListResponse read(@RequestBody TokenRequest req, @PathVariable int temp, @PathVariable int categoryId,
-            @PathVariable int pageNum) throws MessagingException, IOException {
-        PostListResponse result = new PostListResponse();
-        int scrollsize;
+    public PostListResponse read(@RequestBody TokenRequest req, @PathVariable int temp, @PathVariable int categoryId, @PathVariable int pageNum)
+            throws MessagingException, IOException {
+        PostListResponse result = null;
+        int start = (pageNum*9)+1;
+        int end=start+9;
 
         if (temp == 0) {
             System.out.println("임시글 목록 출력!!");
@@ -146,13 +147,21 @@ public class SearchController {
             }
             return result;
         } else if (temp == 1) {
-            scrollsize = 6;
-            int start = (pageNum * scrollsize);
-            int end = start + scrollsize;
+
             List<Post> list;
-            List<Post> plist = new ArrayList<>();
+            List<Post> plist=new ArrayList<>();
             System.out.println("게시물 목록 출력!!");
             long before = System.currentTimeMillis();
+            if (categoryId == 0){// 전체 게시물 출력
+                list = postDao.findPostByTemp(temp);//다 뽑은 다음
+                for (int i = start; i < end; i++) {
+                    plist.add(list.get(i));//페이지에 맞는 게시물만 뽑아서 보내기
+                    System.out.println(list.get(i).getArticleId());
+                }
+            }
+            else
+                plist = postDao.findPostByTempAndCategoryId(temp, categoryId);
+
 
             if (categoryId == 0) {// 전체 게시물 출력
                 // plist = postDao.findPostByTemp(temp);//다 뽑은 다음

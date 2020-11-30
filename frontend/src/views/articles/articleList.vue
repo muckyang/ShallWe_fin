@@ -64,6 +64,8 @@
         role="tabpanel"
         aria-labelledby="nav-home-tab"
       >
+
+      <!-- {{articles}} -->
         <b-container class="bv-example-row">
           <b-row align-h="start">
             <b-col
@@ -187,7 +189,6 @@
                           <i class="far fa-heart" style="color: #ee6e9f; "></i>
                           {{ article.likeNum }}
                         </div>
-                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                         <div class="articleList-chat ml-2">
                           <i class="far fa-comment-dots"></i>
                           {{ article.commentNum }}
@@ -264,7 +265,6 @@
                       style="max-width: 100%; height: auto;"
                     />
                   </div>
-                  <!-- <img src alt /> -->
                   <b-card-text class="p-2">
                     <h5
                       class="article-title mt-3 pt-1"
@@ -296,7 +296,6 @@
                           <i class="far fa-heart" style="color: #ee6e9f; "></i>
                           {{ article.likeNum }}
                         </div>
-                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                         <div class="articleList-chat ml-2">
                           <i class="far fa-comment-dots"></i>
                           {{ article.commentNum }}
@@ -404,7 +403,6 @@
                           <i class="far fa-heart" style="color: #ee6e9f; "></i>
                           {{ article.likeNum }}
                         </div>
-                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                         <div class="articleList-chat ml-2">
                           <i class="far fa-comment-dots"></i>
                           {{ article.commentNum }}
@@ -512,7 +510,6 @@
                           <i class="far fa-heart" style="color: #ee6e9f; "></i>
                           {{ article.likeNum }}
                         </div>
-                        <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                         <div class="articleList-chat ml-2">
                           <i class="far fa-comment-dots"></i>
                           {{ article.commentNum }}
@@ -528,27 +525,18 @@
         </b-container>
       </div>
     </div>
-    <infinite-loading
-      @infinite="infiniteHandler"
-      :identifier="infiniteId"
-      spinner="waveDots"
-    >
-      <div
-        slot="no-more"
-        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px; font-family: 'Recipekorea', cursive; font-size:14.5px"
-      >
-        더이상 게시물이 존재하지 않습니다!
-      </div>
-    </infinite-loading>
+
+    <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
+
   </div>
 </template>
 
 <script>
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 import { mapState, mapActions } from "vuex";
-import InfiniteLoading from "vue-infinite-loading";
-import cookies from "vue-cookies";
-import axios from "axios";
+
+import InfiniteLoading from 'vue-infinite-loading'
+
 
 export default {
   name: "articleList",
@@ -561,6 +549,7 @@ export default {
       page: 0,
       onlyOne: true,
       articles: [],
+
       searchData: {
         searchDataForSend: {
           word: "",
@@ -576,6 +565,7 @@ export default {
   },
   methods: {
     ...mapActions(["getArticles", "search"]),
+
     cutPrice(article) {
       let CD = date + "";
       const year = CD.substring(0, 4) + "년 ";
@@ -589,7 +579,6 @@ export default {
     LabelImg(article) {
       if (article.categoryId == 1) {
         var imgHome = "http://i3b203.p.ssafy.io/localImg/food1.png";
-        console.log(imgHome);
         return imgHome;
       }
     },
@@ -618,7 +607,6 @@ export default {
       this.articles = [];
       this.onlyOne = true;
       this.infiniteId += 1;
-      // this.getArticles({ temp: 1, categoryId: this.categoryNum });
     },
   },
   computed: {
@@ -626,7 +614,6 @@ export default {
       return (article) => {
         var arImg = article.image;
         var result = "http://i3b203.p.ssafy.io/img/" + arImg;
-        console.log(result);
         return {
           background: "url(" + result + ")",
         };
@@ -656,6 +643,21 @@ export default {
         return real;
       };
     },
+
+    infiniteHandler(){
+      this.getArticles({ temp: 1, categoryId: this.categoryNum, page:this.page+1 });
+    },
+    changeCategory(num) {
+      this.categoryNum = num;
+      this.getArticles({ temp: 1, categoryId: this.categoryNum, page:0  });
+    },
+  },
+  computed: {
+    ...mapState(["articles"]),
+  },
+  created() {
+    this.getArticles({ temp: 1, categoryId: this.categoryNum, page:0 });
+
   },
 };
 </script>
@@ -677,8 +679,6 @@ export default {
   position: relative;
   top: 0px;
   left: 0px;
-}
-.type-one {
 }
 .article-list-box {
   width: 95%;
@@ -717,11 +717,8 @@ export default {
 
 <style scoped lang="scss">
 $color-bg: #f8f8f8;
-// $color-bg: #572e2e;
 $card-padding: 20px;
 $grid-gutter: 30px;
-
-// Media Queries breakpoints
 $small: 480px;
 $medium: 768px;
 $large: 992px;
@@ -731,7 +728,6 @@ $x-large: 1200px;
   position: relative;
   flex: 1 1 100%;
   background: lighten($color-bg, 3%);
-  // background: #ee6e9f;
 
   @media screen and (min-width: $medium) {
     flex-basis: calc(33.33% - (#{$grid-gutter * 2} + #{$card-padding * 2}));
@@ -764,12 +760,7 @@ $x-large: 1200px;
     }
   }
 }
-// .card-end {
-// background-color: #FFCBDB;
-// opacity: 0.7;
-// }
 .navs {
-  // border: 1px solid red;
   display: flex;
   justify-content: space-between;
 }

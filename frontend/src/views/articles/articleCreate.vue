@@ -129,10 +129,9 @@ export default {
         tags: [],
         token: this.$cookies.get("auth-token"),
       },
-      imageUrl: null, //다시 검토
+      imageUrl: null,
       selectedTBG: "카테고리",
       coNum: "1",
-      // address: " \uf060" + " 지도에서 만남의 장소를 설정하세요",
       address: "<-  지도에서 만남의 장소를 설정하세요",
       file: "",
       path: "",
@@ -151,7 +150,6 @@ export default {
     fileUpload: function() {
       var formData = new FormData();
       this.file = this.$refs.file.files[0];
-      console.log(this.file);
       formData.append("file", this.file);
       axios
         .post(`${BACK_URL}/file`, formData, {
@@ -173,24 +171,12 @@ export default {
     selectCategory(num) {
       this.articleData.categoryId = num;
       if (num === 1) {
-        this.selectedTBG = "쉘위배달";
+        this.selectedTBG = "쉘위배민";
       } else if (num === 2) {
         this.selectedTBG = "쉘위택배";
       } else {
-        this.selectedTBG = "쉘위공구";
+        this.selectedTBG = "쉘위N빵";
       }
-    },
-    imageChange(e) {
-      const selectedImage = e.target.files[0];
-      this.createBase64Image(selectedImage);
-    },
-    createBase64Image(fileObject) {
-      this.articleData.image = new Image();
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.articleData.image = e.target.result;
-      };
-      reader.readAsDataURL(fileObject);
     },
     imageUpload() {
       this.$refs.imageInput.click();
@@ -204,21 +190,7 @@ export default {
       deep: true,
       handler() {
         try {
-           if (this.articleData.minPrice!=undefined && this.articleData.myPrice!=undefined &&  this.articleData.minPrice <= this.articleData.myPrice) {
-            Swal.fire({
-              icon: "warning",
-              height: 300,
-              width: 400,
-              title:
-                '<a style="font-size:20px; font-family: Recipekorea; color:black">시작 금액은 최소 금액보다 커야합니다.</a>',
-              confirmButtonText:
-                '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-              confirmButtonColor: "#ee6e9f",
-            });
-            // alert("1이상의 정수만 입력이 가능합니다.");
-            this.articleData.minPrice = null;
-          }
-          if (this.articleData.minPrice <= 0 ) {
+          if (this.articleData.minPrice < 0) {
             Swal.fire({
               icon: "warning",
               height: 300,
@@ -229,10 +201,9 @@ export default {
                 '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
               confirmButtonColor: "#ee6e9f",
             });
-            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.minPrice = null;
           }
-          if (this.articleData.myPrice <= 0) {
+          if (this.articleData.myPrice < 0) {
             Swal.fire({
               icon: "warning",
               height: 300,
@@ -243,7 +214,6 @@ export default {
                 '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
               confirmButtonColor: "#ee6e9f",
             });
-            // alert("1이상의 정수만 입력이 가능합니다.");
             this.articleData.myPrice = null;
           }
         } catch {}
@@ -255,13 +225,9 @@ export default {
 
 <style>
 .create-alert-msg {
-  /* border: 1px solid red; */
   display: flex;
   justify-content: flex-end;
   padding-right: 10px;
-}
-.kakao-map-select {
-  /* border: 1px solid red; */
 }
 .create-container {
   padding-left: 0;
@@ -271,11 +237,9 @@ export default {
   flex-direction: row;
 }
 .right-items {
-  /* border: 1px solid blue; */
   text-align: left;
   margin: 0 0 0 1.5vw;
   width: 55vw;
-  /* border: 1px solid rgb(201, 201, 201); */
   border-radius: 4px;
 }
 .right-items > div {
@@ -359,17 +323,6 @@ export default {
 input:focus::placeholder {
   color: transparent;
 }
-/* .tag-submit {
-  border: none;
-  outline: none;
-  border-top-left-radius: 0%;
-  border-bottom-left-radius: 0%;
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  background-color: #ee6e9f;
-  opacity: 0.85;
-  transition: 0.3s;
-} */
 .tag-submit {
   border: none;
   outline: none;
@@ -398,7 +351,6 @@ input:focus::placeholder {
   color: black;
   margin-bottom: 1.5%;
   outline: none;
-  /* padding: 5px 10px 5px 10px; */
   padding: 7px 9px 5px 9px;
 }
 .tag-submit-input {
@@ -408,43 +360,6 @@ input:focus::placeholder {
   border: none;
   outline: none;
 }
-
-/* .{
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0;
-  -webkit-transition: all 0.3s;
-  -moz-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
-  border-top-style: solid;
-  border-bottom-style: solid;
-  border-top-color: rgba(255,255,255,0.5);
-  border-bottom-color: rgba(255,255,255,0.5);
-  -webkit-transform: scale(0.1, 1);
-  transform: scale(0.1, 1);
-}
-.:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s;
-    background-color: rgba(255,255,255,0.25);
-} */
 @media screen and (max-width: 991px) {
   .create-form {
     display: flex;
@@ -454,7 +369,6 @@ input:focus::placeholder {
     padding-right: 8vw;
   }
   .selected-place {
-    /* border: 1px solid red; */
     width: 80vw;
     display: flex;
   }
@@ -475,7 +389,6 @@ input:focus::placeholder {
     margin: 5vh 0 0 0;
   }
   .createContent > .article-text-area {
-    /* border: 1px solid red; */
     width: 77.3vw;
   }
   .tags {

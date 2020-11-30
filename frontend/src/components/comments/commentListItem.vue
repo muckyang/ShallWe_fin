@@ -24,8 +24,6 @@
               <a class="dropdown-item" @click="deleteComment">삭제</a>
             </div>
           </div>
-
-          <!-- 게시물 신고 -->
           <div v-else>
             <b-button
               v-if="comment.status === 1"
@@ -104,7 +102,6 @@
               </b-modal>
             </div>
           </div>
-          <!-- 게시물 신고 -->
         </div>
         <div class="comment-content mt-1" style="font-size:18px">
           {{ comment.content }}
@@ -114,9 +111,6 @@
         </div>
       </div>
     </div>
-
-    <!-- 댓글 수정 input 공간-->
-
     <div v-if="flag" class="comment-update-write">
       <div class="comment-update-text">
         <input class="comment-input" type="text" v-model="comment.content" />
@@ -198,7 +192,6 @@ export default {
     linkCommentData() {
       this.accuseCommentData.accuseValue = this.comment.commentId;
     },
-    // 신고 유형 변경
     changeAccuseKind(kind) {
       if (kind === 1) {
         this.selectedKind = "욕설, 비난을 했어요!";
@@ -211,7 +204,6 @@ export default {
       this.linkUserData();
       this.linkCommentData();
     },
-    // 해당 userData 연결
     linkUserData() {
       this.accuseCommentData.reporter = this.userData.nickname;
     },
@@ -219,7 +211,7 @@ export default {
     deleteComment() {
       const auth = { token: this.$cookies.get("auth-token") };
       axios
-        .post(BACK_URL + `/comment/delete/${this.comment.commentId}`, auth)
+        .delete(BACK_URL + `/comment/delete/${this.comment.commentId}`, auth)
         .then(() => {
           this.watchFlag = true;
         })
@@ -232,7 +224,7 @@ export default {
     },
     updateComment() {
       axios
-        .post(BACK_URL + "/comment/update", this.comment)
+        .put(BACK_URL + "/comment/update", this.comment)
         .then((response) => {
           this.flag = false;
         })
@@ -255,11 +247,6 @@ export default {
 </script>
 
 <style>
-/* @import '../node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'; */
-/* @import url('node_modules/bootstrap-vue/src/components/dropdown/_dropdown.scss'); */
-/* .comment-update-btn:focus {
-  background-color: rgba(0, 0, 0, 0.1);
-} */
 .comment-box {
   border-bottom: 1px solid rgb(237, 237, 240);
   display: flex;
@@ -339,8 +326,6 @@ export default {
   color: grey;
 }
 .comment-update-text {
-  /* border: none;
-  outline: none; */
   display: block;
 }
 .comment-update-input {

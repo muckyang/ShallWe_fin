@@ -73,7 +73,6 @@
           </router-link>
         </b-carousel>
       </div>
-      <!-- 2. 실시간 게시물-->
       <hr />
       <div class="division-box homeMenu d-flex align-items-center justify-content-center">
         <h2 class="mt-0" style="font-family: 'Recipekorea', cursive; color: #ee6e9f;">실시간 게시물</h2>
@@ -190,7 +189,6 @@
                         <i class="far fa-heart" style="color: #ee6e9f; "></i>
                         {{ article.likeNum }}
                       </div>
-                      <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                       <div class="articleList-chat ml-2">
                         <i class="far fa-comment-dots"></i>
                         {{ article.commentNum }}
@@ -204,8 +202,6 @@
           </b-col>
         </b-row>
       </b-container>
-
-      <!-- 3. 마감 임박 게시물-->
       <hr />
       <div class="division-box homeMenu d-flex align-items-center justify-content-center">
         <h2 style="font-family: 'Recipekorea', cursive; color: #ee6e9f;">마감 임박 게시물</h2>
@@ -322,7 +318,6 @@
                         <i class="far fa-heart" style="color: #ee6e9f; "></i>
                         {{ article.likeNum }}
                       </div>
-                      <!-- <b-icon-chat-dots class="ml-1"></b-icon-chat-dots> -->
                       <div class="articleList-chat ml-2">
                         <i class="far fa-comment-dots"></i>
                         {{ article.commentNum }}
@@ -336,8 +331,6 @@
           </b-col>
         </b-row>
       </b-container>
-
-      <!-- 4. 베스트 후기 -->
       <hr />
       <div class="division-box homeMenu d-flex align-items-center justify-content-center">
         <h2 style="font-family: 'Recipekorea', cursive; color: #ee6e9f;">베스트 후기</h2>
@@ -494,8 +487,6 @@ export default {
 $color-bg: #f8f8f8;
 $card-padding: 20px;
 $grid-gutter: 31px;
-
-// Media Queries breakpoints
 $small: 480px;
 $medium: 768px;
 $large: 992px;
@@ -537,12 +528,7 @@ $x-large: 1200px;
     }
   }
 }
-// .card-end {
-// background-color: #FFCBDB;
-// opacity: 0.7;
-// }
 .navs {
-  // border: 1px solid red;
   display: flex;
   justify-content: space-between;
 }

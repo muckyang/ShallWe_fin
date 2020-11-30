@@ -64,9 +64,12 @@ public class UserResponse {
     
     @ApiModelProperty(value = "completeList", position = 22)
     public List<Post> completeList; 
-     @ApiModelProperty(value = "freeCount", position = 23)
+    @ApiModelProperty(value = "freeCount", position = 23)
     public int freeCount;
-    
+
     @ApiModelProperty(value = "freeList", position = 24)
     public List<Post> freeList;
+
+    @ApiModelProperty(value = "introduce", position = 25)
+    public String introduce;
 }

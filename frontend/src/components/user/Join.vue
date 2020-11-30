@@ -9,57 +9,6 @@
         <h2 class="join">회원가입</h2>
         <hr class="line" />
         <div class="form-wrap">
-          <!--기존 join form-->
-          <!-- <div class="input-wrap">
-                        <div class="p-2">
-                            <label for="email">이메일</label>
-                        </div>
-                        <input v-model="signUpData.signUpDataForSend.email" 
-                            id="email"
-                            class="joinInput"
-                            name="email"
-                            placeholder=" 이메일을 입력해주세요"
-                            type="text"/>
-                    </div >
-                    <div class="input-wrap password-wrap">
-                        <div class="p-2">\
-                            <label for="password">비밀번호</label>
-                        </div>
-                        <input v-model="signUpData.signUpDataForSend.password"
-                            id="password" 
-                            class="joinInput"
-                            name="password"
-                            type="password"
-                            placeholder=" 비밀번호를 입력해주세요"/>
-                        <span :class="{active : signUpData.passwordType==='text'}">
-                        </span>
-                    </div>
-
-                    <div class="input-wrap password-wrap">
-                        <div class="p-2">
-                            <label for="password-confirm">비밀번호 확인</label>
-                        </div>
-                        <input v-model="signUpData.password2" 
-                            id="password-confirm"
-                            class="joinInput"
-                            name="password-confirm"
-                            type="password"
-                            placeholder=" 비밀번호를 한번 더 입력해주세요"/>
-                        <span :class="{active : signUpData.passwordConfirmType==='text'}">
-                        </span>
-                    </div>
-
-                    <div class="input-wrap name-warp">
-                        <div class="p-2">
-                            <label for="name">이름</label>
-                        </div>
-                        <input v-model="signUpData.signUpDataForSend.name" 
-                            id="name"
-                            class="joinInput"
-                            name="name"
-                            placeholder=" 이름을 입력해주세요"
-                            type="text"/>
-          </div>-->
 
           <div class="input-wrap">
             <div class="p-2">
@@ -79,7 +28,6 @@
                 trim
               ></b-form-input>
 
-              <!-- This will only be shown if the preceding input has an invalid state -->
               <b-form-invalid-feedback id="input-live-feedback">{{
                 message
               }}</b-form-invalid-feedback>
@@ -101,25 +49,9 @@
             />
           </div>
           <kakaoMap :coNum="coNum" @setAddress="setAddress" />
-
-          <!-- <div class="input-wrap birthday-warp" id="EmailBtnTop">
-                        <div class="p-2">
-                            <label for="birthday">생일</label>
-                        </div>
-                        <input v-model="signUpData.signUpDataForSend.birthday" 
-                            id="birthday"
-                            class="joinInput"
-                            name="birthday"
-                            placeholder=" YYYY-MM-DD"
-                            type="text"/>
-          </div>-->
         </div>
 
         <div class="seeModal">
-          <!-- Button trigger modal -->
-          <!-- <button id="termsBtn" type="button" class="modalBtn" data-toggle="modal" data-target="#exampleModal">
-                    약관 보기
-          </button>-->
           <div class="terms d-inline">
             <span class="compulsory">
               <a
@@ -546,22 +478,7 @@
             </div>
           </div>
         </div>
-
         <hr class="line" />
-
-        <!-- <button @click="sendEmail(signUpData)"
-                v-if="!isSended" class="cta">
-                    <span class="click">Email 인증</span>
-                    <svg class="Svg" width="13px" 
-                    height="10px" viewBox="0 0 13 10">
-                        <path d="M1,5 L11,5"></path>
-                        <polyline points="8 1 12 5 8 9"></polyline>
-                    </svg>
-                </button>  
-
-                <input type="text" v-if="isSended" 
-                v-model="signUpData.signUpDataForSend.authNumber" 
-        placeholder="인증번호를 입력해주세요">-->
 
         <button @click="signUp(signUpData)" class="cta">
           <span class="click">가입완료</span>
@@ -640,45 +557,7 @@ export default {
 </script>
 
 <style scoped>
-/* @font-face { 
-    font-family: 'LotteMartHappy'; 
-    font-style: normal; 
-    font-weight: 400; 
-    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), 
-    url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff'); } 
-    @font-face { font-family: 'LotteMartHappy'; 
-    font-style: normal; 
-    font-weight: 700; 
-    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff2') format('woff2'), 
-    url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff') format('woff'); } 
-    .lottemarthappy * 
-    { font-family: 'LotteMartHappy', sans-serif; 
-}
-@font-face { 
-    font-family: 'TmoneyRoundWindExtraBold'; 
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff'); 
-    font-weight: normal; 
-    font-style: normal; 
-}
-@font-face { font-family: 'Recipekorea'; 
-src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Recipekorea.woff') format('woff'); 
-font-weight: normal; 
-font-style: normal;
-}
- @font-face { 
-     font-family: 'GmarketSansBold'; 
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff'); 
-    font-weight: normal; 
-    font-style: normal; 
-}
-@font-face { 
-    font-family: 'Cafe24Ohsquare'; 
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff'); 
-    font-weight: normal; 
-    font-style: normal; 
-} */
 .join {
-  /* font-family: GmarketSansBold; */
   font-weight: bold;
   font-style: normal;
   color: #3a4049;
@@ -692,7 +571,6 @@ font-style: normal;
 }
 .input-wrap {
   display: flex;
-  /* justify-content: flex-start; */
   margin-bottom: 10px;
 }
 .line {
@@ -734,15 +612,7 @@ label {
   border: 3px solid rgb(202, 51, 195);
   -webkit-transition: all 0.35s ease;
   transition: all 0.35s ease;
-  /* >a
-        color aqur-bg
-        -webkit-transition all .35s ease
-        transition all .35s ease */
 }
-/* .seeModal{
-    justify-content: center;
-    justify-self: center;
-} */
 .termsBox {
   width: 20px;
   height: 17px;
@@ -758,13 +628,8 @@ label {
   border: 1px solid #ee6e9f;
   width: 90px;
   height: 35px;
-  /* font-family: GmarketSansBold; */
   font-weight: bold;
   font-style: normal;
-
-  /* justify-content: center;
-    justify-self: center; */
-  /* margin-right:400px; */
 }
 .modalBtn:hover {
   background-color: #d5638e;
@@ -811,37 +676,14 @@ label {
 .compulsory {
   font-style: italic;
   margin-top: 12px;
-  /* font-weight: 550; */
 }
 .compulsory:hover {
-  /* font-style: normal; */
   font-weight: bold;
 }
 a {
   text-decoration: none;
   color: inherit;
 }
-/* a.underline:after {
-	content: '';
-  position: absolute;
-  left: 315px;
-  display: inline-block;
-  height: 1em;
-  width: 10%;
-  border-bottom: 1px solid;
-  margin-top: 10px;
-  opacity: 0;
-	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
-	transition: opacity 0.35s, transform 0.35s;
-	-webkit-transform: scale(0,1);
-	transform: scale(0,1);
-}
-
-a.underline:hover:after {
-  opacity: 1;
-	-webkit-transform: scale(1);
-	transform: scale(1);
-} */
 
 .cta {
   position: relative;

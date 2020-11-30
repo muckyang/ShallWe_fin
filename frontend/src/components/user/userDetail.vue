@@ -17,7 +17,11 @@
                   <b-card-text>
                     <div class="text-left">
                       <h6 class="text-center mt-5">자기소개</h6>
-                      <div class="mb-5" style="border: solid 1px lightgray; height: 100px;"></div>
+
+                      <div
+                        class="mb-5"
+                        style="border: solid 1px lightgray; height: 100px;"
+                      >{{userData.introduce}}</div>
                     </div>
                   </b-card-text>
                 </b-card-body>
@@ -110,16 +114,23 @@ export default {
       this.userData.status = 0;
       this.sendChangedUserStatus();
     },
-    sendChangedUserStatus() {
-      this.userData.token = this.$cookies.get("admin-token");
-      axios
-        .post(`${BACK_URL}/accuse/disabled`, this.userData)
-        .then(() => {
-          console.log(this.userData, "UUUUUUUUUUUUUUUUUUUU");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+
+    methods: {
+      ...mapActions([ "getUserDatailData" ]),
+      changeUserStatus() {
+        this.userData.status = 0
+        this.sendChangedUserStatus();
+      },
+      sendChangedUserStatus() {
+        this.userData.token = this.$cookies.get('admin-token')
+        axios
+          .post(`${BACK_URL}/accuse/disabled`, this.userData)
+          .then(() => {
+          })
+          .catch(( err ) => {
+            console.error(err);
+          });
+      },
     },
   },
   created() {

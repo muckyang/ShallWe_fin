@@ -31,7 +31,7 @@ export default {
         .then(() => {
           this.$emit("like-change");
         })
-        .catch((err) => console.log(err.response.data));
+        .catch((err) => console.log(err));
     },
   },
   computed: {
@@ -47,12 +47,10 @@ export default {
 }
 .like-content .like-review {
   display: block;
-  /* margin: 40px auto 0px; */
   text-align: center;
   background: #ee6e9f;
   border-radius: 3px;
   box-shadow: 0 10px 20px -8px rgb(240, 75, 113);
-  /* padding: 10px 12px; */
   padding: 12px 12px 7px 12px;
   font-size: 17px;
   cursor: pointer;
@@ -62,7 +60,6 @@ export default {
   text-decoration: none;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
-  /* margin: 0 1% 0 1%; */
 }
 .like-content .like-review:hover {
   transform: translateY(-3px);

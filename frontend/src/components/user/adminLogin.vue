@@ -133,7 +133,7 @@ export default {
   font-weight: bold;
   height: 35px;
   text-align: center;
-  vertical-align: middle; /* 적용 안 됨 */
+  vertical-align: middle;
 }
 .submit-btn {
   background-color: #ee6e9f;
@@ -176,7 +176,6 @@ export default {
 .google-img {
   height: 24px;
   width: 23px;
-  /* margin: 0 0 0 5px; */
 }
 
 .blank {
@@ -227,7 +226,6 @@ export default {
   height: 35px;
   width: 180px;
   border-radius: 4px 0px 0px 4px;
-  /* border-top-left-radius: 2px; */
   border-style: solid;
   border-width: 1.5px;
   border-color: #3a4049;

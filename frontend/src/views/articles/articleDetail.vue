@@ -1,11 +1,10 @@
 <template>
   <div class="mt-5">
     <div class="container detail" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
-      <!--Top 부분. 제목, 작성자, create time -->
+
       <div class="top">
         <div class="top-row">
           <div class="detail-title ml-1">{{ articleData.title }}</div>
-          <!--게시글 수정,삭제,신고 버튼-->
           <div v-if="udflag">
             <div
               class="article-drop dropdown dropleft"
@@ -47,7 +46,9 @@
               <h6 class="our-main-font">신고 사유</h6>
               <div class="dropdown our-main-font">
                 <button
+
                   class="btn btn-secondary btn-sm dropdown-toggle out-main-font"
+
                   type="button"
                   id="dropdownMenuButton"
                   data-toggle="dropdown"
@@ -75,7 +76,6 @@
             </b-modal>
           </div>
 
-          <!-- 게시물 신고 -->
           <br />
         </div>
         <div
@@ -106,8 +106,6 @@
         </div>
       </div>
       <hr class="top-line" />
-
-      <!--중간 부분. 이미지, 주요 정보들 -->
       <div class="middle-row">
         <img class="MyImage" :src="imageUrl" alt="..." />
         <div class="articleInfo">
@@ -128,9 +126,7 @@
             </div>
           </div>
           <div class="detail-btns mt-2">
-            <!--좋아요 버튼-->
             <articleLike @like-change="likeChange" :isLiked="isLiked" />
-            <!--공유 버튼-->
             <a
               href="javascript:;"
               class="mx-1 kakao-share-link"
@@ -138,7 +134,6 @@
               id="kakao-link"
             >
               <button @click="shareContent" class="detail-share">
-                <!-- <img src="../../assets/img/kakao_btn.png" class="kakao" alt="삭제" /> -->
                 <i class="fas fa-share-alt"></i> 공유
               </button>
             </a>
@@ -157,8 +152,6 @@
               <b-button id="show-btn" v-b-modal.join-modal class="participate-btn" v-if="joinFlag">
                 <i class="fas fa-user-plus"></i> 참여
               </b-button>
-              <!-- <b-button id="show-btn" v-b-modal.join-modal class="detail-join" v-if="joinFlag">
-              </b-button>-->
             </div>
             <div v-if="articleData.writer === userData.nickname">
               <div v-if="articleData.status === 3">
@@ -172,7 +165,7 @@
                 </b-button>
               </div>
             </div>
-            <!--참가 modal-->
+
             <b-modal id="join-modal" size="xl" ref="modal" class="form-input" @ok="sendJoinData">
               <form ref="form" class="form-input" @submit.stop.prevent="handleSubmit">
                 <b-form-group label="제목" label-for="title-input" class="our-main-font">
@@ -213,7 +206,7 @@
               </form>
             </b-modal>
 
-            <!--임시modal-->
+
             <b-modal id="update-modal" size="xl" ref="modal" title="수정하기" @ok="updateJoinData">
               <form ref="form" @submit.stop.prevent="handleSubmit">
                 <b-form-group label="제목" label-for="title-input" class="our-main-font">
@@ -237,7 +230,6 @@
         </div>
       </div>
 
-      <!--하단 부분. 내용,(지도) -->
       <div class="detail-content" id="item-1" style="overflow:hidden; word-wrap:break-word;">
         <div>{{ articleData.description }}</div>
       </div>
@@ -247,7 +239,6 @@
         <div class="col-5 d-flex justify-content-end mt-5" style="margin-left: 8%;">
           <kakaoMapForDetail />
         </div>
-        <!-- 차트 -->
         <div
           class="col-5 d-flex justify-content-start"
           style="margin-top: 6%; margin-left: 7%; font-family: 'Recipekorea', cursive;"
@@ -256,8 +247,6 @@
         </div>
       </div>
     </div>
-
-    <!--참가자 리스트-->
     <div class="members mt-5" style="font-family: 'Recipekorea', cursive;">
       <div class="members-start" style="font-size:19px">
         <i class="fas fa-users"></i>
@@ -325,14 +314,17 @@
                     >거절</b-button>
 
                     <b-modal id="modal-scoped">
-                      <p>정말 거절하시겠습니까?</p>
+                      <p class="our-main-font">정말 거절하시겠습니까?</p>
                       <template v-slot:modal-footer="{ ok }">
                         <b-button
                           size="sm"
                           variant="danger"
                           @click="denyParticpation(participant)"
+
+                          class="our-main-font"
                         >거절</b-button>
-                        <b-button size="sm" variant="success" @click="ok()">취소</b-button>
+                        <b-button class="our-main-font" size="sm" variant="success" @click="ok()">취소</b-button>
+
                       </template>
                     </b-modal>
                   </div>
@@ -508,11 +500,20 @@ export default {
     },
     acceptParticpation(participant) {
       axios
-        .post(
+        .put(
           `${BACK_URL}/participant/accept/${this.articleData.articleId}/${participant}`
         )
         .then((response) => {
-          alert(response.data);
+          Swal.fire({
+            icon: "success",
+            height: 300,
+            width: 300,
+
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">참여자 수락되었습니다!</a>',
+            showConfirmButton: false,
+            timer: 1500,
+          });
           this.getArticle(this.$route.params.ID);
         })
         .catch((error) => {
@@ -521,7 +522,7 @@ export default {
     },
     denyParticpation(participant) {
       axios
-        .post(
+        .put(
           `${BACK_URL}/participant/denied/${this.articleData.articleId}/${participant.writer}`
         )
         .then((response) => {
@@ -535,7 +536,7 @@ export default {
     },
     confirmPurchase() {
       axios
-        .get(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
+        .put(`${BACK_URL}/post/complete/${this.articleData.articleId}`)
         .then((response) => {
           Swal.fire({
             icon: "success",
@@ -557,8 +558,6 @@ export default {
       this.searchData.searchDataForSend.word = tag;
       this.detailSearch(this.searchData);
     },
-
-    // 신고 유형 변경
     changeAccuseKind(kind) {
       if (kind === 1) {
         this.kind = "욕설, 비난을 했어요!";
@@ -571,13 +570,11 @@ export default {
       this.linkArticleData();
       this.linkUserData();
     },
-    // 해당 articleData 연결
     linkArticleData() {
       this.accuseArticleData.accuseIndex = 1;
       this.accuseArticleData.accuseValue = this.articleData.articleId;
       this.accuseArticleData.defendant = this.articleData.writer;
     },
-    // 해당 userData 연결
     linkUserData() {
       this.accuseArticleData.reporter = this.userData.nickname;
     },
@@ -645,7 +642,7 @@ export default {
     updateJoinData() {
       this.joinData.articleId = this.articleData.articleId;
       axios
-        .post(`${BACK_URL}/participant/update`, this.joinData)
+        .put(`${BACK_URL}/participant/update`, this.joinData)
         .then((response) => {
           this.getparticipantData();
           Swal.fire({
@@ -664,7 +661,7 @@ export default {
     },
     getparticipantData() {
       axios
-        .post(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
+        .get(`${BACK_URL}/participant/read/${this.$route.params.ID}`)
         .then((response) => {
           this.articleData.partList = response.data.participantList;
         })
@@ -674,7 +671,7 @@ export default {
     },
     cancel(no) {
       axios
-        .post(`${BACK_URL}/participant/delete/${no}`)
+        .delete(`${BACK_URL}/participant/delete/${no}`)
         .then((response) => {
           this.getparticipantData();
           Swal.fire({
@@ -738,6 +735,11 @@ export default {
     likeChange() {
       this.getArticle(this.$route.params.ID);
       this.likeCheck();
+      if(this.articleData.status===0){
+        articleData.title="이 게시글은 신고된 게시글입니다"
+        articleData.description="이 게시글은 신고된 게시글입니다"
+        articleData.address="이 게시글은 신고된 게시글입니다"
+      }
     },
   },
   created: function () {
@@ -809,8 +811,6 @@ export default {
   text-decoration: none;
 }
 .review-create-button {
-  /* display: block;
-  text-align: center;*/
   text-decoration: none;
   border: none;
   outline: none;
@@ -818,7 +818,6 @@ export default {
   color: #eee;
   border-radius: 3px;
   box-shadow: 0 10px 20px -8px #1d0622;
-  /* padding: 10px 12px; */
   padding: 12px 12px 7px 12px;
   -webkit-transition: 0.3s ease;
 }
@@ -832,7 +831,6 @@ export default {
   display: flex;
   width: 700px;
   margin: 3% 0 0 0;
-  /* padding: auto; */
   justify-content: center;
   text-align: center;
 }
@@ -1031,7 +1029,6 @@ a {
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
   display: block;
-  /* margin: 0 2% 0 2%; */
 }
 .detail-btns .detail-share:hover {
   transform: translateY(-3px);
@@ -1040,10 +1037,8 @@ a {
   margin-right: 5px;
 }
 .participate-btn {
-  /* background-color: rgb(37, 7, 44); */
   background-color: #32093d;
   box-shadow: 0 10px 20px -8px rgb(5, 1, 7);
-  /* padding: 10px 11px; */
   padding: 12px 12px 7px 12px;
   border-radius: 3px;
   border: none;
@@ -1062,7 +1057,6 @@ a {
 .detail-btns .detail-join {
   background-color: #000000;
   box-shadow: 0 10px 20px -8px rgb(5, 1, 7);
-  /* padding: 10px 11px; */
   padding: 12px 12px 7px 12px;
   border-radius: 3px;
   border: none;
@@ -1145,15 +1139,6 @@ a {
 .nomargin {
   margin: 0;
 }
-/* .tag-btn {
-  border: 3px solid #ee6e9f;
-  background-color: transparent;
-  margin-right: 1%;
-  outline: none;
-  border-radius: 20px;
-  padding: 5px 6px 2px 4px;
-  box-shadow: 0 1px 4px #e23577, 0 0 40px #fcfafa inset;
-} */
 </style>
 
 <style scoped lang="scss">

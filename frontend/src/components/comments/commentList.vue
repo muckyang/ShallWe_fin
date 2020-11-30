@@ -4,16 +4,12 @@
       <i class="far fa-comment-dots"></i>
       댓글 {{ comments.length }}
     </div>
-
-    <!--댓글 보여주는 공간-->
     <commentListItem
       v-for="comment in comments"
       :key="comment.commentId"
       :comment="comment"
       @re-render="getArticle($route.params.ID)"
     />
-
-    <!--댓글 등록 공간-->
     <div class="comment-write">
       <div class="comment-text">
         <input
@@ -44,7 +40,6 @@ export default {
     commentListItem,
   },
   props: {
-    // reviewId:
   },
   data() {
     return {
@@ -67,7 +62,7 @@ export default {
           .post(`${BACK_URL}/comment/create`, this.commentData)
           .then(() => {
             this.commentData.content = "";
-            this.getArticle(this.$route.params.ID); //다시 보기
+            this.getArticle(this.$route.params.ID);
           })
           .catch((err) => {
             console.error(err);
@@ -76,22 +71,12 @@ export default {
         alert("댓글을 입력해주세요.");
       }
     },
-    // getComments(){
-    //   axios.get(`${BACK_URL}/comment/read/${this.$route.params.ID}`)
-    //     .then((response)=>{
-    //       this.GET_COMMENTS(response.data.commentList)
-    //     })
-    //     .catch((err)=>{
-    //       console.error(err)
-    //     })
-    // },
   },
 };
 </script>
 
 <style>
 .comments-box {
-  /* border: 1px solid red; */
   width: 75%;
   margin: auto;
 }
@@ -135,8 +120,6 @@ export default {
   outline: none;
 }
 .comment-text {
-  /* border: none;
-  outline: none; */
   display: block;
 }
 .comment-input {

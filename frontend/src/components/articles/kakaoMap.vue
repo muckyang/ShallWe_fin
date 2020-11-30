@@ -52,7 +52,6 @@ export default {
       this.initMap();
     } else {
       const script = document.createElement("script");
-      /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
       script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
       document.head.appendChild(script);
@@ -82,22 +81,15 @@ export default {
       } else {
         var keyword = document.getElementById("keyword").value;
       }
-      // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
       this.ps.keywordSearch(keyword, this.placesSearchCB);
     },
     placesSearchCB(data, status, pagination) {
       if (status === kakao.maps.services.Status.OK) {
-        // 정상적으로 검색이 완료됐으면
-        // 검색 목록과 마커를 표출합니다.
         this.displayPlaces(data);
-
-        // 페이지 번호를 표출합니다
         this.displayPagination(pagination);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert("검색 결과가 존재하지 않습니다.");
         return;
-
-        // 페이지 번호를 표출합니다
         this.displayPagination(pagination);
       } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
         alert("검색 결과가 존재하지 않습니다.");
@@ -115,26 +107,14 @@ export default {
         fragment = document.createDocumentFragment(),
         bounds = new kakao.maps.LatLngBounds(),
         listStr = "";
-
-      // 검색 결과 목록에 추가된 항목들을 제거합니다
       this.removeAllChildNods(listEl);
-
-      // 지도에 표시되고 있는 마커를 제거합니다
       this.removeMarker();
 
       for (var i = 0; i < places.length; i++) {
-        // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
           marker = this.addMarker(placePosition, i),
-          itemEl = this.getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
+          itemEl = this.getListItem(i, places[i]);
         bounds.extend(placePosition);
-
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시합니다
-        // mouseout 했을 때는 인포윈도우를 닫습니다
         ((marker, title) => {
           var ditemEl = itemEl;
           var content =
@@ -186,12 +166,8 @@ export default {
 
         fragment.appendChild(itemEl);
       }
-
-      // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
       listEl.appendChild(fragment);
       menuEl.scrollTop = 0;
-
-      // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       this.map.setBounds(bounds);
     },
     getListItem(index, places) {
@@ -226,12 +202,12 @@ export default {
     },
     addMarker(position, idx, title) {
       var imageSrc =
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
-        imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png",
+        imageSize = new kakao.maps.Size(36, 37),
         imgOptions = {
-          spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-          spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-          offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+          spriteSize: new kakao.maps.Size(36, 691),
+          spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10),
+          offset: new kakao.maps.Point(13, 37),
         },
         markerImage = new kakao.maps.MarkerImage(
           imageSrc,
@@ -239,12 +215,12 @@ export default {
           imgOptions
         ),
         marker = new kakao.maps.Marker({
-          position: position, // 마커의 위치
+          position: position,
           image: markerImage,
         });
 
-      marker.setMap(this.map); // 지도 위에 마커를 표출합니다
-      this.markers.push(marker); // 배열에 생성된 마커를 추가합니다
+      marker.setMap(this.map);
+      this.markers.push(marker);
 
       return marker;
     },
@@ -259,7 +235,6 @@ export default {
         fragment = document.createDocumentFragment(),
         i;
 
-      // 기존에 추가된 페이지번호를 삭제합니다
       while (paginationEl.hasChildNodes()) {
         paginationEl.removeChild(paginationEl.lastChild);
       }
@@ -317,7 +292,6 @@ export default {
 .map_wrap * {
   margin: 0;
   padding: 0;
-  /* font-family: "Malgun Gothic", dotum, "돋움", sans-serif; */
   font-size: 12px;
 }
 .map_wrap a,

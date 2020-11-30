@@ -1,7 +1,5 @@
 <template>
   <div class="introduce-list-box mt-5">
-    <!-- <div class="a_layer">
-    <div class="a_layer_inner">-->
     <div class="about-us-top">
       <div class="shall-we">
         <span>Sh</span>
@@ -26,7 +24,6 @@
         <section class="box style1 main-point-box p-3 _card card__one">
           <img src="http://i3b203.p.ssafy.io/localImg/food1.png" class="foodIcon" />
           <h2 class="font-change mb-4">쉘위 배민</h2>
-          <!--배달음식의 최소주문금액을 같이 맞춰 최소의 금액으로 최대의 맛있는 음식을 나눠 보아요-->
           <h4 class="font-change">
             <span>
               <br />배달음식의 최소주문금액을 함께
@@ -34,16 +31,12 @@
               <br />채우고
             </span>
             <span style="color:#ee6e9f" class="font-change">가심비를 즐겨보아요</span>
-            <!-- <span class="font-change">을 나눠 보아요</span> -->
           </h4>
         </section>
       </div>
 
       <div class="col-4 col-6-medium col-12-small">
         <section class="box style1 main-point-box p-3 _card card__one">
-          <!-- <div class="infinite">
-            <img src="http://i3b203.p.ssafy.io/localImg/truck1.png" class="truckIcon" />
-          </div>-->
           <div class="infinite">
           <img src="http://i3b203.p.ssafy.io/localImg/truck1.png" class="truckIcon" />
           </div>
@@ -163,7 +156,6 @@ export default {
 }
 .about-us-middle {
   display: flex;
-  /* border: 1px solid blue; */
   margin: 0 0 120px 0;
 }
 @font-face {
@@ -186,25 +178,6 @@ export default {
 }
 .margin-Left {
   margin-left: 20px;
-}
-.main-point {
-  /* border: 1px solid red; */
-}
-.main-point-box {
-  /* border: 1px solid blue; */
-}
-.main-point-box:hover {
-  /* border: 1px solid red; */
-}
-.a_layer {
-  /* display: table;
-  margin: 10px auto;
-  background: white; */
-}
-.a_layer_inner {
-  /* display: table-cell;
-  text-align: center;
-  vertical-align: middle; */
 }
 .shall-we {
   color: #ee6e9f;
@@ -251,14 +224,12 @@ div.infinite {
 .foodIcon {
   height: 100px;
   width: 100px;
-  /* padding: 20px 20px; */
   margin: 20px 20px;
 }
 
 .nIcon {
   height: 100px;
   width: 100px;
-  /* padding: 20px 20px; */
   margin: 20px 20px;
 }
 .trustIcon {
@@ -269,7 +240,6 @@ div.infinite {
 .ConIcon {
   height: 280px;
   width: 320px;
-  /* padding: 20px 20px; */
   margin: 5px 0 5px 60px;
 }
 h3 {
@@ -293,8 +263,6 @@ h3 {
 $color-bg: #f8f8f8;
 $card-padding: 20px;
 $grid-gutter: 31px;
-
-// Media Queries breakpoints
 $small: 480px;
 $medium: 768px;
 $large: 992px;
