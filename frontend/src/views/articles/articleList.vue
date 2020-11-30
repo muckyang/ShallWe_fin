@@ -64,6 +64,8 @@
         role="tabpanel"
         aria-labelledby="nav-home-tab"
       >
+
+      <!-- {{articles}} -->
         <b-container class="bv-example-row">
           <b-row align-h="start">
             <b-col
@@ -523,27 +525,18 @@
         </b-container>
       </div>
     </div>
-    <infinite-loading
-      @infinite="infiniteHandler"
-      :identifier="infiniteId"
-      spinner="waveDots"
-    >
-      <div
-        slot="no-more"
-        style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px; font-family: 'Recipekorea', cursive; font-size:14.5px"
-      >
-        더이상 게시물이 존재하지 않습니다!
-      </div>
-    </infinite-loading>
+
+    <infinite-loading @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
+
   </div>
 </template>
 
 <script>
 const BACK_URL = process.env.VUE_APP_BACK_URL;
 import { mapState, mapActions } from "vuex";
-import InfiniteLoading from "vue-infinite-loading";
-import cookies from "vue-cookies";
-import axios from "axios";
+
+import InfiniteLoading from 'vue-infinite-loading'
+
 
 export default {
   name: "articleList",
@@ -556,6 +549,7 @@ export default {
       page: 0,
       onlyOne: true,
       articles: [],
+
       searchData: {
         searchDataForSend: {
           word: "",
@@ -571,6 +565,7 @@ export default {
   },
   methods: {
     ...mapActions(["getArticles", "search"]),
+
     cutPrice(article) {
       let CD = date + "";
       const year = CD.substring(0, 4) + "년 ";
@@ -650,6 +645,21 @@ export default {
         return real;
       };
     },
+
+    infiniteHandler(){
+      this.getArticles({ temp: 1, categoryId: this.categoryNum, page:this.page+1 });
+    },
+    changeCategory(num) {
+      this.categoryNum = num;
+      this.getArticles({ temp: 1, categoryId: this.categoryNum, page:0  });
+    },
+  },
+  computed: {
+    ...mapState(["articles"]),
+  },
+  created() {
+    this.getArticles({ temp: 1, categoryId: this.categoryNum, page:0 });
+
   },
 };
 </script>

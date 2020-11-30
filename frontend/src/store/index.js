@@ -145,8 +145,10 @@ export default new Vuex.Store({
       state.userData = userData;
     },
     GET_ARTICLES(state, articles) {
-      state.articles = articles;
+      state.articles.push(articles);
+      console.log(state.articles,'들어옴?')
     },
+
     GET_ARTICLE(state, response) {
       state.articleData = response.data;
     },
@@ -322,9 +324,15 @@ export default new Vuex.Store({
     getArticles({ state, commit }, data) {
       const auth = { token: state.authToken };
       axios
-        .post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}`, auth)
+        .post(`${BACK_URL}/post/read/${data.temp}/${data.categoryId}/${data.page}`, auth)
         .then((response) => {
-          console.log(response, ",ssdfs");
+
+          if (response.data.postList.length) {
+            commit("GET_ARTICLES", response.data.postList);
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
           commit("GET_ARTICLES", response.data.postList);
         })
         .catch((err) => {
