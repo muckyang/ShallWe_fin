@@ -481,7 +481,7 @@ export default new Vuex.Store({
       } else {
         cookies.set("searchData", searchData, 0);
         searchData.categoryId = 0;
-        cookies.set('searchData',searchData, 0)
+        cookies.set("searchData", searchData, 0);
         axios
           .post(
             `${BACK_URL}/post/search/1/${searchData.categoryId}`,
@@ -506,10 +506,12 @@ export default new Vuex.Store({
         searchData.searchDataForSend.subject &&
         searchData.categoryId &&
         searchData.temp
-        ) {
-          if (searchData.categoryId === "temp") {
-            searchData.categoryId = 0;
-          }
+
+      ) {
+        if (searchData.categoryId === "temp") {
+          searchData.categoryId = 0;
+        }
+        console.log(searchData);
         cookies.set("searchData", searchData, 0);
         axios
           .post(
@@ -575,7 +577,7 @@ export default new Vuex.Store({
         .post(`${BACK_URL}/account/readAll`, auth)
         .then((res) => {
           commit("GET_USERS", res.data);
-          console.log(res)
+          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -593,30 +595,40 @@ export default new Vuex.Store({
         });
     },
     createArticleAccuse(context, accuseArticleData) {
-      if(accuseArticleData.accuseArticleData.accuseKind&&accuseArticleData.accuseArticleData.accuseReason){
+      if (
+        accuseArticleData.accuseArticleData.accuseKind &&
+        accuseArticleData.accuseArticleData.accuseReason
+      ) {
         axios
-          .post(`${BACK_URL}/accuse/create`, accuseArticleData.accuseArticleData)
+          .post(
+            `${BACK_URL}/accuse/create`,
+            accuseArticleData.accuseArticleData
+          )
           .then(() => {
-            router.go()
+            router.go();
             Swal.fire({
-              icon: 'warning',
+              icon: "warning",
               height: 300,
               width: 350,
-              title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
-              confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-              confirmButtonColor: '#ee6e9f'
-            })
+              title:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
+              confirmButtonText:
+                '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+              confirmButtonColor: "#ee6e9f",
+            });
           })
           .catch((err) => console.log(err));
-      }else{
+      } else {
         Swal.fire({
-          icon: 'warning',
+          icon: "warning",
           height: 300,
           width: 350,
-          title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고 종류와 사유를 모두 입력해주세요!</a>',
-          confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-          confirmButtonColor: '#ee6e9f'
-        })
+          title:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">신고 종류와 사유를 모두 입력해주세요!</a>',
+          confirmButtonText:
+            '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+          confirmButtonColor: "#ee6e9f",
+        });
       }
     },
     createCommentAccuse(context, accuseCommentData) {
@@ -625,14 +637,16 @@ export default new Vuex.Store({
         .post(`${BACK_URL}/accuse/create`, accuseCommentData.accuseCommentData)
         .then(() => {
           Swal.fire({
-            icon: 'warning',
+            icon: "warning",
             height: 300,
             width: 350,
-            title: '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
-            confirmButtonText :'<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
-            confirmButtonColor: '#ee6e9f'
-          })
-          router.go()
+            title:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">신고가 접수되었습니다!</a>',
+            confirmButtonText:
+              '<a style="font-size:20px; font-family: Recipekorea; color:black">확인</a>',
+            confirmButtonColor: "#ee6e9f",
+          });
+          router.go();
         })
         .catch((err) => console.log(err));
     },

@@ -1,6 +1,7 @@
 <template>
   <div class="mt-5">
     <div class="container detail" style="font-family: 'Recipekorea', cursive; font-size:16.5px">
+
       <div class="top">
         <div class="top-row">
           <div class="detail-title ml-1">{{ articleData.title }}</div>
@@ -33,8 +34,11 @@
                   "
                 >삭제</a>
               </div>
+              <!--다시 보기!!!!!!!1 -->
             </div>
           </div>
+
+          <!-- 게시물 신고 -->
           <div v-if="articleData.userId !== userData.userId">
             <b-button v-b-modal.modal-1 class="siren-btn">신고</b-button>
 
@@ -42,7 +46,9 @@
               <h6 class="our-main-font">신고 사유</h6>
               <div class="dropdown our-main-font">
                 <button
-                  class="btn btn-secondary btn-sm dropdown-toggle our-main-font"
+
+                  class="btn btn-secondary btn-sm dropdown-toggle out-main-font"
+
                   type="button"
                   id="dropdownMenuButton"
                   data-toggle="dropdown"
@@ -69,6 +75,7 @@
               >신고접수</button>
             </b-modal>
           </div>
+
           <br />
         </div>
         <div
@@ -158,6 +165,7 @@
                 </b-button>
               </div>
             </div>
+
             <b-modal id="join-modal" size="xl" ref="modal" class="form-input" @ok="sendJoinData">
               <form ref="form" class="form-input" @submit.stop.prevent="handleSubmit">
                 <b-form-group label="제목" label-for="title-input" class="our-main-font">
@@ -198,6 +206,7 @@
               </form>
             </b-modal>
 
+
             <b-modal id="update-modal" size="xl" ref="modal" title="수정하기" @ok="updateJoinData">
               <form ref="form" @submit.stop.prevent="handleSubmit">
                 <b-form-group label="제목" label-for="title-input" class="our-main-font">
@@ -220,6 +229,7 @@
           </div>
         </div>
       </div>
+
       <div class="detail-content" id="item-1" style="overflow:hidden; word-wrap:break-word;">
         <div>{{ articleData.description }}</div>
       </div>
@@ -310,9 +320,11 @@
                           size="sm"
                           variant="danger"
                           @click="denyParticpation(participant)"
+
                           class="our-main-font"
                         >거절</b-button>
                         <b-button class="our-main-font" size="sm" variant="success" @click="ok()">취소</b-button>
+
                       </template>
                     </b-modal>
                   </div>
