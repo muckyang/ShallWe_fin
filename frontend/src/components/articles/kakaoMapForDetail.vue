@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" style="font-family: 'Recipekorea', cursive; font-size:19px">
     <div id="map"></div>
-    <div>{{articleData.address}}</div>
+    <div class="mt-3">{{articleData.address}}</div>
     <!--삭제하면 update 실행  안된다.-->
   </div>
 </template>
@@ -16,18 +16,22 @@ export default {
   mounted() {
     if (window.kakao && window.kakao.maps) {
       this.initMap();
-
-      // setTimeout(function() {
-      //     map.relayout();
-      //     map.setCenter(new kakao.maps.LatLng(lat, lng));
-      //     // map.setLevel(2); 필요하면 레벨조정
-      // }, 1000);
     } else {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8500f9b4c8e3ef8075b8eeefaaae025f&libraries=services";
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
+      document.head.appendChild(script);
+    }
+  },
+  updated() {
+    if (window.kakao && window.kakao.maps) {
+      this.initMap();
+    } else {
+      const script = document.createElement("script");
+      /* global kakao */
+      script.onload = () => kakao.maps.load(this.initMap);
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
       document.head.appendChild(script);
     }
   },
@@ -67,9 +71,6 @@ export default {
         }
       });
     },
-  },
-  updated: function () {
-    this.initMap();
   },
 };
 </script>

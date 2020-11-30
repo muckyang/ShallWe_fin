@@ -26,39 +26,32 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
-    private String name;
+    @Column(name = "nickname")
     private String nickname;
+    @Column(name = "address")
     private String address;
+    @Column(name ="profile_image")
+    private String profileImage;
+    @Column(name = "introduce")
+    private String introduce;
+    @Column(name = "grade")
     private int grade;
+    @Column(name = "status")
+    private int status;
+    @Column(name = "user_point")
     private int userPoint;
+    @Column(name = "birthday")
     private LocalDate birthday;
     @Column(insertable = false, updatable = false)
     private LocalDateTime createTime;
 
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
+    public User(String email, String nickname){
+        this.email= email;
+        this.nickname=nickname;
     }
 
-    public User(String email , String password, String name, String nickname, String address, LocalDate birthday) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.nickname = nickname;
-        this.address = address;
-        this.grade = 1;
-        this.userPoint = 1000;
-        this.birthday = birthday;
-    }
-
-    public void UserUpdate(SignupRequest req) {
-        this.password = req.getPassword();
-        this.grade= req.getGrade();
-        this.name = req.getName();
-        this.nickname = req.getNickname();
-        this.address= req.getAddress();
-        this.birthday = req.getBirthday();
-    }
 }

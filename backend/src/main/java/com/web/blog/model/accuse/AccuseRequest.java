@@ -11,6 +11,8 @@ public class AccuseRequest {
     int accuseId;
     @ApiModelProperty(required = true)
     @NotNull
+    int accuseIndex;
+    int accuseValue;
     int accuseKind;
     String reporter;
     String defendant;
@@ -18,4 +20,5 @@ public class AccuseRequest {
     String accuseUrl;
     int accuseConfirm;
     String token;
+    String nickname;
 }

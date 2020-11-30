@@ -11,7 +11,7 @@
                 장소 :
                 <input
                   type="text"
-                  value="편의점"
+                  :value="userData.address"
                   id="keyword"
                   size="15"
                   @keypress.enter="searchPlaces"
@@ -33,7 +33,8 @@
 </template>
 
 <script>
-const APP_KEY=process.env.VUE_APP_KAKAO_APP_KEY
+const APP_KEY = process.env.VUE_APP_KAKAO_APP_KEY;
+import { mapState } from "vuex";
 export default {
   props: {
     coNum: String,
@@ -53,10 +54,12 @@ export default {
       const script = document.createElement("script");
       /* global kakao */
       script.onload = () => kakao.maps.load(this.initMap);
-      script.src =
-        'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=8500f9b4c8e3ef8075b8eeefaaae025f&libraries=services';
+      script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${APP_KEY}&libraries=services`;
       document.head.appendChild(script);
     }
+  },
+  computed: {
+    ...mapState(["userData"]),
   },
   methods: {
     initMap() {
@@ -75,7 +78,7 @@ export default {
     },
     searchPlaces() {
       if (document.getElementById("keyword").value.indexOf("편의점") === -1) {
-        var keyword = document.getElementById("keyword").value + " 편의점";
+        var keyword = document.getElementById("keyword").value + "편의점";
       } else {
         var keyword = document.getElementById("keyword").value;
       }
@@ -145,7 +148,18 @@ export default {
             infowindow.close();
           });
           kakao.maps.event.addListener(marker, "click", () => {
-            this.$emit("setAddress", ditemEl.querySelector(".jibun").innerText);
+            try {
+              this.$emit(
+                "setAddress",
+                ditemEl.querySelector(".jibun").innerText
+              );
+            } catch {
+              this.$emit(
+                "setAddress",
+                ditemEl.querySelector(".info").getElementsByTagName("span")[0]
+                  .innerText
+              );
+            }
           });
           itemEl.onmouseover = function () {
             infowindow.setContent(content);
@@ -155,7 +169,18 @@ export default {
             infowindow.close();
           };
           itemEl.onclick = () => {
-            this.$emit("setAddress", ditemEl.querySelector(".jibun").innerText);
+            try {
+              this.$emit(
+                "setAddress",
+                ditemEl.querySelector(".jibun").innerText
+              );
+            } catch {
+              this.$emit(
+                "setAddress",
+                ditemEl.querySelector(".info").getElementsByTagName("span")[0]
+                  .innerText
+              );
+            }
           };
         })(marker, places[i].place_name);
 
@@ -263,16 +288,20 @@ export default {
         el.removeChild(el.lastChild);
       }
     },
-    changeD(el) {
-      console.log(el, "ASDASDASDA");
-    },
   },
 };
 </script>
 
 <style>
 .createMap {
-  width: 38vw;
+  width: 36vw;
+  margin: 45px 0 0 0;
+}
+@media screen and (max-width: 991px) {
+  .createMap {
+    width: 87vw;
+    padding-right: 8vw;
+  }
 }
 .kakao-search-btn {
   border: none;

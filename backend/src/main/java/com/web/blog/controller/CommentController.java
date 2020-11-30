@@ -21,8 +21,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.swagger.annotations.ApiResponse;
@@ -57,11 +59,12 @@ public class CommentController {
 
         User jwtuser = jwtService.getUser(req.getToken());
 
-        Optional<User> userOpt = userDao.findUserByEmailAndPassword(jwtuser.getEmail(), jwtuser.getPassword());
+        Optional<User> userOpt = userDao.findUserByEmail(jwtuser.getEmail());
         if (userOpt.isPresent()) {
             Comment comment = new Comment();
             comment.setArticleId(req.getArticleId());
             comment.setContent(req.getContent());
+            comment.setStatus(1);
             comment.setWriter(userOpt.get().getNickname());
             comment.setUserId(userOpt.get().getUserId()); // token값으로 id 받아옴
             commentDao.save(comment);
@@ -91,7 +94,7 @@ public class CommentController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/comment/update")
+    @PutMapping("/comment/update")
     @ApiOperation(value = "댓글수정")
     public Object update(@Valid @RequestBody CommentRequest request) {
 
@@ -107,7 +110,7 @@ public class CommentController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/comment/delete/{commentId}")
+    @DeleteMapping("/comment/delete/{commentId}")
     @ApiOperation(value = "댓글삭제하기")
     public Object delete(@Valid @PathVariable int commentId) {
         Comment comment = commentDao.getCommentByCommentId(commentId);

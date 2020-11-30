@@ -13,24 +13,17 @@ public class ParticipantRequest {
     @ApiModelProperty(required = true)
     @NotNull
     int no;
-    
-
-    
     @ApiModelProperty(required = true)
     @NotNull
     int articleId;
-    
     @ApiModelProperty(required = true)
     @NotNull
     String title;
-    
     @ApiModelProperty(required = true)
     @NotNull
     int price;
     String writer;
-    @ApiModelProperty(required = true)
+    int status;
     String description;
-    @ApiModelProperty(required = true)
-    @NotNull
     String token;
 }

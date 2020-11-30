@@ -24,14 +24,21 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class Comment {
     @Id
+    @Column(name = "comment_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int commentId;
+    @Column(name = "article_id")
     private int articleId;
+    @Column(name = "user_id")
     private int userId;
+    @Column(name = "status")
+    private int status;
+    @Column(name = "writer")
     private String writer;
+    @Column(name = "content")
     private String content;
     
-    @Column(insertable = false, updatable = false)
+    @Column(insertable = false, updatable = false ,name = "create_time")
     private LocalDateTime createTime;
     
 }

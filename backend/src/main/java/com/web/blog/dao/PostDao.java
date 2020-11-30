@@ -6,8 +6,6 @@ import java.util.Optional;
 import com.web.blog.model.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 
 @Repository
 public interface PostDao extends JpaRepository<Post, String> {
@@ -16,59 +14,60 @@ public interface PostDao extends JpaRepository<Post, String> {
 
     
     Post getPostByArticleId(int articleId);
-    @Transactional(readOnly = true) 
+
     Post findPostByArticleId(int articleId);
     
     List<Post> getPostByUserId(int userId);
     List<Post> getPostByUserIdAndTemp(int userId,int temp);
     List<Post> getPostByUserIdAndCategoryId(int userId,int categoryId);
+    List<Post> getPostByTempAndCategoryIdNotOrderByCategoryIdAscCreateTimeDesc(int userId,int categoryId);
+    List<Post> findPostByTempAndStatusNotOrderByCreateTimeDesc(int temp,int status);
+    List<Post> findPostByTempAndCategoryIdAndStatusNotOrderByCreateTimeDesc(int temp,int categoryId,int status);
+    List<Post> getPostByTempAndCategoryIdNotAndStatusNotOrderByCategoryIdAscCreateTimeDesc(int temp,int categoryId,int status);
 
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndWriter(int temp, String writer);
+    Post getPostByArticleIdAndStatus(int articleId,int status);
+    Post getPostByArticleIdAndStatusIn(int articleId,List<Integer> numlist);
+    List<Post> findPostByTempAndWriterOrderByCreateTimeDesc(int temp, String writer);
 
-    @Transactional(readOnly = true) 
-    Optional<Post> findPostByArticleIdAndTemp(int articleId,int temp);
-    @Transactional(readOnly = true) 
-    Optional<Post> findPostByArticleIdAndTempAndCategoryId(int articleId,int temp,int categoryId);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTitleLike(String word);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndTitleLike(int temp , String word);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndCategoryIdAndTitleLike(int temp ,int categoryId, String word);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndWriterLike(int writer , String word);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndCategoryIdAndWriterLike(int temp ,int categoryId, String word);
+
+    Optional<Post> findPostByStatusNotAndArticleIdAndTempOrderByCreateTimeDesc(int status, int articleId,int temp);
+
+    Optional<Post> findPostByArticleIdAndTempAndCategoryIdOrderByCreateTimeDesc(int articleId,int temp,int categoryId);
+
+    List<Post> findPostByTitleLikeOrderByCreateTimeDesc(String word);
+
+    List<Post> findPostByStatusNotAndTempAndTitleLikeOrderByCreateTimeDesc(int status,int temp , String word);
+    Optional<Post>  findPostByAndArticleIdAndTempOrderByCreateTimeDesc(int articleId, int temp);
+
+    List<Post> findPostByStatusNotAndTempAndCategoryIdAndTitleLikeOrderByCreateTimeDesc(int status,int temp ,int categoryId, String word);
+    List<Post> findPostByStatusNotAndTempAndWriterLikeOrderByCreateTimeDesc(int status, int writer , String word);
+
+    List<Post> findPostByStatusNotAndTempAndCategoryIdAndWriterLikeOrderByCreateTimeDesc(int status , int temp ,int categoryId, String word);
 
     // 리스트 출력 
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTemp(int temp);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndCategoryId(int temp,int categoryId);
-
-    @Transactional(readOnly = true) 
+    List<Post> findPostByStatusNotAndTempOrderByCreateTimeDesc(int status , int temp);
+    
+    List<Post> findPostByTempAndCategoryIdOrderByCreateTimeDesc(int temp,int categoryId);
+    
+    
     List<Post> findPostByUserId(int userId);
-
+    
     // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때 (전체)
-    @Transactional(readOnly = true) 
-    List<Post> findPostByAddressLike(String st1);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByAddressLikeAndAddressLike(String st1, String st2);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByAddressLikeAndAddressLikeAndAddressLike(String st1, String st2, String st3);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(String st1, String st2, String st3, String st4);
+    
+    List<Post> findPostByStatusNotAndAddressLikeOrderByCreateTimeDesc(int status, String st1);
+    List<Post> findPostByStatusNotAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int status, String st1, String st2);
+    List<Post> findPostByStatusNotAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int status,String st1, String st2, String st3);
+    List<Post> findPostByStatusNotAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int status, String st1, String st2, String st3, String st4);
     // 스트링 토크나이저로 잘라서 한 개 입력했을 때 부터 네 개 입력했을 때 (카테고리별)
     
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndCategoryIdAndAddressLike(int temp, int categoryId, String st1);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2, String st3);
-    @Transactional(readOnly = true) 
-    List<Post> findPostByTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLike(int temp, int categoryId, String st1, String st2, String st3, String st4);
-
+    List<Post> findPostByStatusNotAndTempAndCategoryIdAndAddressLikeOrderByCreateTimeDesc(int status, int temp, int categoryId, String st1);
+    List<Post> findPostByStatusNotAndTempAndCategoryIdAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int status, int temp, int categoryId, String st1, String st2);
+    List<Post> findPostByStatusNotAndTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int status, int temp, int categoryId, String st1, String st2, String st3);
+    List<Post> findPostByStatusNotAndTempAndCategoryIdAndAddressLikeAndAddressLikeAndAddressLikeAndAddressLikeOrderByCreateTimeDesc(int status, int temp, int categoryId, String st1, String st2, String st3, String st4);
     
+    // 메인
+    // List<Post> findPostByTempOrderByCreateTimeDesc(int temp);
+    List<Post> findPostByStatusNotAndTitleLikeOrderByCreateTimeDesc(int status,String title);
+    List<Post> findPostByStatusNotAndTempOrderByEndTimeAsc(int status, int temp);
+    List<Post> findPostByStatusNotAndTempAndCategoryIdOrderByLikeNumDesc(int status , int temp, int categoryId);;
 }

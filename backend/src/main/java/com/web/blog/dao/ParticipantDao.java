@@ -6,15 +6,16 @@ import com.web.blog.model.participant.Participant;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
 
 public interface ParticipantDao extends JpaRepository<Participant, String> {
 
    
     Participant getParticipantByNo(int no);
-
+    List<Participant> getParticipantByUserId(int userId);
+    List<Participant> getParticipantByUserIdAndStatus(int userid,int status);
+   
     Participant getParticipantByUserIdAndArticleId(int userId, int articleId);
-    @Transactional(readOnly = true) 
+    Participant findParticipantByArticleIdAndUserId(int articleId,int userId);
     List<Participant> findParticipantByArticleId(int articleId);
     List<Participant> getParticipantByArticleId(int articleId);
 }
