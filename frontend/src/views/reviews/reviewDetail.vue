@@ -136,7 +136,6 @@ export default {
   methods: {
     ...mapActions([
       "getArticle",
-      "getUserData",
       "createArticleAccuse",
       "deleteArticle",
     ]),

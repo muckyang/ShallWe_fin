@@ -723,6 +723,11 @@ export default {
     likeChange() {
       this.getArticle(this.$route.params.ID);
       this.likeCheck();
+      if(this.articleData.status===0){
+        articleData.title="이 게시글은 신고된 게시글입니다"
+        articleData.description="이 게시글은 신고된 게시글입니다"
+        articleData.address="이 게시글은 신고된 게시글입니다"
+      }
     },
   },
   created: function () {
